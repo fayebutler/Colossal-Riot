@@ -14,7 +14,7 @@ CC            = clang
 CXX           = clang++
 DEFINES       = -DNGL_DEBUG -DLINUX -DLINUX -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-CXXFLAGS      = -pipe -msse -msse2 -msse3 -march=native -g -Wall -W -Wno-unused-parameter -D_REENTRANT -fPIE $(DEFINES)
+CXXFLAGS      = -pipe -msse -msse2 -msse3 -march=native -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 INCPATH       = -I/opt/Qt/5.3/gcc_64/mkspecs/linux-clang -I. -Iinclude -I../../../../NGL/include -I/opt/Qt/5.3/gcc_64/include -I/opt/Qt/5.3/gcc_64/include/QtOpenGL -I/opt/Qt/5.3/gcc_64/include/QtWidgets -I/opt/Qt/5.3/gcc_64/include/QtGui -I/opt/Qt/5.3/gcc_64/include/QtCore -Imoc -I.
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++ -Wl,-rpath,/opt/Qt/5.3/gcc_64 -Wl,-rpath,/opt/Qt/5.3/gcc_64/lib
@@ -425,7 +425,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d obj/QtNGL1.0.0 || mkdir -p obj/QtNGL1.0.0
-	$(COPY_FILE) --parents $(DIST) obj/QtNGL1.0.0/ && $(COPY_FILE) --parents include/GLWindow.h include/MainWindow.h obj/QtNGL1.0.0/ && $(COPY_FILE) --parents src/GLWindow.cpp src/main.cpp src/MainWindow.cpp obj/QtNGL1.0.0/ && $(COPY_FILE) --parents ui/Mainwindow.ui ui/Mainwindow.ui obj/QtNGL1.0.0/ && (cd `dirname obj/QtNGL1.0.0` && $(TAR) QtNGL1.0.0.tar QtNGL1.0.0 && $(COMPRESS) QtNGL1.0.0.tar) && $(MOVE) `dirname obj/QtNGL1.0.0`/QtNGL1.0.0.tar.gz . && $(DEL_FILE) -r obj/QtNGL1.0.0
+	$(COPY_FILE) --parents $(DIST) obj/QtNGL1.0.0/ && $(COPY_FILE) --parents include/GLWindow.h include/MainWindow.h obj/QtNGL1.0.0/ && $(COPY_FILE) --parents src/GLWindow.cpp src/main.cpp src/MainWindow.cpp obj/QtNGL1.0.0/ && $(COPY_FILE) --parents ui/Mainwindow.ui obj/QtNGL1.0.0/ && (cd `dirname obj/QtNGL1.0.0` && $(TAR) QtNGL1.0.0.tar QtNGL1.0.0 && $(COMPRESS) QtNGL1.0.0.tar) && $(MOVE) `dirname obj/QtNGL1.0.0`/QtNGL1.0.0.tar.gz . && $(DEL_FILE) -r obj/QtNGL1.0.0
 
 
 clean:compiler_clean 
@@ -730,12 +730,9 @@ moc/moc_MainWindow.cpp: /opt/Qt/5.3/gcc_64/include/QtWidgets/QMainWindow \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_Mainwindow.h ui_Mainwindow.h
+compiler_uic_make_all: ui_Mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_Mainwindow.h ui_Mainwindow.h
-ui_Mainwindow.h: ui/Mainwindow.ui
-	/opt/Qt/5.3/gcc_64/bin/uic ui/Mainwindow.ui -o ui_Mainwindow.h
-
+	-$(DEL_FILE) ui_Mainwindow.h
 ui_Mainwindow.h: ui/Mainwindow.ui
 	/opt/Qt/5.3/gcc_64/bin/uic ui/Mainwindow.ui -o ui_Mainwindow.h
 
@@ -1200,20 +1197,11 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/Qt/5.3/gcc_64/include/QtGui/qinputmethod.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/QButtonGroup \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qbuttongroup.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/QGridLayout \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qgridlayout.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qlayout.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qboxlayout.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/QGroupBox \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qgroupbox.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qframe.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/QHeaderView \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qheaderview.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractitemview.h \
-		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		/opt/Qt/5.3/gcc_64/include/QtCore/qabstractitemmodel.h \
-		/opt/Qt/5.3/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QCheckBox \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qcheckbox.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QComboBox \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qcombobox.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qstyleoption.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractspinbox.h \
@@ -1224,6 +1212,23 @@ obj/MainWindow.o: src/MainWindow.cpp include/MainWindow.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qstyle.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qtabbar.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qrubberband.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QFormLayout \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qformlayout.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QLayout \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qlayout.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qboxlayout.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qgridlayout.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QGridLayout \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QGroupBox \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qgroupbox.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/QHeaderView \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qheaderview.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qitemselectionmodel.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/QMenuBar \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qmenubar.h \
 		/opt/Qt/5.3/gcc_64/include/QtWidgets/qmenu.h \
