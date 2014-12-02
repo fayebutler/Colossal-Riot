@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1321</width>
+    <height>675</height>
+   </rect>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Colossal WIN!</string>
+  </property>
+  <widget class="QWidget" name="m_centralwidget">
+   <layout class="QGridLayout" name="s_mainGridLayout">
+    <item row="1" column="8">
+     <widget class="QFrame" name="frame_2">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="6" colspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <widget class="QPushButton" name="m_colour">
+       <property name="geometry">
+        <rect>
+         <x>291</x>
+         <y>0</y>
+         <width>85</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Colour</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QPushButton" name="m_reset">
+      <property name="text">
+       <string>reset</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QComboBox" name="m_vboSelection">
+      <property name="currentText">
+       <string>plane</string>
+      </property>
+      <property name="currentIndex">
+       <number>4</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>sphere</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>cylinder</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>cone</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>disk</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>plane</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>torus</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>teapot</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>octahedron</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dodecahedron</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>icosahedron</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>tetrahedron</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>football</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>cube</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>troll</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>buddah</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dragon</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bunny</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="4" column="4">
+     <widget class="QSlider" name="m_normalSize">
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>20</number>
+      </property>
+      <property name="pageStep">
+       <number>1</number>
+      </property>
+      <property name="value">
+       <number>6</number>
+      </property>
+      <property name="sliderPosition">
+       <number>6</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="invertedAppearance">
+       <bool>true</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBothSides</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="3">
+     <widget class="QCheckBox" name="m_normals">
+      <property name="text">
+       <string>normals   size</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QCheckBox" name="m_wireframe">
+      <property name="text">
+       <string>wireframe</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1321</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>m_vboSelection</tabstop>
+  <tabstop>m_reset</tabstop>
+  <tabstop>m_normals</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
