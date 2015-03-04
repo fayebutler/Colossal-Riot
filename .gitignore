@@ -3,7 +3,7 @@
 *.lo
 *.o
 *.obj
-
+ColossalWindow
 # Precompiled Headers
 *.gch
 *.pch
