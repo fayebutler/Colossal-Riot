@@ -12,9 +12,14 @@ TARGET = CrowdEngine
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        crowdengine.cpp
+INCLUDEPATH +=/lua
 
-HEADERS  += crowdengine.h
+SOURCES += $$PWD/include/*.h
+HEADERS  += $$PWD/include/*.h
 
 FORMS    += crowdengine.ui
+
+unix:LIBS += -L/lua/lib -llua -ldl
+
+OTHER_FILES += \
+    lua/main.lua

@@ -46,15 +46,15 @@ private:
     void keyPressEvent( QKeyEvent *_event );
 
 private slots :
-    void setScale();
-    void setTranslate();
-    void setRotate();
-    void reset();
-    void updateMatrix(ngl::Mat4 _m );
+//    void setScale();
+//    void setTranslate();
+//    void setRotate();
+//    void reset();
+//    void updateMatrix(ngl::Mat4 _m );
     void setMatrix();
     void changeColour();
-    void setEuler();
-    void setTab(int _value);
+//    void setEuler();
+//    void setTab(int _value);
 
 };
 

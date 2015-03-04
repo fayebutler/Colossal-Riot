@@ -16,17 +16,21 @@ MOC_DIR=moc
 # on a mac we don't create a .app bundle file ( for ease of multiplatform use)
 CONFIG-=app_bundle
 # Auto include all .cpp files in the project src directory (can specifiy individually if required)
-SOURCES+= $$PWD/src/*.cpp
+SOURCES+= $$PWD/src/*.cpp \
+
 # same for the .h files
-HEADERS+= $$PWD/include/*.h
+HEADERS+= $$PWD/include/*.h \
+
 #Forms
 FORMS+=ui/MainWindow.ui
 # and add the include dir into the search path for Qt and make
-INCLUDEPATH +=./include
+INCLUDEPATH +=./include \
+              /lua
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= shaders/*.glsl \
+              lua/main.lua
 							README.md
 # were are going to default to a console app
 CONFIG += console
@@ -36,9 +40,11 @@ CONFIG += console
 	copydata.commands = echo "creating destination dirs" ;
 	# now make a dir
 	copydata.commands += mkdir -p $$OUT_PWD/shaders ;
+        copydata.commands += mkdir -p $$OUT_PWD/lua ;
 	copydata.commands += echo "copying files" ;
 	# then copy the files
 	copydata.commands += $(COPY_DIR) $$PWD/shaders/* $$OUT_PWD/shaders/ ;
+        copydata.commands += $(COPY_DIR) $$PWD/lua/*.lua $$OUT_PWD/lua/ ;
 	# now make sure the first target is built before copy
 	first.depends = $(first) copydata
 	export(first.depends)
@@ -46,6 +52,9 @@ CONFIG += console
 	# now add it as an extra target
 	QMAKE_EXTRA_TARGETS += first copydata
 }
+
+
+
 # use this to suppress some warning from boost
 QMAKE_CXXFLAGS_WARN_ON += "-Wno-unused-parameter"
 # basic compiler flags (not all appropriate for all platforms)
@@ -60,6 +69,9 @@ DEFINES +=NGL_DEBUG
 unix:LIBS += -L/usr/local/lib
 # add the ngl lib
 unix:LIBS +=  -L/$(HOME)/NGL/lib -l NGL
+# add lua lib
+unix:LIBS += -L/lua/lib -llua -ldl
+
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{
