@@ -25,6 +25,10 @@
 #define LUABIND_POLICY_HPP_INCLUDED
 
 #include <luabind/config.hpp>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6cfa8c708456a6c5dd88d307741a7b0416475534
 #include <typeinfo>
 #include <string>
 #include <memory>
