@@ -8,7 +8,10 @@ SOURCES += main.cpp \
     Police.cpp \
     StateMachine.cpp \
     State.cpp \
-    Patrol.cpp
+    Rioter.cpp \
+    SR_Protest.cpp \
+    SR_Flee.cpp \
+    SR_Attack.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -25,7 +28,10 @@ HEADERS += \
     Police.h \
     StateMachine.h \
     State.h \
-    Patrol.h
+    Rioter.h \
+    SR_Protest.h \
+    SR_Flee.h \
+    SR_Attack.h
 
 OTHER_FILES += \
     main.lua

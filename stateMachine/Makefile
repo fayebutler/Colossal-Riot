@@ -50,13 +50,19 @@ SOURCES       = main.cpp \
 		Police.cpp \
 		StateMachine.cpp \
 		State.cpp \
-		Patrol.cpp 
+		Rioter.cpp \
+		SR_Protest.cpp \
+		SR_Flee.cpp \
+		SR_Attack.cpp 
 OBJECTS       = main.o \
 		BaseEntity.o \
 		Police.o \
 		StateMachine.o \
 		State.o \
-		Patrol.o
+		Rioter.o \
+		SR_Protest.o \
+		SR_Flee.o \
+		SR_Attack.o
 DIST          = /opt/Qt/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.3/gcc_64/mkspecs/common/shell-unix.conf \
 		/opt/Qt/5.3/gcc_64/mkspecs/common/unix.conf \
@@ -164,7 +170,10 @@ DIST          = /opt/Qt/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		Police.cpp \
 		StateMachine.cpp \
 		State.cpp \
-		Patrol.cpp
+		Rioter.cpp \
+		SR_Protest.cpp \
+		SR_Flee.cpp \
+		SR_Attack.cpp
 QMAKE_TARGET  = stateMachine
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = stateMachine
@@ -448,14 +457,30 @@ Police.o: Police.cpp Police.h \
 		BaseEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Police.o Police.cpp
 
-StateMachine.o: StateMachine.cpp StateMachine.h
+StateMachine.o: StateMachine.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StateMachine.o StateMachine.cpp
 
-State.o: State.cpp State.h
+State.o: State.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o State.o State.cpp
 
-Patrol.o: Patrol.cpp Patrol.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Patrol.o Patrol.cpp
+Rioter.o: Rioter.cpp Rioter.h \
+		BaseEntity.h \
+		StateMachine.h \
+		State.h \
+		SR_Protest.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Rioter.o Rioter.cpp
+
+SR_Protest.o: SR_Protest.cpp SR_Protest.h \
+		State.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Protest.o SR_Protest.cpp
+
+SR_Flee.o: SR_Flee.cpp SR_Flee.h \
+		State.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Flee.o SR_Flee.cpp
+
+SR_Attack.o: SR_Attack.cpp SR_Attack.h \
+		State.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Attack.o SR_Attack.cpp
 
 ####### Install
 

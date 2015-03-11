@@ -1,6 +1,8 @@
 #ifndef BASEENTITY_H
 #define BASEENTITY_H
 
+//#include "State.h"
+
 class BaseEntity
 {
 public:
@@ -19,6 +21,8 @@ public:
     int getRage() { return m_rage; }
     void setRage(float _val) { m_rage = _val; }
 
+
+
 protected:
     int m_ID;
     static int m_nextValidID;
@@ -28,6 +32,8 @@ protected:
     float m_energy;
     float m_morale;
     float m_rage;
+
+
 };
 
 #endif // BASEENTITY_H

@@ -1,14 +1,17 @@
 #ifndef STATE_H
 #define STATE_H
 
-template <class entity_type>
+#include <iostream>
+
+template <class entityType>
 
 class State
 {
 public:
-    virtual void Enter(entity_type*)=0;
-    virtual void Execute(entity_type*)=0;
-    virtual void Exit(entity_type*)=0;
+    //State();
+    virtual void enter(entityType*)=0;
+    virtual void execute(entityType*)=0;
+    virtual void exit(entityType*)=0;
     virtual ~State(){}
 
 };

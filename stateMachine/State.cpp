@@ -1,27 +1,27 @@
-#include "State.h"
+//#include "State.h"
 
 
-//State::State()
+//template<> State<class entityType>::State()
 //{
 
 //}
 
-//virtual void State::Enter(entity_type*)
+//template<> void State<class entityType>::enter(entityType*)
 //{
 
 //}
 
-//virtual void State::Execute(entity_type*)
+//template<> void State<class entityType>::execute(entityType*)
 //{
 
 //}
 
-//virtual void State::Exit(entity_type*)
+//template<> void State<class entityType>::exit(entityType*)
 //{
 
 //}
 
-//virtual State::~State()
+//template<> State<class entityType>::~State()
 //{
 
 //}
