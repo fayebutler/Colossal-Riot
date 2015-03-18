@@ -6,7 +6,7 @@
 
 class MovingEntity: public BaseGameEntity
 {
-private:
+protected:
     ngl::Vec3 m_velocity;
     ngl::Vec3 m_heading;
     ngl::Vec3 m_side;
