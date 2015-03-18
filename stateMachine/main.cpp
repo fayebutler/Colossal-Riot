@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Rioter.h"
+#include "StateMachine.h"
 
 int main()
 {
