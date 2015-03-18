@@ -15,7 +15,8 @@ private:
     enum behaviour_type
     {
         seek    = 0x00002,
-        flee    = 0x00004
+        flee    = 0x00004,
+        arrive  = 0x00008,
     };
 private:
 
@@ -41,6 +42,8 @@ private:
 //  behaviour type functions
     ngl::Vec3 Seek(ngl::Vec3 TargetPos);
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
+    ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
+
 
 public:
     SteeringBehaviour();
@@ -53,6 +56,10 @@ public:
     void FleeOn(){m_activeFlags |= seek;}
     void FleeOff(){if(on(flee)) m_activeFlags ^= flee;}
     bool isFleeOn(){return on(flee);}
+
+    void ArriveOn(){m_activeFlags |= arrive;}
+    void ArriveOff(){if(on(arrive)) m_activeFlags ^= arrive;}
+    bool isArriveOn(){return on(arrive);}
 
     void setTarget(ngl::Vec3);
 //    void setTargetAgent(Vehicle* agent);
