@@ -19,8 +19,10 @@ CONFIG-=app_bundle
 SOURCES+= $$PWD/src/*.cpp \
 
 
+
 # same for the .h files
 HEADERS+= $$PWD/include/*.h \
+
 
 
 
