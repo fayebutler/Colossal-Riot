@@ -1,8 +1,11 @@
 #include "SteeringBehaviour.h"
 #include "Vehicle.h"
 
+#include "GameWorld.h"
+#include <cstdlib>
+SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
+    m_vehicle(agent)
 
-SteeringBehaviour::SteeringBehaviour()
 {
 
 }
@@ -19,6 +22,33 @@ ngl::Vec3 SteeringBehaviour::calculate()
     //use weight truncated running sum prioritisation
     //truncate force to maxforce
     return force;
+}
+
+
+ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
+{
+    if(on(seek))
+    {
+        m_steeringForce += Seek(m_vehicle->World()->Crosshair()) * m_weightSeek;
+    }
+    if(on(flee))
+    {
+        m_steeringForce += Flee(m_vehicle->World()->Crosshair()) * m_weightFlee;
+    }
+    if(on(arrive))
+    {
+        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
+    }
+
+   //truncate steering force to max force
+    if(m_steeringForce.length() > m_vehicle->getMaxForce())
+    {
+        m_steeringForce.normalize();
+        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
+    }
+
+    return m_steeringForce;
+
 }
 
 double SteeringBehaviour::forwardComponent()
@@ -65,5 +95,20 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
     }
 
     return ngl::Vec3(0,0,0);
+}
+
+
+ngl::Vec3 SteeringBehaviour::Wander()
+{
+    double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
+    float randomClamped = -1+2*((float)rand())/RAND_MAX;
+    m_wanderTarget += ngl::Vec3(randomClamped * jitterTimeSlice,0, randomClamped * jitterTimeSlice);
+
+    m_wanderTarget.normalize();
+    m_wanderTarget *= m_wanderRadius;
+    ngl::Vec3 localTarget = m_wanderTarget + ngl::Vec3(m_wanderDistance,0,0);
+  //  ngl::Vec3 worldTarget = pointtoworldspace ??
+
+    //return worldTarget - m_vehicle->getPos();
 }
 
