@@ -3,7 +3,10 @@
 
 #include
 #include "BaseGameEntity.h"
+<<<<<<< HEAD
 //#include ""
+=======
+>>>>>>> a21cc536f7ad22abe749ab110b5ca0c4b39210f2
 //#include "cellSpacePartition"
 #include <ngl/Transformation.h>
 
@@ -20,6 +23,10 @@ private:
     //any obstacles
     std::vector<BaseGameEntity*> m_obstacles;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a21cc536f7ad22abe749ab110b5ca0c4b39210f2
     //std::vector<Wall2D> m_Walls;
 };
 

@@ -9,6 +9,8 @@
 #include <ngl/Material.h>
 #include <QtOpenGL>
 
+
+
 //----------------------------------------------------------------------------------------------------------------------
 /// @file GLWindow.h
 /// @brief a basic Qt GL window class for ngl demos
@@ -148,6 +150,9 @@ private :
   MATRIXORDER m_matrixOrder;
 
 public slots :
+
+
+
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief slot to indicate the vbo selection combo box has changed
   /// called from MainWindow

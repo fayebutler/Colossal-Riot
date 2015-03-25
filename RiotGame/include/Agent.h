@@ -1,5 +1,6 @@
 #ifndef AGENT_H
 #define AGENT_H
+#include "Vehicle.h"
 
 extern "C" {
 #include <lua.h>
@@ -22,5 +23,5 @@ public:
     void setMass(float _mass);
     float getMass();
 };
-// poo
+
 #endif // AGENT_H
