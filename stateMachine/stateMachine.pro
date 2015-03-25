@@ -6,9 +6,9 @@ CONFIG -= qt
 SOURCES += main.cpp \
     BaseEntity.cpp \
     Police.cpp \
-    StateMachine.cpp \
-    State.cpp \
-    Rioter.cpp
+    Rioter.cpp \
+    EntityManager.cpp \
+    MessageManager.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -24,10 +24,13 @@ HEADERS += \
     BaseEntity.h \
     Police.h \
     StateMachine.h \
-    State.h \
-    Rioter.h
+    Rioter.h \
+    Message.h \
+    EntityManager.h \
+    MessageManager.h \
+    MessageTypes.h
 
 OTHER_FILES += \
-    main.lua \
-    RioterStates.lua
+    RioterStates.lua \
+    PoliceStates.lua
 

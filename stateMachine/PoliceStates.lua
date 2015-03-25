@@ -20,31 +20,29 @@ STATE["exit"] = function(currentState, previousState, morale)
 end
 
 
+-- work state
 
--- protest state
-
-protest = {}
-protest["enter"] = function(currentState, previousState, morale)
-  print("RIOTER protest enter")
+work = {}
+work["enter"] = function(currentState, previousState, morale)
+  print("POLICE work enter")
   morale = morale
   return currentState, previousState, morale
 end
 
-protest["execute"] = function(currentState, previousState, morale)
-  print("RIOTER protest execute")
-  morale = morale - 15
-  cpp_attack(1)
-  if morale < 30 then
+work["execute"] = function(currentState, previousState, morale)
+  print("POLICE work execute")
+  morale = morale - 10
+  if morale < 15 then
     previousState = currentState
     currentState = "flee"
-    protest.exit(currentState, previousState, morale)
+    work.exit(currentState, previousState, morale)
     flee.enter(currentState, previousState, morale)
   end
   return currentState, previousState, morale
 end
 
-protest["exit"] = function(currentState, previousState, morale)
-  print("RIOTER protest exit")
+work["exit"] = function(currentState, previousState, morale)
+  print("POLICE work exit")
   morale = morale
   return currentState, previousState, morale
 end
@@ -55,25 +53,25 @@ end
 
 flee = {}
 flee["enter"] = function(currentState, previousState, morale)
-  print("RIOTER flee enter")
+  print("POLICE flee enter")
   morale = morale
   return currentState, previousState, morale
 end
 
 flee["execute"] = function(currentState, previousState, morale)
-  print("RIOTER flee execute")
-  morale = morale + 5
-  if morale > 75 then
+  print("POLICE flee execute")
+  morale = morale + 10
+  if morale > 50 then
     previousState = currentState
-    currentState = "protest"
+    currentState = "work"
     flee.exit(currentState, previousState, morale)
-    protest.enter(currentState, previousState, morale)
+    work.enter(currentState, previousState, morale)
   end
   return currentState, previousState, morale
 end
 
 flee["exit"] = function(currentState, previousState, morale)
-  print("RIOTER flee exit")
+  print("POLICE flee exit")
   morale = morale
   return currentState, previousState, morale
 end
