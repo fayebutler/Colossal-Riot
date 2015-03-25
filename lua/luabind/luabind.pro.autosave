@@ -1,0 +1,9 @@
+TEMPLATE=lib
+TARGET=luabind
+SOURCES+=$$PWD/src/*.cpp
+
+INCLUDEPATH+=include
+
+# add
+#LIBS+=-Llua/luabind -lluabind
+#INCLUDEPATH+=lua/luabind

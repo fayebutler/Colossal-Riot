@@ -1,5 +1,5 @@
 # This specifies the exe name
-TARGET=ColossalWindow
+TARGET=ColossalRiot
 # where to put the .o files
 OBJECTS_DIR=obj
 # core Qt Libs to use add more here if needed.
@@ -11,6 +11,15 @@ isEqual(QT_MAJOR_VERSION, 5) {
 	cache()
 	DEFINES +=QT5BUILD
 }
+# this demo uses SDL so add the paths using the sdl2-config tool
+QMAKE_CXXFLAGS+=$$system(sdl2-config  --cflags)
+message(output from sdl2-config --cflags added to CXXFLAGS= $$QMAKE_CXXFLAGS)
+
+LIBS+=$$system(sdl2-config  --libs)
+message(output from sdl2-config --libs added to LIB=$$LIBS)
+
+
+
 # where to put moc auto generated files
 MOC_DIR=moc
 # on a mac we don't create a .app bundle file ( for ease of multiplatform use)
@@ -18,24 +27,15 @@ CONFIG-=app_bundle
 # Auto include all .cpp files in the project src directory (can specifiy individually if required)
 SOURCES+= $$PWD/src/*.cpp \
 
-
-
 # same for the .h files
 HEADERS+= $$PWD/include/*.h \
 
-
-
-
-#Forms
-FORMS+=ui/MainWindow.ui
 # and add the include dir into the search path for Qt and make
-INCLUDEPATH +=./include \
-              /lua
+INCLUDEPATH +=./include
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= shaders/*.glsl \
-              lua/main.lua
 							README.md
 # were are going to default to a console app
 CONFIG += console
@@ -45,11 +45,9 @@ CONFIG += console
 	copydata.commands = echo "creating destination dirs" ;
 	# now make a dir
 	copydata.commands += mkdir -p $$OUT_PWD/shaders ;
-        copydata.commands += mkdir -p $$OUT_PWD/lua ;
 	copydata.commands += echo "copying files" ;
 	# then copy the files
 	copydata.commands += $(COPY_DIR) $$PWD/shaders/* $$OUT_PWD/shaders/ ;
-        copydata.commands += $(COPY_DIR) $$PWD/lua/*.lua $$OUT_PWD/lua/ ;
 	# now make sure the first target is built before copy
 	first.depends = $(first) copydata
 	export(first.depends)
@@ -57,9 +55,6 @@ CONFIG += console
 	# now add it as an extra target
 	QMAKE_EXTRA_TARGETS += first copydata
 }
-
-
-
 # use this to suppress some warning from boost
 QMAKE_CXXFLAGS_WARN_ON += "-Wno-unused-parameter"
 # basic compiler flags (not all appropriate for all platforms)
@@ -74,9 +69,6 @@ DEFINES +=NGL_DEBUG
 unix:LIBS += -L/usr/local/lib
 # add the ngl lib
 unix:LIBS +=  -L/$(HOME)/NGL/lib -l NGL
-# add lua lib
-unix:LIBS += -L/lua/lib -llua -ldl
-
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{
@@ -99,4 +91,3 @@ win32: {
         LIBS += -LC:/NGL/lib/ -lNGL
         DEFINES+=NO_DLL
 }
-

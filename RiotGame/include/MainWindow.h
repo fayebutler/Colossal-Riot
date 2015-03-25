@@ -44,6 +44,8 @@ private:
     /// @param [in] _event the event to process
     //----------------------------------------------------------------------------------------------------------------------
     void keyPressEvent( QKeyEvent *_event );
+    void timerEvent (QTimerEvent *_event);
+
 
 private slots :
 //    void setScale();
