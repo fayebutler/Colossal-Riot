@@ -28,7 +28,7 @@ CONFIG-=app_bundle
 SOURCES+= $$PWD/src/*.cpp \
 
 # same for the .h files
-HEADERS+= $$PWD/include/*.h \
+HEADERS+= $$PWD/include/*.h
 
 # and add the include dir into the search path for Qt and make
 INCLUDEPATH +=./include
