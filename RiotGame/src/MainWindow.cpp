@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent), m_ui(new Ui::MainWindow)
 {
+
   // setup the user interface
   m_ui->setupUi(this);
   // now we create our glwindow class
@@ -15,7 +16,7 @@ MainWindow::MainWindow( QWidget *parent ) : QMainWindow(parent), m_ui(new Ui::Ma
   format.setProfile( QGLFormat::CoreProfile);
   m_gl = new GLWindow(format,this);
   m_ui->s_mainGridLayout->addWidget(m_gl, 0, 0, 6, 6);
-
+std::cout<<"STUARTS COOL"<<std::endl;
   // the following code connects the ui components to the GL class
   /// connect the vboSelection combo to the index value in the gl window class
 //  connect(m_ui->m_vboSelection,SIGNAL(currentIndexChanged(int)),m_gl,SLOT(vboChanged(int )));
@@ -204,6 +205,14 @@ void MainWindow::changeColour()
   }
 }
 
+void MainWindow::timerEvent(QTimerEvent *_event)
+{
+
+    if (_event->timerId() == 1)
+    {
+    }
+
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 //void MainWindow::setEuler()

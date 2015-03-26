@@ -78,6 +78,7 @@ GLWindow::GLWindow(const QGLFormat _format, QWidget *_parent ) : QGLWidget( _for
 //----------------------------------------------------------------------------------------------------------------------
 void GLWindow::initializeGL()
 {
+
   ngl::NGLInit::instance();
 
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
@@ -233,6 +234,9 @@ void GLWindow::loadMatricesToShader( )
 // this is our main drawing routine
 void GLWindow::paintGL()
 {
+
+
+
   // grab an instance of the shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   // clear the screen and depth buffer

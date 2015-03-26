@@ -1,0 +1,9 @@
+* physics world only create agent COLLISION SHAPE 
+* agent class creates the rigid body 
+- need to make rigid body work in agent class
+- need to get collision call back working
+- integrate with ngl so control agent ( cylinder )
+- Need to make it draw the collision/rigid body rather than random primitive
+
+
+
