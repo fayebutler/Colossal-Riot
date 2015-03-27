@@ -10,65 +10,65 @@ extern "C" {
 #include <lualib.h>
 }
 
+#include "LuaBridge.h"
+
 template <class entityType> class StateMachine
 {
 public:
     StateMachine(entityType* _owner):m_owner(_owner)
     {
         L = m_owner->getLuaState();
-    }
-
-    void setCurrentState(const char* _inState) { m_currentState = _inState; }
-    const char* getCurrenState() const { return m_currentState; }
-    void setPreviousState(const char* _inState) { m_previousState = _inState; }
-    const char* getPreviousState() const { return m_previousState; }
-    void setGlobalState(const char* _inState) { m_globalState = _inState; }
-    const char* getGlobalState() const { return m_globalState; }
-
-    void update()    {
-//      if (m_globalState)
-//      {
-//        m_globalState->execute(m_owner);
-//      }
-      if (m_currentState)
-      {
-        luaCallState(m_currentState);
-      }
+        registerLua(L);
+        luabridge::push(L, this);
+        lua_setglobal(L, "stateMachine");
     }
 
     ~StateMachine() {}
 
-    void luaCallState(const char* _state)
+    void setCurrentState(const char* _inState) { m_currentState = _inState; }
+    const char* getCurrentState() const { return m_currentState; }
+
+    void setPreviousState(const char* _inState) { m_previousState = _inState; }
+    const char* getPreviousState() const { return m_previousState; }
+
+    void setGlobalState(const char* _inState) { m_globalState = _inState; }
+    const char* getGlobalState() const { return m_globalState; }
+
+    void update()    {
+      if (m_globalState)
+      {
+          luaCallState(m_globalState, "execute");
+      }
+      if (m_currentState)
+      {
+        luaCallState(m_currentState, "execute");
+      }
+    }
+
+    void luaCallState(const char* _state, const char* _phase)
     {
-      lua_settop(L, 0);
-      lua_getglobal(L, _state);
-      if (!lua_istable(L, -1))
-      {
-        std::cout<<"[C++] ERROR: Lua table '"<<_state<<"' not defined"<<std::endl;
-      }
-      else
-      {
-        lua_pushstring(L, "execute");
-        lua_gettable(L, -2);
-        if (!lua_isfunction(L, -1))
-        {
-          std::cout<<"[C++] ERROR: Lua function 'execute' not defined"<<std::endl;
-        }
-        else
-        {
-          lua_pushstring(L, m_currentState);
-          lua_pushstring(L, m_previousState);
-          lua_pushnumber(L, m_owner->getMorale());
-          lua_call(L, 3, 3);
-          m_currentState = lua_tostring(L, -3);
-          std::cout<<"m_currentState = "<<m_currentState<<std::endl;
-          m_previousState = lua_tostring(L, -2);
-          //std::cout<<"m_previousState = "<<m_previousState<<std::endl;
-          m_owner->setMorale(lua_tonumber(L, -1));
-          std::cout<<"m_morale = "<<m_owner->getMorale()<<std::endl;
-          lua_settop(L,0);
-        }
-      }
+        luabridge::LuaRef state = luabridge::getGlobal(L, _state);
+        state[_phase]();
+    }
+
+    void changeState(const char* _newState)
+    {
+        m_previousState = m_currentState;
+        luaCallState(m_currentState, "exit");
+        m_currentState = _newState;
+        luaCallState(m_currentState, "enter");
+    }
+
+    void registerLua(lua_State* _L)
+    {
+        luabridge::getGlobalNamespace(_L)
+            .beginClass<StateMachine>("StateMachine")
+                    .addFunction("changeState", &StateMachine::changeState)
+                    .addProperty("m_currentState", &StateMachine::getCurrentState, &StateMachine::setCurrentState)
+                    .addProperty("m_previousState", &StateMachine::getPreviousState, &StateMachine::setPreviousState)
+                    .addProperty("m_globalState", &StateMachine::getGlobalState, &StateMachine::setGlobalState)
+
+            .endClass();
     }
 
 
@@ -77,6 +77,7 @@ private:
     const char* m_currentState;
     const char* m_previousState;
     const char* m_globalState;
+
 
     lua_State *L;
 };

@@ -10,20 +10,19 @@ public:
     Rioter();
     ~Rioter();
 
-    lua_State* getLuaState() { return L ; }
+    lua_State* getLuaState() const { return L ; }
 
     void update();
     StateMachine<Rioter>* getStateMachine() const { return m_stateMachine; }
 
     bool handleMessage(const Message &_message);
 
-    static void attack(int _ID);
-    static int cpp_attack(lua_State* L);
+    void attack(int _ID);
 
+    void registerClass(lua_State* _L);
 
 protected:
     StateMachine<Rioter>* m_stateMachine;
-    lua_State *L;
 };
 
 #endif // RIOTER_H

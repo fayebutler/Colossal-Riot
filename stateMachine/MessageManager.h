@@ -5,6 +5,11 @@
 #include "Message.h"
 #include "EntityManager.h"
 
+enum messageType
+{
+  msgAttack
+};
+
 class BaseEntity;
 
 #define MessageMgr MessageManager::instance()
