@@ -3,6 +3,7 @@
 
 #include <ngl/Transformation.h>
 
+
 class Vehicle;
 class BaseGameEntity;
 
@@ -71,11 +72,13 @@ private:
 
 
 //  behaviour type functions
+    //need to add the rest
     ngl::Vec3 Seek(ngl::Vec3 TargetPos);
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
     ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
     ngl::Vec3 Wander();
-
+    ngl::Vec3 Pursuit(const Vehicle* agent);
+    ngl::Vec3 Evade(const Vehicle* agent);
 
 public:
     SteeringBehaviour(Vehicle* agent);
@@ -97,6 +100,14 @@ public:
     void WanderOn(){m_activeFlags |= wander;}
     void WanderOff(){if(on(wander)) m_activeFlags ^= wander;}
     bool isWanderOn(){return on(wander);}
+
+    void PursuitOn(){m_activeFlags |= pursuit;}
+    void PursuitOff(){if(on(pursuit)) m_activeFlags ^= pursuit;}
+    bool isPursuitOn(){return on(pursuit);}
+
+    void EvadeOn(){m_activeFlags |= evade;}
+    void EvadeOff(){if(on(evade)) m_activeFlags ^= evade;}
+    bool isEvadeOn(){return on(evade);}
 
     void setTarget(ngl::Vec3);
 //    void setTargetAgent(Vehicle* agent);

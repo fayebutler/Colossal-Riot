@@ -12,7 +12,7 @@
 //
 //
 
-//typedef std::vector<BaseGameEntity*>::iterator ObIt;
+typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
 class GameWorld
 {

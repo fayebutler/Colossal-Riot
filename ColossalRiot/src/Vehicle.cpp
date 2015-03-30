@@ -34,7 +34,7 @@ void Vehicle::update(double time_elapsed)
    ngl::Vec3 oldPos = getPos();
 
    ngl::Vec3 SteeringForce;
-   SteeringForce = m_steering->calculate();
+   SteeringForce = m_steering->calculateWeightedSum();
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -51,8 +51,9 @@ void Vehicle::update(double time_elapsed)
    m_pos += m_velocity * time_elapsed;
    if(m_velocity.lengthSquared()>0.000000001)
    {
-       //m_heading = m_velocity.normalize();
-       //m_side = perpenicular to heading
+       m_velocity.normalize();
+       m_heading = m_velocity;
+       m_side = ngl::Vec3(m_heading.m_x, m_heading.m_y, -m_heading.m_z);
    }
 
 }

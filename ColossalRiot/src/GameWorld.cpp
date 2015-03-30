@@ -15,3 +15,11 @@ GameWorld::GameWorld()
    m_vehicles.push_back(vehicle);
 
 }
+void GameWorld::Update(double timeElapsed)
+{
+    for(unsigned int a=0; a<m_vehicles.size(); ++a)
+    {
+        Vehicle* veh = m_vehicles[a];
+        veh->update(timeElapsed);
+    }
+}
