@@ -40,7 +40,9 @@ private:
     float m_wanderJitter;
     float m_wanderRadius;
     float m_wanderDistance;
+
     int m_deceleration;
+
     ngl::Vec3 m_wanderTarget;
 
     float m_viewDistance;
@@ -67,6 +69,7 @@ private:
     double m_weightFlock;
     double m_weightOffsetPursuit;
 
+
 //  behaviour type functions
     ngl::Vec3 Seek(ngl::Vec3 TargetPos);
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
@@ -76,6 +79,7 @@ private:
 
 public:
     SteeringBehaviour(Vehicle* agent);
+
     ~SteeringBehaviour();
 
     void SeekOn(){m_activeFlags |= seek;} //bitwise OR
@@ -100,6 +104,7 @@ public:
 
     ngl::Vec3 calculate();
     ngl::Vec3 calculateWeightedSum(); //simplest addition method, should update to prioritized
+
 
     double forwardComponent();
     double sideComponent();

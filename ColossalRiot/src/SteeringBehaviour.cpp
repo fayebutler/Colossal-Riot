@@ -1,5 +1,6 @@
 #include "SteeringBehaviour.h"
 #include "Vehicle.h"
+
 #include "GameWorld.h"
 #include <cstdlib>
 SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
@@ -21,6 +22,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
     //truncate force to maxforce
     return force;
 }
+
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
@@ -94,6 +96,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
     return ngl::Vec3(0,0,0);
 }
 
+
 ngl::Vec3 SteeringBehaviour::Wander()
 {
     double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
@@ -107,3 +110,4 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
     //return worldTarget - m_vehicle->getPos();
 }
+

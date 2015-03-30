@@ -8,6 +8,7 @@
 class SteeringBehaviour;
 class GameWorld;
 
+
 class Vehicle: public MovingEntity
 {
 private:
@@ -27,8 +28,6 @@ public:
 
     void update(double time_elapsed);
     void render();
-
-
 
 };
 
