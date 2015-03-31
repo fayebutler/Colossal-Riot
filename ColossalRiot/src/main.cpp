@@ -81,23 +81,26 @@ int main()
 
 
   Timer gameTimer;
-  GameWorld* world;
-  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+//  GameWorld* world;
+//  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
 
-  veh->Steering()->SeekOn();
-  veh->Steering()->ArriveOff();
-  veh->Steering()->FleeOff();
+//  veh->Steering()->SeekOn();
+//  veh->Steering()->ArriveOff();
+//  veh->Steering()->FleeOff();
 //-------MAIN LOOP----------------------------------------------------------------------
 
   while(!quit)
   {
 
-    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
-    veh->update(gameTimer.getCurrentTime()/1000);
+//    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
+//    veh->update(gameTimer.getCurrentTime()/1000);
+      //this is valued before but zero after the update called
+    std::cout<<gameTimer.timeElapsed()<<std::endl;
+    ngldraw.m_veh->update(gameTimer.timeElapsed());
+    std::cout<<gameTimer.timeElapsed()<<std::endl;
     while ( SDL_PollEvent(&event) )
     {
-
       switch (event.type)
       {
         // this is the window x being clicked.
@@ -147,6 +150,7 @@ int main()
     ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
+    std::cout<<"pos = "<<"x "<<ngldraw.m_veh->getPos()[0]<<" y "<<ngldraw.m_veh->getPos()[1]<<" z "<<ngldraw.m_veh->getPos()[2]<<std::endl;
 
 //--------------------------------------------------------------------------------------------------------------------
 

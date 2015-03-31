@@ -3,6 +3,9 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
+#include "Vehicle.h"
+#include "GameWorld.h"
+
 const static float INCREMENT=-0.005;
 const static float ZOOM=1;
 NGLDraw::NGLDraw()
@@ -69,6 +72,12 @@ NGLDraw::NGLDraw()
   m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
+
+  m_world = new GameWorld;
+  m_veh = new Vehicle(m_world, ngl::Vec3(1,0,1), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f,1.0f, 1.0f, 1.0f);
+  m_veh->Steering()->SeekOn();
+  m_veh->Steering()->ArriveOff();
+  m_veh->Steering()->FleeOff();
 }
 
 NGLDraw::~NGLDraw()
@@ -97,7 +106,6 @@ void NGLDraw::draw()
   (*shader)["Phong"]->use();
 
   // Rotation based on the mouse position for our global transform
-  ngl::Transformation trans;
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
   // create the rotation matrices
@@ -113,8 +121,17 @@ void NGLDraw::draw()
    // get the VBO instance and draw the built in teapot
   ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
   // draw
-  loadMatricesToShader();
-  prim->draw("teapot");
+  m_trans.reset();
+  {
+      m_trans.setPosition(m_veh->getPos());
+      loadMatricesToShader();
+      prim->draw("teapot");
+
+  }
+//  loadMatricesToShader();
+//  prim->draw("teapot");
+
+
 }
 
 
@@ -126,7 +143,7 @@ void NGLDraw::loadMatricesToShader()
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
-  M=m_mouseGlobalTX;
+  M=m_trans.getMatrix()*m_mouseGlobalTX;
   MV=  M*m_cam->getViewMatrix();
   MVP= M*m_cam->getVPMatrix();
   normalMatrix=MV;

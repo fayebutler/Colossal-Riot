@@ -80,6 +80,10 @@ private:
     ngl::Vec3 Pursuit(const Vehicle* agent);
     ngl::Vec3 Evade(const Vehicle* agent);
 
+// add in group steering behaviours
+// add in collision avoidance
+
+
 public:
     SteeringBehaviour(Vehicle* agent);
 
