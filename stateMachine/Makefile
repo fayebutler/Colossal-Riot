@@ -442,7 +442,6 @@ main.o: main.cpp Rioter.h \
 		BaseEntity.h \
 		EntityManager.h \
 		Message.h \
-		MessageTypes.h \
 		MessageManager.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
@@ -469,7 +468,6 @@ main.o: main.cpp Rioter.h \
 BaseEntity.o: BaseEntity.cpp BaseEntity.h \
 		EntityManager.h \
 		Message.h \
-		MessageTypes.h \
 		MessageManager.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
@@ -495,7 +493,6 @@ Police.o: Police.cpp Police.h \
 		BaseEntity.h \
 		EntityManager.h \
 		Message.h \
-		MessageTypes.h \
 		MessageManager.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
@@ -522,7 +519,6 @@ Rioter.o: Rioter.cpp Rioter.h \
 		BaseEntity.h \
 		EntityManager.h \
 		Message.h \
-		MessageTypes.h \
 		MessageManager.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
@@ -548,7 +544,6 @@ Rioter.o: Rioter.cpp Rioter.h \
 EntityManager.o: EntityManager.cpp EntityManager.h \
 		BaseEntity.h \
 		Message.h \
-		MessageTypes.h \
 		MessageManager.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
@@ -574,7 +569,6 @@ MessageManager.o: MessageManager.cpp MessageManager.h \
 		Message.h \
 		EntityManager.h \
 		BaseEntity.h \
-		MessageTypes.h \
 		../lua/include/lua.h \
 		../lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
