@@ -8,7 +8,7 @@ SOURCES += main.cpp \
     Police.cpp \
     Rioter.cpp \
     EntityManager.cpp \
-    MessageManager.cpp
+    MessageManager.cpp \
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -29,7 +29,8 @@ HEADERS += \
     Message.h \
     EntityManager.h \
     MessageManager.h \
-    MessageTypes.h
+    MessageTypes.h \
+    BaseEntity.h
 
 OTHER_FILES += \
     test.lua \

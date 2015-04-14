@@ -78,15 +78,12 @@ private:
     ngl::Vec3 Seek(ngl::Vec3 TargetPos);
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
     ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
-<<<<<<< HEAD
-=======
     ngl::Vec3 Wander();
     ngl::Vec3 Pursuit(const Vehicle* agent);
     ngl::Vec3 Evade(const Vehicle* agent);
 
 // add in group steering behaviours
 // add in collision avoidance
->>>>>>> faye
 
 
 public:
