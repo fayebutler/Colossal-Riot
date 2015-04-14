@@ -2,12 +2,17 @@
 #define BASEGAMEENTITY_H
 
 #include <ngl/Transformation.h>
+#include "EntityManager.h"
+#include "Message.h"
+#include "MessageManager.h"
 
 
 class BaseGameEntity
 {
 protected:
-    int m_ID;
+  int m_ID;
+  static int m_nextValidID;
+  void setID(int _val) { m_ID = _val; }
     int m_entityType;
     ngl::Vec3 m_pos;
     float m_boundingRadius;
@@ -21,6 +26,8 @@ public:
 
  //   ~BaseGameEntity();
 
+    int getID() const { return m_ID; }
+
     int getEntityType()const{return m_entityType;}
     void setEntityType(int newType){m_entityType = newType;}
 
@@ -29,6 +36,8 @@ public:
 
     float getBoundingRadius()const{return m_boundingRadius;}
     void setBoudingRadius(float r) {m_boundingRadius = r;}
+
+    virtual bool handleMessage(const Message& _message) = 0;
 
 };
 

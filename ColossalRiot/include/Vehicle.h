@@ -27,6 +27,8 @@ public:
     GameWorld* const World()const{return m_world;}
     double TimeElapsed()const{return m_timeElapsed;}
 
+    virtual bool handleMessage(const Message& _message);
+
 
     void update(double time_elapsed);
     void render();

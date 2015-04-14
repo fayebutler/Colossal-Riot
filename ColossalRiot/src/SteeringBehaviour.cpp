@@ -1,18 +1,9 @@
 #include "SteeringBehaviour.h"
 #include "Vehicle.h"
-<<<<<<< HEAD
-=======
 #include <math.h>
->>>>>>> faye
-
 #include "GameWorld.h"
 #include <cstdlib>
 SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
-<<<<<<< HEAD
-    m_vehicle(agent)
-
-{
-=======
     m_vehicle(agent),
     m_activeFlags(0),
     m_wanderDistance(2.0),
@@ -34,8 +25,6 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightHide(1.0),
     m_weightFlock(1.0),
     m_weightOffsetPursuit(1.0)
->>>>>>> faye
-
 {
     double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
@@ -162,8 +151,6 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 }
 
-<<<<<<< HEAD
-=======
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
@@ -190,8 +177,3 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
     return Flee(agent->getPos() + agent->getVelocity() * lookAheadTime);
 }
-
-
-
-
->>>>>>> faye

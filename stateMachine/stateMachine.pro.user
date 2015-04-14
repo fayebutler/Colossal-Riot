@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 3.2.0, 2015-04-14T13:55:50. -->
+<!-- Written by QtCreator 3.2.0, 2015-04-14T14:14:59. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{96ead819-5c0c-4c18-ae2d-6070eaa2d491}</value>
-=======
-<!-- Written by QtCreator 3.2.0, 2015-04-14T14:01:03. -->
-<qtcreator>
- <data>
-  <variable>EnvironmentId</variable>
-  <value type="QByteArray">{c25e433b-0bff-4b85-8745-0d83027edfe9}</value>
->>>>>>> af5b40421efe092f40b9f743a443a0ea7d0aa8af
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -185,11 +177,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">stateMachine</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7776126/compAnim02/colossal/stateMachine/stateMachine.pro</value>
-=======
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7702804/Programming/colossal/stateMachine/stateMachine.pro</value>
->>>>>>> af5b40421efe092f40b9f743a443a0ea7d0aa8af
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">stateMachine.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

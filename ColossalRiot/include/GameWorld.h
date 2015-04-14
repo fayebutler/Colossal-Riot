@@ -5,9 +5,11 @@
 #include "BaseGameEntity.h"
 //#include "cellSpacePartition"
 #include <ngl/Transformation.h>
+#include <ngl/Camera.h>
 
-#include "Vehicle.h"
 #include <vector>
+#include "Rioter.h"
+
 //class
 //
 //
@@ -19,9 +21,10 @@ class GameWorld
 private:
     std::vector<BaseGameEntity*> m_obstacles;
 
-    std::vector<Vehicle*> m_vehicles;
+    std::vector<Rioter*> m_rioters;
 
     ngl::Vec3 m_crosshair;
+
 
 public:
     GameWorld();
@@ -31,9 +34,9 @@ public:
     void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
 
     void Update(double timeElapsed);
-    void Render();
+    void draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
-    const std::vector<Vehicle*>& Agents(){return m_vehicles;}
+    //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 
     //std::vector<Wall2D> m_Walls;
 };
