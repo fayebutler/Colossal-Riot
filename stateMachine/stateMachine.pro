@@ -15,6 +15,7 @@ qtcAddDeployment()
 
 
 INCLUDEPATH +=../lua/include \
+            ../LuaBridge \
 
 
 unix:LIBS += -L../lua/lib -llua -ldl \
@@ -31,6 +32,7 @@ HEADERS += \
     MessageTypes.h
 
 OTHER_FILES += \
-    RioterStates.lua \
-    PoliceStates.lua
+    test.lua \
+    Rioter.lua \
+    Police.lua
 
