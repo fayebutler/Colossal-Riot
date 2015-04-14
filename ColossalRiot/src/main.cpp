@@ -4,6 +4,7 @@
 #include "NGLDraw.h"
 #include <ngl/NGLInit.h>
 #include "MovingEntity.h"
+
 #include "Timer.h"
 
 /// @brief function to quit SDL with error message
@@ -76,6 +77,7 @@ int main()
 
   Timer gameTimer;
 
+
 //-------MAIN LOOP----------------------------------------------------------------------
 
   while(!quit)
@@ -103,6 +105,7 @@ int main()
           ngl.resize(w,h);
         break;
 
+
         // now we look for a keydown event
         case SDL_KEYDOWN:
         {
@@ -116,6 +119,7 @@ int main()
             SDL_SetWindowFullscreen(window,SDL_TRUE);
             glViewport(0,0,rect.w,rect.h);
             break;
+
             case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
             case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 

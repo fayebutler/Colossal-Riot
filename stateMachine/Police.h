@@ -2,20 +2,24 @@
 #define POLICE_H
 
 #include "BaseEntity.h"
+#include "StateMachine.h"
 
 class Police : public BaseEntity
 {
 public:
-    Police(int _ID);
+    Police();
+    ~Police();
 
     void update();
+    StateMachine<Police>* getStateMachine() const { return m_stateMachine; }
 
-//    int getWeapon() { return m_weapon; }
-//    void setWeapon(int _val) { m_weapon = _val; }
+    bool handleMessage(const Message &_message);
 
+    lua_State* getLuaState() { return L ; }
 
 protected:
-//    int m_weapon();
+    StateMachine<Police>* m_stateMachine;
+    lua_State *L;
 };
 
 #endif // POLICE_H

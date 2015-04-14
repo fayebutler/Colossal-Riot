@@ -48,21 +48,15 @@ OBJECTS_DIR   = ./
 SOURCES       = main.cpp \
 		BaseEntity.cpp \
 		Police.cpp \
-		StateMachine.cpp \
-		State.cpp \
 		Rioter.cpp \
-		SR_Protest.cpp \
-		SR_Flee.cpp \
-		SR_Attack.cpp 
+		EntityManager.cpp \
+		MessageManager.cpp 
 OBJECTS       = main.o \
 		BaseEntity.o \
 		Police.o \
-		StateMachine.o \
-		State.o \
 		Rioter.o \
-		SR_Protest.o \
-		SR_Flee.o \
-		SR_Attack.o
+		EntityManager.o \
+		MessageManager.o
 DIST          = /opt/Qt/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.3/gcc_64/mkspecs/common/shell-unix.conf \
 		/opt/Qt/5.3/gcc_64/mkspecs/common/unix.conf \
@@ -168,12 +162,9 @@ DIST          = /opt/Qt/5.3/gcc_64/mkspecs/features/spec_pre.prf \
 		stateMachine.pro main.cpp \
 		BaseEntity.cpp \
 		Police.cpp \
-		StateMachine.cpp \
-		State.cpp \
 		Rioter.cpp \
-		SR_Protest.cpp \
-		SR_Flee.cpp \
-		SR_Attack.cpp
+		EntityManager.cpp \
+		MessageManager.cpp
 QMAKE_TARGET  = stateMachine
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = stateMachine
@@ -447,40 +438,62 @@ compiler_clean:
 
 ####### Compile
 
-main.o: main.cpp 
+main.o: main.cpp Rioter.h \
+		BaseEntity.h \
+		EntityManager.h \
+		Message.h \
+		MessageTypes.h \
+		StateMachine.h \
+		../lua/include/lua.h \
+		../lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		Police.h \
+		MessageManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-BaseEntity.o: BaseEntity.cpp BaseEntity.h
+BaseEntity.o: BaseEntity.cpp BaseEntity.h \
+		EntityManager.h \
+		Message.h \
+		MessageTypes.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BaseEntity.o BaseEntity.cpp
 
 Police.o: Police.cpp Police.h \
-		BaseEntity.h
+		BaseEntity.h \
+		EntityManager.h \
+		Message.h \
+		MessageTypes.h \
+		StateMachine.h \
+		../lua/include/lua.h \
+		../lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Police.o Police.cpp
-
-StateMachine.o: StateMachine.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o StateMachine.o StateMachine.cpp
-
-State.o: State.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o State.o State.cpp
 
 Rioter.o: Rioter.cpp Rioter.h \
 		BaseEntity.h \
+		EntityManager.h \
+		Message.h \
+		MessageTypes.h \
 		StateMachine.h \
-		State.h \
-		SR_Protest.h
+		../lua/include/lua.h \
+		../lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Rioter.o Rioter.cpp
 
-SR_Protest.o: SR_Protest.cpp SR_Protest.h \
-		State.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Protest.o SR_Protest.cpp
+EntityManager.o: EntityManager.cpp EntityManager.h \
+		BaseEntity.h \
+		Message.h \
+		MessageTypes.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EntityManager.o EntityManager.cpp
 
-SR_Flee.o: SR_Flee.cpp SR_Flee.h \
-		State.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Flee.o SR_Flee.cpp
-
-SR_Attack.o: SR_Attack.cpp SR_Attack.h \
-		State.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SR_Attack.o SR_Attack.cpp
+MessageManager.o: MessageManager.cpp MessageManager.h \
+		Message.h \
+		EntityManager.h \
+		BaseEntity.h \
+		MessageTypes.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MessageManager.o MessageManager.cpp
 
 ####### Install
 

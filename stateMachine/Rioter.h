@@ -3,25 +3,27 @@
 
 #include "BaseEntity.h"
 #include "StateMachine.h"
-#include "SR_Protest.h"
 
 class Rioter : public BaseEntity
 {
 public:
-    Rioter(int _ID);
+    Rioter();
     ~Rioter();
+
+    lua_State* getLuaState() { return L ; }
 
     void update();
     StateMachine<Rioter>* getStateMachine() const { return m_stateMachine; }
- // void changeState(State* _newState);
+
+    bool handleMessage(const Message &_message);
+
+    static void attack(int _ID);
+    static int cpp_attack(lua_State* L);
 
 
 protected:
     StateMachine<Rioter>* m_stateMachine;
-
-
-
-
+    lua_State *L;
 };
 
 #endif // RIOTER_H
