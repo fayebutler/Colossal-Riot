@@ -56,6 +56,8 @@ public:
     float getMaxTurnRate()const{return m_maxTurnRate;}
     void setMaxTurnRate(float turn_rate){m_maxTurnRate = turn_rate;}
 
+    float getSpeed()const{return m_velocity.length();}
+
 
 
 };

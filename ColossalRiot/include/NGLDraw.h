@@ -4,6 +4,8 @@
 #include <ngl/Camera.h>
 #include <ngl/Light.h>
 #include <SDL.h>
+#include "GameWorld.h"
+#include "Vehicle.h"
 
 class NGLDraw
 {
@@ -46,6 +48,8 @@ class NGLDraw
     /// @param _event the SDL mouse event structure containing all mouse info
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent(const SDL_MouseWheelEvent &_event);
+
+    Vehicle *m_veh;
   private :
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform data to the shaders
@@ -99,6 +103,12 @@ class NGLDraw
     /// @brief a simple light use to illuminate the screen
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
+
+//    Vehicle *m_veh;
+
+    GameWorld *m_world;
+
+    ngl::Transformation m_trans;
 };
 
 

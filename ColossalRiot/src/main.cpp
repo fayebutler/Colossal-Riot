@@ -5,6 +5,13 @@
 #include <ngl/NGLInit.h>
 #include "MovingEntity.h"
 
+#include "Timer.h"
+
+#include "Vehicle.h"
+#include "GameWorld.h"
+#include <ngl/Transformation.h>
+
+
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
 void SDLErrorExit(const std::string &_msg);
@@ -66,37 +73,57 @@ int main()
   // now we create an instance of our ngl class, this will init NGL and setup basic
   // opengl stuff ext. When this falls out of scope the dtor will be called and cleanup
   // our gl stuff
-  NGLDraw ngl;
+  NGLDraw ngldraw;
   // resize the ngl to set the screen size and camera stuff
-  ngl.resize(rect.w,rect.h);
+  ngldraw.resize(rect.w,rect.h);
 
+
+
+
+  Timer gameTimer;
+  double timeElapsed = 0.0;
+//  GameWorld* world;
+//  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+
+
+//  veh->Steering()->SeekOn();
+//  veh->Steering()->ArriveOff();
+//  veh->Steering()->FleeOff();
 //-------MAIN LOOP----------------------------------------------------------------------
 
   while(!quit)
   {
+    timeElapsed=gameTimer.timeElapsed();
+//    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
+//    veh->update(gameTimer.getCurrentTime()/1000);
+      //this is valued before but zero after the update called
+
+    ngldraw.m_veh->update(timeElapsed);
+    std::cout<<gameTimer.getCurrentTime()<<std::endl;
+    std::cout<<timeElapsed<<std::endl;
+//    gameTimer.timeElapsed();
 
     while ( SDL_PollEvent(&event) )
     {
-
       switch (event.type)
       {
         // this is the window x being clicked.
         case SDL_QUIT : quit = true; break;
 
         // process the mouse data by passing it to ngl class
-        case SDL_MOUSEMOTION : ngl.mouseMoveEvent(event.motion); break;
-        case SDL_MOUSEBUTTONDOWN : ngl.mousePressEvent(event.button); break;
-        case SDL_MOUSEBUTTONUP : ngl.mouseReleaseEvent(event.button); break;
-        case SDL_MOUSEWHEEL : ngl.wheelEvent(event.wheel); break;
+        case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion); break;
+        case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button); break;
+        case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
+        case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
         // if the window is re-sized pass it to the ngl class to change gl viewport
         // note this is slow as the context is re-create by SDL each time
         case SDL_WINDOWEVENT :
           int w,h;
           // get the new window size
           SDL_GetWindowSize(window,&w,&h);
-          ngl.resize(w,h);
+          ngldraw.resize(w,h);
         break;
-        //
+
 
         // now we look for a keydown event
         case SDL_KEYDOWN:
@@ -112,6 +139,9 @@ int main()
             glViewport(0,0,rect.w,rect.h);
             break;
 
+            case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
+            case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
+
             case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
             default : break;
           } // end of key process
@@ -121,9 +151,10 @@ int main()
       } // end of event switch
     } // end of poll events
     // now we draw ngl
-    ngl.draw();
+    ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
+
 
 //--------------------------------------------------------------------------------------------------------------------
 
