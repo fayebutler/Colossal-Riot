@@ -10,7 +10,7 @@ Timer::Timer()
 
 double Timer::getCurrentTime()
 {
-    m_currentTime=SDL_GetTicks();
+    m_currentTime = SDL_GetTicks();
     return (m_currentTime - m_startTime)/1000.0;
 }
 
@@ -19,10 +19,10 @@ void Timer::resetTimer()
     m_startTime = SDL_GetTicks();
 }
 
-double Timer::timeElapsed() //sort this out!!
+double Timer::timeElapsed()
 {
 
-    m_currentTime=SDL_GetTicks() - m_startTime;
+    m_currentTime = SDL_GetTicks() - m_startTime;
     m_timeElapsed = (m_currentTime - m_previousTickTime);
     m_previousTickTime = m_currentTime;
 

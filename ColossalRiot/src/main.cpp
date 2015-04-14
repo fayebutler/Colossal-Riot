@@ -81,6 +81,7 @@ int main()
 
 
   Timer gameTimer;
+  double timeElapsed = 0.0;
 //  GameWorld* world;
 //  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -92,13 +93,16 @@ int main()
 
   while(!quit)
   {
-
+    timeElapsed=gameTimer.timeElapsed();
 //    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
 //    veh->update(gameTimer.getCurrentTime()/1000);
       //this is valued before but zero after the update called
-    std::cout<<gameTimer.timeElapsed()<<std::endl;
-    ngldraw.m_veh->update(gameTimer.timeElapsed());
-    std::cout<<gameTimer.timeElapsed()<<std::endl;
+
+    ngldraw.m_veh->update(timeElapsed);
+    std::cout<<gameTimer.getCurrentTime()<<std::endl;
+    std::cout<<timeElapsed<<std::endl;
+//    gameTimer.timeElapsed();
+
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)
@@ -150,7 +154,7 @@ int main()
     ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
-    std::cout<<"pos = "<<"x "<<ngldraw.m_veh->getPos()[0]<<" y "<<ngldraw.m_veh->getPos()[1]<<" z "<<ngldraw.m_veh->getPos()[2]<<std::endl;
+
 
 //--------------------------------------------------------------------------------------------------------------------
 

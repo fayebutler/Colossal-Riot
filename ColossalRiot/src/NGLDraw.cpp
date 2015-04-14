@@ -75,9 +75,10 @@ NGLDraw::NGLDraw()
 
   m_world = new GameWorld;
   m_veh = new Vehicle(m_world, ngl::Vec3(1,0,1), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f,1.0f, 1.0f, 1.0f);
-  m_veh->Steering()->SeekOn();
+  m_veh->Steering()->SeekOff();
   m_veh->Steering()->ArriveOff();
   m_veh->Steering()->FleeOff();
+  m_veh->Steering()->WanderOn();
 }
 
 NGLDraw::~NGLDraw()

@@ -11,8 +11,7 @@ private:
     long long m_startTime;
 
     double m_timeElapsed;
-    double m_lastTimeElapsed;
-    double m_lastTimeInTimeElapsed;
+    double m_previousTickTime;
     double m_timeScale;
 
 public:
@@ -22,7 +21,6 @@ public:
     double getCurrentTime();
     double timeElapsed();
 
-   //bool readyForNextFrame();
 };
 
 

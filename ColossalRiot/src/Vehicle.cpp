@@ -29,11 +29,10 @@ Vehicle::Vehicle(GameWorld* world,
 
 void Vehicle::update(double time_elapsed)
 {
-    //why is it zero in here!
-   std::cout<<"update time "<<time_elapsed<<std::endl;
+
    m_timeElapsed = time_elapsed;
-   std::cout<<"update time "<<m_timeElapsed<<std::endl;
-   std::cout<<"update time "<<time_elapsed<<std::endl;
+
+
    ngl::Vec3 oldPos = getPos();
 
    ngl::Vec3 SteeringForce;
