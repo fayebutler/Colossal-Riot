@@ -6,6 +6,8 @@
 #include <SDL.h>
 #include "GameWorld.h"
 #include "Vehicle.h"
+#include "Police.h"
+#include "Rioter.h"
 
 class NGLDraw
 {
@@ -28,6 +30,10 @@ class NGLDraw
     /// @brief draw the scene
     //----------------------------------------------------------------------------------------------------------------------
     void draw();
+
+    void update(double timeElapsed);
+
+
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief this method is called every time a mouse is moved
     /// @param _event the SDL mouse event structure containing all mouse info
@@ -49,7 +55,6 @@ class NGLDraw
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent(const SDL_MouseWheelEvent &_event);
 
-    Vehicle *m_veh;
   private :
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform data to the shaders
@@ -104,11 +109,9 @@ class NGLDraw
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
 
-//    Vehicle *m_veh;
-
-    GameWorld *m_world;
-
     ngl::Transformation m_trans;
+
+    GameWorld* m_gameworld;
 };
 
 

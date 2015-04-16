@@ -58,6 +58,8 @@ public:
 
     float getSpeed()const{return m_velocity.length();}
 
+    virtual bool handleMessage(const Message& _message);
+
 
 
 };

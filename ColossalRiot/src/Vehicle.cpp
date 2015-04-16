@@ -61,6 +61,11 @@ void Vehicle::update(double time_elapsed)
 
 }
 
+bool Vehicle::handleMessage(const Message& _message)
+{
+  MovingEntity::handleMessage(_message);
+}
+
 void Vehicle::render()
 {
 
