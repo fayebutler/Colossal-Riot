@@ -33,12 +33,16 @@ HEADERS+= $$PWD/include/*.h \
 
 
 # and add the include dir into the search path for Qt and make
-INCLUDEPATH +=./include
+INCLUDEPATH +=./include \
+              ../lua/include \
+              ../LuaBridge
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= shaders/*.glsl \
-							README.md
+							README.md \
+    lua/Police.lua \
+    lua/Rioter.lua
 # were are going to default to a console app
 CONFIG += console
 # note each command you add needs a ; as it will be run as a single line
@@ -71,6 +75,8 @@ DEFINES +=NGL_DEBUG
 unix:LIBS += -L/usr/local/lib
 # add the ngl lib
 unix:LIBS +=  -L/$(HOME)/NGL/lib -l NGL
+
+unix:LIBS += -L../lua/lib -llua -ldl \
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{

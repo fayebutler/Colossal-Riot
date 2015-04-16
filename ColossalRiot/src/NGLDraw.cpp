@@ -6,6 +6,7 @@
 #include "Vehicle.h"
 #include "GameWorld.h"
 
+
 const static float INCREMENT=-0.005;
 const static float ZOOM=1;
 NGLDraw::NGLDraw()
@@ -48,13 +49,13 @@ NGLDraw::NGLDraw()
   // and make it active ready to load values
   (*shader)["Phong"]->use();
   // the shader will use the currently active material and light0 so set them
-  ngl::Material m(ngl::GOLD);
+  ngl::Material m(ngl::POLISHEDSILVER);
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,1,0);
+  ngl::Vec3 from(0,5,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -73,12 +74,9 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-  m_world = new GameWorld;
-  m_veh = new Vehicle(m_world, ngl::Vec3(1,0,1), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f,1.0f, 1.0f, 1.0f);
-  m_veh->Steering()->SeekOff();
-  m_veh->Steering()->ArriveOff();
-  m_veh->Steering()->FleeOff();
-  m_veh->Steering()->WanderOn();
+
+   m_gameworld = new GameWorld();
+
 }
 
 NGLDraw::~NGLDraw()
@@ -119,20 +117,13 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
-   // get the VBO instance and draw the built in teapot
-  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
-  // draw
-  m_trans.reset();
-  {
-      m_trans.setPosition(m_veh->getPos());
-      loadMatricesToShader();
-      prim->draw("teapot");
+  m_gameworld->draw(m_cam, m_mouseGlobalTX);
 
-  }
-//  loadMatricesToShader();
-//  prim->draw("teapot");
+}
 
-
+void NGLDraw::update(double timeElapsed)
+{
+  m_gameworld->Update(timeElapsed);
 }
 
 

@@ -1,0 +1,6 @@
+#ifndef MESSAGETYPES_H
+#define MESSAGETYPES_H
+
+
+
+#endif // MESSAGETYPES_H
