@@ -6,9 +6,9 @@
 SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_vehicle(agent),
     m_activeFlags(0),
-    m_wanderDistance(2.0),
-    m_wanderRadius(1.2),
-    m_wanderJitter(80.0),
+    m_wanderDistance(3.0),
+    m_wanderRadius(1.0),
+    m_wanderJitter(1000.0),
     m_weightSeek(1.0),
     m_weightFlee(1.0),
     m_weightArrive(1.0),
@@ -28,6 +28,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 {
     double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
+    std::cout<<"wanderTarge"<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
 }
 
 
@@ -56,7 +57,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     //need to add in the rest
     if(on(seek)) //need to create crosshair in gameworld
     {
-        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+        m_steeringForce += Seek(ngl::Vec3(-10,0,0)) * m_weightSeek;
 
     }
     if(on(flee))
@@ -71,24 +72,22 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     {
         m_steeringForce += Wander() * m_weightWander;
     }
-//    if(on(pursuit))
-//    {
-//        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
-//    }
-//    if(on(evade))
-//    {
-//        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
-//    }
+    if(on(pursuit))
+    {
+        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
+    }
+    if(on(evade))
+    {
+        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
+    }
 
    //truncate steering force to max force
-//    if(m_steeringForce.length() > m_vehicle->getMaxForce())
-//    std::cout<<"maxforce  "<<m_vehicle->getMaxForce()<<std::endl;
-//    if(m_steeringForce.m_x > m_vehicle->getMaxForce() && m_steeringForce.m_z > m_vehicle->getMaxForce())
-//    {
-//        m_steeringForce.normalize();
-//        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
-//        std::cout<<"trunccc"<<std::endl;
-//    }
+    if(m_steeringForce.length() > m_vehicle->getMaxForce())
+    {
+        m_steeringForce.normalize();
+        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
+        std::cout<<"trunccc"<<std::endl;
+    }
 
     std::cout<<"length  "<<m_steeringForce.length()<<std::endl;
     return m_steeringForce;
@@ -122,6 +121,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
     ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+    std::cout<<"FLEEEEEEEEEEING"<<std::endl;
     return(desiredVelocity - m_vehicle->getVelocity());
 }
 
@@ -152,30 +152,54 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 ngl::Vec3 SteeringBehaviour::Wander()
 {
     double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
+    std::cout<<"jitterTimeSlice "<<jitterTimeSlice<<std::endl;
+
     float randomClamped = -1+2*((float)rand())/RAND_MAX;
-    m_wanderTarget += ngl::Vec3(randomClamped * jitterTimeSlice,0, randomClamped * jitterTimeSlice);
-
+    std::cout<<"randomClamped "<<randomClamped<<std::endl;
+    std::cout<<"wanderTarget before "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
+    m_wanderTarget += ngl::Vec3(randomClamped * jitterTimeSlice ,0, randomClamped * jitterTimeSlice);
+    std::cout<<"wanderTarget after  "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
     m_wanderTarget.normalize();
+
     m_wanderTarget *= m_wanderRadius;
+
     ngl::Vec3 localTarget = m_wanderTarget + ngl::Vec3(m_wanderDistance,0,0);
-  //  ngl::Vec3 worldTarget = pointtoworldspace ??
-    //return worldTarget - vehicle position
 
-    return localTarget - m_vehicle->getPos();
+    std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
 
-//    ngl::Vec3 circleCenter = m_vehicle->getVelocity();
-//    circleCenter.normalize();
-//    circleCenter = circleCenter * m_wanderDistance;
 
-//    ngl::Vec3 wanderForce = m_wanderTarget + circleCenter;
-//    return wanderForce;
+    ngl::Transformation move;
+    //rotate local axis to world
+
+    ngl::Vec3 headingNormalise;
+    ngl::Vec3 worldNormalise = ngl::Vec3(1, 0, 0);
+    headingNormalise = m_vehicle->getHeading();
+    headingNormalise.normalize();
+    double dotProduct = headingNormalise.dot(worldNormalise);
+    double magnitude = headingNormalise.length()*worldNormalise.length();
+    double temp = dotProduct/magnitude;
+    double angle = acos(temp);
+
+    float xDash = localTarget.m_x*cos(-angle) - localTarget.m_z*sin(-angle);
+    float zDash = localTarget.m_x*sin(-angle) + localTarget.m_z*cos(-angle);
+    ngl::Vec3 xyzDash = ngl::Vec3(xDash, 0, zDash);
+
+
+    ngl::Vec3 worldTarget = m_vehicle->getPos() + xyzDash;
+    std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
+
+    return worldTarget;
+
 
 }
+
+
 
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
     double relativeHeading = m_vehicle->getHeading().dot(agent->getHeading());
+
 
     if ((toAgent.dot(m_vehicle->getHeading().dot(agent->getHeading()))) && (relativeHeading < -0.95))
     {

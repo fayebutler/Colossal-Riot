@@ -15,12 +15,12 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 5;
+    m_targetID = 0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
-    getVehicle()->Steering()->SeekOn();
-//    getVehicle()->Steering()->FleeOn();
-//    getVehicle()->Steering()->WanderOn();
+//    Vehicle::Steering()->SeekOn();
+//    Vehicle::Steering()->FleeOn();
+    Vehicle::Steering()->WanderOn();
 
 }
 
@@ -34,7 +34,7 @@ void Rioter::update(double timeElapsed)
 {
     Agent::update(timeElapsed);
     m_stateMachine->update();
-    std::cout<<getVehicle()->getPos()[0]<<"  "<<getVehicle()->getPos()[1]<<"  "<<getVehicle()->getPos()[2]<<std::endl;
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)

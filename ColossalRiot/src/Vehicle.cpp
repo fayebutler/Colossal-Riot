@@ -53,12 +53,13 @@ void Vehicle::update(double time_elapsed)
 
 
    m_pos += m_velocity * time_elapsed;
-   std::cout<<"velocity  "<<m_velocity[0]<<"  "<<m_velocity[1]<<"  "<<m_velocity[2]<<std::endl;
 
    if(m_velocity.lengthSquared()>0.000000001)
    {
-       m_velocity.normalize();
-       m_heading = m_velocity;
+       ngl::Vec3 tempVel;
+       tempVel = m_velocity;
+       tempVel.normalize();
+       m_heading = tempVel;
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 

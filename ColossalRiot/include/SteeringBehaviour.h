@@ -81,7 +81,7 @@ private:
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
     ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
     ngl::Vec3 Wander();
-    ngl::Vec3 Pursuit(const Vehicle* agent);
+    ngl::Vec3 Pursuit(const Vehicle *agent);
     ngl::Vec3 Evade(const Vehicle* agent);
 
 // add in group steering behaviours
@@ -97,7 +97,7 @@ public:
     void SeekOff(){if(on(seek)) m_activeFlags ^= seek;} //bitwise XOR
     bool isSeekOn(){return on(seek);}
 
-    void FleeOn(){m_activeFlags |= seek;}
+    void FleeOn(){m_activeFlags |= flee;}
     void FleeOff(){if(on(flee)) m_activeFlags ^= flee;}
     bool isFleeOn(){return on(flee);}
 
@@ -118,7 +118,7 @@ public:
     bool isEvadeOn(){return on(evade);}
 
     void setTarget(ngl::Vec3);
-//    void setTargetAgent(Vehicle* agent);
+    void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
 
     ngl::Vec3 calculate();

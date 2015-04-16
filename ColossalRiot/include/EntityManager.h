@@ -18,6 +18,7 @@ public:
   void registerEntity(BaseGameEntity* _newEntity);
   BaseGameEntity* getEntityFromID(int _ID) const;
 
+
   void removeEntity(BaseGameEntity* _entity);
 
 
