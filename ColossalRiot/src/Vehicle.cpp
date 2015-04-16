@@ -31,12 +31,14 @@ void Vehicle::update(double time_elapsed)
 {
 
    m_timeElapsed = time_elapsed;
+   std::cout<<"time  "<<m_timeElapsed<<std::endl;
 
 
    ngl::Vec3 oldPos = getPos();
 
    ngl::Vec3 SteeringForce;
-   SteeringForce = m_steering->calculate();
+   SteeringForce = m_steering->calculateWeightedSum();
+   std::cout<<"steering force  "<<SteeringForce[0]<<"  "<<SteeringForce[1]<<"  "<<SteeringForce[2]<<std::endl;
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -51,12 +53,13 @@ void Vehicle::update(double time_elapsed)
 
 
    m_pos += m_velocity * time_elapsed;
+   std::cout<<"velocity  "<<m_velocity[0]<<"  "<<m_velocity[1]<<"  "<<m_velocity[2]<<std::endl;
 
    if(m_velocity.lengthSquared()>0.000000001)
    {
        m_velocity.normalize();
        m_heading = m_velocity;
-       m_side = ngl::Vec3(-m_heading.m_x, m_heading.m_y, m_heading.m_z);
+       m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 
 }

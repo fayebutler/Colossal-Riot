@@ -2,9 +2,10 @@
 
 Agent::Agent(GameWorld* world)
 {
-  m_vehicle = new Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 1.0f,1.0f, 1.0f, 0.5f);
+  m_vehicle = new Vehicle(world, ngl::Vec3(2,0,2), ngl::Vec3(0,0,0), 0.0f, 1.0f, 1.0f,1.0f, 1.0f, 0.5f);
   m_ID = m_vehicle->getID();
   L = luaL_newstate();
+
 }
 
 Agent::~Agent()

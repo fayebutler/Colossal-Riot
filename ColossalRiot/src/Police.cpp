@@ -37,6 +37,7 @@ void Police::update(double timeElapsed)
 {
     Agent::update(timeElapsed);
     m_stateMachine->update();
+
 }
 
 

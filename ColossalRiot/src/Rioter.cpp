@@ -18,6 +18,9 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
+    getVehicle()->Steering()->SeekOn();
+//    getVehicle()->Steering()->FleeOn();
+//    getVehicle()->Steering()->WanderOn();
 
 }
 
@@ -31,6 +34,7 @@ void Rioter::update(double timeElapsed)
 {
     Agent::update(timeElapsed);
     m_stateMachine->update();
+    std::cout<<getVehicle()->getPos()[0]<<"  "<<getVehicle()->getPos()[1]<<"  "<<getVehicle()->getPos()[2]<<std::endl;
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -49,6 +53,8 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat4 M;
   ngl::Transformation trans;
   trans.setPosition(getVehicle()->getPos());
+//  trans.setRotation(getVehicle()->getHeading());
+
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
   MVP= M*cam->getVPMatrix();
