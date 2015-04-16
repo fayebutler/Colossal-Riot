@@ -391,9 +391,150 @@ compiler_clean:
 ####### Compile
 
 obj/Agent.o: src/Agent.cpp include/Agent.h \
+		include/Vehicle.h \
+		/home/i7776126/NGL/include/ngl/Transformation.h \
+		/home/i7776126/NGL/include/ngl/Mat4.h \
+		/home/i7776126/NGL/include/ngl/Types.h \
+		/home/i7776126/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7776126/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		/home/i7776126/NGL/include/ngl/Vec4.h \
+		/home/i7776126/NGL/include/ngl/Vec2.h \
+		/home/i7776126/NGL/include/ngl/Vec3.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
+		include/SteeringBehaviour.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -536,31 +677,138 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7776126/NGL/include/ngl/NGLassert.h \
 		/home/i7776126/NGL/include/ngl/Vec4.h \
 		/home/i7776126/NGL/include/ngl/Vec2.h \
-		/home/i7776126/NGL/include/ngl/Vec3.h
+		/home/i7776126/NGL/include/ngl/Vec3.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/BaseGameEntity.o src/BaseGameEntity.cpp
 
 obj/EntityManager.o: src/EntityManager.cpp include/EntityManager.h \
-		include/Agent.h \
+		include/BaseGameEntity.h \
+		/home/i7776126/NGL/include/ngl/Transformation.h \
+		/home/i7776126/NGL/include/ngl/Mat4.h \
+		/home/i7776126/NGL/include/ngl/Types.h \
+		/home/i7776126/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7776126/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		/home/i7776126/NGL/include/ngl/Vec4.h \
+		/home/i7776126/NGL/include/ngl/Vec2.h \
+		/home/i7776126/NGL/include/ngl/Vec3.h \
 		include/Message.h \
-		include/MessageManager.h \
-		../lua/include/lua.h \
-		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
-		../lua/include/lauxlib.h \
-		../lua/include/lualib.h \
-		../LuaBridge/LuaBridge.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Stack.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h
+		include/MessageManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/EntityManager.o src/EntityManager.cpp
 
 obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
@@ -687,9 +935,49 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7776126/NGL/include/ngl/Vec4.h \
 		/home/i7776126/NGL/include/ngl/Vec2.h \
 		/home/i7776126/NGL/include/ngl/Vec3.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
+		include/Rioter.h \
+		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
-		include/SteeringBehaviour.h
+		include/SteeringBehaviour.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		../lua/include/lua.h \
+		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		../LuaBridge/LuaBridge.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaHelpers.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeList.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/FuncTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Constructor.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Stack.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/ClassInfo.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaException.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaRef.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
 obj/main.o: src/main.cpp include/NGLDraw.h \
@@ -822,21 +1110,25 @@ obj/main.o: src/main.cpp include/NGLDraw.h \
 		include/BaseGameEntity.h \
 		/home/i7776126/NGL/include/ngl/Transformation.h \
 		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Rioter.h \
+		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
 		include/SteeringBehaviour.h \
-		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
 		/home/i7776126/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
-		include/Timer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
-
-obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
-		include/Message.h \
-		include/EntityManager.h \
-		include/Agent.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -854,7 +1146,138 @@ obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h \
+		include/Timer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
+
+obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
+		include/Message.h \
+		include/EntityManager.h \
+		include/BaseGameEntity.h \
+		/home/i7776126/NGL/include/ngl/Transformation.h \
+		/home/i7776126/NGL/include/ngl/Mat4.h \
+		/home/i7776126/NGL/include/ngl/Types.h \
+		/home/i7776126/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7776126/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		/home/i7776126/NGL/include/ngl/Vec4.h \
+		/home/i7776126/NGL/include/ngl/Vec2.h \
+		/home/i7776126/NGL/include/ngl/Vec3.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MessageManager.o src/MessageManager.cpp
 
 obj/MovingEntity.o: src/MovingEntity.cpp include/MovingEntity.h \
@@ -980,7 +1403,10 @@ obj/MovingEntity.o: src/MovingEntity.cpp include/MovingEntity.h \
 		/home/i7776126/NGL/include/ngl/Vec4.h \
 		/home/i7776126/NGL/include/ngl/Vec2.h \
 		/home/i7776126/NGL/include/ngl/Vec3.h \
-		include/BaseGameEntity.h
+		include/BaseGameEntity.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MovingEntity.o src/MovingEntity.cpp
 
 obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
@@ -1113,6 +1539,11 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/BaseGameEntity.h \
 		/home/i7776126/NGL/include/ngl/Transformation.h \
 		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Rioter.h \
+		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
 		include/SteeringBehaviour.h \
@@ -1126,14 +1557,175 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7776126/NGL/include/ngl/NGLInit.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7776126/NGL/include/ngl/Material.h
+		/home/i7776126/NGL/include/ngl/Material.h \
+		../lua/include/lua.h \
+		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		../LuaBridge/LuaBridge.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaHelpers.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeList.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/FuncTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Constructor.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Stack.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/ClassInfo.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaException.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaRef.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
 		include/Agent.h \
+		include/Vehicle.h \
+		/home/i7776126/NGL/include/ngl/Transformation.h \
+		/home/i7776126/NGL/include/ngl/Mat4.h \
+		/home/i7776126/NGL/include/ngl/Types.h \
+		/home/i7776126/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7776126/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		/home/i7776126/NGL/include/ngl/Vec4.h \
+		/home/i7776126/NGL/include/ngl/Vec2.h \
+		/home/i7776126/NGL/include/ngl/Vec3.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
+		include/SteeringBehaviour.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1157,9 +1749,150 @@ obj/Police.o: src/Police.cpp include/Police.h \
 
 obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		include/Agent.h \
+		include/Vehicle.h \
+		/home/i7776126/NGL/include/ngl/Transformation.h \
+		/home/i7776126/NGL/include/ngl/Mat4.h \
+		/home/i7776126/NGL/include/ngl/Types.h \
+		/home/i7776126/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7776126/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7776126/NGL/include/ngl/NGLassert.h \
+		/home/i7776126/NGL/include/ngl/Vec4.h \
+		/home/i7776126/NGL/include/ngl/Vec2.h \
+		/home/i7776126/NGL/include/ngl/Vec3.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
+		include/SteeringBehaviour.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1307,7 +2040,47 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
 		include/BaseGameEntity.h \
-		include/GameWorld.h
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/GameWorld.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
+		include/Rioter.h \
+		include/Agent.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		../lua/include/lua.h \
+		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		../LuaBridge/LuaBridge.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaHelpers.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeList.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/FuncTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Constructor.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Stack.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/ClassInfo.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaException.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaRef.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 
 obj/Timer.o: src/Timer.cpp include/Timer.h
@@ -1438,6 +2211,9 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7776126/NGL/include/ngl/Vec3.h \
 		include/MovingEntity.h \
 		include/BaseGameEntity.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
 		include/SteeringBehaviour.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Vehicle.o src/Vehicle.cpp
 

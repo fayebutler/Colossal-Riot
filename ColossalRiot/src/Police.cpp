@@ -40,6 +40,33 @@ void Police::update(double timeElapsed)
 }
 
 
+void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
+{
+  loadMatricesToShader(cam, mouseGlobalTX);
+  ngl::VAOPrimitives::instance()->draw("teapot");
+}
+
+void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
+{
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+  ngl::Mat4 MV;
+  ngl::Mat4 MVP;
+  ngl::Mat3 normalMatrix;
+  ngl::Mat4 M;
+  ngl::Transformation trans;
+  trans.setPosition(getVehicle()->getPos());
+  M=trans.getMatrix()*mouseGlobalTX;
+  MV=  M*cam->getViewMatrix();
+  MVP= M*cam->getVPMatrix();
+  normalMatrix=MV;
+  normalMatrix.inverse();
+  shader->setShaderParamFromMat4("MV",MV);
+  shader->setShaderParamFromMat4("MVP",MVP);
+  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+  shader->setShaderParamFromMat4("M",M);
+}
+
 
 //bool Police::handleMessage(const Message& _message)
 //{
