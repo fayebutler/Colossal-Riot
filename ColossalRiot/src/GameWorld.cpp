@@ -16,6 +16,7 @@ GameWorld::GameWorld()
   for (int i = 0; i < 2; ++i)
   {
     Police* newPolice = new Police(this);
+    newPolice->setTargetID(i);
     m_police.push_back(newPolice);
   }
 

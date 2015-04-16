@@ -12,23 +12,47 @@ class BaseGameEntity;
 
 class EntityManager
 {
+
 public:
+
   static EntityManager* instance();
 
-  void registerEntity(BaseGameEntity* _newEntity);
-  BaseGameEntity* getEntityFromID(int _ID) const;
+  template <typename Type>
+  void registerEntity(Type* _newEntity)
+  {
+    m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
+  }
 
-  void removeEntity(BaseGameEntity* _entity);
+  //template <typename Type>
+  void* getEntityFromID(int _ID)const
+  {
+    EntityMap::const_iterator entity = m_entityMap.find(_ID);
 
+    assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
+
+    return (void*)entity->second;
+  }
+
+
+  template <typename Type>
+  void removeEntity(Type* _entity)
+  {
+    m_entityMap.erase(m_entityMap.find(_entity->getID()));
+  }
 
 private:
-  typedef std::map<int, BaseGameEntity*> EntityMap;
+
+  typedef std::map<int, void*> EntityMap;
   EntityMap m_entityMap;
 
-  EntityManager();
+  EntityManager(){}
 
-  EntityManager(const EntityManager&);
-  EntityManager& operator=(const EntityManager&);
+  // DO THIS>>> MAYBE??!>!??!
+
+  EntityManager(const EntityManager&){}
+
+  EntityManager& operator=(const EntityManager&){}
+
 };
 
 #endif // ENTITYMANAGER_H

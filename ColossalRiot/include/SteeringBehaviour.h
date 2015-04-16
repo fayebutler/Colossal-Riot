@@ -38,6 +38,7 @@ private:
     Vehicle* m_vehicle;
     ngl::Vec3 m_steeringForce;
     ngl::Vec3 m_target;
+    Vehicle* m_targetAgent;
 
     float m_wanderJitter;
     float m_wanderRadius;
@@ -116,7 +117,7 @@ public:
     bool isEvadeOn(){return on(evade);}
 
     void setTarget(ngl::Vec3);
-//    void setTargetAgent(Vehicle* agent);
+    void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
 
     ngl::Vec3 calculate();

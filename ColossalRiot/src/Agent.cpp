@@ -23,6 +23,7 @@ void Agent::registerLua(lua_State* _L)
                 .addProperty("m_morale", &Agent::getMorale, &Agent::setMorale)
                 .addProperty("m_health", &Agent::getHealth, &Agent::setHealth)
                 .addProperty("m_rage", &Agent::getRage, &Agent::setRage)
+                .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
                 .addProperty("m_targetID", &Agent::getTargetID, &Agent::setTargetID)
 
         .endClass();
