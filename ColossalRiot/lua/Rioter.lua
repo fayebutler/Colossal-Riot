@@ -1,9 +1,9 @@
 -- set up initial rioter variables
 
 makeRioter = function()
-   rioter.m_health = 100
-   rioter.m_morale = 100
-   rioter.m_rage = 17
+   rioter.m_health = 500
+   rioter.m_morale = 500
+   rioter.m_rage = 0.9
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
 end
@@ -53,8 +53,9 @@ end
 
 protest["execute"] = function()
   print("RIOTER protest execute")
-  rioter.m_morale = rioter.m_morale - 5
-  rioter:attack(1)
+  rioter.m_morale = rioter.m_morale - 2
+  rioter:attack(rioter.m_targetID)
+  rioter.m_rage = 0.9;
   if rioter.m_morale < 30 then
     stateMachine:changeState("flee")
   end
@@ -75,8 +76,9 @@ end
 
 flee["execute"] = function()
   print("RIOTER flee execute")
-  rioter.m_morale = rioter.m_morale + 5
-  if rioter.m_morale > 75 then
+  rioter.m_morale = rioter.m_morale + 1
+  rioter.m_rage = 0.1;
+  if rioter.m_morale > 300 then
     stateMachine:changeState("protest")
   end
 end

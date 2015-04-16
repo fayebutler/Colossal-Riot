@@ -39,7 +39,7 @@ void MessageManager::sendDelayedMessages()
   // WE NEED CLOCK FUNCTIONALITY
 }
 
-void MessageManager::send(BaseGameEntity* _receiver, const Message &_message)
+void MessageManager::send(BaseGameEntity *_receiver, const Message &_message)
 {
   if (_receiver->handleMessage(_message) == false)
   {

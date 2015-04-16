@@ -18,15 +18,13 @@ extern "C" {
 
 #include "LuaBridge.h"
 
-class Agent
+class Agent: public Vehicle
 {
 public:
   Agent(GameWorld *world);
-  virtual ~Agent();
+  ~Agent();
 
   virtual void update(double timeElapsed) = 0;
-
-  int getID() const { return m_ID; }
 
   float getHealth() const { return m_health; }
   void setHealth(float _val) { m_health = _val; }
@@ -45,11 +43,10 @@ public:
 
   void registerLua(lua_State *_L);
 
-  Vehicle* getVehicle() const { return m_vehicle; }
+
+  virtual bool handleMessage(const Message& _message);
 
 protected:
-  int m_ID;
-
   float m_health;
   float m_energy;
   float m_morale;
@@ -58,8 +55,6 @@ protected:
   int m_targetID;
 
   lua_State *L;
-
-  Vehicle* m_vehicle;
 
 
 };

@@ -13,10 +13,13 @@ public:
     lua_State* getLuaState() const { return L ; }
 
     void update(double timeElapsed);
+    void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
+    void loadMatricesToShader(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
+
 
     StateMachine<Police>* getStateMachine() const { return m_stateMachine; }
 
-    //bool handleMessage(const Message &_message);
+    bool handleMessage(const Message &_message);
 
     void attack(int _ID);
 

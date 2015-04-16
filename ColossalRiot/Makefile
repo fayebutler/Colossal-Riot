@@ -976,7 +976,8 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Namespace.h \
-		include/StateMachine.h
+		include/StateMachine.h \
+		include/Police.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
 obj/main.o: src/main.cpp include/NGLDraw.h \
@@ -2078,7 +2079,8 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Namespace.h \
-		include/StateMachine.h
+		include/StateMachine.h \
+		include/Police.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 
 obj/Timer.o: src/Timer.cpp include/Timer.h

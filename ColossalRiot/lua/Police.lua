@@ -1,9 +1,9 @@
 -- set up initial police variables
 
 makePolice = function()
-   police.m_health = 250
+   police.m_health = 100
    police.m_morale = 100
-   police.m_rage = 3
+   police.m_rage = 1
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
 end
