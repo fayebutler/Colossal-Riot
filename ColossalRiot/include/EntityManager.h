@@ -33,7 +33,6 @@ public:
     return (void*)entity->second;
   }
 
-
   template <typename Type>
   void removeEntity(Type* _entity)
   {

@@ -6,10 +6,10 @@
 
 GameWorld::GameWorld()
 {
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 1; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setPos(ngl::Vec3(5.0, 0.0, 0.0));
+    newRioter->setPos(ngl::Vec3(0.0, 0.0, 0.0));
     m_rioters.push_back(newRioter);
 
   }
@@ -17,8 +17,17 @@ GameWorld::GameWorld()
   {
     Police* newPolice = new Police(this);
     newPolice->setTargetID(i);
+    newPolice->setPos(ngl::Vec3(2.0, 0.0, 2.0));
     m_police.push_back(newPolice);
   }
+
+  Police* policeman = m_police[0];
+  Rioter* riotman = m_rioters[0];
+  policeman->Steering()->PursuitOn();
+  policeman->Steering()->setTargetAgent(riotman);
+  //riotman->Steering()->setTargetAgent(policeman);
+  //riotman->Steering()->EvadeOn();
+  riotman->Steering()->WanderOn();
 
 
 }
