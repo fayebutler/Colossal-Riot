@@ -22,6 +22,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->FleeOn();
     Vehicle::Steering()->WanderOn();
 
+    Vehicle::Steering()->WanderOn();
 }
 
 Rioter::~Rioter()
@@ -47,7 +48,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getRage(), 0.0f, 0.0f, 1.0f));
+  m.setDiffuse(ngl::Colour(getRage()/100.0f, 0.0f, 0.0f, 1.0f));
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -80,8 +81,8 @@ bool Rioter::handleMessage(const Message& _message)
 
 void Rioter::attack(int _ID)
 {
-  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_rage<<std::endl;
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_rage);
+  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 
 void Rioter::registerClass(lua_State* _L)

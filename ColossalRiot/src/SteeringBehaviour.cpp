@@ -55,31 +55,34 @@ ngl::Vec3 SteeringBehaviour::calculate()
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
     //need to add in the rest
-    if(on(seek)) //need to create crosshair in gameworld
-    {
-        m_steeringForce += Seek(ngl::Vec3(-10,0,0)) * m_weightSeek;
-
-    }
-    if(on(flee))
-    {
-        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
-    }
+//    if(on(seek)) //need to create crosshair in gameworld
+//    {
+//        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+//    }
+//    if(on(flee))
+//    {
+//        m_steeringForce += Flee(m_vehicle->World()->Crosshair()) * m_weightFlee;
+//    }
 //    if(on(arrive))
 //    {
 //        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
 //    }
+    if(on(pursuit))
+    {
+        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
+
+    }
     if(on(wander))
     {
         m_steeringForce += Wander() * m_weightWander;
     }
-    if(on(pursuit))
-    {
-        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
-    }
+
     if(on(evade))
     {
         m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
+
     }
+
 
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())

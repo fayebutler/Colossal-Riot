@@ -39,7 +39,7 @@ private:
     ngl::Vec3 m_steeringForce;
     ngl::Vec3 m_target;
     Vehicle* m_targetAgent;
-//    Vehicle* m_targetAgent2;
+
 
     float m_wanderJitter;
     float m_wanderRadius;

@@ -13,8 +13,8 @@ MessageManager* MessageManager::instance()
 
 void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo)
 {
-  BaseGameEntity* sender = EntityMgr->getEntityFromID(_senderID);
-  BaseGameEntity* receiver = EntityMgr->getEntityFromID(_receiverID);
+  BaseGameEntity* sender = (BaseGameEntity*) EntityMgr->getEntityFromID(_senderID);
+  BaseGameEntity* receiver = (BaseGameEntity*)EntityMgr->getEntityFromID(_receiverID);
 
   if (receiver == NULL)
   {

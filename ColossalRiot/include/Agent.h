@@ -38,6 +38,9 @@ public:
   float getRage() const { return m_rage; }
   void setRage(float _val) { m_rage = _val; }
 
+  float getDamage() const { return m_damage; }
+  void setDamage(float _val) { m_damage = _val; }
+
   int getTargetID() const { return m_targetID; }
   void setTargetID(int _val) { m_targetID = _val; }
 
@@ -51,6 +54,8 @@ protected:
   float m_energy;
   float m_morale;
   float m_rage;
+
+  float m_damage;
 
   int m_targetID;
 

@@ -24,10 +24,9 @@ Police::Police(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
- //   Vehicle::Steering()->WanderOn();
-//    Vehicle::Steering()->SeekOn();
-//    Vehicle::Steering()->setTargetAgent(EntityMgr->getEntityFromID(m_targetID));
-//    Vehicle::Steering()->PursuitOn();
+    Vehicle::Steering()->PursuitOn();
+    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+
 }
 
 Police::~Police()
@@ -38,10 +37,11 @@ Police::~Police()
 
 void Police::update(double timeElapsed)
 {
-    Agent::update(timeElapsed);
-    m_stateMachine->update();
-    //std::cout<<"position "<<getPos()<<std::endl;
-    getPos();
+
+  Agent::update(timeElapsed);
+  m_stateMachine->update();
+  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+
 }
 
 
@@ -90,8 +90,8 @@ bool Police::handleMessage(const Message& _message)
 
 void Police::attack(int _ID)
 {
-  std::cout<<"PO PO Attack: "<<_ID<<" for "<<m_rage<<std::endl;
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_rage);
+  std::cout<<"PO PO Attack: "<<_ID<<" for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 
 void Police::registerClass(lua_State* _L)
