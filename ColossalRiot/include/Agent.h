@@ -61,6 +61,8 @@ protected:
 
   lua_State *L;
 
+  double m_hop;
+
 
 };
 

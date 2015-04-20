@@ -2080,7 +2080,8 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
-		include/Police.h
+		include/Police.h \
+		/home/i7776126/NGL/include/ngl/Random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 
 obj/Timer.o: src/Timer.cpp include/Timer.h

@@ -52,6 +52,7 @@ void Vehicle::update(double time_elapsed)
 
 
    m_pos += m_velocity * time_elapsed;
+   m_pos = ngl::Vec3(0.f, 0.f, 0.f);
 
    if(m_velocity.lengthSquared()>0.000000001)
    {
