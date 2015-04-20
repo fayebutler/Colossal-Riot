@@ -27,24 +27,16 @@ CONFIG-=app_bundle
 # Auto include all .cpp files in the project src directory (can specifiy individually if required)
 SOURCES+= $$PWD/src/*.cpp \
 
-
 # same for the .h files
 HEADERS+= $$PWD/include/*.h \
 
-
 # and add the include dir into the search path for Qt and make
-INCLUDEPATH +=./include \
-              ../lua/include \
-              ../LuaBridge
+INCLUDEPATH +=./include
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
 OTHER_FILES+= shaders/*.glsl \
-							README.md \
-    lua/Police.lua \
-    lua/Rioter.lua \
-    shaders/TextureFrag.glsl \
-    shaders/TextureVert.glsl
+							README.md
 # were are going to default to a console app
 CONFIG += console
 # note each command you add needs a ; as it will be run as a single line
@@ -77,8 +69,6 @@ DEFINES +=NGL_DEBUG
 unix:LIBS += -L/usr/local/lib
 # add the ngl lib
 unix:LIBS +=  -L/$(HOME)/NGL/lib -l NGL
-
-unix:LIBS += -L../lua/lib -llua -ldl \
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{
