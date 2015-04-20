@@ -1,4 +1,5 @@
 #include "Police.h"
+#include <math.h>
 
 extern "C" {
 #include <lua.h>
@@ -24,8 +25,6 @@ Police::Police(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-    Vehicle::Steering()->PursuitOn();
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
 
 }
 
@@ -40,7 +39,9 @@ void Police::update(double timeElapsed)
 
   Agent::update(timeElapsed);
   m_stateMachine->update();
+  Vehicle::Steering()->PursuitOn();
   Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
 
 }
 
@@ -67,6 +68,9 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat4 M;
   ngl::Transformation trans;
   trans.setPosition(getPos());
+  ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
+  rot = (rot / M_PI*180.0) + 180;
+  trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
   MVP= M*cam->getVPMatrix();

@@ -12,7 +12,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightSeek(1.0),
     m_weightFlee(1.0),
     m_weightArrive(1.0),
-    m_weightWander(1.0),
+    m_weightWander(0.8),
 //    m_weightCohesion(1.0),
 //    m_weightSeparation(1.0),
 //    m_weightAlignment(1.0),
@@ -54,19 +54,19 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
-    //need to add in the rest
-//    if(on(seek)) //need to create crosshair in gameworld
-//    {
-//        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
-//    }
-//    if(on(flee))
-//    {
-//        m_steeringForce += Flee(m_vehicle->World()->Crosshair()) * m_weightFlee;
-//    }
-//    if(on(arrive))
-//    {
-//        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
-//    }
+
+    if(on(seek)) //need to create crosshair in gameworld
+    {
+        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+    }
+    if(on(flee))
+    {
+        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
+    }
+    if(on(arrive))
+    {
+        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
+    }
     if(on(pursuit))
     {
         m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
@@ -89,10 +89,8 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     {
         m_steeringForce.normalize();
         m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
-        std::cout<<"trunccc"<<std::endl;
     }
 
-    std::cout<<"length  "<<m_steeringForce.length()<<std::endl;
     return m_steeringForce;
 
 }
@@ -114,8 +112,7 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
-    std::cout<<"desiredvelocity in seek  "<<desiredVelocity[0]<<"  "<<desiredVelocity[1]<<"  "<<desiredVelocity[2]<<std::endl;
-    std::cout<<"velocity in seek  "<<m_vehicle->getVelocity()[0]<<"  "<<m_vehicle->getVelocity()[1]<<"  "<<m_vehicle->getVelocity()[2]<<std::endl;
+
     return (desiredVelocity - m_vehicle->getVelocity());
 }
 
@@ -124,7 +121,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
     ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
-    std::cout<<"FLEEEEEEEEEEING"<<std::endl;
+
     return(desiredVelocity - m_vehicle->getVelocity());
 }
 
@@ -216,12 +213,15 @@ ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
+    std::cout<<"agent position"<<agent->getPos()[0]<<"   "<<agent->getPos()[1]<<"   "<<agent->getPos()[2]<<std::endl;
 
 //    if only want to conside pursuers within range
 //    double threatRange = 100.0;
 //    if(toAgent.lengthSquared() > threatRange * threatRange) return ngl::Vec3();
 
     double lookAheadTime = toAgent.length() / (m_vehicle->getMaxSpeed() + agent->getSpeed());
+;
+    ngl::Vec3 agentPos = agent->getPos() + (agent->getVelocity() * lookAheadTime);
 
-    return Flee(agent->getPos() + agent->getVelocity() * lookAheadTime);
+    return Flee(agentPos);
 }
