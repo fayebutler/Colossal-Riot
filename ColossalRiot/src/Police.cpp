@@ -24,7 +24,6 @@ Police::Police(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-
     Vehicle::Steering()->PursuitOn();
     Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
 
@@ -38,9 +37,11 @@ Police::~Police()
 
 void Police::update(double timeElapsed)
 {
+
   Agent::update(timeElapsed);
   m_stateMachine->update();
   Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+
 }
 
 
