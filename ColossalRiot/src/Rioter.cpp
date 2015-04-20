@@ -87,7 +87,7 @@ bool Rioter::handleMessage(const Message& _message)
 
 void Rioter::attack(int _ID)
 {
-  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
+//  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
   MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 

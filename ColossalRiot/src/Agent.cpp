@@ -44,3 +44,13 @@ bool Agent::handleMessage(const Message& _message)
     return false;
   }
 }
+
+void Agent::setCurrentCellID(int _ID)
+{
+    m_currentCellID = _ID;
+}
+
+int Agent::getCurrentCell()
+{
+    return m_currentCellID;
+}

@@ -31,7 +31,7 @@ void Vehicle::update(double time_elapsed)
 {
 
    m_timeElapsed = time_elapsed;
-   std::cout<<"time  "<<m_timeElapsed<<std::endl;
+//   std::cout<<"time  "<<m_timeElapsed<<std::endl;
 
 
    ngl::Vec3 oldPos = getPos();

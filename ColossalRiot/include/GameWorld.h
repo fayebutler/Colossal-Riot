@@ -3,17 +3,14 @@
 
 
 #include "BaseGameEntity.h"
-//#include "cellSpacePartition"
+
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
 #include <vector>
 #include "Rioter.h"
 #include "Police.h"
-
-//class
-//
-//
+#include "CellGraph.h"
 
 typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
@@ -26,6 +23,8 @@ private:
     std::vector<Police*> m_police;
 
     ngl::Vec3 m_crosshair;
+
+    CellGraph m_cellGraph;
 
 
 public:

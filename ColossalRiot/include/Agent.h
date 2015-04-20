@@ -10,6 +10,7 @@
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
+
 extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
@@ -54,8 +55,12 @@ public:
 
   virtual bool handleMessage(const Message& _message);
 
+  void setCurrentCellID(int _ID);
+  int getCurrentCell();
+
 
 protected:
+  int m_currentCellID;
   float m_health;
   float m_energy;
   float m_morale;
@@ -68,6 +73,9 @@ protected:
   double m_hop;
   float m_hopHeight;
   float m_hopSpeed;
+
+  std::vector<int> neighbourPoliceIDs;
+  std::vector<int> neighbourRioterIDs;
 
   lua_State *L;
 

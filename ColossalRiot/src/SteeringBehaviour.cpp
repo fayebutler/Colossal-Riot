@@ -28,7 +28,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 {
     double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
-    std::cout<<"wanderTarge"<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
+//    std::cout<<"wanderTarge"<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
 }
 
 
@@ -152,20 +152,20 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 ngl::Vec3 SteeringBehaviour::Wander()
 {
     double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
-    std::cout<<"jitterTimeSlice "<<jitterTimeSlice<<std::endl;
+//    std::cout<<"jitterTimeSlice "<<jitterTimeSlice<<std::endl;
 
     float randomClamped = -1+2*((float)rand())/RAND_MAX;
-    std::cout<<"randomClamped "<<randomClamped<<std::endl;
-    std::cout<<"wanderTarget before "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
+//    std::cout<<"randomClamped "<<randomClamped<<std::endl;
+//    std::cout<<"wanderTarget before "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
     m_wanderTarget += ngl::Vec3(randomClamped * jitterTimeSlice ,0, randomClamped * jitterTimeSlice);
-    std::cout<<"wanderTarget after  "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
+//    std::cout<<"wanderTarget after  "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
     m_wanderTarget.normalize();
 
     m_wanderTarget *= m_wanderRadius;
 
     ngl::Vec3 localTarget = m_wanderTarget + ngl::Vec3(m_wanderDistance,0,0);
 
-    std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
+//    std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
 
 
     ngl::Transformation move;
@@ -186,7 +186,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 
     ngl::Vec3 worldTarget = m_vehicle->getPos() + xyzDash;
-    std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
+//    std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
 
     return worldTarget;
 
@@ -213,7 +213,7 @@ ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
-    std::cout<<"agent position"<<agent->getPos()[0]<<"   "<<agent->getPos()[1]<<"   "<<agent->getPos()[2]<<std::endl;
+//    std::cout<<"agent position"<<agent->getPos()[0]<<"   "<<agent->getPos()[1]<<"   "<<agent->getPos()[2]<<std::endl;
 
 //    if only want to conside pursuers within range
 //    double threatRange = 100.0;
