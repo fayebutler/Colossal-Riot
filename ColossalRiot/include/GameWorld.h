@@ -9,6 +9,7 @@
 
 #include <vector>
 #include "Rioter.h"
+#include "Police.h"
 
 //class
 //
@@ -22,6 +23,7 @@ private:
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
+    std::vector<Police*> m_police;
 
     ngl::Vec3 m_crosshair;
 

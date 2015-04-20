@@ -18,7 +18,11 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
+//    Vehicle::Steering()->SeekOn();
+//    Vehicle::Steering()->FleeOn();
+    Vehicle::Steering()->WanderOn();
 
+    Vehicle::Steering()->WanderOn();
 }
 
 Rioter::~Rioter()
@@ -31,6 +35,7 @@ void Rioter::update(double timeElapsed)
 {
     Agent::update(timeElapsed);
     m_stateMachine->update();
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -41,6 +46,11 @@ void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 
 void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  m.setSpecularExponent(5.f);
+  m.setDiffuse(ngl::Colour(getRage()/100.0f, 0.0f, 0.0f, 1.0f));
+  m.loadToShader("material");
+
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
   ngl::Mat4 MV;
@@ -48,7 +58,8 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getVehicle()->getPos());
+  trans.setPosition(getPos());
+
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
   MVP= M*cam->getVPMatrix();
@@ -60,18 +71,18 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   shader->setShaderParamFromMat4("M",M);
 }
 
-//bool Rioter::handleMessage(const Message& _message)
-//{
-//  Agent::handleMessage(_message);
-//}
+bool Rioter::handleMessage(const Message& _message)
+{
+  Agent::handleMessage(_message);
+}
 
 
 //RIOTER STATE UTILITY FUNCTIONS
 
 void Rioter::attack(int _ID)
 {
-  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_rage<<std::endl;
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_rage);
+  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 
 void Rioter::registerClass(lua_State* _L)

@@ -1,9 +1,10 @@
 -- set up initial police variables
 
 makePolice = function()
-   police.m_health = 250
+   police.m_health = 150
    police.m_morale = 100
-   police.m_rage = 3
+   police.m_rage = 20
+   police.m_damage = 0.01
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
 end
@@ -34,8 +35,10 @@ global["enter"] = function()
 end
 
 global["execute"] = function()
-  if police.m_health <= 0 then
-    stateMachine:changeState("dead")
+  if stateMachine.m_currentState ~= "dead" then
+    if police.m_health <= 0 then
+        stateMachine:changeState("dead")
+    end
   end
 end
 
@@ -54,7 +57,7 @@ end
 work["execute"] = function()
   print("POLICE work execute")
   police.m_morale = police.m_morale - 1
-  police:attack(1)
+  police:attack(police.m_targetID)
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
   end
@@ -96,8 +99,9 @@ end
 
 dead["execute"] = function()
   print("PO PO DEAD")
+  police.m_health = 0
 end
 
-dead["exit"] = function()
-  print("POLICE dead exit")
-end
+--dead["exit"] = function()
+--  print("POLICE dead exit")
+--end
