@@ -13,12 +13,9 @@ protected:
   int m_ID;
   static int m_nextValidID;
   void setID(int _val) { m_ID = _val; }
-    int m_entityType;
-    ngl::Vec3 m_pos;
-    float m_boundingRadius;
-//    BaseGameEntity();
-//    BaseGameEntity(int entity_type, ngl::Vec3 pos, float r);
-
+  int m_entityType;
+  ngl::Vec3 m_pos;
+  float m_boundingRadius;
 
 public:
     BaseGameEntity();

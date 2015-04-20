@@ -48,9 +48,9 @@ private:
 
   // DO THIS>>> MAYBE??!>!??!
 
-  EntityManager(const EntityManager&){}
+  EntityManager(const EntityManager&);
 
-  EntityManager& operator=(const EntityManager&){}
+  EntityManager& operator=(const EntityManager&);
 
 };
 

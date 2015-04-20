@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include "NGLDraw.h"
 #include <ngl/NGLInit.h>
@@ -26,6 +27,8 @@ SDL_GLContext createOpenGLContext( SDL_Window *window);
 
 int main()
 {
+  srand(static_cast <unsigned> (time(0)));
+
 
   // Initialize SDL's Video subsystem
   if (SDL_Init(SDL_INIT_VIDEO) < 0 )

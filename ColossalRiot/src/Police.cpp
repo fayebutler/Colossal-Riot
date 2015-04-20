@@ -24,8 +24,9 @@ Police::Police(GameWorld* world) : Agent(world)
     m_targetID = 0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-    Vehicle::Steering()->PursuitOn();
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+//    Vehicle::Steering()->PursuitOn();
+//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+    Vehicle::Steering()->WanderOn();
 }
 
 Police::~Police()
@@ -79,7 +80,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 bool Police::handleMessage(const Message& _message)
 {
-  Agent::handleMessage(_message);
+  return Agent::handleMessage(_message);
 }
 
 

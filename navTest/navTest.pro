@@ -27,3 +27,4 @@ FORMS    += mainwindow.ui
 
 INCLUDEPATH += $$(HOME)/NGL/include/
 LIBS +=  -L/$(HOME)/NGL/lib -l NGL
+
