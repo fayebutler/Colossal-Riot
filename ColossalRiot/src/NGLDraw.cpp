@@ -63,9 +63,9 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,-15,0);
+  ngl::Vec3 from(0,15,0);
   ngl::Vec3 to(0,0,0);
-  ngl::Vec3 up(0,0,1);
+  ngl::Vec3 up(0,0,-1);
   // now load to our new camera
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
@@ -129,9 +129,9 @@ void NGLDraw::draw()
 
 }
 
-void NGLDraw::update(double timeElapsed)
+void NGLDraw::update(double timeElapsed, double currentTime)
 {
-  m_gameworld->Update(timeElapsed);
+  m_gameworld->Update(timeElapsed, currentTime);
 }
 
 

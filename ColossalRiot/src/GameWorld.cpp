@@ -34,17 +34,17 @@ GameWorld::GameWorld()
 
 
 }
-void GameWorld::Update(double timeElapsed)
+void GameWorld::Update(double timeElapsed, double currentTime)
 {
     for(unsigned int a=0; a<m_rioters.size(); ++a)
     {
         Rioter* currentRioter = m_rioters[a];
-        currentRioter->update(timeElapsed);
+        currentRioter->update(timeElapsed, currentTime);
     }
     for(unsigned int a=0; a<m_police.size(); ++a)
     {
         Police* currentPolice = m_police[a];
-        currentPolice->update(timeElapsed);
+        currentPolice->update(timeElapsed, currentTime);
         std::cout<<currentPolice->getHealth()<<std::endl;
     }
 }

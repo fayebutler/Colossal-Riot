@@ -12,7 +12,7 @@ Agent::~Agent()
 
 }
 
-void Agent::update(double timeElapsed)
+void Agent::update(double timeElapsed, double currentTime)
 {
   Vehicle::update(timeElapsed);
 }

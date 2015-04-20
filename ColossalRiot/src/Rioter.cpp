@@ -16,6 +16,8 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
     // Set initial variables
     m_targetID = 1;
+    m_hopHeight = 0.5;
+    m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
@@ -31,14 +33,13 @@ Rioter::~Rioter()
   delete m_stateMachine; 
 }
 
-void Rioter::update(double timeElapsed)
+void Rioter::update(double timeElapsed, double currentTime)
 {
-    Agent::update(timeElapsed);
+    Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
     Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
     Vehicle::Steering()->EvadeOn();
-    //m_hop = sin(timeElapsed/10.0)*1000.0;
-
+    m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -61,7 +62,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,0,getPos().m_z);
+  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = (rot / M_PI*180.0) + 180;
   trans.setRotation(0,-rot,0);

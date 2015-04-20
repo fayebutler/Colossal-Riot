@@ -83,6 +83,7 @@ int main()
 
   Timer gameTimer;
   double timeElapsed = 0.0;
+  double currentTime = 0.0;
 //  GameWorld* world;
 //  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -99,10 +100,11 @@ int main()
   while(!quit)
   {
     timeElapsed=gameTimer.timeElapsed();
+    currentTime=gameTimer.getCurrentTime();
 
 
     std::cout<<"------------- TICK -------------"<<std::endl;
-    ngldraw.update(timeElapsed);
+    ngldraw.update(timeElapsed,currentTime);
 
 
 //    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;

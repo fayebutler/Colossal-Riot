@@ -12,7 +12,7 @@ public:
 
     lua_State* getLuaState() const { return L ; }
 
-    void update(double timeElapsed);
+    void update(double timeElapsed, double currentTime);
     void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
     void loadMatricesToShader(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
 
