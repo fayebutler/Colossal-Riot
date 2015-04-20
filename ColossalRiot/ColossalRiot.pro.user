@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< .merge_file_pZG5vs
-<!-- Written by QtCreator 3.2.0, 2015-04-20T11:32:33. -->
-=======
-<!-- Written by QtCreator 3.2.0, 2015-04-20T11:27:46. -->
->>>>>>> .merge_file_B8ZNvk
+<!-- Written by QtCreator 3.2.0, 2015-04-20T11:39:52. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{c25e433b-0bff-4b85-8745-0d83027edfe9}</value>
+  <value type="QByteArray">{1c9f8cfe-56ae-4c31-b47f-aaf392462828}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -181,7 +177,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ColossalRiot</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7702804/Programming/colossal/ColossalRiot/ColossalRiot.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7715430/Colossal/colossal/ColossalRiot/ColossalRiot.pro</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ColossalRiot.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
