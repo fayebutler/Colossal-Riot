@@ -188,9 +188,14 @@ ngl::Vec3 SteeringBehaviour::Wander()
   headingNormalise.normalize();
   std::cout<<"headingNormalise "<<headingNormalise[0]<<", "<<headingNormalise[1]<<", "<<headingNormalise[2]<<std::endl;
   double dotProduct = headingNormalise.dot(worldNormalise);
+  std::cout<<"dotProduct "<<dotProduct<<std::endl;
   double magnitude = headingNormalise.length()*worldNormalise.length();
+  std::cout<<"magnitude "<<magnitude<<std::endl;
   double temp = dotProduct/magnitude;
+  std::cout<<"temp "<<temp<<std::endl;
   double angle = acos(temp);
+  std::cout<<"angle "<<angle<<std::endl;
+
 
   float xDash = localTarget.m_x*cos(-angle) - localTarget.m_z*sin(-angle);
   float zDash = localTarget.m_x*sin(-angle) + localTarget.m_z*cos(-angle);
