@@ -40,10 +40,12 @@ public:
     m_entityMap.erase(m_entityMap.find(_entity->getID()));
   }
 
-private:
-
   typedef std::map<int, void*> EntityMap;
   EntityMap m_entityMap;
+private:
+
+//  typedef std::map<int, void*> EntityMap;
+//  EntityMap m_entityMap;
 
   EntityManager(){}
 

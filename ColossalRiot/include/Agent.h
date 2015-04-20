@@ -24,7 +24,7 @@ public:
   Agent(GameWorld *world);
   ~Agent();
 
-  virtual void update(double timeElapsed) = 0;
+  virtual void update(double timeElapsed, double currentTime) = 0;
 
   float getHealth() const { return m_health; }
   void setHealth(float _val) { m_health = _val; }
@@ -44,10 +44,16 @@ public:
   int getTargetID() const { return m_targetID; }
   void setTargetID(int _val) { m_targetID = _val; }
 
+  float getHopHeight() const { return m_hopHeight; }
+  void setHopHeight(float _val) { m_hopHeight = _val; }
+
+  float getHopSpeed() const { return m_hopSpeed; }
+  void setHopSpeed(float _val) { m_hopSpeed = _val; }
+
   void registerLua(lua_State *_L);
 
-
   virtual bool handleMessage(const Message& _message);
+
 
 protected:
   float m_health;
@@ -59,8 +65,11 @@ protected:
 
   int m_targetID;
 
-  lua_State *L;
+  double m_hop;
+  float m_hopHeight;
+  float m_hopSpeed;
 
+  lua_State *L;
 
 };
 
