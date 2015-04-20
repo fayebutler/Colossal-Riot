@@ -94,6 +94,8 @@ private:
 public:
 
     ngl::Vec3 m_worldWanderTarget;
+    ngl::Vec3 m_localWanderTarget;
+
 
 
     SteeringBehaviour(Vehicle* agent);

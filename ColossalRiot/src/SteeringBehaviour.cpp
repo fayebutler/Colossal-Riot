@@ -7,9 +7,9 @@
 SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_vehicle(agent),
     m_activeFlags(0),
-    m_wanderDistance(2.0),
+    m_wanderDistance(3.0),
     m_wanderRadius(1.0),
-    m_wanderJitter(5.0),
+    m_wanderJitter(10.0),
     m_weightSeek(1.0),
     m_weightFlee(1.0),
     m_weightArrive(1.0),
@@ -91,7 +91,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
         m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
     }
 
-    return m_steeringForce;
+    return Wander();
 
 }
 
@@ -163,52 +163,54 @@ ngl::Vec3 SteeringBehaviour::Wander()
   float randomClampedZ = -1+2*((float)rand())/RAND_MAX;
   std::cout<<"randomClampedX "<<randomClampedX<<std::endl;
   std::cout<<"randomClampedZ "<<randomClampedZ<<std::endl;
+
   std::cout<<"wanderTarget before "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
   m_wanderTarget += ngl::Vec3(randomClampedX * jitterTimeSlice ,0, randomClampedZ * jitterTimeSlice);
+
   std::cout<<"wanderTarget after  "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
   m_wanderTarget.normalize();
 
   m_wanderTarget *= m_wanderRadius;
   std::cout<<"wanderTarget radius "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
 
-  m_wanderTarget = ngl::Vec3(0.f, 0.f, 2.f);
+  //m_wanderTarget = ngl::Vec3(0.f, 0.f, 2.f);
   ngl::Vec3 localTarget = m_wanderTarget + ngl::Vec3(m_wanderDistance,0,0);
 
   std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
 
-
-  ngl::Transformation move;
-  //rotate local axis to world
-
   ngl::Vec3 headingNormalise;
-
-
-  ngl::Vec3 worldNormalise = ngl::Vec3(1, 0, 0);
+  ngl::Vec3 worldNormalise = ngl::Vec3(1,0,0);
   headingNormalise = m_vehicle->getHeading();
   headingNormalise.normalize();
   std::cout<<"headingNormalise "<<headingNormalise[0]<<", "<<headingNormalise[1]<<", "<<headingNormalise[2]<<std::endl;
-  double dotProduct = headingNormalise.dot(worldNormalise);
+  double dotProduct = worldNormalise.dot(headingNormalise);
+
   std::cout<<"dotProduct "<<dotProduct<<std::endl;
   double magnitude = headingNormalise.length()*worldNormalise.length();
   std::cout<<"magnitude "<<magnitude<<std::endl;
   double temp = dotProduct/magnitude;
   std::cout<<"temp "<<temp<<std::endl;
   double angle = acos(temp);
-  std::cout<<"angle "<<angle<<std::endl;
 
+  if(headingNormalise.m_z > 0)
+  {
+    angle = 2*M_PI - angle;
+  }
 
-  float xDash = localTarget.m_x*cos(-angle) - localTarget.m_z*sin(-angle);
-  float zDash = localTarget.m_x*sin(-angle) + localTarget.m_z*cos(-angle);
-  ngl::Vec3 xyzDash = ngl::Vec3(xDash, 0, zDash);
+  std::cout<<"angle "<<((angle * 180)/M_PI)<<std::endl;
 
+  ngl::Transformation trans;
+  trans.setRotation(0, (-angle * 180)/M_PI, 0);
+  ngl::Vec3 worldTarget;
+  worldTarget = trans.getMatrix() * localTarget;
+  worldTarget += m_vehicle->getPos();
 
-  ngl::Vec3 worldTarget = m_vehicle->getPos() + xyzDash;
   std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
-  std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
+  std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
 
   //worldTarget = ngl::Vec3(3.f, 0.f, 1.f);
-
   m_worldWanderTarget = worldTarget;
+  m_localWanderTarget = localTarget;
   return worldTarget;
 }
 

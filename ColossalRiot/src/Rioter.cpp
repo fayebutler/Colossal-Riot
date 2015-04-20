@@ -15,7 +15,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 1;
+    m_targetID = 0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
@@ -45,36 +45,6 @@ void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
   ngl::VAOPrimitives::instance()->draw("teapot");
-
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
-  m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getRage()/100.0f, 0.0f, 0.0f, 1.0f));
-  m.loadToShader("material");
-
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-
-  ngl::Mat4 MV;
-  ngl::Mat4 MVP;
-  ngl::Mat3 normalMatrix;
-  ngl::Mat4 M;
-  ngl::Transformation trans;
-  trans.setPosition(Vehicle::Steering()->m_worldWanderTarget.m_x,0,Vehicle::Steering()->m_worldWanderTarget.m_z);
-  //ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  //rot = (rot / M_PI*180.0) + 180;
-  //trans.setRotation(0,-rot,0);
-  trans.setScale(0.3, 0.3, 0.3);
-  M=trans.getMatrix()*mouseGlobalTX;
-  MV=  M*cam->getViewMatrix();
-  MVP= M*cam->getVPMatrix();
-  normalMatrix=MV;
-  normalMatrix.inverse();
-  shader->setShaderParamFromMat4("MV",MV);
-  shader->setShaderParamFromMat4("MVP",MVP);
-  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-  shader->setShaderParamFromMat4("M",M);
-
-  ngl::VAOPrimitives::instance()->draw("teapot");
-
 }
 
 void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -93,7 +63,14 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Transformation trans;
   trans.setPosition(getPos().m_x,0,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  rot = (rot / M_PI*180.0) + 180;
+  rot = ((rot * 180)/M_PI);
+  std::cout<<"ROT: "<<rot<<std::endl;
+
+  if(getHeading().m_x < 0)
+  {
+    rot = 180 + rot;
+  }
+
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();

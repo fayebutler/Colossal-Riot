@@ -69,7 +69,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Transformation trans;
   trans.setPosition(getPos());
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  rot = (rot / M_PI*180.0) + 180;
+  rot = ((rot * 180)/M_PI) + 180;
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
