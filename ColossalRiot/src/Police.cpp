@@ -24,12 +24,12 @@ Police::Police(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 1;
     m_hopHeight = 0.5;
     m_hopSpeed = 10.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-    //Vehicle::Steering()->PursuitOn();
+
+    m_targetID = 0;
 
 }
 
@@ -113,10 +113,10 @@ bool Police::handleMessage(const Message& _message)
 
 //POLICE STATE UTILITY FUNCTIONS
 
-void Police::attack(int _ID)
+void Police::attack()
 {
-  std::cout<<"PO PO Attack: "<<_ID<<" for "<<m_damage<<std::endl;
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
+  std::cout<<"PO PO Attack for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 }
 
 void Police::registerClass(lua_State* _L)

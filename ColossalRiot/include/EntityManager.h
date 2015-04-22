@@ -28,14 +28,14 @@ public:
     m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
   }
 
-  //template <typename Type>
-  void* getEntityFromID(int _ID)const
+
+  BaseGameEntity* getEntityFromID(int _ID)const
   {
     EntityMap::const_iterator entity = m_entityMap.find(_ID);
 
     assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
 
-    return (void*)entity->second;
+    return (BaseGameEntity*)entity->second;
   }
 
   template <typename Type>
@@ -44,19 +44,21 @@ public:
     m_entityMap.erase(m_entityMap.find(_entity->getID()));
   }
 
-  typedef std::map<int, void*> EntityMap;
-  EntityMap m_entityMap;
+  int getSize()
+  {
+      return m_entityMap.size();
+  }
 
+//  typedef std::map<int, BaseGameEntity*> EntityMap;
+//  EntityMap m_entityMap;
 
 
 private:
 
-//  typedef std::map<int, void*> EntityMap;
-//  EntityMap m_entityMap;
+  typedef std::map<int, BaseGameEntity*> EntityMap;
+  EntityMap m_entityMap;
 
   EntityManager(){}
-
-  // DO THIS>>> MAYBE??!>!??!
 
   EntityManager(const EntityManager&);
 
