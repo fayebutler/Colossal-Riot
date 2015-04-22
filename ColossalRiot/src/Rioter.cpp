@@ -35,7 +35,7 @@ void Rioter::update(double timeElapsed, double currentTime)
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
 
-//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
     Vehicle::Steering()->EvadeOn();
     Vehicle::Steering()->WanderOn();
     Vehicle::Steering()->setWanderWeight(0.8);
