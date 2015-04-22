@@ -27,6 +27,7 @@ Police::Police(GameWorld* world) : Agent(world)
     m_hopSpeed = 10.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
+    Vehicle::Steering()->WanderOn();
 
 }
 
@@ -38,14 +39,15 @@ Police::~Police()
 
 void Police::update(double timeElapsed, double currentTime)
 {
-
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
   Vehicle::Steering()->PursuitOn();
   Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
   std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-
+  Vehicle::Steering()->WanderOff();
+  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  Vehicle::Steering()->PursuitOn();
 }
 
 
@@ -72,7 +74,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Transformation trans;
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  rot = (rot / M_PI*180.0) + 180;
+  rot = ((rot * 180)/M_PI) + 180;
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
@@ -89,7 +91,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 bool Police::handleMessage(const Message& _message)
 {
-  Agent::handleMessage(_message);
+  return Agent::handleMessage(_message);
 }
 
 

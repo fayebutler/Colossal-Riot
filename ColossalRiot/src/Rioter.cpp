@@ -22,9 +22,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     makeRioter();
 
     Vehicle::Steering()->WanderOn();
-//    Vehicle::Steering()->FleeOn();
-//    Vehicle::Steering()->EvadeOn();
-//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+
 }
 
 Rioter::~Rioter()
@@ -64,7 +62,14 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Transformation trans;
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  rot = (rot / M_PI*180.0) + 180;
+  rot = ((rot * 180)/M_PI);
+  std::cout<<"ROT: "<<rot<<std::endl;
+
+  if(getHeading().m_x < 0)
+  {
+    rot = 180 + rot;
+  }
+
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
@@ -79,7 +84,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 bool Rioter::handleMessage(const Message& _message)
 {
-  Agent::handleMessage(_message);
+  return Agent::handleMessage(_message);
 }
 
 

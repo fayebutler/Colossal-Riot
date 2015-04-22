@@ -33,7 +33,6 @@ public:
     return (void*)entity->second;
   }
 
-
   template <typename Type>
   void removeEntity(Type* _entity)
   {
@@ -51,9 +50,9 @@ private:
 
   // DO THIS>>> MAYBE??!>!??!
 
-  EntityManager(const EntityManager&){}
+  EntityManager(const EntityManager&);
 
-  EntityManager& operator=(const EntityManager&){}
+  EntityManager& operator=(const EntityManager&);
 
 };
 
