@@ -7,8 +7,8 @@
 #include "GameWorld.h"
 
 
-const static float INCREMENT=-0.005;
-const static float ZOOM=1;
+const static float INCREMENT=-0.02;
+const static float ZOOM=5;
 NGLDraw::NGLDraw()
 {
   m_rotate=false;
