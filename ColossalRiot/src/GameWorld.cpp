@@ -47,7 +47,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         Police* currentPolice = m_police[a];
         currentPolice->update(timeElapsed, currentTime);
         std::cout<<currentPolice->getHealth()<<std::endl;
+
     }
+
 }
 
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)

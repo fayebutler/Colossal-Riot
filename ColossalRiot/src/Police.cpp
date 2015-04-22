@@ -9,6 +9,8 @@ extern "C" {
 
 Police::Police(GameWorld* world) : Agent(world)
 {
+    m_entityType = typePolice;
+
     // Set up LUA state
     luaL_dofile(L, "lua/Police.lua");
     luaL_openlibs(L);

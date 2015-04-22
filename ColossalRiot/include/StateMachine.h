@@ -38,7 +38,7 @@ public:
     void update()    {
       if (m_globalState)
       {
-          luaCallState(m_globalState, "execute");
+        luaCallState(m_globalState, "execute");
       }
       if (m_currentState)
       {

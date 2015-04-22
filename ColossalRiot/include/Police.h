@@ -25,6 +25,7 @@ public:
 
     void registerClass(lua_State* _L);
 
+
 protected:
     StateMachine<Police>* m_stateMachine;
 };

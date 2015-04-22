@@ -15,7 +15,12 @@ class EntityManager
 
 public:
 
-  static EntityManager* instance();
+  static EntityManager* instance()
+  {
+    static EntityManager instance;
+
+    return &instance;
+  }
 
   template <typename Type>
   void registerEntity(Type* _newEntity)
@@ -41,6 +46,9 @@ public:
 
   typedef std::map<int, void*> EntityMap;
   EntityMap m_entityMap;
+
+
+
 private:
 
 //  typedef std::map<int, void*> EntityMap;

@@ -2,6 +2,8 @@
 
 Rioter::Rioter(GameWorld* world) : Agent(world)
 {
+    m_entityType = typeRioter;
+
     // Set up LUA state
     luaL_dofile(L, "lua/Rioter.lua");
     luaL_openlibs(L);
