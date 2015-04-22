@@ -33,25 +33,26 @@ public:
     return (void*)entity->second;
   }
 
-
   template <typename Type>
   void removeEntity(Type* _entity)
   {
     m_entityMap.erase(m_entityMap.find(_entity->getID()));
   }
 
-private:
-
   typedef std::map<int, void*> EntityMap;
   EntityMap m_entityMap;
+private:
+
+//  typedef std::map<int, void*> EntityMap;
+//  EntityMap m_entityMap;
 
   EntityManager(){}
 
   // DO THIS>>> MAYBE??!>!??!
 
-  EntityManager(const EntityManager&){}
+  EntityManager(const EntityManager&);
 
-  EntityManager& operator=(const EntityManager&){}
+  EntityManager& operator=(const EntityManager&);
 
 };
 

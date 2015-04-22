@@ -6,7 +6,7 @@
 std::vector <cell> * gGraph;
 
 
-void loadOBJ(const char *fileName, std::vector<gml::Vec3> &vertices, std::vector<GLushort> &elements )
+void loadOBJ(const char *fileName, std::vector<ngl::Vec3> &vertices, std::vector<GLushort> &elements )
 {
 
     std::ifstream in(fileName, std::ios::in);
@@ -16,7 +16,7 @@ void loadOBJ(const char *fileName, std::vector<gml::Vec3> &vertices, std::vector
      while (getline(in, line)) {
        if (line.substr(0,2) == "v ") {
          std::istringstream s(line.substr(2));
-         gml::Vec3 v; s >> v.x; s >> v.y; s >> v.z;
+         ngl::Vec3 v; s >> v.x; s >> v.y; s >> v.z;
          vertices.push_back(v);
        }  else if (line.substr(0,2) == "f ") {
          std::istringstream s(line.substr(2));
@@ -35,9 +35,9 @@ void loadOBJ(const char *fileName, std::vector<gml::Vec3> &vertices, std::vector
        GLushort ic = elements[i+2];
 
      }
-
-     //std::cout<< " Vert Indexs:  "<<
-
+     
+     //std::cout<< " Vert Indexs:  "<< 
+     
 }
 
 void generateGraph(std::vector<glm::vec4> &verticies)
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-
+    
     loadOBJ("plane_plain.obj");
 
 

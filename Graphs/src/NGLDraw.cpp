@@ -3,8 +3,6 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-#include "Vehicle.h"
-#include "GameWorld.h"
 
 
 const static float INCREMENT=-0.005;
@@ -19,10 +17,6 @@ NGLDraw::NGLDraw()
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
-
-
-
-
    // now to load the shader and set the values
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -53,17 +47,13 @@ NGLDraw::NGLDraw()
   // and make it active ready to load values
   (*shader)["Phong"]->use();
   // the shader will use the currently active material and light0 so set them
-  ngl::Material m(ngl::POLISHEDSILVER);
+  ngl::Material m(ngl::GOLD);
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
-
-
-
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,15,0);
+  ngl::Vec3 from(0,1,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -82,8 +72,6 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-
-   m_gameworld = new GameWorld();
 
 }
 
@@ -125,13 +113,14 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
-  m_gameworld->draw(m_cam, m_mouseGlobalTX);
+   // get the VBO instance and draw the built in teapot
+  ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+  // draw
 
-}
+//  loadMatricesToShader();
+//  prim->draw("teapot");
 
-void NGLDraw::update(double timeElapsed, double currentTime)
-{
-  m_gameworld->Update(timeElapsed, currentTime);
+
 }
 
 
@@ -143,7 +132,7 @@ void NGLDraw::loadMatricesToShader()
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
-  M=m_trans.getMatrix()*m_mouseGlobalTX;
+
   MV=  M*m_cam->getViewMatrix();
   MVP= M*m_cam->getVPMatrix();
   normalMatrix=MV;

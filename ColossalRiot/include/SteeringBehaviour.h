@@ -36,22 +36,25 @@ private:
 private:
 
     Vehicle* m_vehicle;
+    int m_activeFlags;
     ngl::Vec3 m_steeringForce;
     ngl::Vec3 m_target;
     Vehicle* m_targetAgent;
 
 
-    float m_wanderJitter;
-    float m_wanderRadius;
     float m_wanderDistance;
+    float m_wanderRadius;
+    float m_wanderJitter;
 
     int m_deceleration;
 
     ngl::Vec3 m_wanderTarget;
+    ngl::Vec3 m_wanderTargetOriginal;
+
 
     float m_viewDistance;
 
-    int m_activeFlags;
+
 
     bool on(behaviour_type bt){return (m_activeFlags & bt) == bt;}
 
@@ -89,6 +92,12 @@ private:
 
 
 public:
+
+    ngl::Vec3 m_worldWanderTarget;
+    ngl::Vec3 m_localWanderTarget;
+
+
+
     SteeringBehaviour(Vehicle* agent);
 
     ~SteeringBehaviour();
@@ -128,8 +137,6 @@ public:
 
     double forwardComponent();
     double sideComponent();
-
-
 
 
 };

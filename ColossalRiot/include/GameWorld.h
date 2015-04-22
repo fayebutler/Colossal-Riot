@@ -35,7 +35,7 @@ public:
     ngl::Vec3 Crosshair()const{return m_crosshair;}
     void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
 
-    void Update(double timeElapsed);
+    void Update(double timeElapsed, double currentTime);
     void draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}

@@ -51,20 +51,21 @@ end
 
 work = {}
 work["enter"] = function()
-  print("POLICE work enter")
+  print("LUA POLICE work enter")
 end
 
 work["execute"] = function()
-  print("POLICE work execute")
+  print("LUA POLICE work execute")
   police.m_morale = police.m_morale - 1
   police:attack(police.m_targetID)
+  police:wanderOn()
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
   end
 end
 
 work["exit"] = function()
-  print("POLICE work exit")
+  print("LUA POLICE work exit")
 end
 
 
@@ -73,11 +74,11 @@ end
 
 flee = {}
 flee["enter"] = function()
-  print("POLICE flee enter")
+  print("LUA POLICE flee enter")
 end
 
 flee["execute"] = function()
-  print("POLICE flee execute")
+  print("LUA POLICE flee execute")
   police.m_morale = police.m_morale + 5
   if police.m_morale > 75 then
     stateMachine:changeState("work")
@@ -85,7 +86,7 @@ flee["execute"] = function()
 end
 
 flee["exit"] = function()
-  print("POLICE flee exit")
+  print("LUA POLICE flee exit")
 end
 
 
@@ -94,14 +95,14 @@ end
 
 dead = {}
 dead["enter"] = function()
-  print("POLICE dead enter")
+  print("LUA POLICE dead enter")
 end
 
 dead["execute"] = function()
-  print("PO PO DEAD")
+  print("LUA POLICE dead execute")
   police.m_health = 0
 end
 
 --dead["exit"] = function()
---  print("POLICE dead exit")
+--  print("LUA POLICE dead exit")
 --end

@@ -4,10 +4,7 @@
 #include <ngl/Camera.h>
 #include <ngl/Light.h>
 #include <SDL.h>
-#include "GameWorld.h"
-#include "Vehicle.h"
-#include "Police.h"
-#include "Rioter.h"
+
 
 class NGLDraw
 {
@@ -30,10 +27,6 @@ class NGLDraw
     /// @brief draw the scene
     //----------------------------------------------------------------------------------------------------------------------
     void draw();
-
-    void update(double timeElapsed, double currentTime);
-
-
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief this method is called every time a mouse is moved
     /// @param _event the SDL mouse event structure containing all mouse info
@@ -109,9 +102,6 @@ class NGLDraw
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
 
-    ngl::Transformation m_trans;
-
-    GameWorld* m_gameworld;
 };
 
 

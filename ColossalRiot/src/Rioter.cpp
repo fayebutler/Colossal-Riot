@@ -15,14 +15,14 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 1;
+    m_targetID = 0;
+    m_hopHeight = 0.5;
+    m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
-//    Vehicle::Steering()->SeekOn();
-//    Vehicle::Steering()->FleeOn();
-    Vehicle::Steering()->WanderOn();
 
     Vehicle::Steering()->WanderOn();
+
 }
 
 Rioter::~Rioter()
@@ -31,17 +31,48 @@ Rioter::~Rioter()
   delete m_stateMachine; 
 }
 
-void Rioter::update(double timeElapsed)
+void Rioter::update(double timeElapsed, double currentTime)
 {
-    Agent::update(timeElapsed);
+    Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-
+    //Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+    //Vehicle::Steering()->EvadeOn();
+    //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
   ngl::VAOPrimitives::instance()->draw("teapot");
+
+  //TARGET
+
+//  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+//  m.setSpecularExponent(5.f);
+//  m.setDiffuse(ngl::Colour(getRage()/100.0f, 0.0f, 0.0f, 1.0f));
+//  m.loadToShader("material");
+
+//  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+//  ngl::Mat4 MV;
+//  ngl::Mat4 MVP;
+//  ngl::Mat3 normalMatrix;
+//  ngl::Mat4 M;
+//  ngl::Transformation trans;
+//  trans.setPosition(getHeading());
+//  trans.setScale(0.3,0.3,0.3);
+
+//  M=trans.getMatrix()*mouseGlobalTX;
+//  MV=  M*cam->getViewMatrix();
+//  MVP= M*cam->getVPMatrix();
+//  normalMatrix=MV;
+//  normalMatrix.inverse();
+//  shader->setShaderParamFromMat4("MV",MV);
+//  shader->setShaderParamFromMat4("MVP",MVP);
+//  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+//  shader->setShaderParamFromMat4("M",M);
+
+//  ngl::VAOPrimitives::instance()->draw("teapot");
 }
 
 void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -58,7 +89,15 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos());
+  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
+
+  ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
+  rot = ((rot * 180)/M_PI);
+  if(getHeading().m_x < 0)
+  {
+    rot = 180 + rot;
+  }
+  trans.setRotation(0,-rot,0);
 
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
@@ -73,7 +112,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 bool Rioter::handleMessage(const Message& _message)
 {
-  Agent::handleMessage(_message);
+  return Agent::handleMessage(_message);
 }
 
 
