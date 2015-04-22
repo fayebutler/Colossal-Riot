@@ -21,8 +21,6 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    Vehicle::Steering()->WanderOn();
-//    Vehicle::Steering()->setWanderWeight(0.0);
 
 }
 
@@ -36,8 +34,8 @@ void Rioter::update(double timeElapsed, double currentTime)
 {
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-//    Vehicle::Steering()->setWanderWeight(0.0);
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+
+//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
     Vehicle::Steering()->EvadeOn();
     Vehicle::Steering()->WanderOn();
     Vehicle::Steering()->setWanderWeight(0.8);
@@ -48,6 +46,8 @@ void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
   ngl::VAOPrimitives::instance()->draw("teapot");
+
+
 }
 
 void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -67,7 +67,6 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = ((rot * 180)/M_PI);
-  std::cout<<"ROT: "<<rot<<std::endl;
 
   if(getHeading().m_x < 0)
   {

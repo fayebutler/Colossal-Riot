@@ -27,7 +27,6 @@ Police::Police(GameWorld* world) : Agent(world)
     m_hopSpeed = 10.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-    Vehicle::Steering()->WanderOn();
 
 }
 
@@ -42,9 +41,6 @@ void Police::update(double timeElapsed, double currentTime)
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
 
-//  Vehicle::Steering()->PursuitOn();
-//  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-//  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
   //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 //  Vehicle::Steering()->WanderOn();
   Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
@@ -78,7 +74,6 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = ((rot * 180)/M_PI);
-  std::cout<<"ROT: "<<rot<<std::endl;
 
   if(getHeading().m_x < 0)
   {

@@ -24,15 +24,6 @@ GameWorld::GameWorld()
   }
 
 
-//  Police* policeman = m_police[0];
-//  Rioter* riotman = m_rioters[0];
-//  policeman->Steering()->PursuitOn();
-//  policeman->Steering()->setTargetAgent(riotman);
-  //riotman->Steering()->setTargetAgent(policeman);
-  //riotman->Steering()->EvadeOn();
-//  riotman->Steering()->WanderOn();
-
-
 }
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
@@ -40,12 +31,14 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
+        std::cout<<"Rioters_size  "<<m_rioters.size()<<std::endl;
     }
     for(unsigned int a=0; a<m_police.size(); ++a)
     {
         Police* currentPolice = m_police[a];
         currentPolice->update(timeElapsed, currentTime);
         std::cout<<currentPolice->getHealth()<<std::endl;
+        std::cout<<"Police_size  "<<m_rioters.size()<<std::endl;
     }
 }
 
