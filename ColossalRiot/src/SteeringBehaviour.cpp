@@ -13,7 +13,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightSeek(1.0),
     m_weightFlee(1.0),
     m_weightArrive(1.0),
-    m_weightWander(1.0),
+    m_weightWander(0.0),
 //    m_weightCohesion(1.0),
 //    m_weightSeparation(1.0),
 //    m_weightAlignment(1.0),
@@ -57,40 +57,40 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
+    m_steeringForce = 0;
 
-//    if(on(seek)) //need to create crosshair in gameworld
-//    {
-//        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
-//    }
-//    if(on(flee))
-//    {
-//        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
-//    }
-//    if(on(arrive))
-//    {
-//        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
-//    }
-//    if(on(pursuit))
-//    {
-//        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
-//    }
+    if(on(seek)) //need to create crosshair in gameworld
+    {
+        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+    }
+    if(on(flee))
+    {
+        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
+    }
+    if(on(arrive))
+    {
+        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
+    }
+    if(on(pursuit))
+    {
+        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
+    }
     if(on(wander))
     {
-        m_steeringForce = Wander() * m_weightWander;
+        m_steeringForce += Wander() * m_weightWander;
     }
-//    if(on(evade))
-//    {
-//        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
-//    }
+    if(on(evade))
+    {
+        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
+    }
 
-    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
+//    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
 
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())
     {
         m_steeringForce.normalize();
-        std::cout<<"Steering Force Normalized = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
-//        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
+        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
     }
 
     return m_steeringForce;
@@ -205,7 +205,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-  worldTarget += m_vehicle->getPos();
+//  worldTarget += m_vehicle->getPos();
 
   std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
   std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;

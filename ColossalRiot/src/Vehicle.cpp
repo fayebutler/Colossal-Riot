@@ -34,7 +34,8 @@ void Vehicle::update(double time_elapsed)
    std::cout<<"time  "<<m_timeElapsed<<std::endl;
 
    ngl::Vec3 SteeringForce;
-   SteeringForce = m_steering->calculateWeightedSum() - getPos();
+   SteeringForce = m_steering->calculateWeightedSum();// - getPos();
+
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;

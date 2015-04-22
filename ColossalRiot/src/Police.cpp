@@ -47,9 +47,9 @@ void Police::update(double timeElapsed, double currentTime)
 //  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
   //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 //  Vehicle::Steering()->WanderOn();
-//  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-//  Vehicle::Steering()->PursuitOn();
-//  Vehicle::setMaxSpeed(0.2);
+  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  Vehicle::Steering()->PursuitOn();
+  Vehicle::setMaxSpeed(0.6);
 
 }
 
@@ -77,7 +77,14 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Transformation trans;
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
-  rot = ((rot * 180)/M_PI) + 180;
+  rot = ((rot * 180)/M_PI);
+  std::cout<<"ROT: "<<rot<<std::endl;
+
+  if(getHeading().m_x < 0)
+  {
+    rot = 180 + rot;
+  }
+
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();

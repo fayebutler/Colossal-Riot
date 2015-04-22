@@ -21,8 +21,6 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    Vehicle::Steering()->WanderOn();
-//    Vehicle::Steering()->setWanderWeight(0.0);
 
 }
 
