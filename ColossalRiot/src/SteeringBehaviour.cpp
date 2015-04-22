@@ -168,7 +168,6 @@ ngl::Vec3 SteeringBehaviour::Wander()
     std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
 
 
-    ngl::Transformation move;
     //rotate local axis to world
 
     ngl::Vec3 headingNormalise;

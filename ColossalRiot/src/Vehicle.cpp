@@ -57,9 +57,9 @@ void Vehicle::update(double time_elapsed)
    {
 
        ngl::Vec3 tempVel;
-       tempVel = m_velocity;
-       tempVel.normalize();
-       m_heading = tempVel;
+//       tempVel = SteeringForce;
+//       tempVel.normalize();
+//       m_heading = tempVel;
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 

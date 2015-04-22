@@ -43,7 +43,7 @@ void Police::update(double timeElapsed, double currentTime)
   m_stateMachine->update();
   Vehicle::Steering()->PursuitOn();
   Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
+//  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 
 }
