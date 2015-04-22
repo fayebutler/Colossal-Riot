@@ -10,6 +10,7 @@ GameWorld::GameWorld()
 
 
 
+
    m_cellGraph =  CellGraph("plane_Test.obj");
 
 
@@ -34,6 +35,9 @@ GameWorld::GameWorld()
 
 
 
+
+
+
 //  Police* policeman = m_police[0];
 //  Rioter* riotman = m_rioters[0];
 //  policeman->Steering()->PursuitOn();
@@ -47,17 +51,54 @@ GameWorld::GameWorld()
 }
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
-
-
+//    void * edpp = EntityMgr->getEntityFromID(0);
+//    if (edpp->getEntityType() == typeRioter)
 
     //Clear the cells of agentIDs
 
     m_cellGraph.clearCells();
 
-/// ORDER OF UPDATE:
+    for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
+    {
+        m_cellGraph.updateCells(EntityMgr->getEntityFromID(i));
+    }
+
+    for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
+    {
+        m_cellGraph.addEntities(EntityMgr->getEntityFromID(i));
+    }
+
+
+
+    //0.
 
     //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
 
+/// switchy magic:
+
+//    switch (EntityMgr->getEntityFromID(i)->getEntityType())
+//    {
+//    case typePolice:
+
+
+//        std::cout<<"Chub Police"<<std::endl;
+//        break;
+
+//    case typeRioter:
+
+//        std::cout<<"Chub Rioter"<<std::endl;
+//        break;
+
+//    case typeWall:
+//        std::cout<<"Chub Wall"<<std::endl;
+//        break;
+
+//    default:
+//        std::cout<<"Who knows?"<<std::endl;
+//        break;
+//    }
+
+/// end of switchy magic
 
     //1. for each agent -> updateCells
     // finds the cell agent is in; adds agentID to cell and cellID to agent.
@@ -76,18 +117,18 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
 
     //Update all the cells with their new vector of agents and agents with current Cell
-    for(int i = 0; i<m_rioters.size();i++)
-    {
-        //Give cellGraph the position of the agent, return the cell Id
-        //and append agent to that cell's vector of agents.
-        m_cellGraph.updateCells(m_rioters[i]);
-    }
+//    for(int i = 0; i<m_rioters.size();i++)
+//    {
+//        //Give cellGraph the position of the agent, return the cell Id
+//        //and append agent to that cell's vector of agents.
+//        m_cellGraph.updateCells(m_rioters[i]);
+//    }
 
     //Now we have updated cell information, return the neighbours of each agent:
-    for (int j = 0; j<m_rioters.size();j++)
-    {
-        m_cellGraph.addEntities(m_rioters[j]);
-    }
+//    for (int j = 0; j<m_rioters.size();j++)
+//    {
+//        m_cellGraph.addEntities(m_rioters[j]);
+//    }
 
 
 
@@ -102,8 +143,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Police* currentPolice = m_police[a];
         currentPolice->update(timeElapsed, currentTime);
-        std::cout<<currentPolice->getHealth()<<std::endl;
+
     }
+
 }
 
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)

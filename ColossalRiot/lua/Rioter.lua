@@ -5,6 +5,7 @@ makeRioter = function()
    rioter.m_morale = 100
    rioter.m_rage = 50
    rioter.m_damage = 0.1
+--   stateMachine:changeState("protest")
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
 end
@@ -54,11 +55,13 @@ end
 
 protest = {}
 protest["enter"] = function()
-  print("RIOTER protest enter")
+--  rioter:pursuit(1.0)
+--  rioter:evade(0.0)
+--  print("LUA RIOTER protest enter")
 end
 
 protest["execute"] = function()
-  print("RIOTER protest execute")
+--  print("LUA RIOTER protest execute")
   rioter.m_morale = rioter.m_morale - 0.3
   rioter:attack(rioter.m_targetID)
   rioter.m_rage = rioter.m_rage + 0.1;
@@ -68,7 +71,7 @@ protest["execute"] = function()
 end
 
 protest["exit"] = function()
-  print("RIOTER protest exit")
+--  print("LUA RIOTER protest exit")
 end
 
 
@@ -77,20 +80,22 @@ end
 
 flee = {}
 flee["enter"] = function()
-  print("RIOTER flee enter")
+--  rioter:pursuit(0.0)
+--  rioter:evade(1.0)
+--  print("LUA RIOTER flee enter")
 end
 
 flee["execute"] = function()
-  print("RIOTER flee execute")
+--  print("RIOTER flee execute")
   rioter.m_morale = rioter.m_morale + 0.2
   rioter.m_rage = rioter.m_rage - 0.1;
   if rioter.m_morale > 75 then
-    stateMachine:changeState("protest")
+  stateMachine:changeState("protest")
   end
 end
 
 flee["exit"] = function()
-  print("RIOTER flee exit")
+--  print("LUA RIOTER flee exit")
 end
 
 
@@ -99,16 +104,16 @@ end
 
 dead = {}
 dead["enter"] = function()
-  print("RIOTER dead enter")
+--  print("LUA RIOTER dead enter")
 end
 
 dead["execute"] = function()
-  print("RIOTER DEAD")
+--  print("LUA RIOTER DEAD")
   rioter.m_health = 0
 end
 
 --dead["exit"] = function()
---  print("RIOTER dead exit")
+--  print("LUA RIOTER dead exit")
 --end
 
 
@@ -116,14 +121,14 @@ end
 
 home = {}
 home["enter"] = function()
-  print("RIOTER home enter")
+--  print("LUA RIOTER home enter")
 end
 
 home["execute"] = function()
-  print("RIOTER GOING HOME")
+--  print("LUA RIOTER home execute")
   rioter.m_morale = 0
 end
 
 home["exit"] = function()
-  print("RIOTER home exit")
+--  print("LUA RIOTER home exit")
 end

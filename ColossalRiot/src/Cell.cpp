@@ -82,9 +82,9 @@ void Cell::printCellInfo()
 //    std::cout<<"upper = "<<m_boundries.m_x<<std::endl<<"lower = "<<m_boundries.m_y<<std::endl<<"left = "<<m_boundries.m_z<<std::endl
 //            <<"right = "<<m_boundries.m_w<<std::endl;
 //    std::cout<<"Centre is: "<<m_centre.m_x<<"  "<<m_centre.m_z<<std::endl<<std::endl;
-    if (m_agentIDs.empty() == 0)
+    if (m_dynamicEntityIDs.empty() == 0)
     {
-        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_agentIDs[0]<<std::endl;
+        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_dynamicEntityIDs[0]<<std::endl;
     }
 }
 
@@ -99,18 +99,18 @@ float Cell::getSize()
     return fabs(m_boundries[0] - m_boundries[1]);
 }
 
-void Cell::addAgentID(int _ID)
+void Cell::addDynamicEntityID(int _ID)
 {
-    m_agentIDs.push_back(_ID);
+    m_dynamicEntityIDs.push_back(_ID);
 }
 
-void Cell::clearAgentIDs()
+void Cell::clearDynamicEntityIDs()
 {
-    m_agentIDs.clear();
+    m_dynamicEntityIDs.clear();
 }
 
-std::vector<int> Cell::getAgentIDs()
+std::vector<int> Cell::getDynamicEntityIDs()
 {
-    return m_agentIDs;
+    return m_dynamicEntityIDs;
 
 }

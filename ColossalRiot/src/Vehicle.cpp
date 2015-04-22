@@ -31,10 +31,11 @@ void Vehicle::update(double time_elapsed)
 {
 
    m_timeElapsed = time_elapsed;
-   std::cout<<"time  "<<m_timeElapsed<<std::endl;
 
    ngl::Vec3 SteeringForce;
+
    SteeringForce = m_steering->calculateWeightedSum();
+
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -61,8 +62,7 @@ void Vehicle::update(double time_elapsed)
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 
-//   std::cout<<"heading = ("<<m_heading.m_x<<", "<<m_heading.m_y<<", "<<m_heading.m_z<<")"<<std::endl;
- //  std::cout<<"STEERING: ("<<SteeringForce.m_x<<", "<<SteeringForce.m_y<<", "<<SteeringForce.m_z<<")"<<std::endl;
+
 }
 
 bool Vehicle::handleMessage(const Message& _message)

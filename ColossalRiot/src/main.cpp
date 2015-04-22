@@ -126,10 +126,10 @@ int main()
 
         // process the mouse data by passing it to ngl class
 
-        case SDL_MOUSEMOTION : if (paused == 0)ngldraw.mouseMoveEvent(event.motion);break;
-        case SDL_MOUSEBUTTONDOWN : if (paused == 0)ngldraw.mousePressEvent(event.button); break;
-        case SDL_MOUSEBUTTONUP : if (paused == 0)ngldraw.mouseReleaseEvent(event.button); break;
-        case SDL_MOUSEWHEEL : if (paused == 0)ngldraw.wheelEvent(event.wheel); break;
+        case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion);break;
+        case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button); break;
+        case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
+        case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
 
         // if the window is re-sized pass it to the ngl class to change gl viewport
         // note this is slow as the context is re-create by SDL each time
@@ -176,12 +176,12 @@ int main()
 
     std::cout<<"------------- TICK -------------"<<std::endl;
     ngldraw.update(timeElapsed,currentTime);
+
+    }
     // now we draw ngl
     ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
-    }
-
 
 //--------------------------------------------------------------------------------------------------------------------
 

@@ -7,7 +7,6 @@
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
-#include <vector>
 #include "Rioter.h"
 #include "Police.h"
 #include "CellGraph.h"
@@ -18,7 +17,9 @@ class GameWorld
 {
 private:
 
-    int m_numberofAgents;
+    //entities that update each frame (not walls n shit)
+
+    std::vector<int> m_dynamicEntities;
 
     std::vector<BaseGameEntity*> m_obstacles;
 

@@ -21,6 +21,7 @@ public:
         registerLua(L);
         luabridge::push(L, this);
         lua_setglobal(L, "stateMachine");
+        m_currentState = NULL;
     }
 
     ~StateMachine() {}
@@ -37,7 +38,7 @@ public:
     void update()    {
       if (m_globalState)
       {
-          luaCallState(m_globalState, "execute");
+        luaCallState(m_globalState, "execute");
       }
       if (m_currentState)
       {
@@ -53,11 +54,16 @@ public:
 
     void changeState(const char* _newState)
     {
-        m_previousState = m_currentState;
-        luaCallState(m_currentState, "exit");
+        if (m_currentState != NULL)
+        {
+            m_previousState = m_currentState;
+            luaCallState(m_currentState, "exit");
+        }
+
         m_currentState = _newState;
         luaCallState(m_currentState, "enter");
     }
+
 
     void registerLua(lua_State* _L)
     {

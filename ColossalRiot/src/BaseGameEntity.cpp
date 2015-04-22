@@ -10,7 +10,7 @@ BaseGameEntity::BaseGameEntity()
   EntityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(int entity_type, ngl::Vec3 pos, float r)
+BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
 {
    setID(m_nextValidID);
    m_nextValidID++;
@@ -23,6 +23,16 @@ BaseGameEntity::BaseGameEntity(int entity_type, ngl::Vec3 pos, float r)
 
 }
 
+void BaseGameEntity::setCurrentCellID(int _ID)
+{
+    m_currentCellID = _ID;
+}
+
+int BaseGameEntity::getCurrentCell()
+{
+    return m_currentCellID;
+}
+
 bool BaseGameEntity::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
@@ -32,4 +42,14 @@ bool BaseGameEntity::handleMessage(const Message& _message)
     std::cout<<"BaseGameEntity: Message type not defined"<<std::endl;
     return false;
   }
+}
+
+void BaseGameEntity::addDetectedDynamicEntityID(int _ID)
+{
+    m_detectedDynamicEntityIDs.push_back(_ID);
+}
+
+void BaseGameEntity::clearDetectedDynamicEntityID()
+{
+    m_detectedDynamicEntityIDs.clear();
 }

@@ -21,9 +21,9 @@ public:
     CellGraph();
     CellGraph(const char *_fileName);
     void printCellGraph();
-    void updateCells(Agent * _agent);
+    void updateCells(BaseGameEntity *_entity);
     void clearCells();
-    void addEntities(Agent *_agent);
+    void addEntities(BaseGameEntity *_entity);
 
 };
 

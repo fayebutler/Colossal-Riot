@@ -55,12 +55,19 @@ public:
 
   virtual bool handleMessage(const Message& _message);
 
-  void setCurrentCellID(int _ID);
-  int getCurrentCell();
+
+  //STEERING FUNCTIONS
+
+  void wander(double weight);
+
+  void pursuit(double weight);
+
+  void evade(double weight);
+
 
 
 protected:
-  int m_currentCellID;
+
   float m_detectionRadius;
 
   float m_health;

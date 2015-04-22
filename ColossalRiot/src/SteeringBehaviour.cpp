@@ -31,6 +31,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
     m_wanderTargetOriginal = m_wanderTarget;
+
 }
 
 
@@ -56,6 +57,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
+    m_steeringForce = 0;
 
     m_steeringForce = 0;
     if(on(seek)) //need to create crosshair in gameworld
@@ -83,6 +85,8 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
         m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
     }
 
+//    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
+
 
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())
@@ -95,6 +99,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 }
 
+
 double SteeringBehaviour::forwardComponent()
 {
     return m_vehicle->getHeading().dot(m_steeringForce);
@@ -105,10 +110,11 @@ double SteeringBehaviour::sideComponent()
     return m_vehicle->getSide().dot(m_steeringForce);
 }
 
-//bejaviour type functions
+//behaviour type functions
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
@@ -118,6 +124,7 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 {
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
@@ -126,6 +133,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 {
+
     ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
@@ -184,11 +192,12 @@ ngl::Vec3 SteeringBehaviour::Wander()
     angle = 2*M_PI - angle;
   }
 
+
+
   ngl::Transformation trans;
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-
 
   //worldTarget = ngl::Vec3(3.f, 0.f, 1.f);
   m_worldWanderTarget = worldTarget;
@@ -200,6 +209,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
+
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
     double relativeHeading = m_vehicle->getHeading().dot(agent->getHeading());
 
@@ -215,6 +225,7 @@ ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
+
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
 
 //    if only want to conside pursuers within range
@@ -222,7 +233,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 //    if(toAgent.lengthSquared() > threatRange * threatRange) return ngl::Vec3();
 
     double lookAheadTime = toAgent.length() / (m_vehicle->getMaxSpeed() + agent->getSpeed());
-;
     ngl::Vec3 agentPos = agent->getPos() + (agent->getVelocity() * lookAheadTime);
 
     return Flee(agentPos);

@@ -154,19 +154,19 @@ void CellGraph::printCellGraph()
     }
 }
 
-void CellGraph::updateCells(Agent *_agent)
+void CellGraph::updateCells(BaseGameEntity *_entity)
 {
 
 //    ngl::Vec3 agentPos = _agent->getPos();
     for (int i=0; m_cells.size(); i++)
     {
-        ngl::Vec3 test =m_cells[i].getCentre()-_agent->getPos();
+        ngl::Vec3 test =m_cells[i].getCentre()-_entity->getPos();
         //std::cout<<" CurrentID:  "<< i<<std::endl;
         if (test.length()< m_maxDist)
         {
             std::cout<<" CurrentID:  "<< i<<std::endl;
-            m_cells[i].addAgentID(_agent->getID());
-            _agent->setCurrentCellID(i);
+            m_cells[i].addDynamicEntityID(_entity->getID());
+            _entity->setCurrentCellID(i);
 
             break;
         }
@@ -181,32 +181,35 @@ void CellGraph::clearCells()
     for (unsigned int i = 0; i<m_cells.size(); i++)
     {
         m_cells[i].printCellInfo();
-        m_cells[i].clearAgentIDs();
+        m_cells[i].clearDynamicEntityIDs();
     }
 }
 
-void CellGraph::addEntities(Agent *_agent)
+void CellGraph::addEntities(BaseGameEntity *_entity)
 {
 // 1. add agents in current cell
 // 2. add agents in neighbouring cells
 
-
-
+    _entity->clearDetectedDynamicEntityID();
 
     //for each neighbour
-    int numberOfCellsToCheck = m_cells[(_agent->getCurrentCell())].getNeighbourCellIDs().size();
+    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
 
-
+ //loops through all neighbour cells
     for (unsigned int i = 0; i < numberOfCellsToCheck; i++)
     {
+
         std::cout<<"Current Neighbour:  "<<i<<std::endl;
-        int currentNeighbourCell =m_cells[(_agent->getCurrentCell())].getNeighbourCellIDs()[i];
-        std::vector<int> agentsInCell = m_cells[currentNeighbourCell].getAgentIDs();
+        int currentNeighbourCell =m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i];
+        std::vector<int> dynamicEntitiesInCell = m_cells[currentNeighbourCell].getDynamicEntityIDs();
         // FOR LOOP HERE FOR EACH AGENT IN GETAGENTidS,
 
-        for (unsigned int i = 0; i < agentsInCell.size(); i++)
+        for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
         {
-            std::cout<<"balls";
+            ngl::Vec3 dist  = (EntityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
+            if(dist.length()<10)
+                _entity->addDetectedDynamicEntityID(i);
+                std::cout<<"balls number : "<< i <<std::endl;
 
         }
 

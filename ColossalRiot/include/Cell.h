@@ -18,7 +18,7 @@ private:
     ngl::Vec4 m_boundries;
     ngl::Vec3 m_centre;
 
-    std::vector<int> m_agentIDs;
+    std::vector<int> m_dynamicEntityIDs;
 
 
 public:
@@ -27,9 +27,9 @@ public:
     Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs);
     void printCellInfo();
     std::vector<int> getNeighbourCellIDs();
-    void addAgentID(int _ID);
-    void clearAgentIDs();
-    std::vector<int> getAgentIDs();
+    void addDynamicEntityID(int _ID);
+    void clearDynamicEntityIDs();
+    std::vector<int> getDynamicEntityIDs();
 
 
     ngl::Vec3 getCentre();
