@@ -15,13 +15,14 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 0;
+    m_targetID = 2;
     m_hopHeight = 0.5;
     m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    Vehicle::Steering()->WanderOn();
+//    Vehicle::Steering()->WanderOn();
+//    Vehicle::Steering()->setWanderWeight(0.0);
 
 }
 
@@ -35,8 +36,13 @@ void Rioter::update(double timeElapsed, double currentTime)
 {
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-    //Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-    //Vehicle::Steering()->EvadeOn();
+
+//    Vehicle::Steering()->setWanderWeight(0.0);
+//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+//    Vehicle::Steering()->EvadeOn();
+ //   Vehicle::Steering()->WanderOn();
+//    Vehicle::Steering()->setWanderWeight(0.8);
+
     //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 

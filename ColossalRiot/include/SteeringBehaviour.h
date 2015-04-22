@@ -105,10 +105,14 @@ public:
     void SeekOn(){m_activeFlags |= seek;} //bitwise OR
     void SeekOff(){if(on(seek)) m_activeFlags ^= seek;} //bitwise XOR
     bool isSeekOn(){return on(seek);}
+    void setSeekWeight(double m_newWeight){m_weightSeek = m_newWeight;}
+    double getSeekWeight(){return m_weightSeek;}
 
     void FleeOn(){m_activeFlags |= flee;}
     void FleeOff(){if(on(flee)) m_activeFlags ^= flee;}
     bool isFleeOn(){return on(flee);}
+    void setFleeWeight(double m_newWeight){m_weightFlee = m_newWeight;}
+    double getFleeWeight(){return m_weightFlee;}
 
     void ArriveOn(){m_activeFlags |= arrive;}
     void ArriveOff(){if(on(arrive)) m_activeFlags ^= arrive;}
@@ -117,14 +121,20 @@ public:
     void WanderOn(){m_activeFlags |= wander;}
     void WanderOff(){if(on(wander)) m_activeFlags ^= wander;}
     bool isWanderOn(){return on(wander);}
+    void setWanderWeight(double m_newWeight){m_weightWander = m_newWeight;}
+    double getWanderWeight(){return m_weightWander;}
 
     void PursuitOn(){m_activeFlags |= pursuit;}
     void PursuitOff(){if(on(pursuit)) m_activeFlags ^= pursuit;}
     bool isPursuitOn(){return on(pursuit);}
+    void setPursuitWeight(double m_newWeight){m_weightPursuit = m_newWeight;}
+    double getPursuitWeight(){return m_weightPursuit;}
 
     void EvadeOn(){m_activeFlags |= evade;}
     void EvadeOff(){if(on(evade)) m_activeFlags ^= evade;}
     bool isEvadeOn(){return on(evade);}
+    void setEvadeWeight(double m_newWeight){m_weightEvade = m_newWeight;}
+    double getEvadeWeight(){return m_weightEvade;}
 
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}

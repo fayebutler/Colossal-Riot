@@ -5,6 +5,7 @@ makePolice = function()
    police.m_morale = 100
    police.m_rage = 20
    police.m_damage = 0.01
+--   stateMachine:changeState("work")
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
 end
@@ -52,13 +53,13 @@ end
 work = {}
 work["enter"] = function()
   print("LUA POLICE work enter")
+  police:pursuit(1.0)
 end
 
 work["execute"] = function()
   print("LUA POLICE work execute")
   police.m_morale = police.m_morale - 1
   police:attack(police.m_targetID)
-  police:wanderOn()
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
   end
@@ -95,6 +96,8 @@ end
 
 dead = {}
 dead["enter"] = function()
+  police:pursuit(0.0)
+  police:wander(1.0)
   print("LUA POLICE dead enter")
 end
 

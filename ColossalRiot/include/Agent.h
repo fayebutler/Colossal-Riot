@@ -54,6 +54,14 @@ public:
 
   virtual bool handleMessage(const Message& _message);
 
+  //STEERING FUNCTIONS
+
+  void wander(double weight);
+
+  void pursuit(double weight);
+
+  void evade(double weight);
+
 
 protected:
   float m_health;

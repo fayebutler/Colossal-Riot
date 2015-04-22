@@ -6,7 +6,7 @@
 
 GameWorld::GameWorld()
 {
-  for (int i = 0; i < 10; ++i)
+  for (int i = 0; i < 2; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setPos(ngl::Vec3(-3.0, 0.0, 3.0));
