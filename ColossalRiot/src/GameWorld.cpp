@@ -17,15 +17,16 @@ GameWorld::GameWorld()
   for (int i = 0; i < 2; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setPos(ngl::Vec3(1.0, 0.0, 0.0));
+    newRioter->setPos(ngl::Vec3(0.1, 0.0, 0.0));
     m_rioters.push_back(newRioter);
+
 
   }
   for (int i = 0; i < 5; ++i)
   {
     Police* newPolice = new Police(this);
     //newPolice->setTargetID(i);
-    newPolice->setPos(ngl::Vec3(2.0, 0.0, 2.0));
+    newPolice->setPos(ngl::Vec3(3.0, 0.0, 5.0));
     m_police.push_back(newPolice);
   }
 
@@ -53,10 +54,24 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_cellGraph.clearCells();
 
-    //1. for each agent -> updateCells
-    //2. for each trigger -> updateCells
-    //3. for each agent -> get Neighbouring agents
+/// ORDER OF UPDATE:
 
+    //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
+
+
+    //1. for each agent -> updateCells
+    // finds the cell agent is in; adds agentID to cell and cellID to agent.
+
+    //2. for each moving entity (csGas, molotov etc.) -> updateCells
+    // finds the cell moving entity is in; adds ID to cell and cellID to movingEntity.
+
+    //3. for each agent -> get Neighbouring everything (other agents, moving entities, walls, obstacles)
+    // get all the IDs from current and all neighbouring cells; check if within detectionRadius
+    // add to one vector of IDs? seperate vectors? when to we distinguish? Cell level? ahhhhhhhhhh
+
+    //4. same loop? update agent.
+
+/// ---------------------------------------------------------------------------------
 
 
 

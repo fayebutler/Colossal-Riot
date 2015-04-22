@@ -17,6 +17,7 @@ private:
     std::vector <int> m_neighbourCellIDs;
     ngl::Vec4 m_boundries;
     ngl::Vec3 m_centre;
+
     std::vector<int> m_agentIDs;
 
 
