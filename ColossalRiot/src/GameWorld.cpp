@@ -66,9 +66,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     for (int j = 0; j<m_rioters.size();j++)
     {
         m_cellGraph.addEntities(m_rioters[j]);
-
-
-
     }
 
 
