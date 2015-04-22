@@ -58,40 +58,42 @@ ngl::Vec3 SteeringBehaviour::calculate()
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
 
-    if(on(seek)) //need to create crosshair in gameworld
-    {
-        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
-    }
-    if(on(flee))
-    {
-        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
-    }
-    if(on(arrive))
-    {
-        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
-    }
-    if(on(pursuit))
-    {
-        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
-    }
+//    if(on(seek)) //need to create crosshair in gameworld
+//    {
+//        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+//    }
+//    if(on(flee))
+//    {
+//        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
+//    }
+//    if(on(arrive))
+//    {
+//        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
+//    }
+//    if(on(pursuit))
+//    {
+//        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
+//    }
     if(on(wander))
     {
-        m_steeringForce += Wander() * m_weightWander;
+        m_steeringForce = Wander() * m_weightWander;
     }
-    if(on(evade))
-    {
-        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
-    }
+//    if(on(evade))
+//    {
+//        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
+//    }
 
+    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
 
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())
     {
         m_steeringForce.normalize();
-        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
+        std::cout<<"Steering Force Normalized = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
+//        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
     }
 
-    return Wander();
+    return m_steeringForce;
 
 }
 

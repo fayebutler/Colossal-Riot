@@ -35,8 +35,9 @@ void Rioter::update(double timeElapsed, double currentTime)
 {
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-    Vehicle::Steering()->EvadeOn();
+//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+//    Vehicle::Steering()->EvadeOn();
+ //   Vehicle::Steering()->WanderOn();
     //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
