@@ -15,7 +15,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 0;
+    m_targetID = 1;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 //    Vehicle::Steering()->SeekOn();
