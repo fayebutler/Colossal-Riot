@@ -5,7 +5,7 @@ Cell::Cell()
 
 }
 
-Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourIDs)
+Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs)
 {
     if ( _fourCorners.size() == 4)
     {
@@ -48,7 +48,7 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
     m_centre.m_z = (upper+lower)/2;
 
     m_ID = _ID;
-    m_neighbourIDs = _neighbourIDs;
+    m_neighbourCellIDs = _neighbourCellIDs;
 
 
     }
@@ -60,9 +60,9 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
 
 }
 
-std::vector <int> Cell::getNeighbourIDs()
+std::vector <int> Cell::getNeighbourCellIDs()
 {
-    return m_neighbourIDs;
+    return m_neighbourCellIDs;
 }
 
 void Cell::printCellInfo()
@@ -82,9 +82,9 @@ void Cell::printCellInfo()
 //    std::cout<<"upper = "<<m_boundries.m_x<<std::endl<<"lower = "<<m_boundries.m_y<<std::endl<<"left = "<<m_boundries.m_z<<std::endl
 //            <<"right = "<<m_boundries.m_w<<std::endl;
 //    std::cout<<"Centre is: "<<m_centre.m_x<<"  "<<m_centre.m_z<<std::endl<<std::endl;
-    if (m_agentsID.empty() == 0)
+    if (m_agentIDs.empty() == 0)
     {
-        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_agentsID[0]<<std::endl;
+        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_agentIDs[0]<<std::endl;
     }
 }
 
@@ -101,16 +101,16 @@ float Cell::getSize()
 
 void Cell::addAgentID(int _ID)
 {
-    m_agentsID.push_back(_ID);
+    m_agentIDs.push_back(_ID);
 }
 
 void Cell::clearAgentIDs()
 {
-    m_agentsID.clear();
+    m_agentIDs.clear();
 }
 
 std::vector<int> Cell::getAgentIDs()
 {
-    return m_agentsID;
+    return m_agentIDs;
 
 }

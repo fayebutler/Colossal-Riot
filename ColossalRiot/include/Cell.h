@@ -14,18 +14,18 @@ private:
 
     int m_ID;
     std::vector <ngl::Vec3> m_fourCorners;
-    std::vector <int> m_neighbourIDs;
+    std::vector <int> m_neighbourCellIDs;
     ngl::Vec4 m_boundries;
     ngl::Vec3 m_centre;
-    std::vector<int> m_agentsID;
+    std::vector<int> m_agentIDs;
 
 
 public:
 
     Cell();
-    Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourIDs);
+    Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs);
     void printCellInfo();
-    std::vector<int> getNeighbourIDs();
+    std::vector<int> getNeighbourCellIDs();
     void addAgentID(int _ID);
     void clearAgentIDs();
     std::vector<int> getAgentIDs();

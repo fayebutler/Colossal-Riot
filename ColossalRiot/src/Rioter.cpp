@@ -38,8 +38,8 @@ void Rioter::update(double timeElapsed, double currentTime)
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
     Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-    Vehicle::Steering()->EvadeOn();
-    m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+//    Vehicle::Steering()->EvadeOn();
+//    m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -65,6 +65,10 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = (rot / M_PI*180.0) + 180;
+  if (getHeading().m_x<0)
+  {
+      rot += 180;
+  }
   trans.setRotation(0,-rot,0);
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();

@@ -87,7 +87,6 @@ CellGraph::CellGraph(const char *_fileName)
 
 ///NOW ACTUALLY MAKE THE CELLS
 
-
     for (int j = 0; j < faces.size(); j++)
     {
         std::vector<ngl::Vec3> fourCorners;
@@ -123,12 +122,7 @@ CellGraph::CellGraph(const char *_fileName)
                neighbourIDs.push_back(i);
                }
            }
-
-
-
-
         }
-
 
         Cell newCell(j,fourCorners,neighbourIDs);
         m_cells.push_back(newCell);
@@ -160,13 +154,13 @@ void CellGraph::printCellGraph()
     }
 }
 
-void CellGraph::upadateCells(Agent *_agent)
+void CellGraph::updateCells(Agent *_agent)
 {
 
-    ngl::Vec3 agentPos = _agent->getPos();
+//    ngl::Vec3 agentPos = _agent->getPos();
     for (int i=0; m_cells.size(); i++)
     {
-        ngl::Vec3 test =m_cells[i].getCentre()-agentPos;
+        ngl::Vec3 test =m_cells[i].getCentre()-_agent->getPos();
         //std::cout<<" CurrentID:  "<< i<<std::endl;
         if (test.length()< m_maxDist)
         {
@@ -184,7 +178,7 @@ void CellGraph::upadateCells(Agent *_agent)
 void CellGraph::clearCells()
 {
 
-    for (int i = 0; i<m_cells.size(); i++)
+    for (unsigned int i = 0; i<m_cells.size(); i++)
     {
         m_cells[i].printCellInfo();
         m_cells[i].clearAgentIDs();
@@ -193,12 +187,30 @@ void CellGraph::clearCells()
 
 void CellGraph::addEntities(Agent *_agent)
 {
-    for (int i =0; i<m_cells[(_agent->getCurrentCell())].getNeighbourIDs().size(); i++)
+// 1. add agents in current cell
+// 2. add agents in neighbouring cells
+
+
+
+
+    //for each neighbour
+    int numberOfCellsToCheck = m_cells[(_agent->getCurrentCell())].getNeighbourCellIDs().size();
+
+
+    for (unsigned int i = 0; i < numberOfCellsToCheck; i++)
     {
         std::cout<<"Current Neighbour:  "<<i<<std::endl;
-        int currentNeighbour =m_cells[(_agent->getCurrentCell())].getNeighbourIDs()[i];
-        m_cells[currentNeighbour].getAgentIDs();
+        int currentNeighbourCell =m_cells[(_agent->getCurrentCell())].getNeighbourCellIDs()[i];
+        std::vector<int> agentsInCell = m_cells[currentNeighbourCell].getAgentIDs();
         // FOR LOOP HERE FOR EACH AGENT IN GETAGENTidS,
+
+        for (unsigned int i = 0; i < agentsInCell.size(); i++)
+        {
+            std::cout<<"balls";
+
+        }
+
+
         //CHECK DISTANCE FROM CURRENT AGENT AND ADD TO LIST OF EITHER POLICE AND RIOTERS
     }
 }

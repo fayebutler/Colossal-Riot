@@ -83,7 +83,7 @@ NGLDraw::NGLDraw()
   m_light->loadToShader("light");
 
 
-   m_gameworld = new GameWorld();
+  m_gameworld = new GameWorld();
 
 }
 

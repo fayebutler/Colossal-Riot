@@ -83,6 +83,7 @@ int main()
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
+  bool paused = 0;
 
   Timer gameTimer;
   double timeElapsed = 0.0;
@@ -102,20 +103,18 @@ int main()
 
   while(!quit)
   {
-    timeElapsed=gameTimer.timeElapsed();
-    currentTime=gameTimer.getCurrentTime();
 
 
-    std::cout<<"------------- TICK -------------"<<std::endl;
-    ngldraw.update(timeElapsed,currentTime);
+
+
 
 
 //    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
 //    veh->update(gameTimer.getCurrentTime()/1000);
       //this is valued before but zero after the update called
 
-    std::cout<<gameTimer.getCurrentTime()<<std::endl;
-    std::cout<<timeElapsed<<std::endl;
+//    std::cout<<gameTimer.getCurrentTime()<<std::endl;
+//    std::cout<<timeElapsed<<std::endl;
 //    gameTimer.timeElapsed();
 
     while ( SDL_PollEvent(&event) )
@@ -154,6 +153,8 @@ int main()
             glViewport(0,0,rect.w,rect.h);
             break;
 
+
+            case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
             case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
             case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
@@ -165,10 +166,19 @@ int main()
         default : break;
       } // end of event switch
     } // end of poll events
+
+    if(paused == 0)
+    {
+    timeElapsed=gameTimer.timeElapsed();
+    currentTime=gameTimer.getCurrentTime();
+
+    std::cout<<"------------- TICK -------------"<<std::endl;
+    ngldraw.update(timeElapsed,currentTime);
     // now we draw ngl
     ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
+    }
 
 
 //--------------------------------------------------------------------------------------------------------------------

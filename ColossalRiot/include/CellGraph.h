@@ -21,7 +21,7 @@ public:
     CellGraph();
     CellGraph(const char *_fileName);
     void printCellGraph();
-    void upadateCells(Agent * _agent);
+    void updateCells(Agent * _agent);
     void clearCells();
     void addEntities(Agent *_agent);
 

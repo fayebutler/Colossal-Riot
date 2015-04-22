@@ -17,6 +17,9 @@ typedef std::vector<BaseGameEntity*>::iterator ObIt;
 class GameWorld
 {
 private:
+
+    int m_numberofAgents;
+
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;

@@ -61,6 +61,8 @@ public:
 
 protected:
   int m_currentCellID;
+  float m_detectionRadius;
+
   float m_health;
   float m_energy;
   float m_morale;
