@@ -6,22 +6,22 @@
 
 GameWorld::GameWorld()
 {
-  for (int i = 0; i < 20; ++i)
+  for (int i = 0; i < 1; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setPos(ngl::Vec3(-3.0, 0.0, 0.0));
+    newRioter->setPos(ngl::Vec3(-3.0, 0.0, 3.0));
     std::cout<<"rioterid"<<newRioter->getID()<<std::endl;
     m_rioters.push_back(newRioter);
 
   }
-//  for (int i = 0; i < 1; ++i)
-//  {
-//    Police* newPolice = new Police(this);
-//    //newPolice->setTargetID(i);
-//    newPolice->setPos(ngl::Vec3(0.0, 0.0, 0.0));
-//    std::cout<<"policeid"<<newPolice->getID()<<std::endl;
-//    m_police.push_back(newPolice);
-//  }
+  for (int i = 0; i < 1; ++i)
+  {
+    Police* newPolice = new Police(this);
+    //newPolice->setTargetID(i);
+    newPolice->setPos(ngl::Vec3(2.0, 0.0, -1.0));
+    std::cout<<"policeid"<<newPolice->getID()<<std::endl;
+    m_police.push_back(newPolice);
+  }
 
 
 //  Police* policeman = m_police[0];

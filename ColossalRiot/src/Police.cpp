@@ -41,8 +41,9 @@ void Police::update(double timeElapsed)
   m_stateMachine->update();
   std::cout<<"Police Pos  "<<getPos()[0]<<", "<<getPos()[1]<<", "<<getPos()[2]<<std::endl;
 
-//  Vehicle::Steering()->WanderOn();
-//  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  Vehicle::Steering()->WanderOff();
+  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  Vehicle::Steering()->PursuitOn();
 }
 
 
