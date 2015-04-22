@@ -25,18 +25,20 @@ private:
     std::vector<Rioter*> m_rioters;
     std::vector<Police*> m_police;
 
-    ngl::Vec3 m_crosshair;
+
 
 
 public:
     GameWorld();
     ~GameWorld();
 
-    ngl::Vec3 Crosshair()const{return m_crosshair;}
-    void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
+
 
     void Update(double timeElapsed, double currentTime);
     void draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
+
+    std::vector<Rioter*> getRioters() { return m_rioters; }
+    std::vector<Police*> getPolice() { return m_police; }
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 

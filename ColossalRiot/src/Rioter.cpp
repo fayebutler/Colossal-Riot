@@ -22,6 +22,8 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     makeRioter();
 
     Vehicle::Steering()->WanderOn();
+    //Vehicle::Steering()->SeekOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
 }
 
@@ -35,9 +37,6 @@ void Rioter::update(double timeElapsed, double currentTime)
 {
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-    Vehicle::Steering()->EvadeOn();
-    //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -63,7 +62,6 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = ((rot * 180)/M_PI);
-  std::cout<<"ROT: "<<rot<<std::endl;
 
   if(getHeading().m_x < 0)
   {
@@ -92,7 +90,6 @@ bool Rioter::handleMessage(const Message& _message)
 
 void Rioter::attack(int _ID)
 {
-  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
   MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 

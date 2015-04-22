@@ -55,6 +55,8 @@ public:
   virtual bool handleMessage(const Message& _message);
 
 
+
+
 protected:
   float m_health;
   float m_energy;
@@ -68,6 +70,8 @@ protected:
   double m_hop;
   float m_hopHeight;
   float m_hopSpeed;
+
+
 
   lua_State *L;
 

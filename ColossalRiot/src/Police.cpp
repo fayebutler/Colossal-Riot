@@ -28,6 +28,8 @@ Police::Police(GameWorld* world) : Agent(world)
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
     Vehicle::Steering()->WanderOn();
+    //Vehicle::Steering()->SeekOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
 }
 
@@ -41,13 +43,6 @@ void Police::update(double timeElapsed, double currentTime)
 {
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
-  Vehicle::Steering()->PursuitOn();
-  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-  std::cout<<"heading"<<getHeading().m_x<<"   "<<getHeading().m_y<<"   "<<getHeading().m_z<<std::endl;
-  //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-  Vehicle::Steering()->WanderOff();
-  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-  Vehicle::Steering()->PursuitOn();
 }
 
 
@@ -99,7 +94,6 @@ bool Police::handleMessage(const Message& _message)
 
 void Police::attack(int _ID)
 {
-  std::cout<<"PO PO Attack: "<<_ID<<" for "<<m_damage<<std::endl;
   MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
 }
 

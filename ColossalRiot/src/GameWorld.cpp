@@ -6,33 +6,23 @@
 
 GameWorld::GameWorld()
 {
-  for (int i = 0; i < 1; ++i)
+  for (int i = 0; i < 5; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setPos(ngl::Vec3(-3.0, 0.0, 3.0));
-    std::cout<<"rioterid"<<newRioter->getID()<<std::endl;
+    newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
+    newRioter->setBoudingRadius(2.5f);
+    //newRioter->setCrosshair(ngl::Vec3(-4.f, 0.f, 0.f));
     m_rioters.push_back(newRioter);
 
   }
-  for (int i = 0; i < 1; ++i)
+  for (int i = 0; i < 5; ++i)
   {
     Police* newPolice = new Police(this);
-    //newPolice->setTargetID(i);
-    newPolice->setPos(ngl::Vec3(2.0, 0.0, -1.0));
-    std::cout<<"policeid"<<newPolice->getID()<<std::endl;
+    newPolice->setBoudingRadius(2.5f);
+    newPolice->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
+    newPolice->setCrosshair(ngl::Vec3(4.f, 0.f, 0.f));
     m_police.push_back(newPolice);
   }
-
-
-//  Police* policeman = m_police[0];
-//  Rioter* riotman = m_rioters[0];
-//  policeman->Steering()->PursuitOn();
-//  policeman->Steering()->setTargetAgent(riotman);
-  //riotman->Steering()->setTargetAgent(policeman);
-  //riotman->Steering()->EvadeOn();
-//  riotman->Steering()->WanderOn();
-
-
 }
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
@@ -40,12 +30,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
+
     }
     for(unsigned int a=0; a<m_police.size(); ++a)
     {
         Police* currentPolice = m_police[a];
         currentPolice->update(timeElapsed, currentTime);
-        std::cout<<currentPolice->getHealth()<<std::endl;
     }
 }
 

@@ -17,7 +17,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    m_weightCohesion(1.0),
 //    m_weightSeparation(1.0),
 //    m_weightAlignment(1.0),
-//    m_weightObstacleAvoidance(1.0),
+    m_weightObstacleAvoidance(1.0),
 //    m_weightWallAvoidance(1.0),
 //    m_weightFollowPath(1.0),
     m_weightPursuit(1.0),
@@ -30,8 +30,6 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
-    m_wanderTargetOriginal = m_wanderTarget;
-    std::cout<<"wanderTarget "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
 }
 
 
@@ -60,7 +58,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
     if(on(seek)) //need to create crosshair in gameworld
     {
-        m_steeringForce += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
+        m_steeringForce += Seek(m_vehicle->getCrosshair()) * m_weightSeek;
     }
     if(on(flee))
     {
@@ -68,7 +66,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     }
     if(on(arrive))
     {
-        m_steeringForce += Arrive(m_vehicle->World()->Crosshair(), m_deceleration) * m_weightArrive;
+        m_steeringForce += Arrive(m_vehicle->getCrosshair(), m_deceleration) * m_weightArrive;
     }
     if(on(pursuit))
     {
@@ -82,6 +80,13 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     {
         m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
     }
+    std::cout<<"m_steeringForce before "<<m_steeringForce[0]<<", "<<m_steeringForce[1]<<", "<<m_steeringForce[2]<<std::endl;
+
+    if(on(obstacle_avoidance))
+    {
+        m_steeringForce += ObstacleAvoidance() * m_weightObstacleAvoidance;
+    }
+    std::cout<<"m_steeringForce after "<<m_steeringForce[0]<<", "<<m_steeringForce[1]<<", "<<m_steeringForce[2]<<std::endl;
 
 
    //truncate steering force to max force
@@ -91,7 +96,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
         m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
     }
 
-    return Wander();
+    return m_steeringForce;
 
 }
 
@@ -113,6 +118,10 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+
+    ngl::Vec3 temp;
+    temp = desiredVelocity - m_vehicle->getVelocity();
+    std::cout<<"seek force "<<temp[0]<<", "<<temp[1]<<", "<<temp[2]<<std::endl;
 
     return (desiredVelocity - m_vehicle->getVelocity());
 }
@@ -154,64 +163,43 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 ngl::Vec3 SteeringBehaviour::Wander()
 {
   std::cout<<"SteeringBehaviour::Wander"<<std::endl;
-  std::cout<<"wanderTargetOriginal "<<m_wanderTargetOriginal[0]<<", "<<m_wanderTargetOriginal[1]<<", "<<m_wanderTargetOriginal[2]<<std::endl;
 
   double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
-  std::cout<<"jitterTimeSlice "<<jitterTimeSlice<<std::endl;
 
   float randomClampedX = -1+2*((float)rand())/RAND_MAX;
   float randomClampedZ = -1+2*((float)rand())/RAND_MAX;
-  std::cout<<"randomClampedX "<<randomClampedX<<std::endl;
-  std::cout<<"randomClampedZ "<<randomClampedZ<<std::endl;
 
-  std::cout<<"wanderTarget before "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
   m_wanderTarget += ngl::Vec3(randomClampedX * jitterTimeSlice ,0, randomClampedZ * jitterTimeSlice);
-
-  std::cout<<"wanderTarget after  "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
   m_wanderTarget.normalize();
-
   m_wanderTarget *= m_wanderRadius;
-  std::cout<<"wanderTarget radius "<<m_wanderTarget[0]<<", "<<m_wanderTarget[1]<<", "<<m_wanderTarget[2]<<std::endl;
-
-  //m_wanderTarget = ngl::Vec3(0.f, 0.f, 2.f);
   ngl::Vec3 localTarget = m_wanderTarget + ngl::Vec3(m_wanderDistance,0,0);
 
-  std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
-
+  // local to world space
   ngl::Vec3 headingNormalise;
   ngl::Vec3 worldNormalise = ngl::Vec3(1,0,0);
   headingNormalise = m_vehicle->getHeading();
   headingNormalise.normalize();
-  std::cout<<"headingNormalise "<<headingNormalise[0]<<", "<<headingNormalise[1]<<", "<<headingNormalise[2]<<std::endl;
   double dotProduct = worldNormalise.dot(headingNormalise);
-
-  std::cout<<"dotProduct "<<dotProduct<<std::endl;
   double magnitude = headingNormalise.length()*worldNormalise.length();
-  std::cout<<"magnitude "<<magnitude<<std::endl;
   double temp = dotProduct/magnitude;
-  std::cout<<"temp "<<temp<<std::endl;
   double angle = acos(temp);
-
   if(headingNormalise.m_z > 0)
   {
     angle = 2*M_PI - angle;
   }
-
-  std::cout<<"angle "<<((angle * 180)/M_PI)<<std::endl;
-
   ngl::Transformation trans;
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-  worldTarget += m_vehicle->getPos();
 
-  std::cout<<"worldTarget "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
-  std::cout<<"localTarget "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
+  std::cout<<"local Target "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
+  std::cout<<"world Target "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
 
-  //worldTarget = ngl::Vec3(3.f, 0.f, 1.f);
-  m_worldWanderTarget = worldTarget;
-  m_localWanderTarget = localTarget;
+  //needed?
+  worldTarget.normalize();
+  worldTarget = worldTarget * m_vehicle->getMaxSpeed();
   return worldTarget;
+
 }
 
 
@@ -236,7 +224,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
   std::cout<<"SteeringBehaviour::Evade"<<std::endl;
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
-    std::cout<<"agent position"<<agent->getPos()[0]<<"   "<<agent->getPos()[1]<<"   "<<agent->getPos()[2]<<std::endl;
 
 //    if only want to conside pursuers within range
 //    double threatRange = 100.0;
@@ -248,3 +235,192 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
     return Flee(agentPos);
 }
+
+ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
+{
+  std::cout<<"SteeringBehaviour::Obstacle Avoid"<<std::endl;
+  //const std::vector<BaseGameEntity *> &obstacles
+
+  // not sure if I should use radius for detectionLength, or create a new minimumLength variable
+  float detectionLength = m_vehicle->getBoundingRadius() + m_vehicle->getSpeed() / m_vehicle->getMaxSpeed() * m_vehicle->getBoundingRadius();
+
+  // this needs to be a get agents within detection length as a detection radius
+  // but for now we will just get all agents
+
+  BaseGameEntity* closestIntersectingObstacle = NULL;
+  // any way to get maximum double value?
+  double distanceToCIO = 99999.9;
+  ngl::Vec3 localPosOfCIO;
+
+  for (unsigned int i = 0; i < m_vehicle->World()->getRioters().size(); ++i)
+  {
+    Rioter* currentRioter = m_vehicle->World()->getRioters()[i];
+
+    if (currentRioter->getID() != m_vehicle->getID())
+    {
+      ngl::Vec3 vectorToObstacle = currentRioter->getPos() - m_vehicle->getPos();
+
+      if (vectorToObstacle.length() < detectionLength)
+      {
+
+      ngl::Vec3 localPos = worldToLocalSpace(currentRioter->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+
+        // if obstacle is behind vehicle in local space, discard
+        if (localPos.m_x >= 0.f)
+        {
+          double addedRadius = currentRioter->getBoundingRadius() + m_vehicle->getBoundingRadius();
+          if (fabs(localPos.m_z) < addedRadius)
+          {
+            // intersection of radius and line z = 0
+            // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+            double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+            double intersectX = localPos.m_x - sqrtPart;
+            if (intersectX <= 0)
+            {
+              intersectX = localPos.m_x + sqrtPart;
+            }
+            if (intersectX < distanceToCIO)
+            {
+              distanceToCIO = intersectX;
+              closestIntersectingObstacle = currentRioter;
+              localPosOfCIO = localPos;
+            }
+          }
+        }
+      }
+    }
+  }
+  for (unsigned int i = 0; i < m_vehicle->World()->getPolice().size(); ++i)
+  {
+    Police* currentPolice = m_vehicle->World()->getPolice()[i];
+    if (currentPolice->getID() != m_vehicle->getID())
+    {
+      ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
+
+      if (vectorToObstacle.length() < detectionLength)
+      {
+
+        ngl::Vec3 localPos = worldToLocalSpace(currentPolice->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+
+
+        // if obstacle is behind vehicle in local space, discard
+        if (localPos.m_x >= 0.f)
+        {
+          double addedRadius = currentPolice->getBoundingRadius() + m_vehicle->getBoundingRadius();
+          if (fabs(localPos.m_z) < addedRadius)
+          {
+            // intersection of radius and line z = 0
+            // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+            double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+            double intersectX = localPos.m_x - sqrtPart;
+            if (intersectX <= 0)
+            {
+              intersectX = localPos.m_x + sqrtPart;
+            }
+            if (intersectX < distanceToCIO)
+            {
+              distanceToCIO = intersectX;
+              closestIntersectingObstacle = currentPolice;
+              localPosOfCIO = localPos;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  if (closestIntersectingObstacle)
+  {
+    double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
+    ngl::Vec3 avoidanceForce;
+
+    if (localPosOfCIO.m_z >= 0)
+    {
+      avoidanceForce.m_z = (-closestIntersectingObstacle->getBoundingRadius() + localPosOfCIO.m_z) * mult;
+    }
+    else if (localPosOfCIO.m_z < 0)
+    {
+      avoidanceForce.m_z = (closestIntersectingObstacle->getBoundingRadius() + localPosOfCIO.m_z) * mult;
+    }
+
+    //breaking force
+    const double weightBreaking = 0.2;
+    avoidanceForce.m_x = (detectionLength - localPosOfCIO.m_x) * weightBreaking;
+
+
+    std::cout<<"avoidanceForce "<<avoidanceForce[0]<<", "<<avoidanceForce[1]<<", "<<avoidanceForce[2]<<std::endl;
+    std::cout<<"distanceToCIO "<<distanceToCIO<<std::endl;
+    std::cout<<"localPosOfCIO ===="<<localPosOfCIO[0]<<", "<<localPosOfCIO[1]<<", "<<localPosOfCIO[2]<<std::endl;
+    std::cout<<"avoid ID "<<closestIntersectingObstacle->getID()<<std::endl;
+    std::cout<<"self  ID "<<m_vehicle->getID()<<std::endl;
+    std::cout<<"radius "<<m_vehicle->getBoundingRadius()<<std::endl;
+    std::cout<<"detectionLength "<<detectionLength<<std::endl;
+
+
+    // local to world space
+    ngl::Vec3 headingNormalise;
+    ngl::Vec3 worldNormalise = ngl::Vec3(1,0,0);
+    headingNormalise = m_vehicle->getHeading();
+    headingNormalise.normalize();
+    double dotProduct = worldNormalise.dot(headingNormalise);
+    double magnitude = headingNormalise.length()*worldNormalise.length();
+    double temp = dotProduct/magnitude;
+    double angle = acos(temp);
+    if(headingNormalise.m_z > 0)
+    {
+      angle = 2*M_PI - angle;
+    }
+    ngl::Transformation trans;
+    trans.setRotation(0, (-angle * 180)/M_PI, 0);
+    ngl::Vec3 worldAvoidanceForce;
+    worldAvoidanceForce = trans.getMatrix() * avoidanceForce;
+
+    worldAvoidanceForce.normalize();
+    worldAvoidanceForce *= m_vehicle->getMaxSpeed();
+
+    return worldAvoidanceForce;
+  }
+  return ngl::Vec3(0.f, 0.f, 0.f);
+
+
+}
+
+ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide)
+{
+  vehicleHeading.normalize();
+  vehicleSide.normalize();
+
+  double Tx = vehiclePos.dot(vehicleHeading);
+  double Tz = vehiclePos.dot(vehicleSide);
+
+  ngl::Mat4 mat;
+  mat.m_00 = vehicleHeading.m_x; mat.m_02 = vehicleHeading.m_z; mat.m_03 = -Tx;
+  mat.m_20 = vehicleSide.m_x;    mat.m_22 = vehicleSide.m_z;    mat.m_23 = -Tz;
+  double tempX = (mat.m_00 * pointWorldPos.m_x) + (mat.m_02 * pointWorldPos.m_z) + mat.m_03;
+  double tempZ = (mat.m_20 * pointWorldPos.m_x) + (mat.m_22 * pointWorldPos.m_z) + mat.m_23;
+
+  return ngl::Vec3(tempX, 0, tempZ);
+}
+
+ngl::Vec3 SteeringBehaviour::localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading)
+{
+//  vehicleHeading.normalize();
+//  ngl::Vec3 worldNormalise = ngl::Vec3(1,0,0);
+
+//  double dotProduct = worldNormalise.dot(vehicleHeading);
+//  double magnitude = vehicleHeading.length()*worldNormalise.length();
+//  double temp = dotProduct/magnitude;
+//  double angle = acos(temp);
+//  if(vehicleHeading.m_z > 0)
+//  {
+//    angle = 2*M_PI - angle;
+//  }
+//  ngl::Transformation trans;
+//  trans.setRotation(0, (-angle * 180)/M_PI, 0);
+//  ngl::Vec3 worldPos;
+//  worldPos = trans.getMatrix() * pointLocalPos;
+
+//  return worldPos;
+}
+

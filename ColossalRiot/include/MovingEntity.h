@@ -61,6 +61,7 @@ public:
     virtual bool handleMessage(const Message& _message);
 
 
+    void stopOverlap(BaseGameEntity* _selfEntity, std::vector<BaseGameEntity*> _otherEntities);
 
 };
 

@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include "Message.h"
 #include "MessageManager.h"
+#include <vector>
 
 
 class BaseGameEntity
@@ -35,7 +36,6 @@ public:
     void setBoudingRadius(float r) {m_boundingRadius = r;}
 
     virtual bool handleMessage(const Message& _message) = 0;
-
 };
 
 #endif // BASEGAMEENTITY_H

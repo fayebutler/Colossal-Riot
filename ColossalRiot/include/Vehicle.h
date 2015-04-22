@@ -18,7 +18,12 @@ private:
 
     SteeringBehaviour* m_steering;
 
+
     double m_timeElapsed;
+
+      ngl::Vec3 m_crosshair;
+
+
 
 public:
     Vehicle(GameWorld* world, ngl::Vec3 position, ngl::Vec3 velocity, float rotation, float mass, float max_force, float max_speed, float max_turnrate, float scale);
@@ -32,6 +37,9 @@ public:
 
     void update(double time_elapsed);
     void render();
+
+    ngl::Vec3 getCrosshair()const{return m_crosshair;}
+    void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
 
 };
 
