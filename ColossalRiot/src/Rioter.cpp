@@ -17,11 +17,12 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 2;
     m_hopHeight = 0.5;
     m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
+
+    m_targetID = 2;
 
 //    Vehicle::Steering()->WanderOn();
 //    Vehicle::Steering()->setWanderWeight(0.0);
@@ -126,10 +127,10 @@ bool Rioter::handleMessage(const Message& _message)
 
 //RIOTER STATE UTILITY FUNCTIONS
 
-void Rioter::attack(int _ID)
+void Rioter::attack()
 {
-  std::cout<<"RIOT RIOT Attack: "<<_ID<<" for "<<m_damage<<std::endl;
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
+  std::cout<<"RIOT RIOT Attack for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 }
 
 void Rioter::registerClass(lua_State* _L)

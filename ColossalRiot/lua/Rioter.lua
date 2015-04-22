@@ -5,9 +5,9 @@ makeRioter = function()
    rioter.m_morale = 100
    rioter.m_rage = 50
    rioter.m_damage = 0.1
---   stateMachine:changeState("protest")
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
+   rioter:wander(0.2)
 end
 
 
@@ -63,7 +63,7 @@ end
 protest["execute"] = function()
   print("LUA RIOTER protest execute")
   rioter.m_morale = rioter.m_morale - 0.3
-  rioter:attack(rioter.m_targetID)
+  rioter:attack()
   rioter.m_rage = rioter.m_rage + 0.1;
   if rioter.m_morale < 30 then
     stateMachine:changeState("flee")

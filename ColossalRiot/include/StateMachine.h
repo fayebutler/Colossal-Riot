@@ -22,6 +22,7 @@ public:
         luabridge::push(L, this);
         lua_setglobal(L, "stateMachine");
         m_currentState = NULL;
+        m_previousState = NULL;
     }
 
     ~StateMachine() {}
@@ -40,10 +41,19 @@ public:
       {
         luaCallState(m_globalState, "execute");
       }
-      if (m_currentState)
+
+      //call enter on first tick to set state behaviours
+      if(!m_previousState && m_currentState)
+      {
+          luaCallState(m_currentState, "enter");
+          m_previousState = m_currentState;
+      }
+
+      else if (m_currentState)
       {
         luaCallState(m_currentState, "execute");
       }
+
     }
 
     void luaCallState(const char* _state, const char* _phase)
@@ -54,11 +64,8 @@ public:
 
     void changeState(const char* _newState)
     {
-        if (m_currentState != NULL)
-        {
-            m_previousState = m_currentState;
-            luaCallState(m_currentState, "exit");
-        }
+        m_previousState = m_currentState;
+        luaCallState(m_currentState, "exit");
 
         m_currentState = _newState;
         luaCallState(m_currentState, "enter");
