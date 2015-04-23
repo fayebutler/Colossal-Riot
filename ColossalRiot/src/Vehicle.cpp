@@ -33,6 +33,7 @@ void Vehicle::update(double time_elapsed)
    m_timeElapsed = time_elapsed;
 
    ngl::Vec3 SteeringForce;
+
    SteeringForce = m_steering->calculateWeightedSum();
 
 

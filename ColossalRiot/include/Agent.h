@@ -42,7 +42,8 @@ public:
   void setDamage(float _val) { m_damage = _val; }
 
   int getTargetID() const { return m_targetID; }
-  void setTargetID(int _val) { m_targetID = _val; }
+  void setTargetID(int _val) { m_targetID = _val;
+                             Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }
@@ -54,6 +55,14 @@ public:
 
   virtual bool handleMessage(const Message& _message);
 
+  //STEERING FUNCTIONS
+
+  void wander(double weight);
+
+  void pursuit(double weight);
+
+  void evade(double weight);
+
 
 protected:
   float m_health;
@@ -61,9 +70,9 @@ protected:
   float m_morale;
   float m_rage;
 
-  float m_damage;
-
   int m_targetID;
+
+  float m_damage;
 
   double m_hop;
   float m_hopHeight;

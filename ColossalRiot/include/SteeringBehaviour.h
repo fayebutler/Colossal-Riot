@@ -149,8 +149,6 @@ public:
     double sideComponent();
 
 
-
-
 };
 
 #endif // STEERINGBEHAVIOUR_H

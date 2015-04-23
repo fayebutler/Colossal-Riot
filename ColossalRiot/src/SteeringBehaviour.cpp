@@ -14,7 +14,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightSeek(1.0),
     m_weightFlee(1.0),
     m_weightArrive(1.0),
-    m_weightWander(0.0),
+    m_weightWander(1.0),
 //    m_weightCohesion(1.0),
 //    m_weightSeparation(1.0),
 //    m_weightAlignment(1.0),
@@ -32,6 +32,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
     m_wanderTargetOriginal = m_wanderTarget;
+
 }
 
 
@@ -88,6 +89,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 //    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
 
+
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())
     {
@@ -99,6 +101,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 }
 
+
 double SteeringBehaviour::forwardComponent()
 {
     return m_vehicle->getHeading().dot(m_steeringForce);
@@ -109,7 +112,7 @@ double SteeringBehaviour::sideComponent()
     return m_vehicle->getSide().dot(m_steeringForce);
 }
 
-//bejaviour type functions
+//behaviour type functions
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {

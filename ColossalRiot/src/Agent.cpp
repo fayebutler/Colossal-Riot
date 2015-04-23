@@ -17,6 +17,48 @@ void Agent::update(double timeElapsed, double currentTime)
   Vehicle::update(timeElapsed);
 }
 
+void Agent::wander(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->WanderOff();
+    }
+    else
+    {
+      Vehicle::Steering()->WanderOn();
+      Vehicle::Steering()->setWanderWeight(weight);
+    }
+}
+
+void Agent::pursuit(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->PursuitOff();
+    }
+    else
+    {
+      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+      Vehicle::Steering()->PursuitOn();
+      Vehicle::Steering()->setPursuitWeight(weight);
+    }
+}
+
+void Agent::evade(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->EvadeOff();
+    }
+    else
+    {
+      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+      Vehicle::Steering()->EvadeOn();
+      Vehicle::Steering()->setEvadeWeight(weight);
+    }
+}
+
+
 void Agent::registerLua(lua_State* _L)
 {
     luabridge::getGlobalNamespace(_L)
@@ -26,7 +68,12 @@ void Agent::registerLua(lua_State* _L)
                 .addProperty("m_health", &Agent::getHealth, &Agent::setHealth)
                 .addProperty("m_rage", &Agent::getRage, &Agent::setRage)
                 .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
-                .addProperty("m_targetID", &Agent::getTargetID, &Agent::setTargetID)
+                .addFunction("getTargetID", &Agent::getTargetID)
+                .addFunction("setTargetID", &Agent::setTargetID)
+                .addFunction("wander", &Agent::wander)
+                .addFunction("pursuit", &Agent::pursuit)
+                .addFunction("evade", &Agent::evade)
+
 
         .endClass();
 }
