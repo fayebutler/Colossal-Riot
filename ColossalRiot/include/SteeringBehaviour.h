@@ -2,6 +2,7 @@
 #define STEERINGBEHAVIOUR_H
 
 #include <ngl/Transformation.h>
+#include <vector>
 
 
 class Vehicle;
@@ -49,8 +50,6 @@ private:
     int m_deceleration;
 
     ngl::Vec3 m_wanderTarget;
-    ngl::Vec3 m_wanderTargetOriginal;
-
 
     float m_viewDistance;
 
@@ -87,16 +86,16 @@ private:
     ngl::Vec3 Pursuit(const Vehicle *agent);
     ngl::Vec3 Evade(const Vehicle* agent);
 
+    ngl::Vec3 ObstacleAvoidance();
+
+    ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
+    ngl::Vec3 localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading);
+
 // add in group steering behaviours
 // add in collision avoidance
 
 
 public:
-
-    ngl::Vec3 m_worldWanderTarget;
-    ngl::Vec3 m_localWanderTarget;
-
-
 
     SteeringBehaviour(Vehicle* agent);
 
@@ -136,6 +135,10 @@ public:
     void setEvadeWeight(double m_newWeight){m_weightEvade = m_newWeight;}
     double getEvadeWeight(){return m_weightEvade;}
 
+    void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
+    void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
+    bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
+
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
@@ -144,6 +147,9 @@ public:
 
     ngl::Vec3 calculateWeightedSum(); //simplest addition method, should update to prioritized
 
+    ngl::Vec3 calculatePrioritizedSum();
+
+    bool accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force);
 
     double forwardComponent();
     double sideComponent();

@@ -33,9 +33,7 @@ void Vehicle::update(double time_elapsed)
    m_timeElapsed = time_elapsed;
 
    ngl::Vec3 SteeringForce;
-
-   SteeringForce = m_steering->calculateWeightedSum();
-
+   SteeringForce = m_steering->calculatePrioritizedSum();
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -60,7 +58,6 @@ void Vehicle::update(double time_elapsed)
        m_heading = tempVel;
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
-
 
 }
 

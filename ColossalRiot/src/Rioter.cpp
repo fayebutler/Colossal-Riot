@@ -21,8 +21,11 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
+    Vehicle::Steering()->WanderOn();
+    //Vehicle::Steering()->SeekOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
-    m_targetID = 2;
+    m_targetID = 6;
 
 }
 
@@ -37,10 +40,11 @@ void Rioter::update(double timeElapsed, double currentTime)
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
 
-    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
-    Vehicle::Steering()->EvadeOn();
-    Vehicle::Steering()->WanderOn();
-    Vehicle::Steering()->setWanderWeight(0.8);
+//    Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+//    Vehicle::Steering()->EvadeOn();
+//    Vehicle::Steering()->WanderOn();
+//    Vehicle::Steering()->setWanderWeight(0.8);
+
 
     //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
@@ -49,6 +53,7 @@ void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
   ngl::VAOPrimitives::instance()->draw("teapot");
+
 
   //TARGET
 
@@ -78,6 +83,7 @@ void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 //  shader->setShaderParamFromMat4("M",M);
 
 //  ngl::VAOPrimitives::instance()->draw("teapot");
+
 
 }
 

@@ -107,16 +107,14 @@ int main()
 
 
     std::cout<<"------------- TICK -------------"<<std::endl;
+
+
+    std::cout<<"Current Time  = "<<gameTimer.getCurrentTime()<<std::endl;
+    std::cout<<"Time Elapsed  = "<<timeElapsed<<std::endl;
+
+
+
     ngldraw.update(timeElapsed,currentTime);
-
-
-//    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
-//    veh->update(gameTimer.getCurrentTime()/1000);
-      //this is valued before but zero after the update called
-
-    std::cout<<gameTimer.getCurrentTime()<<std::endl;
-    std::cout<<timeElapsed<<std::endl;
-//    gameTimer.timeElapsed();
 
     while ( SDL_PollEvent(&event) )
     {

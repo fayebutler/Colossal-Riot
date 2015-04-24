@@ -28,6 +28,9 @@ Police::Police(GameWorld* world) : Agent(world)
     m_hopSpeed = 10.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
+    Vehicle::Steering()->WanderOn();
+    //Vehicle::Steering()->SeekOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
     m_targetID = 0;
 
@@ -44,7 +47,6 @@ void Police::update(double timeElapsed, double currentTime)
 {
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
-
   //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 
 //  Vehicle::Steering()->PursuitOn();
@@ -54,8 +56,6 @@ void Police::update(double timeElapsed, double currentTime)
 
     Vehicle::setMaxSpeed(0.6);
     Vehicle::setMaxForce(1.0);
-
-
 }
 
 

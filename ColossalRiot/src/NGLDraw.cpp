@@ -7,8 +7,8 @@
 #include "GameWorld.h"
 
 
-const static float INCREMENT=-0.005;
-const static float ZOOM=1;
+const static float INCREMENT=-0.02;
+const static float ZOOM=5;
 NGLDraw::NGLDraw()
 {
   m_rotate=false;
@@ -19,8 +19,6 @@ NGLDraw::NGLDraw()
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
-
-
 
 
    // now to load the shader and set the values
