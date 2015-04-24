@@ -5,7 +5,7 @@ makePolice = function()
    police.m_morale = 100
    police.m_rage = 20
    police.m_damage = 0.01
-   police:wander(0.2)
+   --police:wander(0.2)
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
 end

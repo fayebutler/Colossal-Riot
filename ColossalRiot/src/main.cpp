@@ -103,17 +103,6 @@ int main()
 
   while(!quit)
   {
-
-    std::cout<<"------------- TICK -------------"<<std::endl;
-
-    std::cout<<"Current Time  = "<<gameTimer.getCurrentTime()<<std::endl;
-    std::cout<<"Time Elapsed  = "<<timeElapsed<<std::endl;
-
-
-
-    ngldraw.update(timeElapsed,currentTime);
-
-
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)

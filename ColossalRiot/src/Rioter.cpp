@@ -22,9 +22,12 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    m_targetID = 6;
+    m_targetID = 0;
 
-
+    Vehicle::Steering()->WanderOn();
+    Vehicle::Steering()->SeekOn();
+    setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+    Vehicle::Steering()->ObstacleAvoidOn();
 }
 
 Rioter::~Rioter()

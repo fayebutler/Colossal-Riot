@@ -31,6 +31,9 @@ Police::Police(GameWorld* world) : Agent(world)
 
     m_targetID = 0;
 
+    //Vehicle::Steering()->WanderOn();
+    //Vehicle::Steering()->ObstacleAvoidOn();
+
 
 
 }

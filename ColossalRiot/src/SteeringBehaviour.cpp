@@ -16,9 +16,9 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightFlee(1.0),
     m_weightArrive(1.0),
     m_weightWander(1.0),
-//    m_weightCohesion(1.0),
-//    m_weightSeparation(1.0),
-//    m_weightAlignment(1.0),
+    m_weightCohesion(1.0),
+    m_weightSeparation(1.0),
+    m_weightAlignment(1.0),
     m_weightObstacleAvoidance(1.0),
 //    m_weightWallAvoidance(1.0),
 //    m_weightFollowPath(1.0),
@@ -32,10 +32,6 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
-
-//    m_wanderTargetOriginal = m_wanderTarget;
-
-
 }
 
 
@@ -463,16 +459,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     //breaking force
     const double weightBreaking = 0.2;
     avoidanceForce.m_x = (detectionLength - localPosOfCIO.m_x) * weightBreaking;
-
-
-    std::cout<<"avoidanceForce "<<avoidanceForce[0]<<", "<<avoidanceForce[1]<<", "<<avoidanceForce[2]<<std::endl;
-    std::cout<<"distanceToCIO "<<distanceToCIO<<std::endl;
-    std::cout<<"localPosOfCIO ===="<<localPosOfCIO[0]<<", "<<localPosOfCIO[1]<<", "<<localPosOfCIO[2]<<std::endl;
-    std::cout<<"avoid ID "<<closestIntersectingObstacle->getID()<<std::endl;
-    std::cout<<"self  ID "<<m_vehicle->getID()<<std::endl;
-    std::cout<<"radius "<<m_vehicle->getBoundingRadius()<<std::endl;
-    std::cout<<"detectionLength "<<detectionLength<<std::endl;
-
 
     // local to world space
     ngl::Vec3 headingNormalise;

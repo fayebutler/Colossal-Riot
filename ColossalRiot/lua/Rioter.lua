@@ -7,7 +7,7 @@ makeRioter = function()
    rioter.m_damage = 0.1
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
-   rioter:wander(0.2)
+   --rioter:wander(0.2)
 end
 
 
