@@ -24,40 +24,6 @@ SDL_GLContext createOpenGLContext( SDL_Window *window);
 std::vector <cell> * gGraph;
 
 
-//void loadOBJ(const char *fileName, std::vector<ngl::Vec3> &vertices, std::vector<GLushort> &elements )
-//{
-
-//    std::ifstream in(fileName, std::ios::in);
-//     if (!in) { std::cerr << "Cannot open " << fileName << std::endl; exit(1); }
-
-//     std::string line;
-//     while (getline(in, line)) {
-//       if (line.substr(0,2) == "v ") {
-//         std::istringstream s(line.substr(2));
-//         ngl::Vec3 v;// s >> v.m_x; s >> v.m_y; s >> v.m_z;
-//         vertices.push_back(v);
-//       }  else if (line.substr(0,2) == "f ") {
-//         std::istringstream s(line.substr(2));
-//         GLushort a,b,c;
-//         s >> a; s >> b; s >> c;
-//         a--; b--; c--;
-//         elements.push_back(a); elements.push_back(b); elements.push_back(c);
-//       }
-//       else if (line[0] == '#') { /* ignoring this line */ }
-//       else { /* ignoring this line */ }
-//     }
-
-//     for (int i = 0; i < elements.size(); i+=3) {
-//       GLushort ia = elements[i];
-//       GLushort ib = elements[i+1];
-//       GLushort ic = elements[i+2];
-
-//     }
-
-//     //std::cout<< " Vert Indexs:  "<<
-
-//}
-
 void makeCells(const char *fileName)
 {
     std::vector<ngl::Vec3> vertices;
@@ -134,7 +100,6 @@ void makeCells(const char *fileName)
             vertId4 = vertId4+rawVertId4[i];
           }
 
-//          std::cout<<vertId1<< "__"<<vertId2<< "__"<<vertId3<< "__"<<vertId4<< "__" <<std::endl;
 
          //Append each vertId to a vector, making them into a vector of integers:
          int a = std::atoi(vertId1.c_str());
@@ -209,8 +174,6 @@ void makeCells(const char *fileName)
          }
 
 
-         std::cout<< neighbourIDs[0]<<std::endl;
-
          cell newCell(j,fourCorners,neighbourIDs);
          graph.push_back(newCell);
 
@@ -228,7 +191,7 @@ void makeCells(const char *fileName)
 
 int main()
 {
-    makeCells("plane_holy.obj");
+    makeCells("plane_city.obj");
 
 
 }
