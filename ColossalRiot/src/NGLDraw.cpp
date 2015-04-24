@@ -81,7 +81,7 @@ NGLDraw::NGLDraw()
   m_light->loadToShader("light");
 
 
-   m_gameworld = new GameWorld();
+  m_gameworld = new GameWorld();
 
 }
 
@@ -157,7 +157,7 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
 {
 
   // right mouse translate code
-if(m_translate && _event.state &SDL_BUTTON_RMASK)
+if(m_translate && _event.state &SDL_BUTTON_MMASK)
   {
     int diffX = (int)(_event.x - m_origXPos);
     int diffZ = (int)(_event.y - m_origYPos);
@@ -179,7 +179,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
 
- if(_event.button == SDL_BUTTON_RIGHT)
+ if(_event.button == SDL_BUTTON_MIDDLE)
   {
     m_origXPos = _event.x;
     m_origYPos = _event.y;
@@ -197,7 +197,7 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
     m_rotate=false;
   }
   // right mouse translate mode
-  if (_event.button == SDL_BUTTON_RIGHT)
+  if (_event.button == SDL_BUTTON_MIDDLE)
   {
     m_translate=false;
   }

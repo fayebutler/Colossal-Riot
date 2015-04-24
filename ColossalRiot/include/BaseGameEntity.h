@@ -16,6 +16,8 @@ enum entityType
 
 };
 
+
+
 class BaseGameEntity
 {
 protected:
@@ -25,6 +27,15 @@ protected:
   entityType m_entityType;
   ngl::Vec3 m_pos;
   float m_boundingRadius;
+
+  int m_currentCellID;
+  std::vector<int> m_detectedDynamicEntityIDs;
+  float m_detectionRadius;
+
+
+  std::vector<int> m_neighbourPoliceIDs;
+  std::vector<int> m_neighbourRioterIDs;
+
 
 public:
     BaseGameEntity();
@@ -42,6 +53,20 @@ public:
 
     float getBoundingRadius()const{return m_boundingRadius;}
     void setBoudingRadius(float r) {m_boundingRadius = r;}
+
+    void addDetectedDynamicEntityID(int _ID);
+    void clearDetectedDynamicEntityID();
+    std::vector<int> getDetectedEntityIDs();
+
+    void addPoliceID(int _ID);
+    void addRioterID(int _ID);
+    void clearAgentIDs();
+
+
+    void setCurrentCellID(int _ID);
+    int getCurrentCell();
+
+    float getDetectionRadius();
 
     virtual bool handleMessage(const Message& _message) = 0;
 };

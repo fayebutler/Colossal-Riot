@@ -49,14 +49,18 @@ public:
       return m_entityMap.size();
   }
 
+  typedef std::map<int, BaseGameEntity*> EntityMap;
+  EntityMap m_entityMap;
+
+
 //  typedef std::map<int, BaseGameEntity*> EntityMap;
 //  EntityMap m_entityMap;
 
 
 private:
 
-  typedef std::map<int, BaseGameEntity*> EntityMap;
-  EntityMap m_entityMap;
+//  typedef std::map<int, BaseGameEntity*> EntityMap;
+//  EntityMap m_entityMap;
 
   EntityManager(){}
 

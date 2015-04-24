@@ -50,6 +50,8 @@ private:
     int m_deceleration;
 
     ngl::Vec3 m_wanderTarget;
+    ngl::Vec3 m_wanderTargetOriginal;
+
 
     float m_viewDistance;
 
@@ -97,6 +99,8 @@ private:
 
 public:
 
+    ngl::Vec3 m_worldWanderTarget;
+    ngl::Vec3 m_localWanderTarget;
     SteeringBehaviour(Vehicle* agent);
 
     ~SteeringBehaviour();
@@ -135,9 +139,11 @@ public:
     void setEvadeWeight(double m_newWeight){m_weightEvade = m_newWeight;}
     double getEvadeWeight(){return m_weightEvade;}
 
+
     void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
     void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
     bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
+
 
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}

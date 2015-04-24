@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ngl/Random.h>
 #include <assert.h>
+
 SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_vehicle(agent),
     m_activeFlags(0),
@@ -34,6 +35,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 
 //    m_wanderTargetOriginal = m_wanderTarget;
 
+
 }
 
 
@@ -61,6 +63,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
     m_steeringForce = 0;
 
+    m_steeringForce = 0;
     if(on(seek)) //need to create crosshair in gameworld
     {
         m_steeringForce += Seek(m_vehicle->getCrosshair()) * m_weightSeek;
@@ -87,15 +90,12 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
         assert(m_targetAgent && "evade target not assigned");
         m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
     }
-    std::cout<<"m_steeringForce before "<<m_steeringForce[0]<<", "<<m_steeringForce[1]<<", "<<m_steeringForce[2]<<std::endl;
 
     if(on(obstacle_avoidance))
     {
         m_steeringForce += ObstacleAvoidance() * m_weightObstacleAvoidance;
-    }
-    std::cout<<"m_steeringForce after "<<m_steeringForce[0]<<", "<<m_steeringForce[1]<<", "<<m_steeringForce[2]<<std::endl;
 
-//    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
+    }
 
 
    //truncate steering force to max force
@@ -108,6 +108,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     return m_steeringForce;
 
 }
+
 
 ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
@@ -214,6 +215,7 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force)
     }
 }
 
+
 double SteeringBehaviour::forwardComponent()
 {
     return m_vehicle->getHeading().dot(m_steeringForce);
@@ -228,21 +230,21 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
-    std::cout<<"SteeringBehaviour::Seek"<<std::endl;
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
 
     ngl::Vec3 temp;
     temp = desiredVelocity - m_vehicle->getVelocity();
-    std::cout<<"seek force "<<temp[0]<<", "<<temp[1]<<", "<<temp[2]<<std::endl;
+
 
     return (desiredVelocity - m_vehicle->getVelocity());
 }
 
 ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 {
-    std::cout<<"SteeringBehaviour::Flee"<<std::endl;
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
@@ -251,7 +253,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 {
-    std::cout<<"SteeringBehaviour::Arrive"<<std::endl;
+
     ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
@@ -276,7 +278,6 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 
 ngl::Vec3 SteeringBehaviour::Wander()
 {
-  std::cout<<"SteeringBehaviour::Wander"<<std::endl;
 
   double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
 
@@ -308,10 +309,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-//  worldTarget += m_vehicle->getPos();
 
-
-  //needed?
   worldTarget.normalize();
   worldTarget = worldTarget * m_vehicle->getMaxSpeed();
 
@@ -323,7 +321,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
-  std::cout<<"SteeringBehaviour::Persuit"<<std::endl;
+
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
     double relativeHeading = m_vehicle->getHeading().dot(agent->getHeading());
 
@@ -339,7 +337,8 @@ ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
-  std::cout<<"SteeringBehaviour::Evade"<<std::endl;
+
+
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
 
 //    if only want to conside pursuers within range

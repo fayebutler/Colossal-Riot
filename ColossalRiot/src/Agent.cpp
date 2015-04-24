@@ -70,6 +70,7 @@ void Agent::registerLua(lua_State* _L)
                 .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
                 .addFunction("getTargetID", &Agent::getTargetID)
                 .addFunction("setTargetID", &Agent::setTargetID)
+                .addProperty("m_targetID", &Agent::getTargetID, &Agent::setTargetID)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
@@ -91,3 +92,5 @@ bool Agent::handleMessage(const Message& _message)
     return false;
   }
 }
+
+

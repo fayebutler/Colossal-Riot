@@ -10,6 +10,7 @@
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
+
 extern "C" {
 #include <lua.h>
 #include <lauxlib.h>
@@ -66,7 +67,11 @@ public:
 
 
 
+
 protected:
+
+  float m_detectionRadius;
+
   float m_health;
   float m_energy;
   float m_morale;
@@ -79,8 +84,6 @@ protected:
   double m_hop;
   float m_hopHeight;
   float m_hopSpeed;
-
-
 
   lua_State *L;
 

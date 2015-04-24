@@ -29,6 +29,7 @@ void MovingEntity::stopOverlap(BaseGameEntity* _selfEntity, std::vector<BaseGame
       }
     }
   }
+
 }
 
 //MovingEntity::MovingEntity(ngl::Vec3 pos, float r, ngl::Vec3 velocity, float max_speed, ngl::Vec3 heading, float mass, float turn_rate, float max_force)

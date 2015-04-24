@@ -3,29 +3,32 @@
 
 
 #include "BaseGameEntity.h"
-//#include "cellSpacePartition"
+
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
-#include <vector>
 #include "Rioter.h"
 #include "Police.h"
-
-//class
-//
-//
+#include "CellGraph.h"
 
 typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
 class GameWorld
 {
 private:
+
+    //entities that update each frame (not walls n shit)
+
+    std::vector<int> m_dynamicEntities;
+
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
     std::vector<Police*> m_police;
 
 
+
+    CellGraph m_cellGraph;
 
 
 public:

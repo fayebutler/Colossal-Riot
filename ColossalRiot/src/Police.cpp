@@ -21,18 +21,16 @@ Police::Police(GameWorld* world) : Agent(world)
 
     // Set up state machine
     m_stateMachine = new StateMachine<Police>(this);
-//    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_hopHeight = 0.5;
-    m_hopSpeed = 10.0;
+
+    m_hopHeight = 0.0;
+    m_hopSpeed = 0.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-    Vehicle::Steering()->WanderOn();
-    //Vehicle::Steering()->SeekOn();
-    Vehicle::Steering()->ObstacleAvoidOn();
 
     m_targetID = 0;
+
 
 
 }
@@ -47,15 +45,9 @@ void Police::update(double timeElapsed, double currentTime)
 {
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
-  //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 
-//  Vehicle::Steering()->PursuitOn();
-//  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 
-//    Vehicle::Steering()->WanderOn();
-
-    Vehicle::setMaxSpeed(0.6);
-    Vehicle::setMaxForce(1.0);
 }
 
 
@@ -83,6 +75,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
+
   rot = ((rot * 180)/M_PI);
 
   if(getHeading().m_x < 0)
@@ -115,8 +108,9 @@ bool Police::handleMessage(const Message& _message)
 
 void Police::attack()
 {
-  std::cout<<"PO PO Attack for "<<m_damage<<std::endl;
+
   MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
+
 }
 
 void Police::registerClass(lua_State* _L)
