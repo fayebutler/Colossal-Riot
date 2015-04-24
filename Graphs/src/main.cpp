@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "NGLDraw.h"
 #include <ngl/NGLInit.h>
-#include "cell.h"
+#include "cellGraph.h"
 
 #include <fstream>
 #include <sstream>
@@ -19,6 +19,7 @@ void SDLErrorExit(const std::string &_msg);
 
 /// @brief initialize SDL OpenGL context
 SDL_GLContext createOpenGLContext( SDL_Window *window);
+
 
 
 std::vector <cell> * gGraph;
@@ -189,9 +190,12 @@ void makeCells(const char *fileName)
 }
 
 
+
 int main()
 {
-    makeCells("plane_city.obj");
+
+    cellGraph benGraph("plane_Test.obj");
+    benGraph.printCellGraph();
 
 
 }

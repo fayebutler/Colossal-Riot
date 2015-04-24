@@ -32,11 +32,8 @@ void Vehicle::update(double time_elapsed)
 
    m_timeElapsed = time_elapsed;
 
-
-   ngl::Vec3 oldPos = getPos();
-
    ngl::Vec3 SteeringForce;
-   SteeringForce = m_steering->calculate();
+   SteeringForce = m_steering->calculatePrioritizedSum();
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -51,19 +48,22 @@ void Vehicle::update(double time_elapsed)
 
 
    m_pos += m_velocity * time_elapsed;
+   //m_pos = ngl::Vec3(0.f, 0.f, 0.f);
 
    if(m_velocity.lengthSquared()>0.000000001)
    {
-       m_velocity.normalize();
-       m_heading = m_velocity;
-       m_side = ngl::Vec3(-m_heading.m_x, m_heading.m_y, m_heading.m_z);
+       ngl::Vec3 tempVel;
+       tempVel = m_velocity;
+       tempVel.normalize();
+       m_heading = tempVel;
+       m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 
 }
 
 bool Vehicle::handleMessage(const Message& _message)
 {
-  BaseGameEntity::handleMessage(_message);
+  return MovingEntity::handleMessage(_message);
 }
 
 void Vehicle::render()

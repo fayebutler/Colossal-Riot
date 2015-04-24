@@ -18,15 +18,13 @@ extern "C" {
 
 #include "LuaBridge.h"
 
-class Agent
+class Agent: public Vehicle
 {
 public:
   Agent(GameWorld *world);
-  virtual ~Agent();
+  ~Agent();
 
-  virtual void update(double timeElapsed) = 0;
-
-  int getID() const { return m_ID; }
+  virtual void update(double timeElapsed, double currentTime) = 0;
 
   float getHealth() const { return m_health; }
   void setHealth(float _val) { m_health = _val; }
@@ -40,16 +38,35 @@ public:
   float getRage() const { return m_rage; }
   void setRage(float _val) { m_rage = _val; }
 
+  float getDamage() const { return m_damage; }
+  void setDamage(float _val) { m_damage = _val; }
+
   int getTargetID() const { return m_targetID; }
-  void setTargetID(int _val) { m_targetID = _val; }
+  void setTargetID(int _val) { m_targetID = _val;
+                             Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
+
+  float getHopHeight() const { return m_hopHeight; }
+  void setHopHeight(float _val) { m_hopHeight = _val; }
+
+  float getHopSpeed() const { return m_hopSpeed; }
+  void setHopSpeed(float _val) { m_hopSpeed = _val; }
 
   void registerLua(lua_State *_L);
 
-  Vehicle* getVehicle() const { return m_vehicle; }
+  virtual bool handleMessage(const Message& _message);
+
+  //STEERING FUNCTIONS
+
+  void wander(double weight);
+
+  void pursuit(double weight);
+
+  void evade(double weight);
+
+
+
 
 protected:
-  int m_ID;
-
   float m_health;
   float m_energy;
   float m_morale;
@@ -57,10 +74,15 @@ protected:
 
   int m_targetID;
 
+  float m_damage;
+
+  double m_hop;
+  float m_hopHeight;
+  float m_hopSpeed;
+
+
+
   lua_State *L;
-
-  Vehicle* m_vehicle;
-
 
 };
 

@@ -7,8 +7,8 @@
 #include "GameWorld.h"
 
 
-const static float INCREMENT=-0.005;
-const static float ZOOM=1;
+const static float INCREMENT=-0.02;
+const static float ZOOM=5;
 NGLDraw::NGLDraw()
 {
   m_rotate=false;
@@ -19,6 +19,8 @@ NGLDraw::NGLDraw()
   glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
+
+
    // now to load the shader and set the values
   // grab an instance of shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -52,10 +54,14 @@ NGLDraw::NGLDraw()
   ngl::Material m(ngl::POLISHEDSILVER);
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
+
+
+
+
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,5,0);
+  ngl::Vec3 from(0,15,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -121,9 +127,9 @@ void NGLDraw::draw()
 
 }
 
-void NGLDraw::update(double timeElapsed)
+void NGLDraw::update(double timeElapsed, double currentTime)
 {
-  m_gameworld->Update(timeElapsed);
+  m_gameworld->Update(timeElapsed, currentTime);
 }
 
 

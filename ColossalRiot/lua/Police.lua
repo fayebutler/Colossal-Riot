@@ -1,9 +1,10 @@
 -- set up initial police variables
 
 makePolice = function()
-   police.m_health = 250
+   police.m_health = 150
    police.m_morale = 100
-   police.m_rage = 3
+   police.m_rage = 20
+   police.m_damage = 0.01
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
 end
@@ -34,8 +35,10 @@ global["enter"] = function()
 end
 
 global["execute"] = function()
-  if police.m_health <= 0 then
-    stateMachine:changeState("dead")
+  if stateMachine.m_currentState ~= "dead" then
+    if police.m_health <= 0 then
+        stateMachine:changeState("dead")
+    end
   end
 end
 
@@ -48,20 +51,22 @@ end
 
 work = {}
 work["enter"] = function()
-  print("POLICE work enter")
+  print("LUA POLICE work enter")
+  police:pursuit(1.0)
+  police:setTargetID(0)
 end
 
 work["execute"] = function()
-  print("POLICE work execute")
-  police.m_morale = police.m_morale - 1
-  police:attack(1)
+  print("LUA POLICE work execute")
+  police.m_morale = police.m_morale - 0.2
+  police:attack()
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
   end
 end
 
 work["exit"] = function()
-  print("POLICE work exit")
+  print("LUA POLICE work exit")
 end
 
 
@@ -70,19 +75,20 @@ end
 
 flee = {}
 flee["enter"] = function()
-  print("POLICE flee enter")
+  police:setTargetID(1)
+  print("LUA POLICE flee enter")
 end
 
 flee["execute"] = function()
-  print("POLICE flee execute")
-  police.m_morale = police.m_morale + 5
+  print("LUA POLICE flee execute")
+  police.m_morale = police.m_morale + 0.5
   if police.m_morale > 75 then
     stateMachine:changeState("work")
   end
 end
 
 flee["exit"] = function()
-  print("POLICE flee exit")
+  print("LUA POLICE flee exit")
 end
 
 
@@ -91,13 +97,16 @@ end
 
 dead = {}
 dead["enter"] = function()
-  print("POLICE dead enter")
+  police:pursuit(0.0)
+  police:wander(1.0)
+  print("LUA POLICE dead enter")
 end
 
 dead["execute"] = function()
-  print("PO PO DEAD")
+  print("LUA POLICE dead execute")
+  police.m_health = 0
 end
 
-dead["exit"] = function()
-  print("POLICE dead exit")
-end
+--dead["exit"] = function()
+--  print("LUA POLICE dead exit")
+--end

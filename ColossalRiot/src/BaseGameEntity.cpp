@@ -10,7 +10,7 @@ BaseGameEntity::BaseGameEntity()
   EntityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(int entity_type, ngl::Vec3 pos, float r)
+BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
 {
    setID(m_nextValidID);
    m_nextValidID++;
@@ -27,12 +27,11 @@ bool BaseGameEntity::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgAttack:
-    //m_health -= _message.m_extraInfo;
-    return true;
 
   default:
-    std::cout<<"Message type not defined"<<std::endl;
+    std::cout<<"BaseGameEntity: Message type not defined"<<std::endl;
     return false;
   }
 }
+
+

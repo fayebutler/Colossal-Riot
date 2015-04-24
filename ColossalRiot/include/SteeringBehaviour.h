@@ -2,6 +2,7 @@
 #define STEERINGBEHAVIOUR_H
 
 #include <ngl/Transformation.h>
+#include <vector>
 
 
 class Vehicle;
@@ -36,12 +37,15 @@ private:
 private:
 
     Vehicle* m_vehicle;
+    int m_activeFlags;
     ngl::Vec3 m_steeringForce;
     ngl::Vec3 m_target;
+    Vehicle* m_targetAgent;
 
-    float m_wanderJitter;
-    float m_wanderRadius;
+
     float m_wanderDistance;
+    float m_wanderRadius;
+    float m_wanderJitter;
 
     int m_deceleration;
 
@@ -49,7 +53,7 @@ private:
 
     float m_viewDistance;
 
-    int m_activeFlags;
+
 
     bool on(behaviour_type bt){return (m_activeFlags & bt) == bt;}
 
@@ -79,14 +83,20 @@ private:
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
     ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
     ngl::Vec3 Wander();
-    ngl::Vec3 Pursuit(const Vehicle* agent);
+    ngl::Vec3 Pursuit(const Vehicle *agent);
     ngl::Vec3 Evade(const Vehicle* agent);
+
+    ngl::Vec3 ObstacleAvoidance();
+
+    ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
+    ngl::Vec3 localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading);
 
 // add in group steering behaviours
 // add in collision avoidance
 
 
 public:
+
     SteeringBehaviour(Vehicle* agent);
 
     ~SteeringBehaviour();
@@ -94,10 +104,14 @@ public:
     void SeekOn(){m_activeFlags |= seek;} //bitwise OR
     void SeekOff(){if(on(seek)) m_activeFlags ^= seek;} //bitwise XOR
     bool isSeekOn(){return on(seek);}
+    void setSeekWeight(double m_newWeight){m_weightSeek = m_newWeight;}
+    double getSeekWeight(){return m_weightSeek;}
 
-    void FleeOn(){m_activeFlags |= seek;}
+    void FleeOn(){m_activeFlags |= flee;}
     void FleeOff(){if(on(flee)) m_activeFlags ^= flee;}
     bool isFleeOn(){return on(flee);}
+    void setFleeWeight(double m_newWeight){m_weightFlee = m_newWeight;}
+    double getFleeWeight(){return m_weightFlee;}
 
     void ArriveOn(){m_activeFlags |= arrive;}
     void ArriveOff(){if(on(arrive)) m_activeFlags ^= arrive;}
@@ -106,28 +120,39 @@ public:
     void WanderOn(){m_activeFlags |= wander;}
     void WanderOff(){if(on(wander)) m_activeFlags ^= wander;}
     bool isWanderOn(){return on(wander);}
+    void setWanderWeight(double m_newWeight){m_weightWander = m_newWeight;}
+    double getWanderWeight(){return m_weightWander;}
 
     void PursuitOn(){m_activeFlags |= pursuit;}
     void PursuitOff(){if(on(pursuit)) m_activeFlags ^= pursuit;}
     bool isPursuitOn(){return on(pursuit);}
+    void setPursuitWeight(double m_newWeight){m_weightPursuit = m_newWeight;}
+    double getPursuitWeight(){return m_weightPursuit;}
 
     void EvadeOn(){m_activeFlags |= evade;}
     void EvadeOff(){if(on(evade)) m_activeFlags ^= evade;}
     bool isEvadeOn(){return on(evade);}
+    void setEvadeWeight(double m_newWeight){m_weightEvade = m_newWeight;}
+    double getEvadeWeight(){return m_weightEvade;}
+
+    void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
+    void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
+    bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
 
     void setTarget(ngl::Vec3);
-//    void setTargetAgent(Vehicle* agent);
+    void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
 
     ngl::Vec3 calculate();
 
     ngl::Vec3 calculateWeightedSum(); //simplest addition method, should update to prioritized
 
+    ngl::Vec3 calculatePrioritizedSum();
+
+    bool accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force);
 
     double forwardComponent();
     double sideComponent();
-
-
 
 
 };

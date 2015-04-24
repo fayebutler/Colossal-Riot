@@ -8,12 +8,12 @@ class MovingEntity: public BaseGameEntity
 {
 protected:
     ngl::Vec3 m_velocity;
-    ngl::Vec3 m_heading;
-    ngl::Vec3 m_side;
-    float m_mass;
     float m_maxSpeed;
-    float m_maxForce;
+    ngl::Vec3 m_heading;
+    float m_mass;
     float m_maxTurnRate;
+    float m_maxForce;
+    ngl::Vec3 m_side;    
 
 public:
     MovingEntity();
@@ -24,14 +24,14 @@ public:
                  ngl::Vec3 heading,
                  float mass,
                  float turn_rate,
-                 float max_force):BaseGameEntity(0,pos,r),
+                 float max_force):BaseGameEntity(typeMovingEntity,pos,r),
                                   m_velocity(velocity),
+                                  m_maxSpeed(max_speed),
                                   m_heading(heading),
                                   m_mass(mass),
-                                  m_side(m_heading.cross(ngl::Vec3(0,1,0))),
-                                  m_maxSpeed(max_speed),
+                                  m_maxTurnRate(turn_rate),
                                   m_maxForce(max_force),
-                                  m_maxTurnRate(turn_rate)
+                                  m_side(m_heading.cross(ngl::Vec3(0,1,0)))
     {}
 
 
@@ -61,6 +61,7 @@ public:
     virtual bool handleMessage(const Message& _message);
 
 
+    void stopOverlap(BaseGameEntity* _selfEntity, std::vector<BaseGameEntity*> _otherEntities);
 
 };
 

@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 #include "NGLDraw.h"
 #include <ngl/NGLInit.h>
@@ -26,6 +27,8 @@ SDL_GLContext createOpenGLContext( SDL_Window *window);
 
 int main()
 {
+  srand(static_cast <unsigned> (time(0)));
+
 
   // Initialize SDL's Video subsystem
   if (SDL_Init(SDL_INIT_VIDEO) < 0 )
@@ -83,6 +86,7 @@ int main()
 
   Timer gameTimer;
   double timeElapsed = 0.0;
+  double currentTime = 0.0;
 //  GameWorld* world;
 //  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -99,19 +103,18 @@ int main()
   while(!quit)
   {
     timeElapsed=gameTimer.timeElapsed();
+    currentTime=gameTimer.getCurrentTime();
 
 
     std::cout<<"------------- TICK -------------"<<std::endl;
-    ngldraw.update(timeElapsed);
 
 
-//    std::cout<<"pos = "<<"x "<<veh->getPos()[0]<<" y "<<veh->getPos()[1]<<" z "<<veh->getPos()[2]<<std::endl;
-//    veh->update(gameTimer.getCurrentTime()/1000);
-      //this is valued before but zero after the update called
+    std::cout<<"Current Time  = "<<gameTimer.getCurrentTime()<<std::endl;
+    std::cout<<"Time Elapsed  = "<<timeElapsed<<std::endl;
 
-    std::cout<<gameTimer.getCurrentTime()<<std::endl;
-    std::cout<<timeElapsed<<std::endl;
-//    gameTimer.timeElapsed();
+
+
+    ngldraw.update(timeElapsed,currentTime);
 
     while ( SDL_PollEvent(&event) )
     {

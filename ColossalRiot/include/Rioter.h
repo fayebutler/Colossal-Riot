@@ -12,16 +12,16 @@ public:
 
     lua_State* getLuaState() const { return L ; }
 
-    void update(double timeElapsed);
+    void update(double timeElapsed, double currentTime);
     void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
     void loadMatricesToShader(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
 
 
     StateMachine<Rioter>* getStateMachine() const { return m_stateMachine; }
 
-    //bool handleMessage(const Message &_message);
+    bool handleMessage(const Message &_message);
 
-    void attack(int _ID);
+    void attack();
 
     void registerClass(lua_State* _L);
 

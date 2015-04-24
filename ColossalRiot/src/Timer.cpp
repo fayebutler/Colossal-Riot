@@ -19,7 +19,7 @@ void Timer::resetTimer()
     m_startTime = SDL_GetTicks();
 }
 
-double Timer::timeElapsed() //sort this out!!
+double Timer::timeElapsed()
 {
 
     m_currentTime=SDL_GetTicks() - m_startTime;
