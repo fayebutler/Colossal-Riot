@@ -60,11 +60,13 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
     {
+        //Adds entities to cells and cell ID to entities
         m_cellGraph.updateCells(EntityMgr->getEntityFromID(i));
     }
 
     for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
     {
+        //Adds entity neighbours:
         m_cellGraph.addEntities(EntityMgr->getEntityFromID(i));
     }
 

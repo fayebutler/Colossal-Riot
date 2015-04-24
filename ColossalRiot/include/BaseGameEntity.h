@@ -28,6 +28,11 @@ protected:
   float m_boundingRadius;
   int m_currentCellID;
   std::vector<int> m_detectedDynamicEntityIDs;
+  float m_detectionRadius;
+
+
+  std::vector<int> m_neighbourPoliceIDs;
+  std::vector<int> m_neighbourRioterIDs;
 
 public:
     BaseGameEntity();
@@ -49,9 +54,17 @@ public:
 
     void addDetectedDynamicEntityID(int _ID);
     void clearDetectedDynamicEntityID();
+    std::vector<int> getDetectedEntityIDs();
+
+    void addPoliceID(int _ID);
+    void addRioterID(int _ID);
+    void clearAgentIDs();
+
 
     void setCurrentCellID(int _ID);
     int getCurrentCell();
+
+    float getDetectionRadius();
 
     virtual bool handleMessage(const Message& _message) = 0;
 

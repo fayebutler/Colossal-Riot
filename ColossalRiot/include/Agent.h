@@ -83,8 +83,6 @@ protected:
   float m_hopHeight;
   float m_hopSpeed;
 
-  std::vector<int> neighbourPoliceIDs;
-  std::vector<int> neighbourRioterIDs;
 
   lua_State *L;
 

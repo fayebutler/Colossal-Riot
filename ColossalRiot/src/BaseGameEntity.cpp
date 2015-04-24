@@ -20,6 +20,7 @@ BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
     m_pos = pos;
     m_boundingRadius = r;
     m_entityType = entity_type;
+    m_detectionRadius = m_boundingRadius*3; // CHANGE TO VARIABLE
 
 }
 
@@ -52,4 +53,30 @@ void BaseGameEntity::addDetectedDynamicEntityID(int _ID)
 void BaseGameEntity::clearDetectedDynamicEntityID()
 {
     m_detectedDynamicEntityIDs.clear();
+}
+
+float BaseGameEntity::getDetectionRadius()
+{
+    return m_detectionRadius;
+}
+
+std::vector<int> BaseGameEntity::getDetectedEntityIDs()
+{
+    return m_detectedDynamicEntityIDs;
+}
+
+void BaseGameEntity::addPoliceID(int _ID)
+{
+    m_neighbourPoliceIDs.push_back(_ID);
+}
+
+void BaseGameEntity::addRioterID(int _ID)
+{
+    m_neighbourRioterIDs.push_back(_ID);
+}
+
+void BaseGameEntity::clearAgentIDs()
+{
+    m_neighbourPoliceIDs.clear();
+    m_neighbourRioterIDs.clear();
 }
