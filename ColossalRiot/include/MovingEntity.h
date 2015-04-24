@@ -24,7 +24,7 @@ public:
                  ngl::Vec3 heading,
                  float mass,
                  float turn_rate,
-                 float max_force):BaseGameEntity(0,pos,r),
+                 float max_force):BaseGameEntity(typeMovingEntity,pos,r),
                                   m_velocity(velocity),
                                   m_maxSpeed(max_speed),
                                   m_heading(heading),

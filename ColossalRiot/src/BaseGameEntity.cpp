@@ -10,7 +10,7 @@ BaseGameEntity::BaseGameEntity()
   EntityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(int entity_type, ngl::Vec3 pos, float r)
+BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
 {
    setID(m_nextValidID);
    m_nextValidID++;

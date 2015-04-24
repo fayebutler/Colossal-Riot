@@ -10,7 +10,7 @@ GameWorld::GameWorld()
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
-    newRioter->setBoudingRadius(2.5f);
+    newRioter->setBoudingRadius(3.f);
     //newRioter->setCrosshair(ngl::Vec3(-4.f, 0.f, 0.f));
     m_rioters.push_back(newRioter);
 
@@ -18,12 +18,13 @@ GameWorld::GameWorld()
   for (int i = 0; i < 5; ++i)
   {
     Police* newPolice = new Police(this);
-    newPolice->setBoudingRadius(2.5f);
+    newPolice->setBoudingRadius(3.f);
     newPolice->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
     newPolice->setCrosshair(ngl::Vec3(4.f, 0.f, 0.f));
     m_police.push_back(newPolice);
   }
 }
+
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
     for(unsigned int a=0; a<m_rioters.size(); ++a)
@@ -37,6 +38,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         Police* currentPolice = m_police[a];
         currentPolice->update(timeElapsed, currentTime);
     }
+
 }
 
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)

@@ -1,12 +1,12 @@
 #include "EntityManager.h"
 #include "BaseGameEntity.h"
 
-EntityManager* EntityManager::instance()
-{
-  static EntityManager instance;
+//EntityManager* EntityManager::instance()
+//{
+//  static EntityManager instance;
 
-  return &instance;
-}
+//  return &instance;
+//}
 
 //template <typename Type>
 //BaseGameEntity *EntityManager::getEntityFromID(int _ID)const
@@ -29,3 +29,5 @@ EntityManager* EntityManager::instance()
 //{
 //  m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
 //}
+
+//bool typeB = dynamic_cast<BaseGameEntity*>(currentPolice);

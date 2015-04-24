@@ -2,6 +2,8 @@
 
 Rioter::Rioter(GameWorld* world) : Agent(world)
 {
+    m_entityType = typeRioter;
+
     // Set up LUA state
     luaL_dofile(L, "lua/Rioter.lua");
     luaL_openlibs(L);
@@ -15,7 +17,6 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    m_stateMachine->setGlobalState(Class::Instance());
 
     // Set initial variables
-    m_targetID = 1;
     m_hopHeight = 0.5;
     m_hopSpeed = 20.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
@@ -25,6 +26,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     //Vehicle::Steering()->SeekOn();
     Vehicle::Steering()->ObstacleAvoidOn();
 
+    m_targetID = 6;
 }
 
 Rioter::~Rioter()
@@ -37,6 +39,8 @@ void Rioter::update(double timeElapsed, double currentTime)
 {
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
+
+    //m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -60,15 +64,15 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat4 M;
   ngl::Transformation trans;
   trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
+
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
   rot = ((rot * 180)/M_PI);
-
   if(getHeading().m_x < 0)
   {
     rot = 180 + rot;
   }
-
   trans.setRotation(0,-rot,0);
+
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
   MVP= M*cam->getVPMatrix();
@@ -88,9 +92,10 @@ bool Rioter::handleMessage(const Message& _message)
 
 //RIOTER STATE UTILITY FUNCTIONS
 
-void Rioter::attack(int _ID)
+void Rioter::attack()
 {
-  MessageMgr->sendMessage(this->getID(),m_targetID,msgAttack,0,m_damage);
+  std::cout<<"RIOT RIOT Attack for "<<m_damage<<std::endl;
+  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 }
 
 void Rioter::registerClass(lua_State* _L)

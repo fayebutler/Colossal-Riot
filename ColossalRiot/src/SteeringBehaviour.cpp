@@ -55,6 +55,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
+    m_steeringForce = 0;
 
     if(on(seek)) //need to create crosshair in gameworld
     {
@@ -88,6 +89,8 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
     }
     std::cout<<"m_steeringForce after "<<m_steeringForce[0]<<", "<<m_steeringForce[1]<<", "<<m_steeringForce[2]<<std::endl;
 
+//    std::cout<<"Steering Force = "<<m_steeringForce.m_x<<"  "<<m_steeringForce.m_y<<"  "<<m_steeringForce.m_z<<std::endl;
+
 
    //truncate steering force to max force
     if(m_steeringForce.length() > m_vehicle->getMaxForce())
@@ -100,6 +103,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 }
 
+
 double SteeringBehaviour::forwardComponent()
 {
     return m_vehicle->getHeading().dot(m_steeringForce);
@@ -110,7 +114,7 @@ double SteeringBehaviour::sideComponent()
     return m_vehicle->getSide().dot(m_steeringForce);
 }
 
-//bejaviour type functions
+//behaviour type functions
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
@@ -191,9 +195,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-
-  std::cout<<"local Target "<<localTarget[0]<<", "<<localTarget[1]<<", "<<localTarget[2]<<std::endl;
-  std::cout<<"world Target "<<worldTarget[0]<<", "<<worldTarget[1]<<", "<<worldTarget[2]<<std::endl;
+//  worldTarget += m_vehicle->getPos();
 
   //needed?
   worldTarget.normalize();
@@ -230,7 +232,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 //    if(toAgent.lengthSquared() > threatRange * threatRange) return ngl::Vec3();
 
     double lookAheadTime = toAgent.length() / (m_vehicle->getMaxSpeed() + agent->getSpeed());
-;
     ngl::Vec3 agentPos = agent->getPos() + (agent->getVelocity() * lookAheadTime);
 
     return Flee(agentPos);
