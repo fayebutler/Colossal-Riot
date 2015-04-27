@@ -67,6 +67,10 @@ public:
     int getCurrentCell();
 
     float getDetectionRadius();
+    void setDetectionRadius(float _r);
+
+    std::vector<int> getNeighbourPoliceIDs() { return m_neighbourPoliceIDs; }
+    std::vector<int> getNeighbourRioterIDs() { return m_neighbourRioterIDs; }
 
     virtual bool handleMessage(const Message& _message) = 0;
 };

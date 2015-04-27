@@ -44,7 +44,7 @@ public:
 
   int getTargetID() const { return m_targetID; }
   void setTargetID(int _val) { m_targetID = _val;
-                             Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
+  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }

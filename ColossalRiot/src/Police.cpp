@@ -31,11 +31,17 @@ Police::Police(GameWorld* world) : Agent(world)
 
     m_targetID = 0;
 
-    //Vehicle::Steering()->WanderOn();
+    Vehicle::Steering()->WanderOn();
     //Vehicle::Steering()->ObstacleAvoidOn();
 
+    Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(1.f);
 
+    Vehicle::Steering()->AlignmentOn();
+    Vehicle::Steering()->setAlignmentWeight(1.f);
 
+    Vehicle::Steering()->SeparationOn();
+    Vehicle::Steering()->setSeparationWeight(1.f);
 }
 
 Police::~Police()
@@ -50,6 +56,10 @@ void Police::update(double timeElapsed, double currentTime)
   m_stateMachine->update();
 
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+
+  Vehicle::Steering()->clearNeighbours();
+  Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
+  Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
 
 }
 
