@@ -7,9 +7,7 @@
 #include <ngl/Transformation.h>
 #include "Cell.h"
 #include "EntityManager.h"
-
-
-
+#include <ngl/Obj.h>
 
 class CellGraph
 {
