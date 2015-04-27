@@ -185,6 +185,9 @@ public:
     double forwardComponent();
     double sideComponent();
 
+    void OverlapAvoidance();
+
+
 
 };
 

@@ -9,8 +9,8 @@ GameWorld::GameWorld()
 {
 
 
-    m_mesh = new ngl::Obj("plane_Mesh.obj"); //Obj to draw, must be triangulated
-    m_mesh->createVAO();
+//    m_mesh = new ngl::Obj("plane_Mesh.obj"); //Obj to draw, must be triangulated
+//    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
    m_cellGraph =  CellGraph("plane_Test.obj"); //Obj for cell graph, must be quads
@@ -21,20 +21,20 @@ GameWorld::GameWorld()
   for (int i = 0; i < 8; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setBoudingRadius(2.f);
+    newRioter->setBoudingRadius(1.5f);
     newRioter->setDetectionRadius(10.f);
     newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
     m_rioters.push_back(newRioter);
-
-
   }
-  for (int i = 0; i < 8; ++i)
+
+  for (int i = 0; i < 1; ++i)
   {
-    Police* newPolice = new Police(this);
-    newPolice->setBoudingRadius(2.f);
-    newPolice->setDetectionRadius(10.f);
-    newPolice->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
-    m_police.push_back(newPolice);
+
+      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f));
+      m_squads.push_back(newSquad);
+      newSquad = new Squad(this, 5, ngl::Vec3(-1.0f,0.0f,-5.0f));
+      m_squads.push_back(newSquad);
+
   }
 
 }
@@ -61,9 +61,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
     }
 
-    std::cout<<"policeman 0 current cell = "<<m_police[0]->getCurrentCell()<<std::endl;
-
-
+    //std::cout<<"policeman 0 current cell = "<<m_police[0]->getCurrentCell()<<std::endl;
 
     //0.
 
@@ -135,11 +133,10 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         currentRioter->update(timeElapsed, currentTime);
 
     }
-    for(unsigned int a=0; a<m_police.size(); ++a)
+    for(unsigned int a=0; a<m_squads.size(); ++a)
     {
-        Police* currentPolice = m_police[a];
-        currentPolice->update(timeElapsed, currentTime);
-
+        Squad* currentSquad = m_squads[a];
+        currentSquad->update(timeElapsed, currentTime);
     }
 
 }
@@ -174,17 +171,17 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  m_mesh->draw();
+//  m_mesh->draw();
 
   for(unsigned int a=0; a<m_rioters.size(); ++a)
   {
       Rioter* currentRioter = m_rioters[a];
       currentRioter->draw(cam, mouseGlobalTX);
   }
-  for(unsigned int a=0; a<m_police.size(); ++a)
+  for(unsigned int a=0; a<m_squads.size(); ++a)
   {
-      Police* currentPolice = m_police[a];
-      currentPolice->draw(cam, mouseGlobalTX);
+      Squad* currentSquad = m_squads[a];
+      currentSquad->draw(cam, mouseGlobalTX);
   }
 
 

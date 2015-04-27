@@ -163,28 +163,42 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(pursuit))
     {
-        assert(m_targetAgent && "pursuit target not assigned");
-        force = Pursuit(m_targetAgent) * m_weightPursuit;
-        if(!accumulateForce(m_steeringForce, force))
+        if (m_targetAgent == NULL)
         {
-            return m_steeringForce;
+            std::cout<<"pursuit NULL"<<std::endl;
         }
         else
         {
-            m_steeringForce += force;
+            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
+            force = Pursuit(m_targetAgent) * m_weightPursuit;
+            if(!accumulateForce(m_steeringForce, force))
+            {
+                return m_steeringForce;
+            }
+            else
+            {
+                m_steeringForce += force;
+            }
         }
+
     }
     if(on(evade))
     {
-        assert(m_targetAgent && "evade target not assigned");
-        force = Evade(m_targetAgent) * m_weightEvade;
-        if(!accumulateForce(m_steeringForce, force))
+        if (m_targetAgent == NULL)
         {
-            return m_steeringForce;
+            std::cout<<"evade NULL"<<std::endl;
         }
         else
         {
-            m_steeringForce += force;
+            force = Evade(m_targetAgent) * m_weightEvade;
+            if(!accumulateForce(m_steeringForce, force))
+            {
+                return m_steeringForce;
+            }
+            else
+            {
+                m_steeringForce += force;
+            }
         }
     }
     if(on(seek))
@@ -264,6 +278,7 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
@@ -347,6 +362,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
+
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
@@ -360,6 +376,7 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
+
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
@@ -439,6 +456,7 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
+
   //const std::vector<BaseGameEntity *> &obstacles
 
   // not sure if I should use radius for detectionLength, or create a new minimumLength variable
@@ -491,9 +509,10 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       }
     }
   }
-  for (unsigned int i = 0; i < m_vehicle->World()->getPolice().size(); ++i)
+  for (unsigned int i = 0; i < m_vehicle->getNeighbourPoliceIDs().size(); ++i)
   {
-    Police* currentPolice = m_vehicle->World()->getPolice()[i];
+    Police* currentPolice = dynamic_cast<Police*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]));
+    if (currentPolice) continue;
     if (currentPolice->getID() != m_vehicle->getID())
     {
       ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
@@ -623,5 +642,35 @@ void SteeringBehaviour::addNeighbours(std::vector<int> neighbours)
   {
     m_neighbours.push_back(neighbours[i]);
   }
+}
+
+
+void SteeringBehaviour::OverlapAvoidance()
+{
+    // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
+    for (unsigned int i = 0; i < m_neighbours.size(); i++)
+
+    {
+        Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_neighbours[i]));
+        if (curEntity)
+        {
+
+            //make sure we don't check against ourselves
+            Vehicle* entity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_vehicle->getID()));
+            if (curEntity == entity) continue;
+
+
+            ngl::Vec3 toEntity = m_vehicle->getPos() - curEntity->getPos();
+            double distFromEachOther = toEntity.length();
+
+            double amountOfOverLap = m_vehicle->getBoundingRadius() - distFromEachOther;
+
+            if (amountOfOverLap >= 0)
+            {
+            m_vehicle->setPos(m_vehicle->getPos() + (toEntity/distFromEachOther) * amountOfOverLap);
+            }
+        }
+    }
+
 }
 

@@ -3,8 +3,9 @@
 Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
 
-  //m_entityMgr = new EntityManager();
   L = luaL_newstate();
+
+  m_targetID = -1;
 
 }
 
@@ -16,6 +17,20 @@ Agent::~Agent()
 void Agent::update(double timeElapsed, double currentTime)
 {
   Vehicle::update(timeElapsed);
+}
+
+void Agent::setTargetID(int _val)
+{
+    m_targetID = _val;
+    if (_val < 0)
+    {
+        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
+        Vehicle::Steering()->setTargetAgent(NULL);
+    }
+    else
+    {
+      Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
+    }
 }
 
 void Agent::wander(double weight)
@@ -38,8 +53,7 @@ void Agent::pursuit(double weight)
       Vehicle::Steering()->PursuitOff();
     }
     else
-    {
-      Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
+    {        
       Vehicle::Steering()->PursuitOn();
       Vehicle::Steering()->setPursuitWeight(weight);
     }
@@ -53,9 +67,49 @@ void Agent::evade(double weight)
     }
     else
     {
-      Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
       Vehicle::Steering()->EvadeOn();
       Vehicle::Steering()->setEvadeWeight(weight);
+    }
+}
+
+bool Agent::handleMessage(const Message& _message)
+{
+  switch(_message.m_message)
+  {
+  case msgAttack:
+    m_health -= _message.m_extraInfo;
+    return true;
+
+  default:
+    std::cout<<"Agent: Message type not defined"<<std::endl;
+    return false;
+  }
+}
+
+void Agent::checkValidTarget(float _dist, float _health)
+{
+    if(m_targetID >= 0)
+    {
+        Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
+
+        ngl::Vec3 toEntity = m_pos - target->getPos();
+        double distFromEachOther = toEntity.length();
+
+
+        if(distFromEachOther>m_boundingRadius*_dist || target->getHealth()<_health)
+        {
+            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
+            findTargetID(_health);
+        }
+        else
+        {
+            std::cout<<"TARGET A-OKAY"<<std::endl;
+        }
+    }
+    else
+    {
+        std::cout<<"TARGET NOT SET"<<std::endl;
+        findTargetID(_health);
     }
 }
 
@@ -75,23 +129,7 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
-
+                .addFunction("checkValidTarget", &Agent::checkValidTarget)
 
         .endClass();
 }
-
-bool Agent::handleMessage(const Message& _message)
-{
-  switch(_message.m_message)
-  {
-  case msgAttack:
-    m_health -= _message.m_extraInfo;
-    return true;
-
-  default:
-    std::cout<<"Agent: Message type not defined"<<std::endl;
-    return false;
-  }
-}
-
-
