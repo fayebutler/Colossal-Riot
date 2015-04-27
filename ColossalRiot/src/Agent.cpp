@@ -5,6 +5,8 @@ Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0
 
   L = luaL_newstate();
 
+  EntityMgr->registerEntity(this);
+
 }
 
 Agent::~Agent()

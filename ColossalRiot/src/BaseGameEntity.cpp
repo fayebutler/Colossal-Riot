@@ -15,7 +15,7 @@ BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
    setID(m_nextValidID);
    m_nextValidID++;
 
-   EntityMgr->registerEntity(this);
+//   EntityMgr->registerEntity(this);
 
     m_pos = pos;
     m_boundingRadius = r;

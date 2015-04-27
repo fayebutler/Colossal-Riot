@@ -51,8 +51,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(EntityMgr->getEntityFromID(i));
     }
 
-
-
     //0.
 
     //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
