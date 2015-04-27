@@ -7,8 +7,13 @@
 
 GameWorld::GameWorld()
 {
-  m_entityMgr = new EntityManager();
-   m_cellGraph =  CellGraph("plane_Test.obj");
+
+
+    m_mesh = new ngl::Obj("plane_Mesh.obj"); //Obj to draw, must be triangulated
+    m_mesh->createVAO();
+
+   m_entityMgr = new EntityManager();
+   m_cellGraph =  CellGraph("plane_Test.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
 
 
@@ -37,7 +42,8 @@ GameWorld::GameWorld()
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
 //    void * edpp = EntityMgr->getEntityFromID(0);
-//    if (edpp->getEntityType() == typeRioter)
+//    if (edpp->getEntityType() == typeRioter)  m_mesh->draw();
+
 
     //Clear the cells of agentIDs
 
@@ -138,8 +144,38 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
 }
 
+void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
+{
+
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.1f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  m.setSpecularExponent(5.f);
+  m.loadToShader("material");
+
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+
+  ngl::Mat4 MV;
+  ngl::Mat4 MVP;
+  ngl::Mat3 normalMatrix;
+  ngl::Mat4 M;
+
+  M=mouseGlobalTX;
+  MV=  M*cam->getViewMatrix();
+  MVP= M*cam->getVPMatrix();
+  normalMatrix=MV;
+  normalMatrix.inverse();
+  shader->setShaderParamFromMat4("MV",MV);
+  shader->setShaderParamFromMat4("MVP",MVP);
+  shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+  shader->setShaderParamFromMat4("M",M);
+
+}
+
+
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
+  loadMatricesToShader(cam, mouseGlobalTX);
+  m_mesh->draw();
+
   for(unsigned int a=0; a<m_rioters.size(); ++a)
   {
       Rioter* currentRioter = m_rioters[a];
@@ -150,4 +186,8 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       Police* currentPolice = m_police[a];
       currentPolice->draw(cam, mouseGlobalTX);
   }
+
+
+
 }
+

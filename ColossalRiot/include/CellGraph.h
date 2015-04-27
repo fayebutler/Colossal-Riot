@@ -8,8 +8,7 @@
 #include "Cell.h"
 #include "EntityManager.h"
 
-#include
-
+#include <ngl/Obj.h>
 
 class CellGraph
 {
