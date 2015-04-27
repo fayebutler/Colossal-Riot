@@ -19,6 +19,20 @@ void Agent::update(double timeElapsed, double currentTime)
   Vehicle::update(timeElapsed);
 }
 
+void Agent::setTargetID(int _val)
+{
+    m_targetID = _val;
+    if (_val < 0)
+    {
+        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
+        Vehicle::Steering()->setTargetAgent(NULL);
+    }
+    else
+    {
+      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+    }
+}
+
 void Agent::wander(double weight)
 {
     if(weight <= 0.0)
@@ -39,8 +53,7 @@ void Agent::pursuit(double weight)
       Vehicle::Steering()->PursuitOff();
     }
     else
-    {
-      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+    {        
       Vehicle::Steering()->PursuitOn();
       Vehicle::Steering()->setPursuitWeight(weight);
     }

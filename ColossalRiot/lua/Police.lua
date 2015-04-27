@@ -54,14 +54,22 @@ work = {}
 work["enter"] = function()
 
   print("LUA POLICE work enter")
---  police:pursuit(1.0)
+  police:findTargetID()
+  police:pursuit(1.0)
 --  police:setTargetID(0)
 end
 
 work["execute"] = function()
   print("LUA POLICE work execute")
+  print(police.m_targetID)
   police.m_morale = police.m_morale - 0.2
-  police:attack()
+
+  if police.m_targetID < 0 then
+    police:findTargetID()
+
+  else
+    police:attack()
+  end
 
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
@@ -78,6 +86,7 @@ end
 
 flee = {}
 flee["enter"] = function()
+    police:pursuit(0.0)
 --  police:setTargetID(1)
   print("LUA POLICE flee enter")
 end

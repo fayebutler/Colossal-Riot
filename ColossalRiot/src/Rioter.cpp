@@ -22,12 +22,22 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    m_targetID = 0;
+    m_targetID;
 
     Vehicle::Steering()->WanderOn();
-    Vehicle::Steering()->SeekOn();
-    setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-    Vehicle::Steering()->ObstacleAvoidOn();
+    //Vehicle::Steering()->SeekOn();
+    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+    //Vehicle::Steering()->ObstacleAvoidOn();
+
+//    Vehicle::Steering()->CohesionOn();
+//    Vehicle::Steering()->setCohesionWeight(1.f);
+
+//    Vehicle::Steering()->AlignmentOn();
+//    Vehicle::Steering()->setAlignmentWeight(1.f);
+
+    Vehicle::Steering()->SeparationOn();
+    Vehicle::Steering()->setSeparationWeight(1.f);
+
 }
 
 Rioter::~Rioter()
@@ -42,6 +52,13 @@ void Rioter::update(double timeElapsed, double currentTime)
     m_stateMachine->update();
 
     m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+
+    Vehicle::Steering()->clearNeighbours();
+    Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
+    Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
+    Vehicle::Steering()->OverlapAvoidance();
+
+    std::cout<<"RAGE: "<<m_rage<<std::endl;
 
 }
 
@@ -88,6 +105,11 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   shader->setShaderParamFromMat4("MVP",MVP);
   shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
   shader->setShaderParamFromMat4("M",M);
+}
+
+void Rioter::findTargetID()
+{
+
 }
 
 bool Rioter::handleMessage(const Message& _message)

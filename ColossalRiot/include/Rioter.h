@@ -19,6 +19,8 @@ public:
 
     StateMachine<Rioter>* getStateMachine() const { return m_stateMachine; }
 
+    void findTargetID();
+
     bool handleMessage(const Message &_message);
 
     void attack();

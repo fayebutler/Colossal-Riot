@@ -88,19 +88,8 @@ int main()
   Timer gameTimer;
   double timeElapsed = 0.0;
   double currentTime = 0.0;
-//  GameWorld* world;
-//  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
-
-//  veh->Steering()->SeekOn();
-//  veh->Steering()->ArriveOff();
-//  veh->Steering()->FleeOff();
 //-------MAIN LOOP----------------------------------------------------------------------
-
-//  GameWorld *MyWorld;
-//  Rioter test_rioter(MyWorld);
-//  Police test_police(MyWorld);
-
   while(!quit)
   {
     while ( SDL_PollEvent(&event) )

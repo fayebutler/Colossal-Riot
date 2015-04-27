@@ -130,12 +130,12 @@ CellGraph::CellGraph(const char *_fileName)
         if (j == 0)
         {
             m_cellSize = m_cells[0].getSize();
-            std::cout<<"cell size = "<<m_cellSize<<std::endl;
+            //std::cout<<"cell size = "<<m_cellSize<<std::endl;
         }
 
     }
     m_maxDist = sqrt(2*((m_cellSize/2)*(m_cellSize/2)));
-    std::cout<<"maxDist = "<<m_maxDist<<std::endl;
+    //std::cout<<"maxDist = "<<m_maxDist<<std::endl;
 
 
 }
@@ -194,7 +194,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     _entity->clearDetectedDynamicEntityID();
     _entity->clearAgentIDs();
 
-    std::cout<< "************************Current Entity:  "<< _entity->getID()<<std::endl;
+    //std::cout<< "************************Current Entity:  "<< _entity->getID()<<std::endl;
     //for each neighbour
     int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
 
@@ -205,13 +205,13 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
         int currentNeighbourCell =m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i];
         std::vector<int> dynamicEntitiesInCell = m_cells[currentNeighbourCell].getDynamicEntityIDs();
-        std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i]<<std::endl;
+        //std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i]<<std::endl;
 
 
         //Tests all entities in neighbouring cells against the entity's detection radius and adds it to its detected neighbours:
         for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
         {
-            std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
+            //std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
             ngl::Vec3 dist  = (EntityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
             if(dist.length()<_entity->getDetectionRadius())
@@ -219,7 +219,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
                 //All entities will have a list of neighbours within their radius'
                 _entity->addDetectedDynamicEntityID(dynamicEntitiesInCell[i]);
 
-                std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
+                //std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
             }
 
         }
@@ -229,12 +229,12 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
     //Do the same test but against the cell the entity's in:
     std::vector<int> dynamicEntitiesInCell = m_cells[_entity->getCurrentCell()].getDynamicEntityIDs();
-    std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCell()<<std::endl;
+   // std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCell()<<std::endl;
     for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
     {
         if (_entity->getID() != dynamicEntitiesInCell[i])
         {
-        std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
+        //std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
         ngl::Vec3 dist  = (EntityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
         if(dist.length()<_entity->getDetectionRadius())
@@ -242,7 +242,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
             //All entities will have a list of neighbours within their radius'
             _entity->addDetectedDynamicEntityID(dynamicEntitiesInCell[i]);
 
-            std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
+            //std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
         }
 
         }
@@ -252,17 +252,17 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
     for (int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
     {
-        std::cout<<"WOOOOOO       "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+        //std::cout<<"WOOOOOO       "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
         if ( EntityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
         {
-            std::cout<<"WOOOOOO     POPO  "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+            //std::cout<<"WOOOOOO     POPO  "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
             _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
         }
         if ( EntityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
         {
-            std::cout<<"WOOOOOO   RIOT    "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+            //std::cout<<"WOOOOOO   RIOT    "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
             _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
         }

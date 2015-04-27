@@ -60,6 +60,11 @@ float BaseGameEntity::getDetectionRadius()
     return m_detectionRadius;
 }
 
+void BaseGameEntity::setDetectionRadius(float _r)
+{
+  m_detectionRadius = _r;
+}
+
 std::vector<int> BaseGameEntity::getDetectedEntityIDs()
 {
     return m_detectedDynamicEntityIDs;
