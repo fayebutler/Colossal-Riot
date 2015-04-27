@@ -21,14 +21,12 @@ public:
   EntityManager();
   ~EntityManager();
 
-  //template <typename Type>
   void registerEntity(BaseGameEntity* _newEntity);
 
   EntityMap getEntityMap();
 
   BaseGameEntity* getEntityFromID(int _ID) const;
 
-  //template <typename Type>
   void removeEntity(BaseGameEntity* _entity);
 
   int getSize();
