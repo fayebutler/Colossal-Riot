@@ -3,6 +3,7 @@
 Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
 
+  //m_entityMgr = new EntityManager();
   L = luaL_newstate();
 
 }
@@ -38,7 +39,7 @@ void Agent::pursuit(double weight)
     }
     else
     {
-      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+      Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
       Vehicle::Steering()->PursuitOn();
       Vehicle::Steering()->setPursuitWeight(weight);
     }
@@ -52,7 +53,7 @@ void Agent::evade(double weight)
     }
     else
     {
-      Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));
+      Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
       Vehicle::Steering()->EvadeOn();
       Vehicle::Steering()->setEvadeWeight(weight);
     }

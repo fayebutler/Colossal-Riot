@@ -5,19 +5,24 @@
 #include "Message.h"
 #include "EntityManager.h"
 
+
+
 enum messageType
 {
   msgAttack
 };
 
 class BaseGameEntity;
+class EntityManager;
 
-#define MessageMgr MessageManager::instance()
+//#define MessageMgr MessageManager::instance()
 
 class MessageManager
 {
 public:
-  static MessageManager* instance();
+
+  MessageManager();
+  //static MessageManager* instance();
 
   void sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo);
   void sendDelayedMessages();
@@ -25,11 +30,12 @@ public:
 
 
 private:
-  std::set<Message> m_queue;
+
+  static std::set<Message> m_queue;
 
   void send(BaseGameEntity *_receiver, const Message &_message);
 
-  MessageManager();
+
 };
 
 #endif // MESSAGEMANAGER_H

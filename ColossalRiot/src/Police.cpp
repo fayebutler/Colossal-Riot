@@ -9,6 +9,8 @@ extern "C" {
 
 Police::Police(GameWorld* world) : Agent(world)
 {
+  m_messageMgr = new MessageManager();
+
     m_entityType = typePolice;
 
     // Set up LUA state
@@ -60,7 +62,6 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->clearNeighbours();
   Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
-
 }
 
 
@@ -122,7 +123,7 @@ bool Police::handleMessage(const Message& _message)
 void Police::attack()
 {
 
-  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
+  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 
 }
 

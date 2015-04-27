@@ -3,6 +3,7 @@
 
 #include "Agent.h"
 #include "StateMachine.h"
+#include "MessageManager.h"
 
 class Police : public Agent
 {
@@ -27,6 +28,8 @@ public:
 
 
 protected:
+    MessageManager* m_messageMgr;
+
     StateMachine<Police>* m_stateMachine;
 };
 

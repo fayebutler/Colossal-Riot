@@ -19,6 +19,9 @@ private:
 
     //entities that update each frame (not walls n shit)
 
+    EntityManager* m_entityMgr;
+
+
     std::vector<int> m_dynamicEntities;
 
     std::vector<BaseGameEntity*> m_obstacles;
@@ -26,16 +29,12 @@ private:
     std::vector<Rioter*> m_rioters;
     std::vector<Police*> m_police;
 
-
-
     CellGraph m_cellGraph;
 
 
 public:
     GameWorld();
     ~GameWorld();
-
-
 
     void Update(double timeElapsed, double currentTime);
     void draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);

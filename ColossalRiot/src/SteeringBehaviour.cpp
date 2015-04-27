@@ -29,6 +29,8 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    m_weightFlock(1.0),
 //    m_weightOffsetPursuit(1.0)
 {
+  m_entityMgr = new EntityManager();
+
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
@@ -262,8 +264,6 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
-  std::cout<<"SteeringBehaviour::Seek"<<std::endl;
-
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
     desiredVelocity.normalize();
     desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
@@ -347,12 +347,10 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Separation"<<std::endl;
-
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
-    ngl::Vec3 vectorToNeighbour = EntityMgr->getEntityFromID(neighbours[i])->getPos() - m_vehicle->getPos();
+    ngl::Vec3 vectorToNeighbour = m_entityMgr->getEntityFromID(neighbours[i])->getPos() - m_vehicle->getPos();
     vectorToNeighbour.normalize();
     vectorToNeighbour /= -(vectorToNeighbour.length());
     separationForce += vectorToNeighbour;
@@ -362,14 +360,12 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Alignment"<<std::endl;
-
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
     for (unsigned int i = 0; i < neighbours.size(); i++)
     {
-      Vehicle* vehicleNeighbour = dynamic_cast<Vehicle*>(EntityMgr->getEntityFromID(neighbours[i]));
+      Vehicle* vehicleNeighbour = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(neighbours[i]));
       if (vehicleNeighbour)
       {
         averageHeading += vehicleNeighbour->getHeading();
@@ -388,15 +384,13 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Cohesion"<<std::endl;
-
   if (neighbours.size() > 0)
   {
       ngl::Vec3 averagePosition;
       ngl::Vec3 cohesionForce;
       for (unsigned int i =0; i < neighbours.size(); i++)
       {
-        averagePosition += EntityMgr->getEntityFromID(neighbours[i])->getPos();
+        averagePosition += m_entityMgr->getEntityFromID(neighbours[i])->getPos();
       }
       averagePosition /= neighbours.size();
       cohesionForce = Seek(averagePosition);
@@ -445,7 +439,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
-  std::cout<<"SteeringBehaviour::Obstacle Avoid"<<std::endl;
   //const std::vector<BaseGameEntity *> &obstacles
 
   // not sure if I should use radius for detectionLength, or create a new minimumLength variable

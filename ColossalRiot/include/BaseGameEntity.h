@@ -16,14 +16,16 @@ enum entityType
 
 };
 
-
+class EntityManager;
 
 class BaseGameEntity
 {
 protected:
+
   int m_ID;
   static int m_nextValidID;
   void setID(int _val) { m_ID = _val; }
+  EntityManager* m_entityMgr;
   entityType m_entityType;
   ngl::Vec3 m_pos;
   float m_boundingRadius;
