@@ -112,6 +112,7 @@ class NGLDraw
     ngl::Transformation m_trans;
 
     GameWorld* m_gameworld;
+    ngl::Obj *m_mesh;
 };
 
 

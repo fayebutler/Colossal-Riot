@@ -7,6 +7,12 @@
 #include <iostream>
 #include <Agent.h>
 
+struct Wall
+{
+    ngl::Vec3 start;
+    ngl::Vec3 end;
+    ngl::Vec3 normal;
+};
 
 class Cell
 {
@@ -17,6 +23,8 @@ private:
     std::vector <int> m_neighbourCellIDs;
     ngl::Vec4 m_boundries;
     ngl::Vec3 m_centre;
+
+    std::vector<Wall> m_walls;
 
     std::vector<int> m_dynamicEntityIDs;
 
@@ -30,6 +38,8 @@ public:
     void addDynamicEntityID(int _ID);
     void clearDynamicEntityIDs();
     std::vector<int> getDynamicEntityIDs();
+    ngl::Vec4 getBoundaries(){ return m_boundries;}
+    void addWall(Wall _wall);
 
 
     ngl::Vec3 getCentre();
