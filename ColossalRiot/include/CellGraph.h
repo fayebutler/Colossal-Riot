@@ -8,6 +8,8 @@
 #include "Cell.h"
 #include "EntityManager.h"
 
+#include
+
 
 class CellGraph
 {
@@ -27,6 +29,7 @@ public:
     void updateCells(BaseGameEntity *_entity);
     void clearCells();
     void addEntities(BaseGameEntity *_entity);
+    void generateWalls();
 
 };
 

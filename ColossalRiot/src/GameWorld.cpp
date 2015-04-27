@@ -9,6 +9,7 @@ GameWorld::GameWorld()
 {
   m_entityMgr = new EntityManager();
    m_cellGraph =  CellGraph("plane_Test.obj");
+   m_cellGraph.generateWalls();
 
 
 
@@ -53,6 +54,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         //Adds entity neighbours:
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
     }
+
+    std::cout<<"policeman 0 current cell = "<<m_police[0]->getCurrentCell()<<std::endl;
 
 
 
