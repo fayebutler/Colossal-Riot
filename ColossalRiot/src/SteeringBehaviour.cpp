@@ -510,9 +510,10 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       }
     }
   }
-  for (unsigned int i = 0; i < m_vehicle->World()->getPolice().size(); ++i)
+  for (unsigned int i = 0; i < m_vehicle->getNeighbourPoliceIDs().size(); ++i)
   {
-    Police* currentPolice = m_vehicle->World()->getPolice()[i];
+    Police* currentPolice = dynamic_cast<Police*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]));
+    if (currentPolice) continue;
     if (currentPolice->getID() != m_vehicle->getID())
     {
       ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();

@@ -82,7 +82,7 @@ flee = {}
 flee["enter"] = function()
   rioter:checkValidTarget(1.0, 50.0)
 --  rioter:pursuit(0.0)
-  rioter:evade(1.0)
+  rioter:evade(0.6)
 --  print("LUA RIOTER flee enter")
 end
 

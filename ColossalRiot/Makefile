@@ -57,6 +57,7 @@ SOURCES       = src/Agent.cpp \
 		src/NGLDraw.cpp \
 		src/Police.cpp \
 		src/Rioter.cpp \
+		src/Squad.cpp \
 		src/SteeringBehaviour.cpp \
 		src/Timer.cpp \
 		src/Vehicle.cpp 
@@ -72,6 +73,7 @@ OBJECTS       = obj/Agent.o \
 		obj/NGLDraw.o \
 		obj/Police.o \
 		obj/Rioter.o \
+		obj/Squad.o \
 		obj/SteeringBehaviour.o \
 		obj/Timer.o \
 		obj/Vehicle.o
@@ -88,6 +90,7 @@ DIST          = .qmake.cache \
 		src/NGLDraw.cpp \
 		src/Police.cpp \
 		src/Rioter.cpp \
+		src/Squad.cpp \
 		src/SteeringBehaviour.cpp \
 		src/Timer.cpp \
 		src/Vehicle.cpp
@@ -357,7 +360,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d obj/ColossalRiot1.0.0 || mkdir -p obj/ColossalRiot1.0.0
-	$(COPY_FILE) --parents $(DIST) obj/ColossalRiot1.0.0/ && $(COPY_FILE) --parents include/Agent.h include/BaseGameEntity.h include/Cell.h include/CellGraph.h include/EntityManager.h include/GameWorld.h include/Message.h include/MessageManager.h include/MessageTypes.h include/MovingEntity.h include/NGLDraw.h include/Police.h include/Rioter.h include/StateMachine.h include/SteeringBehaviour.h include/Timer.h include/Vehicle.h obj/ColossalRiot1.0.0/ && $(COPY_FILE) --parents src/Agent.cpp src/BaseGameEntity.cpp src/Cell.cpp src/CellGraph.cpp src/EntityManager.cpp src/GameWorld.cpp src/main.cpp src/MessageManager.cpp src/MovingEntity.cpp src/NGLDraw.cpp src/Police.cpp src/Rioter.cpp src/SteeringBehaviour.cpp src/Timer.cpp src/Vehicle.cpp obj/ColossalRiot1.0.0/ && (cd `dirname obj/ColossalRiot1.0.0` && $(TAR) ColossalRiot1.0.0.tar ColossalRiot1.0.0 && $(COMPRESS) ColossalRiot1.0.0.tar) && $(MOVE) `dirname obj/ColossalRiot1.0.0`/ColossalRiot1.0.0.tar.gz . && $(DEL_FILE) -r obj/ColossalRiot1.0.0
+	$(COPY_FILE) --parents $(DIST) obj/ColossalRiot1.0.0/ && $(COPY_FILE) --parents include/Agent.h include/BaseGameEntity.h include/Cell.h include/CellGraph.h include/EntityManager.h include/GameWorld.h include/Message.h include/MessageManager.h include/MessageTypes.h include/MovingEntity.h include/NGLDraw.h include/Police.h include/Rioter.h include/Squad.h include/StateMachine.h include/SteeringBehaviour.h include/Timer.h include/Vehicle.h obj/ColossalRiot1.0.0/ && $(COPY_FILE) --parents src/Agent.cpp src/BaseGameEntity.cpp src/Cell.cpp src/CellGraph.cpp src/EntityManager.cpp src/GameWorld.cpp src/main.cpp src/MessageManager.cpp src/MovingEntity.cpp src/NGLDraw.cpp src/Police.cpp src/Rioter.cpp src/Squad.cpp src/SteeringBehaviour.cpp src/Timer.cpp src/Vehicle.cpp obj/ColossalRiot1.0.0/ && (cd `dirname obj/ColossalRiot1.0.0` && $(TAR) ColossalRiot1.0.0.tar ColossalRiot1.0.0 && $(COMPRESS) ColossalRiot1.0.0.tar) && $(MOVE) `dirname obj/ColossalRiot1.0.0`/ColossalRiot1.0.0.tar.gz . && $(DEL_FILE) -r obj/ColossalRiot1.0.0
 
 
 clean:compiler_clean 
@@ -2258,6 +2261,9 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Rioter.o src/Rioter.cpp
+
+obj/Squad.o: src/Squad.cpp include/Squad.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Squad.o src/Squad.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/EntityManager.h \

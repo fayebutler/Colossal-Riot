@@ -33,17 +33,19 @@ Police::Police(GameWorld* world) : Agent(world)
 
     //m_targetID = 0;
 
-    Vehicle::Steering()->WanderOn();
-    //Vehicle::Steering()->ObstacleAvoidOn();
+//    Vehicle::Steering()->WanderOn();
+//    Vehicle::Steering()->setWanderWeight(0.5);
 
-//    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(1.f);
+   // Vehicle::Steering()->ObstacleAvoidOn();
+
+    Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(0.8f);
 
 //    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(1.f);
+//    Vehicle::Steering()->setAlignmentWeight(0.3f);
 
-//    Vehicle::Steering()->SeparationOn();
-//    Vehicle::Steering()->setSeparationWeight(1.f);
+    Vehicle::Steering()->SeparationOn();
+    Vehicle::Steering()->setSeparationWeight(0.7f);
 }
 
 Police::~Police()
@@ -64,7 +66,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->OverlapAvoidance();
 
-  Vehicle::setMaxSpeed(0.7);
+  Vehicle::setMaxSpeed(0.8);
 }
 
 
@@ -89,7 +91,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
+  trans.setPosition(getPos().m_x,m_hop+0.5f,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 
@@ -157,7 +159,6 @@ void Police::attack()
 {
 
   m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
-
 }
 
 void Police::registerClass(lua_State* _L)
@@ -168,5 +169,21 @@ void Police::registerClass(lua_State* _L)
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Police::attack)
                 .addFunction("findTargetID", &Police::findTargetID)
+                .addFunction("squadCohesion", &Police::squadCohesion)
         .endClass();
+}
+
+void Police::squadCohesion(double weight)
+{
+    ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
+    double distance = fabs(toSquad.length());
+
+    weight = weight*distance*0.6f/m_squadRadius;
+
+
+    Vehicle::setCrosshair(m_squadPos);
+    Vehicle::Steering()->setSeekWeight(weight);
+
+    Vehicle::Steering()->SeekOn();
+
 }
