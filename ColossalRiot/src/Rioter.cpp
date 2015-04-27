@@ -2,6 +2,7 @@
 
 Rioter::Rioter(GameWorld* world) : Agent(world)
 {
+    m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
 
     // Set up LUA state
@@ -123,7 +124,7 @@ bool Rioter::handleMessage(const Message& _message)
 void Rioter::attack()
 {
 
-  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
+  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 
 
 }

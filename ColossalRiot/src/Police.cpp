@@ -9,6 +9,8 @@ extern "C" {
 
 Police::Police(GameWorld* world) : Agent(world)
 {
+  m_messageMgr = new MessageManager();
+
     m_entityType = typePolice;
 
     // Set up LUA state
@@ -61,6 +63,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->OverlapAvoidance();
+
 
 }
 
@@ -118,7 +121,7 @@ void Police::findTargetID()
     Agent* currentTarget = NULL;
     for (int i=0; i<rioters.size(); i++)
     {
-        Agent* rioter = dynamic_cast<Agent*>(EntityMgr->getEntityFromID(rioters[i]));
+        Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(rioters[i]));
         if (rioter)
         {
             if (rioter->getRage()>currentRage)
@@ -153,7 +156,7 @@ bool Police::handleMessage(const Message& _message)
 void Police::attack()
 {
 
-  MessageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
+  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 
 }
 

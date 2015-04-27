@@ -2260,6 +2260,8 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Rioter.o src/Rioter.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
+		include/EntityManager.h \
+		include/BaseGameEntity.h \
 		/home/i7702804/NGL/include/ngl/Transformation.h \
 		/home/i7702804/NGL/include/ngl/Mat4.h \
 		/home/i7702804/NGL/include/ngl/Types.h \
@@ -2382,12 +2384,10 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7702804/NGL/include/ngl/Vec4.h \
 		/home/i7702804/NGL/include/ngl/Vec2.h \
 		/home/i7702804/NGL/include/ngl/Vec3.h \
-		include/Vehicle.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
-		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
+		include/Vehicle.h \
+		include/MovingEntity.h \
 		include/GameWorld.h \
 		/home/i7702804/NGL/include/ngl/Camera.h \
 		/home/i7702804/NGL/include/ngl/RibExport.h \

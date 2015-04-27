@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Vehicle.h"
+#include "EntityManager.h"
 
 #include <ngl/ShaderLib.h>
 #include <ngl/NGLInit.h>
@@ -43,6 +44,7 @@ public:
   void setDamage(float _val) { m_damage = _val; }
 
   int getTargetID() const { return m_targetID; }
+
   void setTargetID(int _val);
 
   virtual void findTargetID() = 0;

@@ -7,7 +7,7 @@
 
 GameWorld::GameWorld()
 {
-
+  m_entityMgr = new EntityManager();
    m_cellGraph =  CellGraph("plane_Test.obj");
 
 
@@ -46,16 +46,16 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_cellGraph.clearCells();
 
-    for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
+    for (int i=0; i<m_entityMgr->getEntityMap().size(); i++)
     {
         //Adds entities to cells and cell ID to entities
-        m_cellGraph.updateCells(EntityMgr->getEntityFromID(i));
+        m_cellGraph.updateCells(m_entityMgr->getEntityFromID(i));
     }
 
-    for (int i=0; i<EntityMgr->m_entityMap.size(); i++)
+    for (int i=0; i<m_entityMgr->getEntityMap().size(); i++)
     {
         //Adds entity neighbours:
-        m_cellGraph.addEntities(EntityMgr->getEntityFromID(i));
+        m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
     }
 
     //0.

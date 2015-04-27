@@ -2,6 +2,9 @@
 
 CellGraph::CellGraph(const char *_fileName)
 {
+
+   m_entityMgr = new EntityManager();
+
     std::vector<ngl::Vec3> vertices;
     std::vector<ngl::Vec4> faces;
 
@@ -31,7 +34,7 @@ CellGraph::CellGraph(const char *_fileName)
            std::string vertId1,vertId2,vertId3,vertId4;
 
            //Get rid of slashes in .obj files:
-           for(int i =0; i<rawVertId1.length(); i++)
+           for(unsigned int i =0; i<rawVertId1.length(); i++)
            {
              if (std::ispunct(rawVertId1[i]))
              {
@@ -39,7 +42,7 @@ CellGraph::CellGraph(const char *_fileName)
              }
              vertId1 = vertId1+rawVertId1[i];
            }
-           for(int i =0; i<rawVertId2.length(); i++)
+           for(unsigned int i =0; i<rawVertId2.length(); i++)
            {
              if (std::ispunct(rawVertId2[i]))
              {
@@ -49,7 +52,7 @@ CellGraph::CellGraph(const char *_fileName)
            }
 
 
-           for(int i =0; i<rawVertId3.length(); i++)
+           for(unsigned int i =0; i<rawVertId3.length(); i++)
            {
              if (std::ispunct(rawVertId3[i]))
              {
@@ -59,7 +62,7 @@ CellGraph::CellGraph(const char *_fileName)
            }
 
 
-           for(int i =0; i<rawVertId4.length(); i++)
+           for(unsigned int i =0; i<rawVertId4.length(); i++)
            {
              if (std::ispunct(rawVertId4[i]))
              {
@@ -87,7 +90,7 @@ CellGraph::CellGraph(const char *_fileName)
 
 ///NOW ACTUALLY MAKE THE CELLS
 
-    for (int j = 0; j < faces.size(); j++)
+    for (unsigned int j = 0; j < faces.size(); j++)
     {
         std::vector<ngl::Vec3> fourCorners;
 
@@ -101,7 +104,7 @@ CellGraph::CellGraph(const char *_fileName)
 
        std::vector<int> neighbourIDs;
 
-        for (int i=0 ;i<faces.size();i++)
+        for (unsigned int i=0 ;i<faces.size();i++)
         {
             // j is the cell (face) we are creating. i is cell we are checking against.
            if (faces[j].m_x == faces[i].m_x || faces[j].m_y == faces[i].m_x ||
@@ -142,13 +145,13 @@ CellGraph::CellGraph(const char *_fileName)
 
 CellGraph::CellGraph()
 {
-
+  //m_entityMgr = new EntityManager();
 }
 
 void CellGraph::printCellGraph()
 {
 
-    for ( int j =0; j<m_cells.size();j++)
+    for (unsigned int j =0; j<m_cells.size();j++)
     {
         m_cells[j].printCellInfo();
     }
@@ -158,7 +161,7 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
 {
 
 //    ngl::Vec3 agentPos = _agent->getPos();
-    for (int i=0; i < m_cells.size(); i++)
+    for (unsigned int i=0; i < m_cells.size(); i++)
     {
         ngl::Vec3 test =m_cells[i].getCentre()-_entity->getPos();
         //std::cout<<" CurrentID:  "<< i<<std::endl;
@@ -199,7 +202,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
 
  //loops through all neighbour cells
-    for (unsigned int i = 0; i < numberOfCellsToCheck; i++)
+    for (int i = 0; i < numberOfCellsToCheck; i++)
     {
 
 
@@ -213,7 +216,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         {
             //std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
-            ngl::Vec3 dist  = (EntityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
+            ngl::Vec3 dist  = (m_entityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
             if(dist.length()<_entity->getDetectionRadius())
             {
                 //All entities will have a list of neighbours within their radius'
@@ -236,7 +239,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         {
         //std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
-        ngl::Vec3 dist  = (EntityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
+        ngl::Vec3 dist  = (m_entityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
         if(dist.length()<_entity->getDetectionRadius())
         {
             //All entities will have a list of neighbours within their radius'
@@ -250,17 +253,17 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
 
     //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
-    for (int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
+    for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
     {
         //std::cout<<"WOOOOOO       "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
-        if ( EntityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
+        if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
         {
             //std::cout<<"WOOOOOO     POPO  "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
             _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
         }
-        if ( EntityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
+        if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
         {
             //std::cout<<"WOOOOOO   RIOT    "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
 
