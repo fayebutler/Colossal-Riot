@@ -15,6 +15,8 @@
 #include "Rioter.h"
 #include "Police.h"
 
+#include "EntityManager.h"
+
 
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
@@ -83,39 +85,15 @@ int main()
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
+  bool paused = 0;
 
   Timer gameTimer;
   double timeElapsed = 0.0;
   double currentTime = 0.0;
-//  GameWorld* world;
-//  Vehicle* veh = new Vehicle(world, ngl::Vec3(5,0,5), ngl::Vec3(1,1,1), 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 
-
-//  veh->Steering()->SeekOn();
-//  veh->Steering()->ArriveOff();
-//  veh->Steering()->FleeOff();
 //-------MAIN LOOP----------------------------------------------------------------------
-
-//  GameWorld *MyWorld;
-//  Rioter test_rioter(MyWorld);
-//  Police test_police(MyWorld);
-
   while(!quit)
   {
-    timeElapsed=gameTimer.timeElapsed();
-    currentTime=gameTimer.getCurrentTime();
-
-
-    std::cout<<"------------- TICK -------------"<<std::endl;
-
-
-    std::cout<<"Current Time  = "<<gameTimer.getCurrentTime()<<std::endl;
-    std::cout<<"Time Elapsed  = "<<timeElapsed<<std::endl;
-
-
-
-    ngldraw.update(timeElapsed,currentTime);
-
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)
@@ -124,10 +102,12 @@ int main()
         case SDL_QUIT : quit = true; break;
 
         // process the mouse data by passing it to ngl class
-        case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion); break;
+
+        case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion);break;
         case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button); break;
         case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
         case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
+
         // if the window is re-sized pass it to the ngl class to change gl viewport
         // note this is slow as the context is re-create by SDL each time
         case SDL_WINDOWEVENT :
@@ -152,6 +132,8 @@ int main()
             glViewport(0,0,rect.w,rect.h);
             break;
 
+
+            case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
             case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
             case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
@@ -163,11 +145,19 @@ int main()
         default : break;
       } // end of event switch
     } // end of poll events
+
+    if(paused == 0)
+    {
+    timeElapsed=gameTimer.timeElapsed();
+    currentTime=gameTimer.getCurrentTime();
+
+    std::cout<<"------------- TICK -------------"<<std::endl;
+    ngldraw.update(timeElapsed,currentTime);
+    }
     // now we draw ngl
     ngldraw.draw();
     // swap the buffers
     SDL_GL_SwapWindow(window);
-
 
 //--------------------------------------------------------------------------------------------------------------------
 

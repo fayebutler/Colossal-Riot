@@ -20,6 +20,7 @@ public:
     void resetTimer();
     double getCurrentTime();
     double timeElapsed();
+    void pauseTimer();
 
 };
 

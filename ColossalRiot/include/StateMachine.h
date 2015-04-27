@@ -23,6 +23,7 @@ public:
         lua_setglobal(L, "stateMachine");
         m_currentState = NULL;
         m_previousState = NULL;
+
     }
 
     ~StateMachine() {}
@@ -64,8 +65,14 @@ public:
 
     void changeState(const char* _newState)
     {
+
         m_previousState = m_currentState;
         luaCallState(m_currentState, "exit");
+        if (m_currentState != NULL)
+        {
+            m_previousState = m_currentState;
+            luaCallState(m_currentState, "exit");
+        }
 
         m_currentState = _newState;
         luaCallState(m_currentState, "enter");

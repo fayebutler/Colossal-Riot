@@ -1,6 +1,7 @@
 #ifndef STEERINGBEHAVIOUR_H
 #define STEERINGBEHAVIOUR_H
 
+#include "EntityManager.h"
 #include <ngl/Transformation.h>
 #include <vector>
 
@@ -22,7 +23,7 @@ private:
         wander             = 0x00010,
         cohesion           = 0x00020,
         separation         = 0x00040,
-        allignment         = 0x00080,
+        alignment         = 0x00080,
         obstacle_avoidance = 0x00100,
         wall_avoidance     = 0x00200,
         follow_path        = 0x00400,
@@ -36,6 +37,7 @@ private:
     };
 private:
 
+    EntityManager* m_entityMgr;
     Vehicle* m_vehicle;
     int m_activeFlags;
     ngl::Vec3 m_steeringForce;
@@ -52,6 +54,8 @@ private:
     ngl::Vec3 m_wanderTarget;
 
     float m_viewDistance;
+
+    std::vector<int> m_neighbours;
 
 
 
@@ -88,6 +92,10 @@ private:
 
     ngl::Vec3 ObstacleAvoidance();
 
+    ngl::Vec3 Separation(std::vector<int> neighbours);
+    ngl::Vec3 Alignment(std::vector<int> neighbours);
+    ngl::Vec3 Cohesion(std::vector<int> neighbours);
+
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
     ngl::Vec3 localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading);
 
@@ -123,6 +131,24 @@ public:
     void setWanderWeight(double m_newWeight){m_weightWander = m_newWeight;}
     double getWanderWeight(){return m_weightWander;}
 
+    void SeparationOn(){m_activeFlags |= separation;}
+    void SeparationOff(){if(on(separation)) m_activeFlags ^= separation;}
+    bool isSeparationOn(){return on(separation);}
+    void setSeparationWeight(double m_newWeight){m_weightSeparation = m_newWeight;}
+    double getSeparationWeight(){return m_weightSeparation;}
+
+    void AlignmentOn(){m_activeFlags |= alignment;}
+    void AlignmentOff(){if(on(alignment)) m_activeFlags ^= alignment;}
+    bool isAlignmentOn(){return on(alignment);}
+    void setAlignmentWeight(double m_newWeight){m_weightAlignment = m_newWeight;}
+    double getAlignmentWeight(){return m_weightAlignment;}
+
+    void CohesionOn(){m_activeFlags |= cohesion;}
+    void CohesionOff(){if(on(cohesion)) m_activeFlags ^= cohesion;}
+    bool isCohesionOn(){return on(cohesion);}
+    void setCohesionWeight(double m_newWeight){m_weightCohesion = m_newWeight;}
+    double getCohesionWeight(){return m_weightCohesion;}
+
     void PursuitOn(){m_activeFlags |= pursuit;}
     void PursuitOff(){if(on(pursuit)) m_activeFlags ^= pursuit;}
     bool isPursuitOn(){return on(pursuit);}
@@ -135,12 +161,17 @@ public:
     void setEvadeWeight(double m_newWeight){m_weightEvade = m_newWeight;}
     double getEvadeWeight(){return m_weightEvade;}
 
+
     void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
     void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
     bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
 
+
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
+
+    void addNeighbours(std::vector<int> neighbours);
+    void clearNeighbours() { m_neighbours.clear(); }
 
 
     ngl::Vec3 calculate();

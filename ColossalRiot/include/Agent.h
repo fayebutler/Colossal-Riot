@@ -3,12 +3,14 @@
 
 #include <iostream>
 #include "Vehicle.h"
+#include "EntityManager.h"
 
 #include <ngl/ShaderLib.h>
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
+
 
 extern "C" {
 #include <lua.h>
@@ -43,7 +45,7 @@ public:
 
   int getTargetID() const { return m_targetID; }
   void setTargetID(int _val) { m_targetID = _val;
-                             Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
+    Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));}
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }
@@ -66,7 +68,11 @@ public:
 
 
 
+
 protected:
+
+  float m_detectionRadius;
+
   float m_health;
   float m_energy;
   float m_morale;
@@ -79,8 +85,6 @@ protected:
   double m_hop;
   float m_hopHeight;
   float m_hopSpeed;
-
-
 
   lua_State *L;
 

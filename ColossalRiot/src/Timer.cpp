@@ -16,13 +16,14 @@ double Timer::getCurrentTime()
 
 void Timer::resetTimer()
 {
+    m_previousTickTime = 0;
     m_startTime = SDL_GetTicks();
 }
 
 double Timer::timeElapsed()
 {
 
-    m_currentTime=SDL_GetTicks() - m_startTime;
+    m_currentTime = SDL_GetTicks() - m_startTime;
     m_timeElapsed = (m_currentTime - m_previousTickTime);
     m_previousTickTime = m_currentTime;
 

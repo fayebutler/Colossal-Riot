@@ -2,19 +2,22 @@
 
 MessageManager::MessageManager()
 {
+
+
 }
 
-MessageManager* MessageManager::instance()
-{
-  static MessageManager instance;
+//MessageManager* MessageManager::instance()
+//{
+//  static MessageManager instance;
 
-  return &instance;
-}
+//  return &instance;
+//}
 
 void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo)
 {
-  BaseGameEntity* sender = (BaseGameEntity*) EntityMgr->getEntityFromID(_senderID);
-  BaseGameEntity* receiver = (BaseGameEntity*)EntityMgr->getEntityFromID(_receiverID);
+  EntityManager* entityMgr = new EntityManager();
+  BaseGameEntity* sender = (BaseGameEntity*)entityMgr->getEntityFromID(_senderID);
+  BaseGameEntity* receiver = (BaseGameEntity*)entityMgr->getEntityFromID(_receiverID);
 
   if (receiver == NULL)
   {
@@ -46,3 +49,5 @@ void MessageManager::send(BaseGameEntity *_receiver, const Message &_message)
     std::cout<<"MessageManager::discharge: message could not be handled"<<std::endl;
   }
 }
+
+
