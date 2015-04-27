@@ -169,6 +169,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
         else
         {
+            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {
@@ -183,15 +184,21 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(evade))
     {
-        assert(m_targetAgent && "evade target not assigned");
-        force = Evade(m_targetAgent) * m_weightEvade;
-        if(!accumulateForce(m_steeringForce, force))
+        if (m_targetAgent == NULL)
         {
-            return m_steeringForce;
+            std::cout<<"evade NULL"<<std::endl;
         }
         else
         {
-            m_steeringForce += force;
+            force = Evade(m_targetAgent) * m_weightEvade;
+            if(!accumulateForce(m_steeringForce, force))
+            {
+                return m_steeringForce;
+            }
+            else
+            {
+                m_steeringForce += force;
+            }
         }
     }
     if(on(seek))
@@ -641,12 +648,10 @@ void SteeringBehaviour::addNeighbours(std::vector<int> neighbours)
 void SteeringBehaviour::OverlapAvoidance()
 {
     // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
-    // for (unsigned int i = 0; i < m_neighbours.size(); i++)
-    for (unsigned int i = 0; i < 16; i++)
+    for (unsigned int i = 0; i < m_neighbours.size(); i++)
 
     {
-        //Vehicle* curEntity = dynamic_cast<Vehicle*>(EntityMgr->getEntityFromID(m_neighbours[i]));
-        Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(i));
+        Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_neighbours[i]));
         if (curEntity)
         {
 
@@ -658,8 +663,7 @@ void SteeringBehaviour::OverlapAvoidance()
             ngl::Vec3 toEntity = m_vehicle->getPos() - curEntity->getPos();
             double distFromEachOther = toEntity.length();
 
-            // NEED TO GET RADIUS OF OBJ INSTEAD OF 1.5!!!
-            double amountOfOverLap = 1.5 - distFromEachOther;
+            double amountOfOverLap = m_vehicle->getBoundingRadius() - distFromEachOther;
 
             if (amountOfOverLap >= 0)
             {

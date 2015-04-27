@@ -4,7 +4,7 @@ makePolice = function()
    police.m_health = 150
    police.m_morale = 100
    police.m_rage = 20
-   police.m_damage = 0.01
+   police.m_damage = 0.1
    --police:wander(0.2)
    stateMachine.m_currentState = "work"
    stateMachine.m_globalState = "global"
@@ -54,7 +54,7 @@ work = {}
 work["enter"] = function()
 
   print("LUA POLICE work enter")
-  police:findTargetID()
+  police:checkValidTarget(1.0, 50.0)
   police:pursuit(1.0)
 --  police:setTargetID(0)
 end
@@ -62,12 +62,10 @@ end
 work["execute"] = function()
   print("LUA POLICE work execute")
   print(police.m_targetID)
-  police.m_morale = police.m_morale - 0.2
+  police.m_morale = police.m_morale
 
-  if police.m_targetID < 0 then
-    police:findTargetID()
-
-  else
+  police:checkValidTarget(4.0, 50.0)
+  if police.m_targetID >= 0 then
     police:attack()
   end
 

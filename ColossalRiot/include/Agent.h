@@ -47,7 +47,9 @@ public:
 
   void setTargetID(int _val);
 
-  virtual void findTargetID() = 0;
+  virtual void findTargetID(float _health) = 0;
+
+  void checkValidTarget(float _dist, float _health);
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }

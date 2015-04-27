@@ -56,7 +56,7 @@ end
 protest = {}
 protest["enter"] = function()
 --  rioter:pursuit(1.0)
---  rioter:evade(0.0)
+  rioter:evade(0.0)
 --  print("LUA RIOTER protest enter")
 end
 
@@ -80,8 +80,9 @@ end
 
 flee = {}
 flee["enter"] = function()
+  rioter:checkValidTarget(1.0, 50.0)
 --  rioter:pursuit(0.0)
---  rioter:evade(1.0)
+  rioter:evade(1.0)
 --  print("LUA RIOTER flee enter")
 end
 
@@ -89,6 +90,9 @@ flee["execute"] = function()
 --  print("RIOTER flee execute")
   rioter.m_morale = rioter.m_morale + 0.2
   rioter.m_rage = rioter.m_rage - 0.1;
+
+  rioter:checkValidTarget(1.0, 50.0)
+
   if rioter.m_morale > 75 then
   stateMachine:changeState("protest")
   end

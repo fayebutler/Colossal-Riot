@@ -20,7 +20,7 @@ public:
 
     StateMachine<Police>* getStateMachine() const { return m_stateMachine; }
 
-    void findTargetID();
+    void findTargetID(float _health);
 
     bool handleMessage(const Message &_message);
 

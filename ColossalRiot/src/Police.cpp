@@ -64,7 +64,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->OverlapAvoidance();
 
-
+  Vehicle::setMaxSpeed(0.7);
 }
 
 
@@ -114,7 +114,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 }
 
-void Police::findTargetID()
+void Police::findTargetID(float _health)
 {
     std::vector<int> rioters = getNeighbourRioterIDs();
     float currentRage = -100;
@@ -124,7 +124,7 @@ void Police::findTargetID()
         Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(rioters[i]));
         if (rioter)
         {
-            if (rioter->getRage()>currentRage)
+            if (rioter->getHealth()>_health && rioter->getRage()>currentRage)
             {
                 currentRage = rioter->getRage();
                 currentTarget = rioter;
