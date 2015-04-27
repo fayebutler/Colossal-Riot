@@ -170,6 +170,7 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
             std::cout<<" CurrentID:  "<< i<<std::endl;
             m_cells[i].addDynamicEntityID(_entity->getID());
             _entity->setCurrentCellID(i);
+            _entity->setCurrentCell(m_cells[i]);
 
             break;
         }
@@ -199,16 +200,16 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
     std::cout<< "************************Current Entity:  "<< _entity->getID()<<std::endl;
     //for each neighbour
-    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
+    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs().size();
 
  //loops through all neighbour cells
     for (int i = 0; i < numberOfCellsToCheck; i++)
     {
 
 
-        int currentNeighbourCell =m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i];
+        int currentNeighbourCell =m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs()[i];
         std::vector<int> dynamicEntitiesInCell = m_cells[currentNeighbourCell].getDynamicEntityIDs();
-        std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i]<<std::endl;
+        std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs()[i]<<std::endl;
 
 
         //Tests all entities in neighbouring cells against the entity's detection radius and adds it to its detected neighbours:
@@ -231,8 +232,8 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     }
 
     //Do the same test but against the cell the entity's in:
-    std::vector<int> dynamicEntitiesInCell = m_cells[_entity->getCurrentCell()].getDynamicEntityIDs();
-    std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCell()<<std::endl;
+    std::vector<int> dynamicEntitiesInCell = m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs();
+    std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCellID()<<std::endl;
     for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
     {
         if (_entity->getID() != dynamicEntitiesInCell[i])

@@ -165,6 +165,14 @@ public:
     void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
     void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
     bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
+    void setObstacleAvoidWeight(double m_newWeight){m_weightObstacleAvoidance = m_newWeight;}
+    double getObstacleAvoidWeight(){return m_weightObstacleAvoidance;}
+
+    void WallAvoidOn() { m_activeFlags |= wall_avoidance; }
+    void WallAvoidOff() { if(on(wall_avoidance)) m_activeFlags ^= wall_avoidance; }
+    bool isWallAvoidOn() { return on(wall_avoidance); }
+    void setWallAvoidWeight(double m_newWeight){m_weightWallAvoidance = m_newWeight;}
+    double getWallAvoidWeight(){return m_weightWallAvoidance;}
 
 
     void setTarget(ngl::Vec3);

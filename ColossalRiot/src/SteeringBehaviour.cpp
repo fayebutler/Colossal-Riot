@@ -579,6 +579,11 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
 }
 
+ngl::Vec3 SteeringBehaviour::wallAvoidance()
+{
+  m_vehicle->getCurrentCell()
+}
+
 ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide)
 {
   vehicleHeading.normalize();

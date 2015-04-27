@@ -5,8 +5,6 @@
 #include <glm/glm.hpp>
 #include <ngl/Transformation.h>
 #include <iostream>
-#include <Agent.h>
-
 
 class Cell
 {
