@@ -36,12 +36,12 @@ int BaseGameEntity::getCurrentCellID()
     return m_currentCellID;
 }
 
-void BaseGameEntity::setCurrentCell(Cell& _inCell)
+void BaseGameEntity::setCurrentCell(Cell _inCell)
 {
   m_currentCell = _inCell;
 }
 
-Cell &BaseGameEntity::getCurrentCell()
+Cell BaseGameEntity::getCurrentCell()
 {
   return m_currentCell;
 }

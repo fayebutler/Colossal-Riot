@@ -36,14 +36,16 @@ Police::Police(GameWorld* world) : Agent(world)
     Vehicle::Steering()->WanderOn();
     //Vehicle::Steering()->ObstacleAvoidOn();
 
-    Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(1.f);
+//    Vehicle::Steering()->CohesionOn();
+//    Vehicle::Steering()->setCohesionWeight(1.f);
 
-    Vehicle::Steering()->AlignmentOn();
-    Vehicle::Steering()->setAlignmentWeight(1.f);
+//    Vehicle::Steering()->AlignmentOn();
+//    Vehicle::Steering()->setAlignmentWeight(1.f);
 
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.f);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(1.f);
+
+    Vehicle::Steering()->WallAvoidOn();
 }
 
 Police::~Police()

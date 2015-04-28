@@ -7,7 +7,7 @@
 #include <ngl/Transformation.h>
 #include "Cell.h"
 #include "EntityManager.h"
-
+#include <ngl/Obj.h>
 
 class CellGraph
 {
@@ -27,6 +27,7 @@ public:
     void updateCells(BaseGameEntity *_entity);
     void clearCells();
     void addEntities(BaseGameEntity *_entity);
+    void generateWalls();
 
 };
 

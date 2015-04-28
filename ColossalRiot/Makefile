@@ -1019,7 +1019,11 @@ obj/CellGraph.o: src/CellGraph.cpp include/CellGraph.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/CellGraph.o src/CellGraph.cpp
 
 obj/EntityManager.o: src/EntityManager.cpp include/EntityManager.h \
@@ -1318,7 +1322,11 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Cell.h
+		include/Cell.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
 obj/main.o: src/main.cpp include/NGLDraw.h \
@@ -1492,6 +1500,10 @@ obj/main.o: src/main.cpp include/NGLDraw.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Cell.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Timer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
@@ -1922,7 +1934,11 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Cell.h
+		include/Cell.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
@@ -2260,6 +2276,8 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Rioter.o src/Rioter.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
+		include/EntityManager.h \
+		include/BaseGameEntity.h \
 		/home/i7776126/NGL/include/ngl/Transformation.h \
 		/home/i7776126/NGL/include/ngl/Mat4.h \
 		/home/i7776126/NGL/include/ngl/Types.h \
@@ -2382,12 +2400,10 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7776126/NGL/include/ngl/Vec4.h \
 		/home/i7776126/NGL/include/ngl/Vec2.h \
 		/home/i7776126/NGL/include/ngl/Vec3.h \
-		include/Vehicle.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
-		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
+		include/Vehicle.h \
+		include/MovingEntity.h \
 		include/GameWorld.h \
 		/home/i7776126/NGL/include/ngl/Camera.h \
 		/home/i7776126/NGL/include/ngl/RibExport.h \
@@ -2428,6 +2444,10 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Cell.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		/home/i7776126/NGL/include/ngl/Random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 

@@ -69,8 +69,8 @@ public:
 
     void setCurrentCellID(int _ID);
     int getCurrentCellID();
-    void setCurrentCell(Cell& _inCell);
-    Cell& getCurrentCell();
+    void setCurrentCell(Cell _inCell);
+    Cell getCurrentCell();
 
     float getDetectionRadius();
     void setDetectionRadius(float _r);

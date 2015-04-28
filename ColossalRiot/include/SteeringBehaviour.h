@@ -23,7 +23,7 @@ private:
         wander             = 0x00010,
         cohesion           = 0x00020,
         separation         = 0x00040,
-        alignment         = 0x00080,
+        alignment          = 0x00080,
         obstacle_avoidance = 0x00100,
         wall_avoidance     = 0x00200,
         follow_path        = 0x00400,
@@ -91,13 +91,13 @@ private:
     ngl::Vec3 Evade(const Vehicle* agent);
 
     ngl::Vec3 ObstacleAvoidance();
+    ngl::Vec3 WallAvoidance();
 
     ngl::Vec3 Separation(std::vector<int> neighbours);
     ngl::Vec3 Alignment(std::vector<int> neighbours);
     ngl::Vec3 Cohesion(std::vector<int> neighbours);
 
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
-    ngl::Vec3 localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading);
 
 // add in group steering behaviours
 // add in collision avoidance
@@ -181,6 +181,7 @@ public:
     void addNeighbours(std::vector<int> neighbours);
     void clearNeighbours() { m_neighbours.clear(); }
 
+    bool lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &distToIntersect, ngl::Vec3 &intersectPoint);
 
     ngl::Vec3 calculate();
 
