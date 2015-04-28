@@ -6,6 +6,7 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include <vector>
+#include <list>
 #include "Cell.h"
 
 enum entityType

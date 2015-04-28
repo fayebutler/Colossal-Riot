@@ -360,6 +360,8 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
+  std::cout<<"SteeringBehaviour::Separation"<<std::endl;
+
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
@@ -373,6 +375,8 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
+  std::cout<<"SteeringBehaviour::Alignment"<<std::endl;
+
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
@@ -397,6 +401,8 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
+  std::cout<<"SteeringBehaviour::Cohesion"<<std::endl;
+
   if (neighbours.size() > 0)
   {
       ngl::Vec3 averagePosition;
@@ -452,6 +458,7 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
+  std::cout<<"SteeringBehaviour::ObstacleAvoidance"<<std::endl;
   //const std::vector<BaseGameEntity *> &obstacles
 
   // not sure if I should use radius for detectionLength, or create a new minimumLength variable
@@ -466,9 +473,11 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
   double distanceToCIO = 99999.9;
   ngl::Vec3 localPosOfCIO;
 
-  for (unsigned int i = 0; i < m_vehicle->World()->getRioters().size(); ++i)
+
+  int numberOfRioters = m_vehicle->getNeighbourRioterIDs().size();
+  for (unsigned int i = 0; i < numberOfRioters; i++)
   {
-    Rioter* currentRioter = m_vehicle->World()->getRioters()[i];
+    Rioter* currentRioter = (Rioter*)m_entityMgr->getEntityFromID(m_vehicle->getNeighbourRioterIDs()[i]);
 
     if (currentRioter->getID() != m_vehicle->getID())
     {
@@ -504,9 +513,12 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       }
     }
   }
-  for (unsigned int i = 0; i < m_vehicle->World()->getPolice().size(); ++i)
+
+  int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
+
+  for (unsigned int i = 0; i < numberOfPolice; ++i)
   {
-    Police* currentPolice = m_vehicle->World()->getPolice()[i];
+    Police* currentPolice = (Police*)m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]);
     if (currentPolice->getID() != m_vehicle->getID())
     {
       ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
@@ -596,7 +608,7 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
 {
   std::cout<<"SteeringBehaviour::WallAvoidance"<<std::endl;
 
-  double feelerLength = m_vehicle->getBoundingRadius() * 2.f;
+  double feelerLength = m_vehicle->getBoundingRadius() * 2;
   std::vector<ngl::Vec3> feelers;
   ngl::Vec3 feelerFront = m_vehicle->getPos() + (feelerLength * m_vehicle->getHeading());
   feelers.push_back(feelerFront);
@@ -612,6 +624,7 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
   double distToCurrentIntersect = 0.0;
   ngl::Vec3 closestIntersectPoint;
   double distToClosestIntersect = 99999.9;
+  ngl::Vec3 currentClosestWallNormal;
   int wallID = -1;
 
   ngl::Vec3 wallAvoidanceForce;
@@ -621,11 +634,11 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
     // need neighbour walls
     for (int j= 0; j < m_vehicle->getCurrentCell().getWalls().size(); ++j)
     {
-      std::cout<<"i, j "<<i<<", "<<j<<std::endl;
-
-
       ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWalls()[j].start;
       ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWalls()[j].end;
+      ngl::Vec3 wallLine = wallEnd - wallStart;
+      ngl::Vec3 wallNormal = wallLine.cross(ngl::Vec3(0.f, 1.f, 0.f));
+      wallNormal.normalize();
 
       if (lineIntersection2D(m_vehicle->getPos(), feelers[i], wallStart, wallEnd, distToCurrentIntersect, currentIntersectPoint))
       {
@@ -634,6 +647,7 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
           distToClosestIntersect = distToCurrentIntersect;
           wallID = i;
           closestIntersectPoint = currentIntersectPoint;
+          currentClosestWallNormal = wallNormal;
         }
       }
 
@@ -641,20 +655,10 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
     if (wallID >= 0)
     {
       ngl::Vec3 overShoot = feelers[i] - closestIntersectPoint;
-      wallAvoidanceForce = m_vehicle->getCurrentCell().getWalls()[wallID].normal * overShoot.length();
-      std::cout<<"wallIDNormal= "<<m_vehicle->getCurrentCell().getWalls()[wallID].normal.m_x<<", "<<m_vehicle->getCurrentCell().getWalls()[wallID].normal.m_y<<", "<<m_vehicle->getCurrentCell().getWalls()[wallID].normal.m_z<<std::endl;
+      wallAvoidanceForce = currentClosestWallNormal * overShoot.length();
 
     }
   }
-
-  std::cout<<"feelerFront"<<feelerFront.m_x<<", "<<feelerFront.m_y<<", "<<feelerFront.m_z<<std::endl;
-  std::cout<<"feelerLeft "<<feelerLeft.m_x<<", "<<feelerLeft.m_y<<", "<<feelerLeft.m_z<<std::endl;
-  std::cout<<"feelerRight"<<feelerRight.m_x<<", "<<feelerRight.m_y<<", "<<feelerRight.m_z<<std::endl;
-  std::cout<<"wallAvoidanceForce"<<wallAvoidanceForce.m_x<<", "<<wallAvoidanceForce.m_y<<", "<<wallAvoidanceForce.m_z<<std::endl;
-  std::cout<<"closestIntersectPoint"<<closestIntersectPoint.m_x<<", "<<closestIntersectPoint.m_y<<", "<<closestIntersectPoint.m_z<<std::endl;
-  std::cout<<"wallAvoidanceDist "<<distToClosestIntersect<<std::endl;
-
-  //wallAvoidanceForce = ngl::Vec3(0.f, 0.f, 0.f);
   return wallAvoidanceForce;
 }
 

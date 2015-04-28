@@ -28,7 +28,12 @@ private:
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
+    int m_numberOfRioters;
+
     std::vector<Police*> m_police;
+    int m_numberOfPolice;
+
+    int m_numberOfEntities;
 
     CellGraph m_cellGraph;
     ngl::Obj *m_worldMesh;
@@ -41,6 +46,7 @@ public:
     ~GameWorld();
 
     ngl::Obj* m_mesh;
+
 
     void loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 

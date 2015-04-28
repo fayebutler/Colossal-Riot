@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include <ngl/Transformation.h>
 #include <vector>
+#include <list>
 
 
 class Vehicle;

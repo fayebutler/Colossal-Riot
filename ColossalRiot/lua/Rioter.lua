@@ -57,11 +57,11 @@ protest = {}
 protest["enter"] = function()
 --  rioter:pursuit(1.0)
 --  rioter:evade(0.0)
-  print("LUA RIOTER protest enter")
+--  print("LUA RIOTER protest enter")
 end
 
 protest["execute"] = function()
-  print("LUA RIOTER protest execute")
+--  print("LUA RIOTER protest execute")
   rioter.m_morale = rioter.m_morale - 0.3
   rioter:attack()
   rioter.m_rage = rioter.m_rage + 0.1;
@@ -82,7 +82,7 @@ flee = {}
 flee["enter"] = function()
 --  rioter:pursuit(0.0)
 --  rioter:evade(1.0)
-  print("LUA RIOTER flee enter")
+--  print("LUA RIOTER flee enter")
 end
 
 flee["execute"] = function()
@@ -95,7 +95,7 @@ flee["execute"] = function()
 end
 
 flee["exit"] = function()
-  print("LUA RIOTER flee exit")
+--  print("LUA RIOTER flee exit")
 end
 
 
@@ -104,11 +104,11 @@ end
 
 dead = {}
 dead["enter"] = function()
-  print("LUA RIOTER dead enter")
+--  print("LUA RIOTER dead enter")
 end
 
 dead["execute"] = function()
-  print("LUA RIOTER DEAD")
+--  print("LUA RIOTER DEAD")
   rioter.m_health = 0
 end
 
@@ -121,14 +121,14 @@ end
 
 home = {}
 home["enter"] = function()
-  print("LUA RIOTER home enter")
+--  print("LUA RIOTER home enter")
 end
 
 home["execute"] = function()
-  print("LUA RIOTER home execute")
+--  print("LUA RIOTER home execute")
   rioter.m_morale = 0
 end
 
 home["exit"] = function()
-  print("LUA RIOTER home exit")
+--  print("LUA RIOTER home exit")
 end
