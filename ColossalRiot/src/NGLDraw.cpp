@@ -58,6 +58,7 @@ NGLDraw::NGLDraw()
 
 
 
+
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
@@ -80,8 +81,10 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-
   m_gameworld = new GameWorld();
+
+
+
 
 }
 
@@ -110,6 +113,7 @@ void NGLDraw::draw()
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   (*shader)["Phong"]->use();
 
+
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
@@ -124,6 +128,7 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_gameworld->draw(m_cam, m_mouseGlobalTX);
+
 
 }
 
@@ -184,6 +189,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
     m_origXPos = _event.x;
     m_origYPos = _event.y;
     m_translate=true;
+  }
+ if(_event.button == SDL_BUTTON_LEFT)
+  {
+     std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
   }
 }
 

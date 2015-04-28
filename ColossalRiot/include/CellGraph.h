@@ -6,12 +6,15 @@
 #include <string>
 #include <ngl/Transformation.h>
 #include "Cell.h"
-
-
+#include "EntityManager.h"
+#include <ngl/Obj.h>
 
 class CellGraph
 {
 private:
+
+    EntityManager* m_entityMgr;
+
     std::vector <Cell> m_cells;
     float m_cellSize;
     float m_maxDist; //Maximum distance from the centre of the cell within the cell.
@@ -24,6 +27,7 @@ public:
     void updateCells(BaseGameEntity *_entity);
     void clearCells();
     void addEntities(BaseGameEntity *_entity);
+    void generateWalls();
 
 };
 

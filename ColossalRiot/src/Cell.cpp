@@ -16,13 +16,13 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
           left = _fourCorners[0].m_x,
           right = _fourCorners[0].m_x;
 
-    for (int i=0; i<4;i++)
+    for (int i=0; i<_fourCorners.size() ;i++)
     {
-        if (upper< _fourCorners[i].m_z)
+        if (upper> _fourCorners[i].m_z)
         {
             upper= _fourCorners[i].m_z;
         }
-        if (lower> _fourCorners[i].m_z)
+        if (lower< _fourCorners[i].m_z)
         {
             lower= _fourCorners[i].m_z;
         }
@@ -43,12 +43,19 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
     m_boundries.m_z = left;
     m_boundries.m_w = right;
 
-    m_centre.m_x = (right+left)/2;
+    m_centre.m_x = ((right+left)/2.0);
     m_centre.m_y = 0;
-    m_centre.m_z = (upper+lower)/2;
+    m_centre.m_z = ((upper+lower)/2.0);
 
     m_ID = _ID;
     m_neighbourCellIDs = _neighbourCellIDs;
+//    std::cout<< " Cell id:"<< m_ID<< " cell centre: "<< m_centre.m_x<<std::endl;
+
+//    std::cout<<"Cell number: "<<m_ID<<std::endl;
+//    std::cout<<"upper = "<<m_boundries.m_x<<std::endl;
+//    std::cout<<"lower = "<<m_boundries.m_y<<std::endl;
+//    std::cout<<"left = "<<m_boundries.m_z<<std::endl;
+//    std::cout<<"right = "<<m_boundries.m_w<<std::endl;
 
 
     }
@@ -67,7 +74,7 @@ std::vector <int> Cell::getNeighbourCellIDs()
 
 void Cell::printCellInfo()
 {
-//    std::cout<< "ID is:  "<< m_ID<<std::endl;
+    std::cout<< "ID is:  "<< m_ID<<std::endl;
 //    std::cout<<"Neighbouring IDs are ";
 //    for ( int i =0; i<m_neighbourIDs.size();i++)
 //    {
@@ -82,10 +89,26 @@ void Cell::printCellInfo()
 //    std::cout<<"upper = "<<m_boundries.m_x<<std::endl<<"lower = "<<m_boundries.m_y<<std::endl<<"left = "<<m_boundries.m_z<<std::endl
 //            <<"right = "<<m_boundries.m_w<<std::endl;
 //    std::cout<<"Centre is: "<<m_centre.m_x<<"  "<<m_centre.m_z<<std::endl<<std::endl;
+
+
+    if( m_walls.size() != 0)
+    {
+        //Print start
+        for ( int i = 0; i< m_walls.size(); i++)
+        {
+            std::cout<<" Wall Start:  "<< m_walls[i].start.m_x<<", "<<m_walls[i].start.m_z<<std::endl;
+            std::cout<<" Wall End:  "<< m_walls[i].end.m_x<<", "<<m_walls[i].end.m_z<<std::endl;
+
+
+        }
+    }
+
     if (m_dynamicEntityIDs.empty() == 0)
     {
         std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_dynamicEntityIDs[0]<<std::endl;
     }
+
+
 }
 
 ngl::Vec3 Cell::getCentre()
@@ -113,4 +136,9 @@ std::vector<int> Cell::getDynamicEntityIDs()
 {
     return m_dynamicEntityIDs;
 
+}
+
+void Cell::addWall(Wall _wall)
+{
+    m_walls.push_back(_wall);
 }
