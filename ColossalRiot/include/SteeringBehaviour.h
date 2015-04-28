@@ -55,7 +55,8 @@ private:
 
     float m_viewDistance;
 
-    std::vector<int> m_neighbours;
+    std::vector<int> m_friendlyNeighbours;
+    std::vector<int> m_allNeighbours;
 
 
 
@@ -170,8 +171,11 @@ public:
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
-    void addNeighbours(std::vector<int> neighbours);
-    void clearNeighbours() { m_neighbours.clear(); }
+    void addFriendlyNeighbours(std::vector<int> neighbours);
+    void clearFriendlyNeighbours() { m_friendlyNeighbours.clear(); }
+
+    void addAllNeighbours(std::vector<int> neighbours);
+    void clearAllNeighbours() { m_allNeighbours.clear(); }
 
 
     ngl::Vec3 calculate();

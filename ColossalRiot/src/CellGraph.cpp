@@ -220,7 +220,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
             //std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
             ngl::Vec3 dist  = (m_entityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
-            if(dist.length()<_entity->getDetectionRadius())
+            if(dist.length()<  _entity->getDetectionRadius())
             {
                 //All entities will have a list of neighbours within their radius'
                 _entity->addDetectedDynamicEntityID(dynamicEntitiesInCell[i]);

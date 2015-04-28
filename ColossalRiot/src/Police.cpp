@@ -38,8 +38,8 @@ Police::Police(GameWorld* world) : Agent(world)
 
    // Vehicle::Steering()->ObstacleAvoidOn();
 
-    Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(0.5f);
+//    Vehicle::Steering()->CohesionOn();
+//    Vehicle::Steering()->setCohesionWeight(0.8f);
 
 //    Vehicle::Steering()->AlignmentOn();
 //    Vehicle::Steering()->setAlignmentWeight(0.3f);
@@ -63,9 +63,12 @@ void Police::update(double timeElapsed, double currentTime)
 
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
 
-  Vehicle::Steering()->clearNeighbours();
-  Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
-  Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
+  //make a friendly and opposing neightbours vector as seperation wants all neighbours bu alignment & cohesion doesn't
+  Vehicle::Steering()->clearFriendlyNeighbours();
+  Vehicle::Steering()->clearAllNeighbours();
+  Vehicle::Steering()->addFriendlyNeighbours(getNeighbourPoliceIDs());
+  Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
+  Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->OverlapAvoidance();
 
   Vehicle::setMaxSpeed(0.8);
@@ -181,7 +184,7 @@ void Police::squadCohesion(double weight)
     ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
     double distance = fabs(toSquad.length());
 
-    weight = weight*distance*0.6f/m_squadRadius;
+    weight = (weight*distance*1.5f)/m_squadRadius;
 
 
     Vehicle::setCrosshair(m_squadPos);

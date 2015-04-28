@@ -22,7 +22,7 @@ GameWorld::GameWorld()
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(1.5f);
-    newRioter->setDetectionRadius(10.f);
+    newRioter->setDetectionRadius(5.f);
     newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
     m_rioters.push_back(newRioter);
   }
@@ -30,11 +30,10 @@ GameWorld::GameWorld()
   for (int i = 0; i < 1; ++i)
   {
 
-      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f));
+      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f), 1.5f);
       m_squads.push_back(newSquad);
-      newSquad = new Squad(this, 5, ngl::Vec3(-1.0f,0.0f,-5.0f));
+      newSquad = new Squad(this, 5, ngl::Vec3(-1.0f,0.0f,-5.0f), 1.5f);
       m_squads.push_back(newSquad);
-
   }
 
 }

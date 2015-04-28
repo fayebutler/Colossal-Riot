@@ -127,7 +127,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(separation))
     {
-      force = Separation(m_neighbours) * m_weightSeparation;
+      force = Separation(m_allNeighbours) * m_weightSeparation;
       if(!accumulateForce(m_steeringForce, force))
       {
         return m_steeringForce;
@@ -139,7 +139,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(cohesion))
     {
-      force = Cohesion(m_neighbours) * m_weightCohesion;
+      force = Cohesion(m_friendlyNeighbours) * m_weightCohesion;
       if(!accumulateForce(m_steeringForce, force))
       {
         return m_steeringForce;
@@ -151,7 +151,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(alignment))
     {
-      force = Alignment(m_neighbours) * m_weightAlignment;
+      force = Alignment(m_friendlyNeighbours) * m_weightAlignment;
       if(!accumulateForce(m_steeringForce, force))
       {
         return m_steeringForce;
@@ -637,22 +637,31 @@ ngl::Vec3 SteeringBehaviour::localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec
 //  return worldPos;
 }
 
-void SteeringBehaviour::addNeighbours(std::vector<int> neighbours)
+void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> neighbours)
 {
   for (int i = 0; i < neighbours.size(); i++)
   {
-    m_neighbours.push_back(neighbours[i]);
+    m_friendlyNeighbours.push_back(neighbours[i]);
   }
 }
 
+void SteeringBehaviour::addAllNeighbours(std::vector<int> neighbours)
+{
+  for (int i = 0; i < neighbours.size(); i++)
+  {
+
+    m_allNeighbours.push_back(neighbours[i]);
+  }
+
+}
 
 void SteeringBehaviour::OverlapAvoidance()
 {
     // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
-    for (unsigned int i = 0; i < m_neighbours.size(); i++)
+    for (unsigned int i = 0; i < m_allNeighbours.size(); i++)
 
     {
-        Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_neighbours[i]));
+        Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
         if (curEntity)
         {
 

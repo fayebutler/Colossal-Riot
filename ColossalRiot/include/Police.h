@@ -36,6 +36,9 @@ public:
 
     void squadCohesion(double weight);
 
+    int getSquadID()const{return m_squadID;}
+    void setSquadID(int squadID){m_squadID = squadID;}
+
 
 protected:
     MessageManager* m_messageMgr;
@@ -44,6 +47,7 @@ protected:
 
     ngl::Vec3 m_squadPos;
     float m_squadRadius;
+    int m_squadID;
 };
 
 #endif // POLICE_H
