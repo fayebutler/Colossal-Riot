@@ -15,6 +15,8 @@
 #include "Rioter.h"
 #include "Police.h"
 
+#include "EntityManager.h"
+
 
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
@@ -151,7 +153,6 @@ int main()
 
     std::cout<<"------------- TICK -------------"<<std::endl;
     ngldraw.update(timeElapsed,currentTime);
-
     }
     // now we draw ngl
     ngldraw.draw();

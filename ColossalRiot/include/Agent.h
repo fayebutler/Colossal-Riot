@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Vehicle.h"
+#include "EntityManager.h"
 
 #include <ngl/ShaderLib.h>
 #include <ngl/NGLInit.h>
@@ -43,8 +44,12 @@ public:
   void setDamage(float _val) { m_damage = _val; }
 
   int getTargetID() const { return m_targetID; }
-  void setTargetID(int _val) { m_targetID = _val;
-  Vehicle::Steering()->setTargetAgent((Vehicle*)EntityMgr->getEntityFromID(m_targetID));}
+
+  void setTargetID(int _val);
+
+  virtual void findTargetID(float _health) = 0;
+
+  void checkValidTarget(float _dist, float _health);
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }

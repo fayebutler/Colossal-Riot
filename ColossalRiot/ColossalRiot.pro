@@ -27,10 +27,8 @@ CONFIG-=app_bundle
 # Auto include all .cpp files in the project src directory (can specifiy individually if required)
 SOURCES+= $$PWD/src/*.cpp \
 
-
 # same for the .h files
 HEADERS+= $$PWD/include/*.h \
-
 
 # and add the include dir into the search path for Qt and make
 INCLUDEPATH +=./include \

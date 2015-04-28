@@ -1,33 +1,40 @@
 #include "EntityManager.h"
-#include "BaseGameEntity.h"
 
-//EntityManager* EntityManager::instance()
-//{
-//  static EntityManager instance;
+typedef std::map<int, BaseGameEntity*> EntityMap;
+EntityMap EntityManager::m_entityMap;
 
-//  return &instance;
-//}
+EntityManager::EntityManager()
+{
 
-//template <typename Type>
-//BaseGameEntity *EntityManager::getEntityFromID(int _ID)const
-//{
-//  EntityMap::const_iterator entity = m_entityMap.find(_ID);
-
-//  assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
-
-//  return (BaseGameEntity*)entity->second;
-//}
+}
 
 //template <typename Type>
-//void EntityManager::removeEntity(BaseGameEntity *_entity)
-//{
-//  m_entityMap.erase(m_entityMap.find(_entity->getID()));
-//}
+void EntityManager::registerEntity(BaseGameEntity* _newEntity)
+{
+  EntityManager::m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
+}
+
+EntityManager::EntityMap EntityManager::getEntityMap()
+{
+  return m_entityMap;
+}
+
+BaseGameEntity* EntityManager::getEntityFromID(int _ID)const
+{
+  EntityMap::const_iterator entity = m_entityMap.find(_ID);
+
+  assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
+
+  return (BaseGameEntity*)entity->second;
+}
 
 //template <typename Type>
-//void EntityManager::registerEntity(Type *_newEntity)
-//{
-//  m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
-//}
+void EntityManager::removeEntity(BaseGameEntity* _entity)
+{
+  m_entityMap.erase(m_entityMap.find(_entity->getID()));
+}
 
-//bool typeB = dynamic_cast<BaseGameEntity*>(currentPolice);
+int EntityManager::getSize()
+{
+    return m_entityMap.size();
+}

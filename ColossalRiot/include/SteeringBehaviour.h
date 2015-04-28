@@ -1,6 +1,7 @@
 #ifndef STEERINGBEHAVIOUR_H
 #define STEERINGBEHAVIOUR_H
 
+#include "EntityManager.h"
 #include <ngl/Transformation.h>
 #include <vector>
 
@@ -36,6 +37,7 @@ private:
     };
 private:
 
+    EntityManager* m_entityMgr;
     Vehicle* m_vehicle;
     int m_activeFlags;
     ngl::Vec3 m_steeringForce;
@@ -182,6 +184,9 @@ public:
 
     double forwardComponent();
     double sideComponent();
+
+    void OverlapAvoidance();
+
 
 
 };

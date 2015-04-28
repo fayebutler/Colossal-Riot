@@ -19,6 +19,8 @@ public:
 
     StateMachine<Rioter>* getStateMachine() const { return m_stateMachine; }
 
+    void findTargetID(float _health);
+
     bool handleMessage(const Message &_message);
 
     void attack();
@@ -26,6 +28,7 @@ public:
     void registerClass(lua_State* _L);
 
 protected:
+    MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
 };
 
