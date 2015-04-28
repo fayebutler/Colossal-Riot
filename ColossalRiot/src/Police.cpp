@@ -32,7 +32,7 @@ Police::Police(GameWorld* world) : Agent(world)
     m_targetID = 0;
 
     Vehicle::Steering()->WanderOn();
-    //Vehicle::Steering()->ObstacleAvoidOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
     Vehicle::Steering()->CohesionOn();
     Vehicle::Steering()->setCohesionWeight(1.f);
@@ -40,8 +40,8 @@ Police::Police(GameWorld* world) : Agent(world)
     Vehicle::Steering()->AlignmentOn();
     Vehicle::Steering()->setAlignmentWeight(1.f);
 
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.f);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(1.f);
 }
 
 Police::~Police()
@@ -68,6 +68,7 @@ void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
   ngl::VAOPrimitives::instance()->draw("teapot");
+
 }
 
 void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)

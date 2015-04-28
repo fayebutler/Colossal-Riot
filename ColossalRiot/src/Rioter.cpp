@@ -27,7 +27,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     Vehicle::Steering()->WanderOn();
     //Vehicle::Steering()->SeekOn();
     //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-    //Vehicle::Steering()->ObstacleAvoidOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
     Vehicle::Steering()->CohesionOn();
     Vehicle::Steering()->setCohesionWeight(1.f);
@@ -35,8 +35,8 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     Vehicle::Steering()->AlignmentOn();
     Vehicle::Steering()->setAlignmentWeight(1.f);
 
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.f);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(1.f);
 
 }
 

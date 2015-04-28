@@ -578,9 +578,10 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     worldAvoidanceForce *= m_vehicle->getMaxSpeed();
 
     return worldAvoidanceForce;
-    worldAvoidanceForce.normalize();
-    worldAvoidanceForce = worldAvoidanceForce * m_vehicle->getMaxSpeed();
+   // worldAvoidanceForce.normalize();
+    //worldAvoidanceForce = worldAvoidanceForce * m_vehicle->getMaxSpeed();
   }
+
   return ngl::Vec3(0.f, 0.f, 0.f);
 
 

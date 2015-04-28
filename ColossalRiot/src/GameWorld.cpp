@@ -15,7 +15,7 @@ GameWorld::GameWorld()
   for (int i = 0; i < 8; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setBoudingRadius(2.f);
+    newRioter->setBoudingRadius(2.5f);
     newRioter->setDetectionRadius(10.f);
     newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
     m_rioters.push_back(newRioter);
@@ -25,7 +25,7 @@ GameWorld::GameWorld()
   for (int i = 0; i < 8; ++i)
   {
     Police* newPolice = new Police(this);
-    newPolice->setBoudingRadius(2.f);
+    newPolice->setBoudingRadius(2.5f);
     newPolice->setDetectionRadius(10.f);
     newPolice->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
     m_police.push_back(newPolice);
