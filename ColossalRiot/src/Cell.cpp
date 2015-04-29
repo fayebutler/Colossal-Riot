@@ -16,6 +16,7 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
           left = _fourCorners[0].m_x,
           right = _fourCorners[0].m_x;
 
+<<<<<<< .merge_file_6AUDKh
       for (unsigned int i=0; i<4 ;i++)
       {
           if (upper> _fourCorners[i].m_z)
@@ -34,6 +35,26 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
           {
               right= _fourCorners[i].m_x;
           }
+=======
+    for (int i=0; i<_fourCorners.size() ;i++)
+    {
+        if (upper> _fourCorners[i].m_z)
+        {
+            upper= _fourCorners[i].m_z;
+        }
+        if (lower< _fourCorners[i].m_z)
+        {
+            lower= _fourCorners[i].m_z;
+        }
+        if (left> _fourCorners[i].m_x)
+        {
+            left= _fourCorners[i].m_x;
+        }
+        if (right< _fourCorners[i].m_x)
+        {
+            right= _fourCorners[i].m_x;
+        }
+>>>>>>> .merge_file_2PAsQd
 
 
     }
@@ -94,11 +115,20 @@ void Cell::printCellInfo()
     if( m_walls.size() != 0)
     {
         //Print start
+<<<<<<< .merge_file_6AUDKh
       int numberOfWalls = m_walls.size();
         for (unsigned int i = 0; i< numberOfWalls; i++)
         {
             std::cout<<" Wall Start:  "<< m_walls[i].start.m_x<<", "<<m_walls[i].start.m_z<<std::endl;
             std::cout<<" Wall End:  "<< m_walls[i].end.m_x<<", "<<m_walls[i].end.m_z<<std::endl;
+=======
+        for ( int i = 0; i< m_walls.size(); i++)
+        {
+            std::cout<<" Wall Start:  "<< m_walls[i].start.m_x<<", "<<m_walls[i].start.m_z<<std::endl;
+            std::cout<<" Wall End:  "<< m_walls[i].end.m_x<<", "<<m_walls[i].end.m_z<<std::endl;
+
+
+>>>>>>> .merge_file_2PAsQd
         }
     }
 

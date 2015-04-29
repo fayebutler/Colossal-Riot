@@ -47,7 +47,10 @@ public:
 
     ngl::Obj* m_mesh;
 
+<<<<<<< .merge_file_41Qig6
 
+=======
+>>>>>>> .merge_file_wf2Di1
     void loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
     void Update(double timeElapsed, double currentTime);

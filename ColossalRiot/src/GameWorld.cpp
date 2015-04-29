@@ -7,6 +7,17 @@
 
 GameWorld::GameWorld()
 {
+<<<<<<< .merge_file_bHOoUC
+=======
+
+
+    m_mesh = new ngl::Obj("plane_Mesh.obj"); //Obj to draw, must be triangulated
+    m_mesh->createVAO();
+
+   m_entityMgr = new EntityManager();
+   m_cellGraph =  CellGraph("plane_Test.obj"); //Obj for cell graph, must be quads
+   m_cellGraph.generateWalls();
+>>>>>>> .merge_file_Xo2fVu
 
 
    m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
@@ -100,6 +111,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
       }
     }
+
+    std::cout<<"policeman 0 current cell = "<<m_police[0]->getCurrentCell()<<std::endl;
 
 
     /// ----------------------------------------------------
@@ -212,7 +225,11 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
   loadMatricesToShader(cam, mouseGlobalTX);
   m_mesh->draw();
 
+<<<<<<< .merge_file_bHOoUC
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
+=======
+  for(unsigned int a=0; a<m_rioters.size(); ++a)
+>>>>>>> .merge_file_Xo2fVu
   {
       Rioter* currentRioter = m_rioters[a];
       currentRioter->draw(cam, mouseGlobalTX);

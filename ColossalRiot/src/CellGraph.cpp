@@ -205,6 +205,7 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
   {
     for (int i = 0; i < _entity->getCurrentCell().getNeighbourCellIDs().size(); i++)
     {
+<<<<<<< .merge_file_TbP41j
       int currentNeighbourID = _entity->getCurrentCell().getNeighbourCellIDs()[i];
       if (entityIsInCell(currentNeighbourID, _entity) == true)
       {
@@ -212,6 +213,15 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
         _entity->setCurrentCellID(currentNeighbourID);
         _entity->setCurrentCell(m_cells[currentNeighbourID]);
       }
+=======
+        ngl::Vec3 test =m_cells[i].getCentre()-_entity->getPos();
+        //std::cout<<" CurrentID:  "<< i<<std::endl;
+        if (test.length()< m_maxDist)
+        {
+//            std::cout<<" CurrentID:  "<< i<<std::endl;
+            m_cells[i].addDynamicEntityID(_entity->getID());
+            _entity->setCurrentCellID(i);
+>>>>>>> .merge_file_cNQttp
 
 
     }
@@ -240,8 +250,14 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     _entity->clearDetectedDynamicEntityID();
     _entity->clearAgentIDs();
 
+<<<<<<< .merge_file_TbP41j
     //Do the test but against the cell the entity's in:
    int numberOfEntiesInCurrentCell = m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs().size();
+=======
+//    std::cout<< "************************Current Entity:  "<< _entity->getID()<<std::endl;
+//    //for each neighbour
+    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
+>>>>>>> .merge_file_cNQttp
 
 
    for (unsigned int i = 0; i < numberOfEntiesInCurrentCell; i++)
@@ -253,9 +269,15 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
    }
 
+<<<<<<< .merge_file_TbP41j
     //for each neighbour
     int numberOfCellsToCheck = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs().size();
     //loops through all neighbour cells
+=======
+        int currentNeighbourCell =m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i];
+        std::vector<int> dynamicEntitiesInCell = m_cells[currentNeighbourCell].getDynamicEntityIDs();
+//        std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i]<<std::endl;
+>>>>>>> .merge_file_cNQttp
 
     for (int i = 0; i < numberOfCellsToCheck; i++)
     {
@@ -267,7 +289,12 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         for (unsigned int i = 0; i < numberOfEntiesInCurrentCell; i++)
         {
 
+<<<<<<< .merge_file_TbP41j
           ngl::Vec3 vectorToEntity = _entity->getPos()- (m_entityMgr->getEntityFromID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i])->getPos());
+=======
+//                std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
+            }
+>>>>>>> .merge_file_cNQttp
 
 
           if(vectorToEntity.lengthSquared()< (m_maxDist*m_maxDist))
@@ -278,6 +305,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         }
     }
 
+<<<<<<< .merge_file_TbP41j
   }
   //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
   for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
@@ -296,12 +324,145 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 void CellGraph::generateWalls()
 {
     for (unsigned int i=0; i< m_cells.size(); i++)
+=======
+    //Do the same test but against the cell the entity's in:
+    std::vector<int> dynamicEntitiesInCell = m_cells[_entity->getCurrentCell()].getDynamicEntityIDs();
+//    std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCell()<<std::endl;
+    for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
+>>>>>>> .merge_file_cNQttp
     {
         bool upperWall = true, lowerWall = true, leftWall =  true,  rightWall= true;
 
         //Test for each wall against 3 conditions,
         //if no neighbour centre is detected, the bool remains true:
         for (unsigned int j =0; j < m_cells[i].getNeighbourCellIDs().size(); j ++)
+        {
+            ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre();
+
+<<<<<<< .merge_file_TbP41j
+=======
+//            std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
+        }
+>>>>>>> .merge_file_cNQttp
+
+            //Check for upper wall:
+            if(currentNeighbourCentre.m_z < m_cells[i].getBoundaries().m_x
+                    && currentNeighbourCentre.m_x > m_cells[i].getBoundaries().m_z
+                    && currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_w)
+            {
+                upperWall = false;
+                //std::cout<< "Cell: "<< i<< "   UpperWall? " << upperWall<<std::endl;
+            }
+            //Check for lower wall:
+            if(currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_y
+                    && currentNeighbourCentre.m_x > m_cells[i].getBoundaries().m_z
+                    && currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_w)
+            {
+                lowerWall = false;
+              //std::cout<< "Cell: "<< i<< "   LowerWall? " << lowerWall<<std::endl;
+            }
+            //Check for left wall:
+            if(currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_z
+                    && currentNeighbourCentre.m_z < m_cells[i].getBoundaries().m_y
+                    && currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_x)
+            {
+                leftWall = false;
+                //std::cout<< "Cell: "<< i<< "   LeftWall? " << leftWall<<std::endl;
+            }
+            //Check for right wall
+            if(currentNeighbourCentre.m_x > m_cells[i].getBoundaries().m_w
+                    && currentNeighbourCentre.m_z < m_cells[i].getBoundaries().m_y
+                    && currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_x)
+            {
+                rightWall = false;
+               // std::cout<< "Cell: "<< i<< "   rightWall? " << rightWall<<std::endl;
+            }
+
+
+<<<<<<< .merge_file_TbP41j
+=======
+    //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
+    for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
+    {
+//        std::cout<<"WOOOOOO       "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+>>>>>>> .merge_file_cNQttp
+
+        }
+
+        //Now make the walls depending on the bool
+        if(upperWall == true)
+        {
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_x);
+            Wall newWall;
+            newWall.start =start;
+            newWall.end = end;
+            newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
+            //std::cout<<"cell "<<i<<" upperWallstart: "<<start.m_x<<" "<<start.m_z<<" upperwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+            m_cells[i].addWall(newWall);
+
+        }
+        if(lowerWall == true)
+        {
+<<<<<<< .merge_file_TbP41j
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            Wall newWall;
+            newWall.start =start;
+            newWall.end = end;
+            newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
+            //std::cout<<"cell "<<i<<" lowerWallstart: "<<start.m_x<<" "<<start.m_z<<" lowerwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+            m_cells[i].addWall(newWall);
+=======
+//            std::cout<<"WOOOOOO     POPO  "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+>>>>>>> .merge_file_cNQttp
+
+        }
+        if(leftWall == true)
+        {
+<<<<<<< .merge_file_TbP41j
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
+            Wall newWall;
+            newWall.start =start;
+            newWall.end = end;
+            newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
+            //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+            m_cells[i].addWall(newWall);
+=======
+//            std::cout<<"WOOOOOO   RIOT    "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
+>>>>>>> .merge_file_cNQttp
+
+        }
+        if(rightWall == true)
+        {
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_x);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
+            Wall newWall;
+            newWall.start =start;
+            newWall.end = end;
+            newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
+            //std::cout<<"cell "<<i<<" rightWallstart: "<<start.m_x<<" "<<start.m_z<<" rightwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+            m_cells[i].addWall(newWall);
+        }
+
+
+    }
+
+
+
+
+<<<<<<< .merge_file_TbP41j
+=======
+void CellGraph::generateWalls()
+{
+    for (int i=0; i< m_cells.size(); i++)
+    {
+        bool upperWall = true, lowerWall = true, leftWall =  true,  rightWall= true;
+
+        //Test for each wall against 3 conditions,
+        //if no neighbour centre is detected, the bool remains true:
+        for ( int j =0; j < m_cells[i].getNeighbourCellIDs().size(); j ++)
         {
             ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre();
 
@@ -358,8 +519,8 @@ void CellGraph::generateWalls()
         }
         if(lowerWall == true)
         {
-            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
-            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
             Wall newWall;
             newWall.start =start;
             newWall.end = end;
@@ -370,13 +531,13 @@ void CellGraph::generateWalls()
         }
         if(leftWall == true)
         {
-            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
-            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
             Wall newWall;
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
-            //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+           //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
             m_cells[i].addWall(newWall);
 
         }
@@ -398,4 +559,5 @@ void CellGraph::generateWalls()
 
 
 
+>>>>>>> .merge_file_cNQttp
 }

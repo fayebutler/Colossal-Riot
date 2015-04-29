@@ -41,7 +41,6 @@ public:
     ngl::Vec4 getBoundaries(){ return m_boundries;}
     void addWall(Wall _wall);
     std::vector<Wall> getWalls(){return m_walls;}
-
     ngl::Vec3 getCentre();
     float getSize();
 
