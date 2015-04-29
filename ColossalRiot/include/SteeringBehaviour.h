@@ -194,7 +194,7 @@ public:
 
     ngl::Vec3 calculatePrioritizedSum();
 
-    bool accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force);
+    bool accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force);
 
     double forwardComponent();
     double sideComponent();

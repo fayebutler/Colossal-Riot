@@ -103,6 +103,7 @@ CellGraph::CellGraph(const char *_fileName)
        //FIND NEIGHBOURS
 
        std::vector<int> neighbourIDs;
+       std::vector<int> perpendicularNeighbourIDs;
 
         for (unsigned int i=0 ;i<m_numberOfCells;i++)
         {
@@ -122,13 +123,15 @@ CellGraph::CellGraph(const char *_fileName)
                if( i != j)
                {
 
+
                neighbourIDs.push_back(i);
                }
            }
         }
 
-        Cell newCell(j,fourCorners,neighbourIDs);
+        Cell newCell(j,fourCorners,neighbourIDs, perpendicularNeighbourIDs);
         m_cells.push_back(newCell);
+
 
         if (j == 0)
         {
@@ -137,8 +140,25 @@ CellGraph::CellGraph(const char *_fileName)
         }
 
     }
-    m_maxDist = sqrt(2*((m_cellSize/2)*(m_cellSize/2)));
-    std::cout<<"maxDist = "<<m_maxDist<<std::endl;
+    ///////////////////////////////////PERPENDICULAR////////////////////////////////////////////////////////////////////////////////
+    for ( int i =0; i< m_cells.size(); i++)
+    {
+        for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
+        {
+            m_cells[m_cells[i].getNeighbourCellIDs()[j]];
+            if ( m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre().m_x == m_cells[i].getCentre().m_x
+                 || m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre().m_z == m_cells[i].getCentre().m_z)
+            {
+                m_cells[i].addPerpendicularNeighbourID(m_cells[i].getNeighbourCellIDs()[j]);
+
+            }
+
+        }
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 }
 
 CellGraph::CellGraph()
@@ -212,8 +232,6 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
         _entity->setCurrentCellID(currentNeighbourID);
         _entity->setCurrentCell(m_cells[currentNeighbourID]);
       }
-
-
     }
   }
 
@@ -248,6 +266,8 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
    {
        if (_entity->getID() != m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i])
        {
+
+
           _entity->addDetectedDynamicEntityID(m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i]);
        }
 
@@ -256,7 +276,6 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     //for each neighbour
     int numberOfCellsToCheck = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs().size();
     //loops through all neighbour cells
-
     for (int i = 0; i < numberOfCellsToCheck; i++)
     {
 
@@ -268,9 +287,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         {
 
           ngl::Vec3 vectorToEntity = _entity->getPos()- (m_entityMgr->getEntityFromID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i])->getPos());
-
-
-          if(vectorToEntity.lengthSquared()< (m_maxDist*m_maxDist))
+          if(vectorToEntity.lengthSquared() <= (_entity->getDetectionRadius()*_entity->getDetectionRadius()))
           {
             _entity->addDetectedDynamicEntityID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i]);
 
@@ -295,15 +312,16 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
 void CellGraph::generateWalls()
 {
-    for (unsigned int i=0; i< m_cells.size(); i++)
+    for (unsigned int i=0; i< m_numberOfCells; i++)
     {
         bool upperWall = true, lowerWall = true, leftWall =  true,  rightWall= true;
 
         //Test for each wall against 3 conditions,
         //if no neighbour centre is detected, the bool remains true:
-        for (unsigned int j =0; j < m_cells[i].getNeighbourCellIDs().size(); j ++)
+
+        for ( int j =0; j < m_cells[i].getPerpendicularNeighbourCellIDs().size(); j ++)
         {
-            ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre();
+            ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getPerpendicularNeighbourCellIDs()[j]].getCentre();
 
 
             //Check for upper wall:
@@ -353,7 +371,7 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
             //std::cout<<"cell "<<i<<" upperWallstart: "<<start.m_x<<" "<<start.m_z<<" upperwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(lowerWall == true)
@@ -365,7 +383,7 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
             //std::cout<<"cell "<<i<<" lowerWallstart: "<<start.m_x<<" "<<start.m_z<<" lowerwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(leftWall == true)
@@ -377,7 +395,7 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
             //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(rightWall == true)
@@ -389,12 +407,92 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
             //std::cout<<"cell "<<i<<" rightWallstart: "<<start.m_x<<" "<<start.m_z<<" rightwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
         }
 
 
     }
+    for (int i =0; i < m_numberOfCells; i++)
+    {
+      for (int j = 0; j < m_cells[i].getWallsInCell().size(); j++)
+      {
+            Wall wallToAdd = m_cells[i].getWallsInCell()[j];
+            m_cells[i].addWall(wallToAdd);
+      }
+        int numberOfNeighbours = m_cells[i].getNeighbourCellIDs().size();
 
+        for(int j = 0; j < numberOfNeighbours; j++)
+        {
+            for( int k=0; k<m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell().size();k++)
+            {
+                //std::cout<<"adding Wall"<<std::endl;
+                Wall wallToAdd = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell()[k];
+                m_cells[i].addWall(wallToAdd);
+            }
+
+        }
+
+
+    }
+}
+
+//TO D000 :Instead of cells as inputs, use Vec3's
+std::vector<ngl::Vec3> CellGraph::findPath(Cell _from, Cell _to)
+{
+
+
+
+   int currentCell;
+   std::vector<int> frontierCells; //IDs of cells to be tested
+   std::vector<int> frontierMemory; // list of all cell IDs that have ever been held in frontierCells.
+
+   std::vector<int> priorityQueue;
+
+   std::vector<std::vector<int> > SPTs; // vector of search paths (of cell IDs), new ones are added when cells cannot be added sequentially.
+                                        // This happens when a new frontier is tested that is not perpendicular to the previous SPT element.
+
+
+
+    //Now actual search:
+
+    ////1-Update frontier:
+    // Clear priorityQueue.
+    // Remove currentCell from frontier.
+    // Get perpendicular neighbours of cell. Add them to frontier if they are not in frontier memory.
+
+    ///2-Update priorityQueue:
+    // Order the frontier by closest to destination, in priorityQueue.
+
+    ///3-Add current cell to search path tree:
+    // Checks the last SPT in SPTs. From the first element, check if the currentCell is perpendicular.
+    // If it is perpendicular to the final element, simply append to that SPT vector.
+    // If not, then create a new SPT vector from the start of the current SPT to the first perpendicular element, append currentCell.
+    // If not perpendicular to ANY elements in the latest SPT, go to the previous SPT and perform check again. -Do not delete the last SPT.
+
+    ///4-Go to highes priority cell:
+    // Set currentCell to the first element of priorityQueue.
+
+    ///5- Idf currentCell == _to (destination).
+
+
+//    //3-Then,  add all perpendicular neighbours of that cell to the frontier cell vector if not in frontierMemory.
+
+//    //Initially, set frontier to all neighbouring cells:
+//    for( int i =0; i<_from.getPerpendicularNeighbourCellIDs().size(); i++)
+//    {
+//        frontierCells.push_back(&m_cells[_from.getPerpendicularNeighbourCellIDs()[i]]);
+//    }
+
+//    for ( int i=0; i< frontierCells.size(); i++)
+//    {
+//        //Cost in our system is the distance from the start cell to the frontier tested cell
+//        float newCost = (frontierCells[i]->getCentre() - _from.getCentre()).length();
+
+//        //If the cell has not been
+//        if( frontierCells[i])
+
+
+//    }
 
 
 

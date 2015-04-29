@@ -23,7 +23,7 @@ BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
   m_pos = pos;
   m_boundingRadius = r;
   m_entityType = entity_type;
-  m_detectionRadius = m_boundingRadius*3; // CHANGE TO VARIABLE
+  m_detectionRadius = r * 3; // CHANGE TO VARIABLE
 
 }
 
