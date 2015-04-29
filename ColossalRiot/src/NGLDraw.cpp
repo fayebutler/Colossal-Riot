@@ -18,7 +18,7 @@ NGLDraw::NGLDraw()
   m_spinXFace=0;
   m_spinYFace=0;
 
-  glClearColor(0.4f, 0.4f, 0.4f, 1.0f);			   // Grey Background
+  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);			   // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
 

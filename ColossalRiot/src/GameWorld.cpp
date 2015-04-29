@@ -8,15 +8,17 @@
 GameWorld::GameWorld()
 {
 
-   m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
+   m_mesh = new ngl::Obj("test_meshTest.obj"); //Obj to draw, must be triangulated
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
-   m_cellGraph =  CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
+   m_cellGraph =  CellGraph("test_navTest.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
 
+   m_cellGraph.findPath(13,4);
 
-  for (int i = 0; i < 1000 ; ++i)
+
+  for (int i = 0; i < 20 ; ++i)
 
   {
     Rioter* newRioter = new Rioter(this);

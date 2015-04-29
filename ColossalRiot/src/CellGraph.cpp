@@ -419,30 +419,45 @@ void CellGraph::generateWalls()
 
     }
     for (int i =0; i < m_numberOfCells; i++)
-    {
-        int numberOfNeighbours = m_cells[i].getNeighbourCellIDs().size();
-
-        for(int j = 0; j < numberOfNeighbours; j++)
         {
-            for( int k=0; k<m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell().size();k++)
-            {
-                //std::cout<<"adding Wall"<<std::endl;
-                Wall wallToAdd = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell()[k];
+          for (int j = 0; j < m_cells[i].getWallsInCell().size(); j++)
+          {
+                Wall wallToAdd = m_cells[i].getWallsInCell()[j];
                 m_cells[i].addWall(wallToAdd);
+          }
+            int numberOfNeighbours = m_cells[i].getNeighbourCellIDs().size();
+
+            for(int j = 0; j < numberOfNeighbours; j++)
+            {
+                for( int k=0; k<m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell().size();k++)
+                {
+                    //std::cout<<"adding Wall"<<std::endl;
+                    Wall wallToAdd = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell()[k];
+                    m_cells[i].addWall(wallToAdd);
+                }
+
             }
 
-        }
 
-    }
+        }
 }
 
+
+
 //TO D000 :Instead of cells as inputs, use Vec3's
-std::vector<ngl::Vec3> CellGraph::findPath(Cell _from, Cell _to)
+void CellGraph::findPath(int _from, int _to)
 {
 
 
 
-   int currentCell;
+   int startCellID = _from;
+   Cell *endCell = &m_cells[_to];
+   int currentCellID = startCellID;
+   Cell *currentCell = &m_cells[currentCellID];
+
+
+//   ngl::Vec3 destinationPos = _to;
+
    std::vector<int> frontierCells; //IDs of cells to be tested
    std::vector<int> frontierMemory; // list of all cell IDs that have ever been held in frontierCells.
 
@@ -450,6 +465,183 @@ std::vector<ngl::Vec3> CellGraph::findPath(Cell _from, Cell _to)
 
    std::vector<std::vector<int> > SPTs; // vector of search paths (of cell IDs), new ones are added when cells cannot be added sequentially.
                                         // This happens when a new frontier is tested that is not perpendicular to the previous SPT element.
+
+   //Create start SPT, the firt element of which is  _from
+   std::vector<int> newSPT;
+   //Push it into SPTs
+   SPTs.push_back(newSPT);
+
+
+    frontierMemory.push_back(startCellID);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////LOOOOOP/////////////
+    for( int c =0; c<1; c++)
+
+//    while (currentCellID != _to)
+    {
+
+
+
+
+
+
+
+///////1-Update frontier:
+///
+    //Clear priority Q:
+    priorityQueue.clear();
+
+    //Remove currentCell from frontierCells:
+    for (std::vector<int>::iterator iter = frontierCells.begin(); iter != frontierCells.end(); ++iter)
+    {
+        if( *iter == currentCellID)
+        {
+            frontierCells.erase(iter);
+            std::cout<< "erasing   "<< currentCellID <<std::endl;
+            break;
+        }
+    }
+
+//    for (int i =0; i<frontierCells.size(); i++)
+//    {
+//        if (frontierCells[i]==currentCellID)
+//        {
+//            frontierCells.erase(i);
+//        }
+
+//    }
+
+    std::cout<<"----------------------------"<<std::endl;
+    //Add perpendicular neighbours to frontierCells:
+    for ( int i=0; i <currentCell->getPerpendicularNeighbourCellIDs().size();i++)
+    {
+//        for(int i=0; )
+
+
+        std::cout<<"perpendicular cell = "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
+        bool isInMemory = false;
+
+        for (int j=0; j<frontierMemory.size();j++)
+        {
+            std::cout<<"frontier memory  "<<frontierMemory[j]<<std::endl;
+            if( currentCell->getPerpendicularNeighbourCellIDs()[i] == frontierMemory[j])
+            {
+                isInMemory = true;
+                break;
+            }
+
+
+        }
+
+
+        if( isInMemory == true)
+        {
+            std::cout<<"IS IN MEMORY    "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
+
+
+        }
+        if ( isInMemory ==false)
+        {
+            std::cout<<"adding to frontier "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
+            frontierCells.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
+            frontierMemory.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
+        }
+
+    }
+
+
+    std::cout<<"----------------------------"<<std::endl;
+//////2-Update priorityQueue:
+    //Order frontier cells:
+    std::vector<int>frontierCopy = frontierCells;
+
+    std::cout<<"PQ size ==     "<<priorityQueue.size()<<std::endl;
+    std::cout<<"FC size ==    "<<    frontierCopy.size()<<std::endl;
+    while (priorityQueue.size() < frontierCells.size())
+    {
+        float shortestDist = 10000000000.0f;
+        int shortestID;
+
+        for (int i=0; i<frontierCopy.size();i++ )
+        {
+            ngl::Vec3 distance = (m_cells[frontierCopy[i]].getCentre() - endCell->getCentre());
+
+            if(distance.lengthSquared() <shortestDist)
+            {
+                shortestDist = distance.lengthSquared();
+                shortestID = frontierCopy[i];
+
+
+            }
+        }
+
+
+        for (std::vector<int>::iterator iter = frontierCopy.begin(); iter != frontierCopy.end(); ++iter)
+        {
+            if( *iter == shortestID)
+            {
+                frontierCopy.erase(iter);
+                break;
+            }
+        }
+        priorityQueue.push_back(shortestID);
+
+
+    }
+
+    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
+
+    std::cout<<"Frontier Cells"<< std::endl;
+    for (int i = 0;i<frontierCells.size();i++)
+    {
+        std::cout<<frontierCells[i]<<std::endl;
+
+    }
+
+    std::cout<< "PRIORITY QUEUEUE:   "<<std::endl;
+    for (int i =0; i< priorityQueue.size();i++)
+    {
+        std::cout<< priorityQueue[i]<<std::endl;
+    }
+
+    std::cout<<"Frontier Memory: "<< std::endl;
+    for (int i = 0;i<frontierMemory.size();i++)
+    {
+        std::cout<<frontierMemory[i]<<std::endl;
+
+    }
+
+
+
+
+////3-Add currentCell to SPT
+//  //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
+
+//    for (int i=0; i<SPTs.back().size();i-- )
+//    {
+//        for (int j=0; j<SPTs[i].size();j++)
+//        {
+//            Cell *SPTCell = &m_cells[SPTs[i][j]];
+//            for( int k=0; k<SPTCell->getPerpendicularNeighbourCellIDs().size();k++)
+//            {
+//                if ( currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
+//                {
+//                    if(j == SPTs[i].size())
+//                    {
+//                    SPTs[i].push_back(currentCellID);
+//                    break;
+//                    }
+//                    else {
+//                        //Else make a new SPT up to the first perpendicular cell in the last SPT. -___-?
+//                    }
+//                }
+//            }
+
+//        }
+//    }
+
+
+
 
 
 
@@ -472,28 +664,13 @@ std::vector<ngl::Vec3> CellGraph::findPath(Cell _from, Cell _to)
     ///4-Go to highes priority cell:
     // Set currentCell to the first element of priorityQueue.
 
-    ///5- Idf currentCell == _to (destination).
+    ///5- If currentCell == _to (destination). while loop
 
 
-//    //3-Then,  add all perpendicular neighbours of that cell to the frontier cell vector if not in frontierMemory.
+////4- Set currentCell to highest priority:
 
-//    //Initially, set frontier to all neighbouring cells:
-//    for( int i =0; i<_from.getPerpendicularNeighbourCellIDs().size(); i++)
-//    {
-//        frontierCells.push_back(&m_cells[_from.getPerpendicularNeighbourCellIDs()[i]]);
-//    }
+    currentCellID = priorityQueue[0];
+    currentCell = &m_cells[currentCellID];
 
-//    for ( int i=0; i< frontierCells.size(); i++)
-//    {
-//        //Cost in our system is the distance from the start cell to the frontier tested cell
-//        float newCost = (frontierCells[i]->getCentre() - _from.getCentre()).length();
-
-//        //If the cell has not been
-//        if( frontierCells[i])
-
-
-//    }
-
-
-
+    }
 }
