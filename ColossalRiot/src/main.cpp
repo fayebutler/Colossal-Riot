@@ -56,6 +56,7 @@ int main()
     SDLErrorExit("Unable to create window");
   }
 
+
   // Create our opengl context and attach it to our window
 
    SDL_GLContext glContext=createOpenGLContext(window);
@@ -114,6 +115,7 @@ int main()
           int w,h;
           // get the new window size
           SDL_GetWindowSize(window,&w,&h);
+
           ngldraw.resize(w,h);
         break;
 

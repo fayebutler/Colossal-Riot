@@ -52,6 +52,8 @@ public:
     std::vector<Rioter*> getRioters() { return m_rioters; }
     //std::vector<Police*> getPolice() { return m_police; }
 
+    std::vector<Squad*> getSquads() {return m_squads;}
+
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 
     //std::vector<Wall2D> m_Walls;

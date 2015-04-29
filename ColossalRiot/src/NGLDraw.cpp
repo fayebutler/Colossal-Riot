@@ -62,14 +62,16 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,15,0);
+  ngl::Vec3 from(0,50,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
+
   // now load to our new camera
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
-  m_cam->setShape(45,(float)720.0/576.0,0.05,350);
+
+  m_cam->setShape(45,(float)m_width/m_height,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -83,8 +85,8 @@ NGLDraw::NGLDraw()
 
   m_gameworld = new GameWorld();
 
-
-
+  m_selected = false;
+  m_selectedSquad = NULL;
 
 }
 
@@ -100,6 +102,10 @@ NGLDraw::~NGLDraw()
 void NGLDraw::resize(int _w, int _h)
 {
   glViewport(0,0,_w,_h);
+
+  m_height = _h;
+  m_width = _w;
+
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
 }
@@ -193,6 +199,15 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
  if(_event.button == SDL_BUTTON_LEFT)
   {
      std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+     if(m_selected == true)
+     {
+         doMovement(_event.x, _event.y);
+     }
+     else
+     {
+        doSelection(_event.x, _event.y);
+     }
+
   }
 }
 
@@ -241,3 +256,101 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
   }
 }
 //----------------------------------------------------------------------------------------------------------------------
+
+void NGLDraw::doSelection(const int _x, const int _y)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+//    glReadPixels(_x, _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
+//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+
+    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+    {
+        Squad* currentSquad = m_gameworld->getSquads()[i];
+
+        currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
+
+    }
+//    unsigned char pixel[3];
+    ngl::Vec3 pixel;
+    //pixel = ngl::Vec3(0.f,0.f,0.f);
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
+//    pixel.m_x = round(pixel.m_x);
+    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+
+    if (m_selectedSquad!= NULL)
+    {
+        m_selectedSquad->setSquadColour(ngl::Colour(0.0f,1.0f,0.0f,1.0f));
+    }
+
+    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+    {
+        Squad* currentSquad = m_gameworld->getSquads()[i];
+
+
+        if(currentSquad->checkSelectionColour(pixel) == true)
+        {
+            currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+            m_selected = true;
+            m_selectedSquad = currentSquad;
+            break;
+        }
+    }
+}
+
+void NGLDraw::doMovement(const int _x, const int _y)
+{
+    m_clickPosition = getWorldSpace(_x, _y);
+
+    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+    std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+    m_selectedSquad->setPos(m_clickPosition);
+    std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+    m_selected = false;
+}
+
+ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
+{
+  std::cout<<"Mouse pos "<<_x<<" "<<_y<<" ";
+
+  ngl::Mat4 t=m_cam->getProjectionMatrix();
+  ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
+
+  // as ngl:: and OpenGL use different formats need to transpose the matrix.
+  t.transpose();
+  v.transpose();
+  ngl::Mat4 inverse=(t*v).inverse();
+
+  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
+
+  ngl::Vec4 tmp(0.0f,0.0f,1.0f,1.0f);
+  // convert into NDC
+  tmp.m_x=(2.0f * _x) / m_width - 1.0f;
+  tmp.m_y=1.0f - (2.0f * _y) / m_height;
+  // scale by inverse MV * Project transform
+  ngl::Vec4 obj=inverse*tmp;
+  // Scale by w
+  obj/=obj.m_w*75.0;
+
+  std::cout<<obj.m_w*75.0<<std::endl;
+    std::cout<<obj.m_w<<std::endl;
+
+
+  obj.m_y = 0.0;
+
+
+
+  return obj.toVec3();
+
+
+}
+
+
+
+
+

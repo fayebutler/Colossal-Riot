@@ -24,7 +24,7 @@ void Agent::setTargetID(int _val)
     m_targetID = _val;
     if (_val < 0)
     {
-        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
+//        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
         Vehicle::Steering()->setTargetAgent(NULL);
     }
     else
@@ -98,17 +98,17 @@ void Agent::checkValidTarget(float _dist, float _health)
 
         if(distFromEachOther>m_boundingRadius*_dist || target->getHealth()<_health)
         {
-            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
+//            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
             findTargetID(_health);
         }
         else
         {
-            std::cout<<"TARGET A-OKAY"<<std::endl;
+//            std::cout<<"TARGET A-OKAY"<<std::endl;
         }
     }
     else
     {
-        std::cout<<"TARGET NOT SET"<<std::endl;
+//        std::cout<<"TARGET NOT SET"<<std::endl;
         findTargetID(_health);
     }
 }

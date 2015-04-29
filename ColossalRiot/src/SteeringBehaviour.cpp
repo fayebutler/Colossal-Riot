@@ -165,11 +165,11 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-            std::cout<<"pursuit NULL"<<std::endl;
+//            std::cout<<"pursuit NULL"<<std::endl;
         }
         else
         {
-            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
+//            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {
@@ -186,7 +186,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-            std::cout<<"evade NULL"<<std::endl;
+//            std::cout<<"evade NULL"<<std::endl;
         }
         else
         {

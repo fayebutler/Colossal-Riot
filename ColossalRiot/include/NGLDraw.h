@@ -55,6 +55,15 @@ class NGLDraw
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent(const SDL_MouseWheelEvent &_event);
 
+    void doSelection(const int _x, const int _y);
+
+    void doMovement(const int _x, const int _y);
+
+    ngl::Vec3 getWorldSpace(int _x, int _y);
+
+    int m_width;
+    int m_height;
+
   private :
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform data to the shaders
@@ -113,6 +122,13 @@ class NGLDraw
 
     GameWorld* m_gameworld;
     ngl::Obj *m_mesh;
+    Squad* m_selectedSquad;
+
+    ngl::Vec3 m_clickPosition;
+
+    bool m_selected;
+
+
 };
 
 
