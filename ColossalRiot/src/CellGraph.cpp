@@ -475,7 +475,7 @@ void CellGraph::findPath(int _from, int _to)
     frontierMemory.push_back(startCellID);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////LOOOOOP/////////////
-    for( int c =0; c<1; c++)
+    for( int c =0; c<3; c++)
 
 //    while (currentCellID != _to)
     {
