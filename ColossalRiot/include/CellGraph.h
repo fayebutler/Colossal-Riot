@@ -29,6 +29,8 @@ public:
     void addEntities(BaseGameEntity *_entity);
     void generateWalls();
 
+    std::vector<ngl::Vec3> findPath(Cell _from, Cell _to); //Returns the centre of cells in path
+
 };
 
 

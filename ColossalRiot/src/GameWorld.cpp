@@ -18,6 +18,7 @@ GameWorld::GameWorld()
 
 
 
+
   for (int i = 0; i < 8; ++i)
   {
     Rioter* newRioter = new Rioter(this);
@@ -48,6 +49,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     //Clear the cells of agentIDs
 
     m_cellGraph.clearCells();
+    m_cellGraph.printCellGraph();
 
     for (int i=0; i<m_entityMgr->getEntityMap().size(); i++)
     {

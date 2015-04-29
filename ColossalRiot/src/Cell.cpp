@@ -5,7 +5,8 @@ Cell::Cell()
 
 }
 
-Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs)
+Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners,
+           std::vector<int> _neighbourCellIDs, std::vector<int> _perpendicularCellIDs)
 {
     if ( _fourCorners.size() == 4)
     {
@@ -49,6 +50,8 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
 
     m_ID = _ID;
     m_neighbourCellIDs = _neighbourCellIDs;
+
+    m_perpendicularNeighbourCellIDs = _perpendicularCellIDs;
 //    std::cout<< " Cell id:"<< m_ID<< " cell centre: "<< m_centre.m_x<<std::endl;
 
 //    std::cout<<"Cell number: "<<m_ID<<std::endl;
@@ -75,11 +78,12 @@ std::vector <int> Cell::getNeighbourCellIDs()
 void Cell::printCellInfo()
 {
     std::cout<< "ID is:  "<< m_ID<<std::endl;
-//    std::cout<<"Neighbouring IDs are ";
-//    for ( int i =0; i<m_neighbourIDs.size();i++)
-//    {
-//        std::cout<<m_neighbourIDs[i]<<" ";
-//    }
+    std::cout<<"Perpen     Neighbouring IDs are ";
+    for ( int i =0; i<m_perpendicularNeighbourCellIDs.size();i++)
+    {
+        std::cout<<m_perpendicularNeighbourCellIDs[i]<<" ";
+    }
+   std::cout<<std::endl;
 //    std::cout<<std::endl;
 //    std::cout<<" First Corner is:  "<<m_fourCorners[0].m_x<<" "<<m_fourCorners[0].m_y<<" "<<m_fourCorners[0].m_z<<std::endl;
 //    std::cout<<" Second Corner is:  "<<m_fourCorners[1].m_x<<" "<<m_fourCorners[1].m_y<<" "<<m_fourCorners[1].m_z<<std::endl;
@@ -103,10 +107,10 @@ void Cell::printCellInfo()
         }
     }
 
-    if (m_dynamicEntityIDs.empty() == 0)
-    {
-        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_dynamicEntityIDs[0]<<std::endl;
-    }
+//    if (m_dynamicEntityIDs.empty() == 0)
+//    {
+//        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_dynamicEntityIDs[0]<<std::endl;
+//    }
 
 
 }
@@ -141,4 +145,14 @@ std::vector<int> Cell::getDynamicEntityIDs()
 void Cell::addWall(Wall _wall)
 {
     m_walls.push_back(_wall);
+}
+
+void Cell::addPerpendicularNeighbourID(int _ID)
+{
+    m_perpendicularNeighbourCellIDs.push_back(_ID);
+}
+
+std::vector<int> Cell::getPerpendicularNeighbourCellIDs()
+{
+    return m_perpendicularNeighbourCellIDs;
 }

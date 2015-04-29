@@ -103,6 +103,7 @@ CellGraph::CellGraph(const char *_fileName)
        //FIND NEIGHBOURS
 
        std::vector<int> neighbourIDs;
+       std::vector<int> perpendicularNeighbourIDs;
 
         for (unsigned int i=0 ;i<faces.size();i++)
         {
@@ -122,13 +123,15 @@ CellGraph::CellGraph(const char *_fileName)
                if( i != j)
                {
 
+
                neighbourIDs.push_back(i);
                }
            }
         }
 
-        Cell newCell(j,fourCorners,neighbourIDs);
+        Cell newCell(j,fourCorners,neighbourIDs, perpendicularNeighbourIDs);
         m_cells.push_back(newCell);
+
 
         if (j == 0)
         {
@@ -139,6 +142,23 @@ CellGraph::CellGraph(const char *_fileName)
     }
     m_maxDist = sqrt(2*((m_cellSize/2)*(m_cellSize/2)));
     std::cout<<"maxDist = "<<m_maxDist<<std::endl;
+
+    for ( int i =0; i< m_cells.size(); i++)
+    {
+        for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
+        {
+            m_cells[m_cells[i].getNeighbourCellIDs()[j]];
+            if ( m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre().m_x == m_cells[i].getCentre().m_x
+                 || m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre().m_z == m_cells[i].getCentre().m_z)
+            {
+                m_cells[i].addPerpendicularNeighbourID(m_cells[i].getNeighbourCellIDs()[j]);
+
+            }
+
+        }
+
+    }
+
 
 
 }
@@ -282,9 +302,9 @@ void CellGraph::generateWalls()
 
         //Test for each wall against 3 conditions,
         //if no neighbour centre is detected, the bool remains true:
-        for ( int j =0; j < m_cells[i].getNeighbourCellIDs().size(); j ++)
+        for ( int j =0; j < m_cells[i].getPerpendicularNeighbourCellIDs().size(); j ++)
         {
-            ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre();
+            ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getPerpendicularNeighbourCellIDs()[j]].getCentre();
 
 
             //Check for upper wall:
@@ -376,6 +396,65 @@ void CellGraph::generateWalls()
 
     }
 
+}
+
+//TO D000 :Instead of cells as inputs, use Vec3's
+std::vector<ngl::Vec3> CellGraph::findPath(Cell _from, Cell _to)
+{
+
+
+
+   int currentCell;
+   std::vector<int> frontierCells; //IDs of cells to be tested
+   std::vector<int> frontierMemory; // list of all cell IDs that have ever been held in frontierCells.
+
+   std::vector<int> priorityQueue;
+
+   std::vector<std::vector<int> > SPTs; // vector of search paths (of cell IDs), new ones are added when cells cannot be added sequentially.
+                                        // This happens when a new frontier is tested that is not perpendicular to the previous SPT element.
+
+
+
+    //Now actual search:
+
+    ////1-Update frontier:
+    // Clear priorityQueue.
+    // Remove currentCell from frontier.
+    // Get perpendicular neighbours of cell. Add them to frontier if they are not in frontier memory.
+
+    ///2-Update priorityQueue:
+    // Order the frontier by closest to destination, in priorityQueue.
+
+    ///3-Add current cell to search path tree:
+    // Checks the last SPT in SPTs. From the first element, check if the currentCell is perpendicular.
+    // If it is perpendicular to the final element, simply append to that SPT vector.
+    // If not, then create a new SPT vector from the start of the current SPT to the first perpendicular element, append currentCell.
+    // If not perpendicular to ANY elements in the latest SPT, go to the previous SPT and perform check again. -Do not delete the last SPT.
+
+    ///4-Go to highes priority cell:
+    // Set currentCell to the first element of priorityQueue.
+
+    ///5- Idf currentCell == _to (destination).
+
+
+//    //3-Then,  add all perpendicular neighbours of that cell to the frontier cell vector if not in frontierMemory.
+
+//    //Initially, set frontier to all neighbouring cells:
+//    for( int i =0; i<_from.getPerpendicularNeighbourCellIDs().size(); i++)
+//    {
+//        frontierCells.push_back(&m_cells[_from.getPerpendicularNeighbourCellIDs()[i]]);
+//    }
+
+//    for ( int i=0; i< frontierCells.size(); i++)
+//    {
+//        //Cost in our system is the distance from the start cell to the frontier tested cell
+//        float newCost = (frontierCells[i]->getCentre() - _from.getCentre()).length();
+
+//        //If the cell has not been
+//        if( frontierCells[i])
+
+
+//    }
 
 
 
