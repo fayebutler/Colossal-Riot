@@ -61,7 +61,8 @@ void Rioter::update(double timeElapsed, double currentTime)
     Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
-    Vehicle::Steering()->OverlapAvoidance();
+    Vehicle::Steering()->ObjectOverlapAvoidance();
+    Vehicle::Steering()->WallOverlapAvoidance();
 
     std::cout<<"RAGE: "<<m_rage<<std::endl;
 

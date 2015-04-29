@@ -375,7 +375,6 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Separation"<<std::endl;
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
@@ -389,7 +388,6 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Alignment"<<std::endl;
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
@@ -414,7 +412,6 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Cohesion"<<std::endl;
 
   if (neighbours.size() > 0)
   {
@@ -471,7 +468,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
-  std::cout<<"SteeringBehaviour::ObstacleAvoidance"<<std::endl;
   //const std::vector<BaseGameEntity *> &obstacles
 
   // not sure if I should use radius for detectionLength, or create a new minimumLength variable
@@ -626,8 +622,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
 ngl::Vec3 SteeringBehaviour::WallAvoidance()
 {
-  std::cout<<"SteeringBehaviour::WallAvoidance"<<std::endl;
-
   double feelerLength = m_vehicle->getBoundingRadius() * 2;
   std::vector<ngl::Vec3> feelers;
   ngl::Vec3 feelerFront = m_vehicle->getPos() + (feelerLength * m_vehicle->getHeading());
@@ -752,7 +746,7 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
 
 
 
-void SteeringBehaviour::OverlapAvoidance()
+void SteeringBehaviour::ObjectOverlapAvoidance()
 {
     // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
     for (unsigned int i = 0; i < m_allNeighbours.size(); i++)
@@ -781,3 +775,22 @@ void SteeringBehaviour::OverlapAvoidance()
 
 }
 
+void SteeringBehaviour::WallOverlapAvoidance()
+{
+  for (int j= 0; j < m_vehicle->getCurrentCell().getWalls().size(); ++j)
+  {
+    ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWalls()[j].start;
+    ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWalls()[j].end;
+    ngl::Vec3 wallLine = wallEnd - wallStart;
+    ngl::Vec3 wallNormal = wallLine.cross(ngl::Vec3(0.f, 1.f, 0.f));
+    wallNormal.normalize();
+
+    std::cout<<"wallLine "<<wallLine.m_x<<", "<<wallLine.m_y<<", "<<wallLine.m_z<<std::endl;
+
+    if (wallLine.m_x != 0.f)
+    {
+
+    }
+
+  }
+}

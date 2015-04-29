@@ -199,7 +199,8 @@ public:
     double forwardComponent();
     double sideComponent();
 
-    void OverlapAvoidance();
+    void ObjectOverlapAvoidance();
+    void WallOverlapAvoidance();
 
 
 
