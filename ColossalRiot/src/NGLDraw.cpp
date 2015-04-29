@@ -9,7 +9,7 @@
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
-float cameraHeight =100 ;
+float cameraHeight =125 ;
 
 NGLDraw::NGLDraw()
 {

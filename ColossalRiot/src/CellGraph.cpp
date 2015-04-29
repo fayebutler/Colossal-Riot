@@ -140,11 +140,6 @@ CellGraph::CellGraph(const char *_fileName)
         }
 
     }
-    m_maxDist = sqrt(2*((m_cellSize/2)*(m_cellSize/2)));
-    std::cout<<"maxDist = "<<m_maxDist<<std::endl;
-
-
-
     ///////////////////////////////////PERPENDICULAR////////////////////////////////////////////////////////////////////////////////
     for ( int i =0; i< m_cells.size(); i++)
     {
@@ -271,6 +266,8 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
    {
        if (_entity->getID() != m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i])
        {
+
+
           _entity->addDetectedDynamicEntityID(m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i]);
        }
 
@@ -279,7 +276,6 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
     //for each neighbour
     int numberOfCellsToCheck = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs().size();
     //loops through all neighbour cells
-
     for (int i = 0; i < numberOfCellsToCheck; i++)
     {
 
@@ -291,9 +287,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         {
 
           ngl::Vec3 vectorToEntity = _entity->getPos()- (m_entityMgr->getEntityFromID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i])->getPos());
-
-
-          if(vectorToEntity.lengthSquared()< (m_maxDist*m_maxDist))
+          if(vectorToEntity.lengthSquared() <= (_entity->getDetectionRadius()*_entity->getDetectionRadius()))
           {
             _entity->addDetectedDynamicEntityID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i]);
 
@@ -437,14 +431,12 @@ void CellGraph::generateWalls()
                 }
 
             }
-
-
         }
+
 }
 
 
 
-//TO D000 :Instead of cells as inputs, use Vec3's
 void CellGraph::findPath(int _from, int _to)
 {
 
@@ -474,20 +466,21 @@ void CellGraph::findPath(int _from, int _to)
 
     frontierMemory.push_back(startCellID);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////LOOOOOP/////////////
-    for( int c =0; c<3; c++)
+///////////////////////////////LOOOOOP////////////////////////////////////////////////////////////////////////////////////
+    for( int c =0; c<10; c++)
 
 //    while (currentCellID != _to)
     {
 
-
-
+    std::cout<<"----------------------------"<<std::endl;
+    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
+    std::cout<<"----------------------------"<<std::endl;
 
 
 
 
 ///////1-Update frontier:
-///
+
     //Clear priority Q:
     priorityQueue.clear();
 
@@ -497,33 +490,18 @@ void CellGraph::findPath(int _from, int _to)
         if( *iter == currentCellID)
         {
             frontierCells.erase(iter);
-            std::cout<< "erasing   "<< currentCellID <<std::endl;
             break;
         }
     }
 
-//    for (int i =0; i<frontierCells.size(); i++)
-//    {
-//        if (frontierCells[i]==currentCellID)
-//        {
-//            frontierCells.erase(i);
-//        }
 
-//    }
-
-    std::cout<<"----------------------------"<<std::endl;
     //Add perpendicular neighbours to frontierCells:
     for ( int i=0; i <currentCell->getPerpendicularNeighbourCellIDs().size();i++)
     {
-//        for(int i=0; )
-
-
-        std::cout<<"perpendicular cell = "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
         bool isInMemory = false;
 
         for (int j=0; j<frontierMemory.size();j++)
         {
-            std::cout<<"frontier memory  "<<frontierMemory[j]<<std::endl;
             if( currentCell->getPerpendicularNeighbourCellIDs()[i] == frontierMemory[j])
             {
                 isInMemory = true;
@@ -533,16 +511,9 @@ void CellGraph::findPath(int _from, int _to)
 
         }
 
-
-        if( isInMemory == true)
-        {
-            std::cout<<"IS IN MEMORY    "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
-
-
-        }
         if ( isInMemory ==false)
         {
-            std::cout<<"adding to frontier "<<currentCell->getPerpendicularNeighbourCellIDs()[i]<<std::endl;
+
             frontierCells.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
             frontierMemory.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
         }
@@ -550,13 +521,10 @@ void CellGraph::findPath(int _from, int _to)
     }
 
 
-    std::cout<<"----------------------------"<<std::endl;
 //////2-Update priorityQueue:
     //Order frontier cells:
     std::vector<int>frontierCopy = frontierCells;
 
-    std::cout<<"PQ size ==     "<<priorityQueue.size()<<std::endl;
-    std::cout<<"FC size ==    "<<    frontierCopy.size()<<std::endl;
     while (priorityQueue.size() < frontierCells.size())
     {
         float shortestDist = 10000000000.0f;
@@ -575,7 +543,6 @@ void CellGraph::findPath(int _from, int _to)
             }
         }
 
-
         for (std::vector<int>::iterator iter = frontierCopy.begin(); iter != frontierCopy.end(); ++iter)
         {
             if( *iter == shortestID)
@@ -585,11 +552,8 @@ void CellGraph::findPath(int _from, int _to)
             }
         }
         priorityQueue.push_back(shortestID);
-
-
     }
 
-    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
 
     std::cout<<"Frontier Cells"<< std::endl;
     for (int i = 0;i<frontierCells.size();i++)
@@ -615,7 +579,7 @@ void CellGraph::findPath(int _from, int _to)
 
 
 ////3-Add currentCell to SPT
-//  //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
+  //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
 
 //    for (int i=0; i<SPTs.back().size();i-- )
 //    {

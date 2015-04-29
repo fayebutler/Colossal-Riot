@@ -91,6 +91,9 @@ void Cell::printCellInfo()
 //    std::cout<<"upper = "<<m_boundries.m_x<<std::endl<<"lower = "<<m_boundries.m_y<<std::endl<<"left = "<<m_boundries.m_z<<std::endl
 //            <<"right = "<<m_boundries.m_w<<std::endl;
 //    std::cout<<"Centre is: "<<m_centre.m_x<<"  "<<m_centre.m_z<<std::endl<<std::endl;
+   std::cout<<" _walls.size()  "<< m_walls.size()<<std::endl;
+   std::cout<<" _wallsInCell.size()  "<< m_wallsInCell.size()<<std::endl;
+
 
     if( m_walls.size() != 0)
     {

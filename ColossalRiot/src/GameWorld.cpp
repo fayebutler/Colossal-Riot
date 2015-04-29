@@ -8,21 +8,26 @@
 GameWorld::GameWorld()
 {
 
+
    m_mesh = new ngl::Obj("test_meshTest.obj"); //Obj to draw, must be triangulated
+
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
    m_cellGraph =  CellGraph("test_navTest.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
+   m_cellGraph.printCellGraph();
 
    m_cellGraph.findPath(13,4);
 
 
-  for (int i = 0; i < 20 ; ++i)
+
+  for (int i = 0; i < 10 ; ++i)
+
 
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setBoudingRadius(1.f);
+    newRioter->setBoudingRadius(0.5f);
     newRioter->setDetectionRadius(3.f);
     newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
     newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
@@ -47,7 +52,6 @@ GameWorld::GameWorld()
   {
       //Adds entities to cells and cell ID to entities
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
-
   }
   m_numberOfEntities = m_entityMgr->getSize();
   m_numberOfRioters = m_rioters.size();

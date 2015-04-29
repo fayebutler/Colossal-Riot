@@ -60,9 +60,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
 ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 {
-    m_steeringForce = 0;
-
-    m_steeringForce = 0;
+    m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
     if(on(seek)) //need to create crosshair in gameworld
     {
         m_steeringForce += Seek(m_vehicle->getCrosshair()) * m_weightSeek;
@@ -111,7 +109,8 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
-    m_steeringForce = 0;
+    m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
+
 
     ngl::Vec3 force;
     if(on(wall_avoidance))
@@ -126,11 +125,13 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         m_steeringForce += force;
       }
     }
+
     if(on(obstacle_avoidance))
     {
         force = ObstacleAvoidance() * m_weightObstacleAvoidance;
         if(!accumulateForce(m_steeringForce, force))
         {
+
             return m_steeringForce;
         }
         else
@@ -138,6 +139,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             m_steeringForce += force;
         }
     }
+
     if(on(separation))
     {
       force = Separation(m_allNeighbours) * m_weightSeparation;
@@ -162,6 +164,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         m_steeringForce += force;
       }
     }
+
     if(on(alignment))
     {
       force = Alignment(m_friendlyNeighbours) * m_weightAlignment;
@@ -174,6 +177,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         m_steeringForce += force;
       }
     }
+
     if(on(pursuit))
     {
         if (m_targetAgent == NULL)
@@ -195,6 +199,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
 
     }
+
     if(on(evade))
     {
         if (m_targetAgent == NULL)
@@ -214,6 +219,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             }
         }
     }
+
     if(on(seek))
     {
         force = Seek(m_vehicle->getCrosshair()) * m_weightSeek;
@@ -226,6 +232,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             m_steeringForce += force;
         }
     }
+
     if(on(flee))
     {
         force = Flee(m_vehicle->getCrosshair()) * m_weightFlee;
@@ -238,6 +245,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             m_steeringForce += force;
         }
     }
+
     if(on(wander))
     {
         force = Wander() * m_weightWander;
@@ -256,7 +264,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 
 }
 
-bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force)
+bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force)
 {
     double magnitude = currentTotal.length();
 
@@ -266,9 +274,11 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 force)
     {
         return false;
     }
-    else if(force.length() + currentTotal.length() > m_vehicle->getMaxForce())
+    else if(force.length() > forceLeft)
     {
-        return false;
+      force.normalize();
+      force *= m_vehicle->getMaxForce();
+        return true;
     }
     else
     {
@@ -375,7 +385,6 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Separation"<<std::endl;
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
@@ -389,7 +398,6 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Alignment"<<std::endl;
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
@@ -414,7 +422,6 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
-  std::cout<<"SteeringBehaviour::Cohesion"<<std::endl;
 
   if (neighbours.size() > 0)
   {
@@ -471,7 +478,6 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
-  std::cout<<"SteeringBehaviour::ObstacleAvoidance"<<std::endl;
   //const std::vector<BaseGameEntity *> &obstacles
 
   // not sure if I should use radius for detectionLength, or create a new minimumLength variable
@@ -626,9 +632,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
 ngl::Vec3 SteeringBehaviour::WallAvoidance()
 {
-  std::cout<<"SteeringBehaviour::WallAvoidance"<<std::endl;
-
-  double feelerLength = m_vehicle->getBoundingRadius() * 2;
+  double feelerLength = m_vehicle->getDetectionRadius();
   std::vector<ngl::Vec3> feelers;
   ngl::Vec3 feelerFront = m_vehicle->getPos() + (feelerLength * m_vehicle->getHeading());
   feelers.push_back(feelerFront);
@@ -645,9 +649,9 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
   ngl::Vec3 closestIntersectPoint;
   double distToClosestIntersect = 99999.9;
   ngl::Vec3 currentClosestWallNormal;
-  int wallID = -1;
+  bool feelerTouch = false;
 
-  ngl::Vec3 wallAvoidanceForce;
+  ngl::Vec3 wallAvoidanceForce = ngl::Vec3(0.f, 0.f, 0.f);
 
   for (int i = 0; i < feelers.size(); ++i)
   {
@@ -665,17 +669,18 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
         if (distToCurrentIntersect < distToClosestIntersect)
         {
           distToClosestIntersect = distToCurrentIntersect;
-          wallID = i;
+          feelerTouch = true;
           closestIntersectPoint = currentIntersectPoint;
           currentClosestWallNormal = wallNormal;
         }
       }
 
     }
-    if (wallID >= 0)
+    if (feelerTouch == true)
     {
       ngl::Vec3 overShoot = feelers[i] - closestIntersectPoint;
-      wallAvoidanceForce = currentClosestWallNormal * overShoot.length();
+      ngl::Vec3 reverseOverShoot = currentClosestWallNormal * overShoot.length();
+      wallAvoidanceForce = reverseOverShoot;
 
     }
   }
@@ -752,7 +757,7 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
 
 
 
-void SteeringBehaviour::OverlapAvoidance()
+void SteeringBehaviour::ObjectOverlapAvoidance()
 {
     // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
     for (unsigned int i = 0; i < m_allNeighbours.size(); i++)
@@ -767,17 +772,58 @@ void SteeringBehaviour::OverlapAvoidance()
             if (curEntity == entity) continue;
 
 
-            ngl::Vec3 toEntity = m_vehicle->getPos() - curEntity->getPos();
-            double distFromEachOther = toEntity.length();
+            ngl::Vec3 vecToEntity = m_vehicle->getPos() - curEntity->getPos();
+            double distFromEachOther = vecToEntity.length();
 
-            double amountOfOverLap = m_vehicle->getBoundingRadius() - distFromEachOther;
+            double amountOfOverLap = (m_vehicle->getBoundingRadius() + curEntity->getBoundingRadius()) - distFromEachOther;
 
             if (amountOfOverLap >= 0)
             {
-            m_vehicle->setPos(m_vehicle->getPos() + (toEntity/distFromEachOther) * amountOfOverLap);
+            m_vehicle->setPos(m_vehicle->getPos() + (vecToEntity/distFromEachOther) * amountOfOverLap);
             }
         }
     }
 
 }
 
+void SteeringBehaviour::WallOverlapAvoidance()
+{
+
+  for (int j= 0; j < m_vehicle->getCurrentCell().getWallsInCell().size(); ++j)
+  {
+    ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWallsInCell()[j].start;
+    ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWallsInCell()[j].end;
+    ngl::Vec3 wallLine = wallEnd - wallStart;
+    ngl::Vec3 wallNormal = wallLine.cross(ngl::Vec3(0.f, 1.f, 0.f));
+    wallNormal.normalize();
+
+
+    if (wallLine.m_x != 0.f)
+    {
+      // upper or lower wall
+      float zDistToWall = fabs(wallStart.m_z - m_vehicle->getPos().m_z);
+
+      float amountOfOverLap = m_vehicle->getBoundingRadius() - zDistToWall;
+      if (amountOfOverLap >= 0)
+      {
+        m_vehicle->setPos(m_vehicle->getPos() + (wallNormal * amountOfOverLap));
+        //m_vehicle->setHeading(m_vehicle->getHeading() * wallNormal);
+
+      }
+
+    }
+    else if (wallLine.m_z != 0.f)
+    {
+      // left or right wall
+      float xDistToWall = fabs(wallStart.m_x - m_vehicle->getPos().m_x);
+
+      float amountOfOverLap = m_vehicle->getBoundingRadius() - xDistToWall;
+      if (amountOfOverLap >= 0)
+      {
+        m_vehicle->setPos(m_vehicle->getPos() + (wallNormal * amountOfOverLap));
+        //m_vehicle->setHeading(m_vehicle->getHeading() * wallNormal);
+      }
+    }
+
+  }
+}

@@ -25,19 +25,19 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
     //m_targetID = 400;
 
-//    Vehicle::Steering()->WanderOn();
-////    //Vehicle::Steering()->SeekOn();
-////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+    Vehicle::Steering()->WanderOn();
+//////    //Vehicle::Steering()->SeekOn();
+//////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
     Vehicle::Steering()->ObstacleAvoidOn();
-//   // Vehicle::Steering()->EvadeOn();
-//  // Vehicle::Steering()->CohesionOn();
-//////    Vehicle::Steering()->setCohesionWeight(1.f);
+////   // Vehicle::Steering()->EvadeOn();
+////  // Vehicle::Steering()->CohesionOn();
+////////    Vehicle::Steering()->setCohesionWeight(1.f);
 
-//   Vehicle::Steering()->AlignmentOn();
-//////    Vehicle::Steering()->setAlignmentWeight(1.f);
+////   Vehicle::Steering()->AlignmentOn();
+////////    Vehicle::Steering()->setAlignmentWeight(1.f);
 
     Vehicle::Steering()->SeparationOn();
-////    Vehicle::Steering()->setSeparationWeight(1.f);
+//////    Vehicle::Steering()->setSeparationWeight(1.f);
 
     Vehicle::Steering()->WallAvoidOn();
 
@@ -61,10 +61,8 @@ void Rioter::update(double timeElapsed, double currentTime)
     Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
-    Vehicle::Steering()->OverlapAvoidance();
-
-    std::cout<<"RAGE: "<<m_rage<<std::endl;
-
+    Vehicle::Steering()->WallOverlapAvoidance();
+    Vehicle::Steering()->ObjectOverlapAvoidance();
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -99,7 +97,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   {
     rot = 180 + rot;
   }
-  trans.setRotation(0,-rot,0);
+  trans.setRotation(0,-rot+90,0);
 
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
