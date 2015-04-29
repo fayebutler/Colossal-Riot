@@ -16,7 +16,7 @@ GameWorld::GameWorld()
    m_cellGraph.generateWalls();
 
 
-  for (int i = 0; i < 500; ++i)
+  for (int i = 0; i < 1000; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(1.f);
