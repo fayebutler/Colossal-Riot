@@ -62,7 +62,7 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,100,0);
+  ngl::Vec3 from(0,50,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
 
@@ -71,7 +71,13 @@ NGLDraw::NGLDraw()
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
 
-  m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+//  int w=this->size().width();
+//  int h=this->size().height();
+  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
+  m_cam->setShape(45,(float)m_width/m_height,0.5,50);
+
+  //m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+  //m_cam->setShape(45,(float)w/h,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -105,6 +111,8 @@ void NGLDraw::resize(int _w, int _h)
 
   m_height = _h;
   m_width = _w;
+  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
+
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
@@ -177,7 +185,7 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //    m_modelPos.m_x += INCREMENT * diffX;
 //    m_modelPos.m_y -= INCREMENT * diffY;
 
-    m_cam->move(INCREMENT * diffX,0,INCREMENT * diffZ);
+//    m_cam->move(INCREMENT * diffX,0,INCREMENT * diffZ);
 
     this->draw();
   }
@@ -285,7 +293,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
     if (m_selectedSquad!= NULL)
     {
-        m_selectedSquad->setSquadColour(ngl::Colour(0.0f,1.0f,0.0f,1.0f));
+        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
     }
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -318,30 +326,62 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 {
   std::cout<<"Mouse pos "<<_x<<" "<<_y<<" ";
 
+
+  //ngl::Mat4 t=ngl::perspective(45, (float)m_width/m_height,0.05,350);
   ngl::Mat4 t=m_cam->getProjectionMatrix();
   ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
+
+//  t.m_00 = 1.7918;
+//  t.m_01 = 0.f;
+ // t.m_32 = -1.f;
+ // t.m_22 = -1.f;
+
+  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_00<<" "<<t.m_01<<" "<<t.m_02<<" "<<t.m_03<<std::endl;
+  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_10<<" "<<t.m_11<<" "<<t.m_12<<" "<<t.m_13<<std::endl;
+  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_20<<" "<<t.m_21<<" "<<t.m_22<<" "<<t.m_23<<std::endl;
+  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_30<<" "<<t.m_31<<" "<<t.m_32<<" "<<t.m_33<<std::endl;
+
+
+  std::cout<<"m_cam.getViewMatrix() "<<v.m_00<<" "<<v.m_01<<" "<<v.m_02<<" "<<v.m_03<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<v.m_10<<" "<<v.m_11<<" "<<v.m_12<<" "<<v.m_13<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<v.m_20<<" "<<v.m_21<<" "<<v.m_22<<" "<<v.m_23<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<v.m_30<<" "<<v.m_31<<" "<<v.m_32<<" "<<v.m_33<<std::endl;
 
   // as ngl:: and OpenGL use different formats need to transpose the matrix.
   t.transpose();
   v.transpose();
   ngl::Mat4 inverse=(t*v).inverse();
+  //inverse = m_mouseGlobalTX*inverse;
+
+  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_00<<" "<<inverse.m_01<<" "<<inverse.m_02<<" "<<inverse.m_03<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_10<<" "<<inverse.m_11<<" "<<inverse.m_12<<" "<<inverse.m_13<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_20<<" "<<inverse.m_21<<" "<<inverse.m_22<<" "<<inverse.m_23<<std::endl;
+  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_30<<" "<<inverse.m_31<<" "<<inverse.m_32<<" "<<inverse.m_33<<std::endl;
 
   std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
 
-  ngl::Vec4 tmp(0.0f,0.0f,1.0f,1.0f);
+  ngl::Vec4 tmp(0,0,1.0f,1.0f);
   // convert into NDC
   tmp.m_x=(2.0f * _x) / m_width - 1.0f;
   tmp.m_y=1.0f - (2.0f * _y) / m_height;
+
+  std::cout<<"tmp "<<tmp.m_x<<" "<<tmp.m_y<<" "<<tmp.m_z<<" "<<tmp.m_w<<std::endl;
+
   // scale by inverse MV * Project transform
   ngl::Vec4 obj=inverse*tmp;
+
+  std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<obj.m_w<<std::endl;
+
   // Scale by w
-  obj/=obj.m_w*75.0;
+
+  obj/=obj.m_w;
 
   std::cout<<obj.m_w*75.0<<std::endl;
     std::cout<<obj.m_w<<std::endl;
 
 
   obj.m_y = 0.0;
+
 
 
 

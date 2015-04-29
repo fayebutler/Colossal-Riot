@@ -8,7 +8,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
     //m_squadPos = pos;
 
     //m_boundingRad = r;
-    m_squadColour = ngl::Colour(0.0f,1.0f,0.0f,1.0f);
+    m_squadColour = ngl::Colour(1.0f,0.0f,0.0f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius/2.0f;
 
@@ -89,7 +89,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos);
+    trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
 

@@ -142,7 +142,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.1f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+//  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.0f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
   m.loadToShader("material");
 
@@ -170,7 +171,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
   loadMatricesToShader(cam, mouseGlobalTX);
-  m_mesh->draw();
+//  m_mesh->draw();
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
