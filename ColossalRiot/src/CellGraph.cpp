@@ -143,6 +143,8 @@ CellGraph::CellGraph(const char *_fileName)
     m_maxDist = sqrt(2*((m_cellSize/2)*(m_cellSize/2)));
     std::cout<<"maxDist = "<<m_maxDist<<std::endl;
 
+
+    ///////////////////////////////////PERPENDICULAR////////////////////////////////////////////////////////////////////////////////
     for ( int i =0; i< m_cells.size(); i++)
     {
         for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
@@ -158,6 +160,7 @@ CellGraph::CellGraph(const char *_fileName)
         }
 
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 

@@ -9,6 +9,8 @@
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
+float cameraHeight =15 ;
+
 NGLDraw::NGLDraw()
 {
   m_rotate=false;
@@ -62,7 +64,8 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,15,0);
+
+  ngl::Vec3 from(0,cameraHeight,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -171,10 +174,16 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //    m_modelPos.m_x += INCREMENT * diffX;
 //    m_modelPos.m_y -= INCREMENT * diffY;
 
-    m_cam->move(INCREMENT * diffX,0,INCREMENT * diffZ);
+//    INCREMENT = INCREMENT*;
+
+    //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
+    m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
+    std::cout<<"modelPos.m_y = "<<abs(m_modelPos.m_y-cameraHeight)<<std::endl;
 
     this->draw();
   }
+
+
 }
 
 
@@ -215,25 +224,31 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
   // check the diff of the wheel position (0 means no change)
   if(_event.y > 0)
   {
-    m_modelPos.m_y+=ZOOM;
+    if(abs(m_modelPos.m_y-cameraHeight) > 2)
+    {
+    m_modelPos.m_y+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
     this->draw();
+    }
   }
-  else if(_event.y <0 )
+  else if(_event.y < 0 )
   {
-    m_modelPos.m_y-=ZOOM;
+    m_modelPos.m_y-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
     this->draw();
   }
 
   // check the diff of the wheel position (0 means no change)
   if(_event.x > 0)
   {
-    m_modelPos.m_x-=ZOOM;
+    m_modelPos.m_x-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
     this->draw();
   }
   else if(_event.x <0 )
   {
-    m_modelPos.m_x+=ZOOM;
+      if(abs(m_modelPos.m_y-cameraHeight) > 2)
+      {
+    m_modelPos.m_x+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
     this->draw();
+      }
   }
 }
 //----------------------------------------------------------------------------------------------------------------------

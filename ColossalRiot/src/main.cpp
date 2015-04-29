@@ -104,7 +104,7 @@ int main()
         // process the mouse data by passing it to ngl class
 
         case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion);break;
-        case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button); break;
+        case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button);break;
         case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
         case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
 
@@ -143,7 +143,8 @@ int main()
         } // end of keydown
 
         default : break;
-      } // end of event switch
+      }
+// end of event switch
     } // end of poll events
 
     if(paused == 0)
