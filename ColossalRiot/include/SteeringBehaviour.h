@@ -56,7 +56,8 @@ private:
 
     float m_viewDistance;
 
-    std::vector<int> m_neighbours;
+    std::vector<int> m_friendlyNeighbours;
+    std::vector<int> m_allNeighbours;
 
 
 
@@ -179,8 +180,11 @@ public:
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
-    void addNeighbours(std::vector<int> neighbours);
-    void clearNeighbours() { m_neighbours.clear(); }
+    void addFriendlyNeighbours(std::vector<int> neighbours);
+    void clearFriendlyNeighbours() { m_friendlyNeighbours.clear(); }
+
+    void addAllNeighbours(std::vector<int> neighbours);
+    void clearAllNeighbours() { m_allNeighbours.clear(); }
 
     bool lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &distToIntersect, ngl::Vec3 &intersectPoint);
 
@@ -194,6 +198,10 @@ public:
 
     double forwardComponent();
     double sideComponent();
+
+    void ObjectOverlapAvoidance();
+    void WallOverlapAvoidance();
+
 
 
 };

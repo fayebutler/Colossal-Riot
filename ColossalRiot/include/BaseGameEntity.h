@@ -14,7 +14,8 @@ enum entityType
   typeMovingEntity,
   typePolice,
   typeRioter,
-  typeWall
+  typeWall,
+  typeSquad
 
 };
 

@@ -20,17 +20,34 @@ public:
 
     StateMachine<Police>* getStateMachine() const { return m_stateMachine; }
 
+    void findTargetID(float _health);
+
     bool handleMessage(const Message &_message);
 
     void attack();
 
     void registerClass(lua_State* _L);
 
+    ngl::Vec3 getSquadPos()const{return m_squadPos;}
+    void setSquadPos(ngl::Vec3 newPos) {m_squadPos = newPos;}
+
+    float getSquadRadius()const{return m_squadRadius;}
+    void setSquadRadius(float newRad) {m_squadRadius = newRad;}
+
+    void squadCohesion(double weight);
+
+    int getSquadID()const{return m_squadID;}
+    void setSquadID(int squadID){m_squadID = squadID;}
+
 
 protected:
     MessageManager* m_messageMgr;
 
     StateMachine<Police>* m_stateMachine;
+
+    ngl::Vec3 m_squadPos;
+    float m_squadRadius;
+    int m_squadID;
 };
 
 #endif // POLICE_H

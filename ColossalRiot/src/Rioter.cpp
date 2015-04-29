@@ -23,21 +23,21 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    m_targetID = 400;
+    //m_targetID = 400;
 
-    Vehicle::Steering()->WanderOn();
-//    //Vehicle::Steering()->SeekOn();
-//    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+//    Vehicle::Steering()->WanderOn();
+////    //Vehicle::Steering()->SeekOn();
+////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
     Vehicle::Steering()->ObstacleAvoidOn();
-   // Vehicle::Steering()->EvadeOn();
-  // Vehicle::Steering()->CohesionOn();
-////    Vehicle::Steering()->setCohesionWeight(1.f);
+//   // Vehicle::Steering()->EvadeOn();
+//  // Vehicle::Steering()->CohesionOn();
+//////    Vehicle::Steering()->setCohesionWeight(1.f);
 
-   Vehicle::Steering()->AlignmentOn();
-////    Vehicle::Steering()->setAlignmentWeight(1.f);
+//   Vehicle::Steering()->AlignmentOn();
+//////    Vehicle::Steering()->setAlignmentWeight(1.f);
 
     Vehicle::Steering()->SeparationOn();
-//    Vehicle::Steering()->setSeparationWeight(1.f);
+////    Vehicle::Steering()->setSeparationWeight(1.f);
 
     Vehicle::Steering()->WallAvoidOn();
 
@@ -56,10 +56,16 @@ void Rioter::update(double timeElapsed, double currentTime)
     m_stateMachine->update();
 
     m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+    Vehicle::Steering()->clearFriendlyNeighbours();
+    Vehicle::Steering()->clearAllNeighbours();
+    Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
+    Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
+    Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
+    Vehicle::Steering()->ObjectOverlapAvoidance();
+    Vehicle::Steering()->WallOverlapAvoidance();
 
-    Vehicle::Steering()->clearNeighbours();
-    Vehicle::Steering()->addNeighbours(getNeighbourPoliceIDs());
-    Vehicle::Steering()->addNeighbours(getNeighbourRioterIDs());
+    std::cout<<"RAGE: "<<m_rage<<std::endl;
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -73,7 +79,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getRage()/100.0f, 0.0f, 0.0f, 1.0f));
+  m.setDiffuse(ngl::Colour(getHealth()/100.0f, 0.0f, 0.0f, 1.0f));
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -107,6 +113,37 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   shader->setShaderParamFromMat4("M",M);
 }
 
+void Rioter::findTargetID(float _health)
+{
+    std::vector<int> police = getNeighbourPoliceIDs();
+    float currentHealth = 0;
+    Agent* currentTarget = NULL;
+    for (int i=0; i<police.size(); i++)
+    {
+        Agent* policeman = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(police[i]));
+        if (policeman)
+        {
+            if (policeman->getHealth()> _health && policeman->getHealth()>currentHealth)
+            {
+                currentHealth = policeman->getHealth();
+                currentTarget = policeman;
+            }
+        }
+    }
+
+    if (currentTarget == NULL)
+    {
+        setTargetID(-1);
+        std::cout<< "NO NEARBY TARGETS"<<std::endl;
+    }
+    else
+    {
+        int target = currentTarget->getID();
+        setTargetID(target);
+        std::cout<< "FOUND TARGET"<<std::endl;
+    }
+}
+
 bool Rioter::handleMessage(const Message& _message)
 {
   return Agent::handleMessage(_message);
@@ -130,5 +167,6 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Rioter::attack)
+                .addFunction("findTargetID", &Rioter::findTargetID)
         .endClass();
 }

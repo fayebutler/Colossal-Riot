@@ -190,6 +190,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
     m_origYPos = _event.y;
     m_translate=true;
   }
+ if(_event.button == SDL_BUTTON_LEFT)
+  {
+     std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
