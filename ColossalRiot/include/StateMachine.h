@@ -37,7 +37,8 @@ public:
     void setGlobalState(const char* _inState) { m_globalState = _inState; }
     const char* getGlobalState() const { return m_globalState; }
 
-    void update()    {
+    void update()
+    {
       if (m_globalState)
       {
         luaCallState(m_globalState, "execute");

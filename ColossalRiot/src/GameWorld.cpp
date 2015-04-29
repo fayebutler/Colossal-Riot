@@ -8,66 +8,80 @@
 GameWorld::GameWorld()
 {
 
-
-    m_mesh = new ngl::Obj("plane_Mesh.obj"); //Obj to draw, must be triangulated
-    m_mesh->createVAO();
+   m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
+   m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
-   m_cellGraph =  CellGraph("plane_Test.obj"); //Obj for cell graph, must be quads
+   m_cellGraph =  CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
 
 
+  for (int i = 0; i < 1000 ; ++i)
 
-
-  for (int i = 0; i < 8; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setBoudingRadius(2.f);
-    newRioter->setDetectionRadius(10.f);
-    newRioter->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
+    newRioter->setBoudingRadius(1.f);
+    newRioter->setDetectionRadius(3.f);
+    newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
+    newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+    m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+    while (newRioter->getCurrentCellID() < 0)
+    {
+      newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+    }
     m_rioters.push_back(newRioter);
-
-
   }
-  for (int i = 0; i < 8; ++i)
+
+  for (int i = 0; i < 1; ++i)
   {
-    Police* newPolice = new Police(this);
-    newPolice->setBoudingRadius(2.f);
-    newPolice->setDetectionRadius(10.f);
-    newPolice->setPos(ngl::Vec3(-7+14*((float)rand())/RAND_MAX, 0.f, -7+14*((float)rand())/RAND_MAX));
-    m_police.push_back(newPolice);
+
+      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f), 1.f);
+      m_squads.push_back(newSquad);
   }
+    m_numberOfEntities = m_entityMgr->getSize();
+
+  for (unsigned int i=0; i<m_numberOfEntities; i++)
+  {
+      //Adds entities to cells and cell ID to entities
+      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
+
+  }
+  m_numberOfEntities = m_entityMgr->getSize();
+  m_numberOfRioters = m_rioters.size();
+  //m_numberOfPolice = m_police.size();
+
 
 }
 
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
-//    void * edpp = EntityMgr->getEntityFromID(0);
-//    if (edpp->getEntityType() == typeRioter)  m_mesh->draw();
-
-
     //Clear the cells of agentIDs
 
-    m_cellGraph.clearCells();
-    m_cellGraph.printCellGraph();
+  /// don't call everyframe -------------------
 
-    for (int i=0; i<m_entityMgr->getEntityMap().size(); i++)
+    m_cellGraph.clearCells();
+
+    m_numberOfEntities = m_entityMgr->getSize();
+    m_numberOfRioters = m_rioters.size();
+    m_numberOfPolice = m_police.size();
+
+    for (unsigned int i=0; i<m_numberOfEntities; i++)
     {
         //Adds entities to cells and cell ID to entities
         m_cellGraph.updateCells(m_entityMgr->getEntityFromID(i));
     }
 
-    for (int i=0; i<m_entityMgr->getEntityMap().size(); i++)
+    for (unsigned int i=0; i<m_numberOfEntities; i++)
     {
         //Adds entity neighbours:
+      if (m_entityMgr->getEntityFromID(i)->getCurrentCellID() >= 0)
+      {
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
+      }
     }
 
-    std::cout<<"policeman 0 current cell = "<<m_police[0]->getCurrentCell()<<std::endl;
-
-
-
-    //0.
+    /// ----------------------------------------------------
 
     //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
 
@@ -112,36 +126,16 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 /// ---------------------------------------------------------------------------------
 
 
-
-    //Update all the cells with their new vector of agents and agents with current Cell
-//    for(int i = 0; i<m_rioters.size();i++)
-//    {
-//        //Give cellGraph the position of the agent, return the cell Id
-//        //and append agent to that cell's vector of agents.
-//        m_cellGraph.updateCells(m_rioters[i]);
-//    }
-
-    //Now we have updated cell information, return the neighbours of each agent:
-//    for (int j = 0; j<m_rioters.size();j++)
-//    {
-//        m_cellGraph.addEntities(m_rioters[j]);
-//    }
-
-
-
-
-
-    for(unsigned int a=0; a<m_rioters.size(); ++a)
+    for(unsigned int a=0; a<m_numberOfRioters; ++a)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
 
     }
-    for(unsigned int a=0; a<m_police.size(); ++a)
+    for(unsigned int a=0; a<m_squads.size(); ++a)
     {
-        Police* currentPolice = m_police[a];
-        currentPolice->update(timeElapsed, currentTime);
-
+        Squad* currentSquad = m_squads[a];
+        currentSquad->update(timeElapsed, currentTime);
     }
 
 }
@@ -175,21 +169,18 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
+
   loadMatricesToShader(cam, mouseGlobalTX);
   m_mesh->draw();
-
-  for(unsigned int a=0; a<m_rioters.size(); ++a)
+  for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
       currentRioter->draw(cam, mouseGlobalTX);
   }
-  for(unsigned int a=0; a<m_police.size(); ++a)
+  for(unsigned int a=0; a<m_squads.size(); ++a)
   {
-      Police* currentPolice = m_police[a];
-      currentPolice->draw(cam, mouseGlobalTX);
+      Squad* currentSquad = m_squads[a];
+      currentSquad->draw(cam, mouseGlobalTX);
   }
-
-
-
 }
 

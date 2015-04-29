@@ -16,6 +16,7 @@ BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
   setID(m_nextValidID);
   m_nextValidID++;
 
+
   m_entityMgr = new EntityManager();
   m_entityMgr->registerEntity(this);
 
@@ -31,9 +32,19 @@ void BaseGameEntity::setCurrentCellID(int _ID)
     m_currentCellID = _ID;
 }
 
-int BaseGameEntity::getCurrentCell()
+int BaseGameEntity::getCurrentCellID()
 {
     return m_currentCellID;
+}
+
+void BaseGameEntity::setCurrentCell(Cell _inCell)
+{
+  m_currentCell = _inCell;
+}
+
+Cell BaseGameEntity::getCurrentCell()
+{
+  return m_currentCell;
 }
 
 bool BaseGameEntity::handleMessage(const Message& _message)

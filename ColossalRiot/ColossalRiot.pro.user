@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.2.0, 2015-04-29T10:16:52. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{7dda2a78-7be0-46c9-ac8b-fff38b2c0061}</value>
+=======
+<<<<<<< .merge_file_T9IaMO
+<!-- Written by QtCreator 3.2.0, 2015-04-28T18:37:34. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{1c9f8cfe-56ae-4c31-b47f-aaf392462828}</value>
+=======
+<<<<<<< .merge_file_flTptL
+<!-- Written by QtCreator 3.2.0, 2015-04-29T09:28:19. -->
+=======
+<!-- Written by QtCreator 3.2.0, 2015-04-27T15:08:43. -->
+>>>>>>> .merge_file_RDH9pH
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{145bd3bf-7e24-4c4f-9a2f-06b210bcb402}</value>
+>>>>>>> .merge_file_bKmxxJ
+>>>>>>> master
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -177,7 +197,15 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ColossalRiot</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7758474/colossal/ColossalRiot/ColossalRiot.pro</value>
+=======
+<<<<<<< .merge_file_T9IaMO
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7715430/Colossal/colossal/ColossalRiot/ColossalRiot.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7702155/Documents/colossal/ColossalRiot/ColossalRiot.pro</value>
+>>>>>>> .merge_file_bKmxxJ
+>>>>>>> master
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ColossalRiot.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

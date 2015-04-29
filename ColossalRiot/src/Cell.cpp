@@ -16,27 +16,24 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners,
           lower = _fourCorners[0].m_z,
           left = _fourCorners[0].m_x,
           right = _fourCorners[0].m_x;
-
-    for (int i=0; i<_fourCorners.size() ;i++)
-    {
-        if (upper> _fourCorners[i].m_z)
-        {
-            upper= _fourCorners[i].m_z;
-        }
-        if (lower< _fourCorners[i].m_z)
-        {
-            lower= _fourCorners[i].m_z;
-        }
-        if (left> _fourCorners[i].m_x)
-        {
-            left= _fourCorners[i].m_x;
-        }
-        if (right< _fourCorners[i].m_x)
-        {
-            right= _fourCorners[i].m_x;
-        }
-
-
+      for (unsigned int i=0; i<4 ;i++)
+      {
+          if (upper> _fourCorners[i].m_z)
+          {
+              upper= _fourCorners[i].m_z;
+          }
+          if (lower< _fourCorners[i].m_z)
+          {
+              lower= _fourCorners[i].m_z;
+          }
+          if (left> _fourCorners[i].m_x)
+          {
+              left= _fourCorners[i].m_x;
+          }
+          if (right< _fourCorners[i].m_x)
+          {
+              right= _fourCorners[i].m_x;
+          }
     }
 
     m_boundries.m_x = upper;
@@ -51,6 +48,7 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners,
     m_ID = _ID;
     m_neighbourCellIDs = _neighbourCellIDs;
 
+
     m_perpendicularNeighbourCellIDs = _perpendicularCellIDs;
 //    std::cout<< " Cell id:"<< m_ID<< " cell centre: "<< m_centre.m_x<<std::endl;
 
@@ -60,9 +58,9 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners,
 //    std::cout<<"left = "<<m_boundries.m_z<<std::endl;
 //    std::cout<<"right = "<<m_boundries.m_w<<std::endl;
 
-
     }
-    else{
+    else
+    {
         std::cout<<" fourCorners does not have 4 corners!!"<<std::endl;
     }
 
@@ -94,7 +92,6 @@ void Cell::printCellInfo()
 //            <<"right = "<<m_boundries.m_w<<std::endl;
 //    std::cout<<"Centre is: "<<m_centre.m_x<<"  "<<m_centre.m_z<<std::endl<<std::endl;
 
-
     if( m_walls.size() != 0)
     {
         //Print start
@@ -106,13 +103,6 @@ void Cell::printCellInfo()
 
         }
     }
-
-//    if (m_dynamicEntityIDs.empty() == 0)
-//    {
-//        std::cout<<"Cell number: "<<m_ID<< "  agent? "<<m_dynamicEntityIDs[0]<<std::endl;
-//    }
-
-
 }
 
 ngl::Vec3 Cell::getCentre()
@@ -145,6 +135,10 @@ std::vector<int> Cell::getDynamicEntityIDs()
 void Cell::addWall(Wall _wall)
 {
     m_walls.push_back(_wall);
+}
+void Cell::addWallInCell(Wall _wall)
+{
+    m_wallsInCell.push_back(_wall);
 }
 
 void Cell::addPerpendicularNeighbourID(int _ID)

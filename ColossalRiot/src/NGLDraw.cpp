@@ -9,7 +9,7 @@
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
-float cameraHeight =15 ;
+float cameraHeight =100 ;
 
 NGLDraw::NGLDraw()
 {
@@ -65,7 +65,10 @@ NGLDraw::NGLDraw()
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
 
+
   ngl::Vec3 from(0,cameraHeight,0);
+
+
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -80,7 +83,7 @@ NGLDraw::NGLDraw()
   ngl::Mat4 iv=m_cam->getViewMatrix();
   iv.transpose();
   m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
-  m_light->setTransform(iv);
+  //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
 
@@ -178,9 +181,8 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 
     //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-    std::cout<<"modelPos.m_y = "<<abs(m_modelPos.m_y-cameraHeight)<<std::endl;
 
-    this->draw();
+
   }
 
 
@@ -198,6 +200,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
     m_origXPos = _event.x;
     m_origYPos = _event.y;
     m_translate=true;
+  }
+ if(_event.button == SDL_BUTTON_LEFT)
+  {
+     std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
   }
 }
 
@@ -227,27 +233,27 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
     if(abs(m_modelPos.m_y-cameraHeight) > 2)
     {
     m_modelPos.m_y+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-    this->draw();
+//    this->draw();
     }
   }
   else if(_event.y < 0 )
   {
     m_modelPos.m_y-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-    this->draw();
+//    this->draw();
   }
 
   // check the diff of the wheel position (0 means no change)
   if(_event.x > 0)
   {
     m_modelPos.m_x-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-    this->draw();
+//    this->draw();
   }
   else if(_event.x <0 )
   {
       if(abs(m_modelPos.m_y-cameraHeight) > 2)
       {
     m_modelPos.m_x+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-    this->draw();
+//    this->draw();
       }
   }
 }

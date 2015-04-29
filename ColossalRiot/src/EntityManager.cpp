@@ -23,7 +23,7 @@ BaseGameEntity* EntityManager::getEntityFromID(int _ID)const
 {
   EntityMap::const_iterator entity = m_entityMap.find(_ID);
 
-  assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
+  assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID ");
 
   return (BaseGameEntity*)entity->second;
 }

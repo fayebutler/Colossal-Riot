@@ -85,7 +85,7 @@ int main()
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
-  bool paused = 0;
+  bool paused = 1;
 
   Timer gameTimer;
   double timeElapsed = 0.0;

@@ -89,8 +89,8 @@ CellGraph::CellGraph(const char *_fileName)
     }
 
 ///NOW ACTUALLY MAKE THE CELLS
-
-    for (unsigned int j = 0; j < faces.size(); j++)
+    m_numberOfCells = faces.size();
+    for (unsigned int j = 0; j < m_numberOfCells; j++)
     {
         std::vector<ngl::Vec3> fourCorners;
 
@@ -105,7 +105,7 @@ CellGraph::CellGraph(const char *_fileName)
        std::vector<int> neighbourIDs;
        std::vector<int> perpendicularNeighbourIDs;
 
-        for (unsigned int i=0 ;i<faces.size();i++)
+        for (unsigned int i=0 ;i<m_numberOfCells;i++)
         {
             // j is the cell (face) we are creating. i is cell we are checking against.
            if (faces[j].m_x == faces[i].m_x || faces[j].m_y == faces[i].m_x ||
@@ -144,6 +144,7 @@ CellGraph::CellGraph(const char *_fileName)
     std::cout<<"maxDist = "<<m_maxDist<<std::endl;
 
 
+
     ///////////////////////////////////PERPENDICULAR////////////////////////////////////////////////////////////////////////////////
     for ( int i =0; i< m_cells.size(); i++)
     {
@@ -163,7 +164,6 @@ CellGraph::CellGraph(const char *_fileName)
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
 }
 
 CellGraph::CellGraph()
@@ -174,37 +174,78 @@ CellGraph::CellGraph()
 void CellGraph::printCellGraph()
 {
 
-    for (unsigned int j =0; j<m_cells.size();j++)
+    for (unsigned int j =0; j< m_numberOfCells;j++)
     {
         m_cells[j].printCellInfo();
     }
 }
 
+bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
+{
+  //check up down left right
+  float upper = m_cells[_cellID].getBoundaries().m_x;
+  float lower = m_cells[_cellID].getBoundaries().m_y;
+  float left  = m_cells[_cellID].getBoundaries().m_z;
+  float right = m_cells[_cellID].getBoundaries().m_w;
+
+  if(_entity->getPos().m_z > upper && _entity->getPos().m_z < lower &&
+     _entity->getPos().m_x > left && _entity->getPos().m_x < right)
+  {
+    return true;
+  }
+
+  else
+  {
+   return false;
+  }
+
+}
+
+void CellGraph::initializeCells(BaseGameEntity *_entity)
+{
+      for (unsigned int i=0; i < m_numberOfCells; i++)
+      {
+
+          if (entityIsInCell(i, _entity) == true)
+          {
+              m_cells[i].addDynamicEntityID(_entity->getID());
+              _entity->setCurrentCellID(i);
+              _entity->setCurrentCell(m_cells[i]);
+              return;
+          }
+      }
+      _entity->setCurrentCellID(-1);
+}
+
+
+
+
 void CellGraph::updateCells(BaseGameEntity *_entity)
 {
-
-//    ngl::Vec3 agentPos = _agent->getPos();
-    for (unsigned int i=0; i < m_cells.size(); i++)
+  if (entityIsInCell(_entity->getCurrentCellID(), _entity) == true)
+  {
+    m_cells[_entity->getCurrentCellID()].addDynamicEntityID(_entity->getID());
+  }
+  else
+  {
+    for (int i = 0; i < _entity->getCurrentCell().getNeighbourCellIDs().size(); i++)
     {
-        ngl::Vec3 test =m_cells[i].getCentre()-_entity->getPos();
-        //std::cout<<" CurrentID:  "<< i<<std::endl;
-        if (test.length()< m_maxDist)
-        {
-//            std::cout<<" CurrentID:  "<< i<<std::endl;
-            m_cells[i].addDynamicEntityID(_entity->getID());
-            _entity->setCurrentCellID(i);
-
-            break;
-        }
-
+      int currentNeighbourID = _entity->getCurrentCell().getNeighbourCellIDs()[i];
+      if (entityIsInCell(currentNeighbourID, _entity) == true)
+      {
+        m_cells[currentNeighbourID].addDynamicEntityID(_entity->getID());
+        _entity->setCurrentCellID(currentNeighbourID);
+        _entity->setCurrentCell(m_cells[currentNeighbourID]);
+      }
     }
+  }
 
 }
 
 void CellGraph::clearCells()
 {
 
-    for (unsigned int i = 0; i<m_cells.size(); i++)
+    for (unsigned int i = 0; i<m_numberOfCells; i++)
     {
         m_cells[i].clearDynamicEntityIDs();
     }
@@ -212,99 +253,78 @@ void CellGraph::clearCells()
 
 void CellGraph::addEntities(BaseGameEntity *_entity)
 {
-// 1. add agents in current cell
-// 2. add agents in neighbouring cells
+  // 1. add agents in current cell
+  // 2. add agents in neighbouring cells
+
+  if (_entity >= 0)
+  {
 
     //Clear the ID vectors of the previous tick:
     _entity->clearDetectedDynamicEntityID();
     _entity->clearAgentIDs();
 
-//    std::cout<< "************************Current Entity:  "<< _entity->getID()<<std::endl;
-//    //for each neighbour
-    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs().size();
+    //Do the test but against the cell the entity's in:
+   int numberOfEntiesInCurrentCell = m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs().size();
 
- //loops through all neighbour cells
+
+   for (unsigned int i = 0; i < numberOfEntiesInCurrentCell; i++)
+   {
+       if (_entity->getID() != m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i])
+       {
+          _entity->addDetectedDynamicEntityID(m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i]);
+       }
+
+   }
+
+    //for each neighbour
+    int numberOfCellsToCheck = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs().size();
+    //loops through all neighbour cells
+
     for (int i = 0; i < numberOfCellsToCheck; i++)
     {
 
-
-        int currentNeighbourCell =m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i];
-        std::vector<int> dynamicEntitiesInCell = m_cells[currentNeighbourCell].getDynamicEntityIDs();
-//        std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<m_cells[(_entity->getCurrentCell())].getNeighbourCellIDs()[i]<<std::endl;
-
-
+        int currentNeighbourCell = m_cells[(_entity->getCurrentCellID())].getNeighbourCellIDs()[i];
         //Tests all entities in neighbouring cells against the entity's detection radius and adds it to its detected neighbours:
-        for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
+        numberOfEntiesInCurrentCell = m_cells[currentNeighbourCell].getDynamicEntityIDs().size();
+
+        for (unsigned int i = 0; i < numberOfEntiesInCurrentCell; i++)
         {
-            std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
 
-            ngl::Vec3 dist  = (m_entityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
-            if(dist.length()<_entity->getDetectionRadius())
-            {
-                //All entities will have a list of neighbours within their radius'
-                _entity->addDetectedDynamicEntityID(dynamicEntitiesInCell[i]);
-
-//                std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
-            }
-
-        }
+          ngl::Vec3 vectorToEntity = _entity->getPos()- (m_entityMgr->getEntityFromID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i])->getPos());
 
 
-    }
+          if(vectorToEntity.lengthSquared()< (m_maxDist*m_maxDist))
+          {
+            _entity->addDetectedDynamicEntityID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i]);
 
-    //Do the same test but against the cell the entity's in:
-    std::vector<int> dynamicEntitiesInCell = m_cells[_entity->getCurrentCell()].getDynamicEntityIDs();
-//    std::cout<<"Number of Neighbours :  "<< dynamicEntitiesInCell.size()<<" in cell "<<_entity->getCurrentCell()<<std::endl;
-    for (unsigned int i = 0; i < dynamicEntitiesInCell.size(); i++)
-    {
-        if (_entity->getID() != dynamicEntitiesInCell[i])
-        {
-        std::cout<<" Entity: "<< _entity->getID()<< " tests against entity: "<< dynamicEntitiesInCell[i]<< std::endl;
-
-        ngl::Vec3 dist  = (m_entityMgr->getEntityFromID(dynamicEntitiesInCell[i])->getPos()-(_entity->getPos()));
-        if(dist.length()<_entity->getDetectionRadius())
-        {
-            //All entities will have a list of neighbours within their radius'
-            _entity->addDetectedDynamicEntityID(dynamicEntitiesInCell[i]);
-
-//            std::cout<<"***********************Total detected entities:  "<<_entity->getDetectedEntityIDs().size()<<std::endl;
-        }
-
+          }
         }
     }
 
-
-    //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
-    for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
-    {
-//        std::cout<<"WOOOOOO       "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
-
-        if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
-        {
-//            std::cout<<"WOOOOOO     POPO  "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
-
-            _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
-        }
-        if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
-        {
-//            std::cout<<"WOOOOOO   RIOT    "<<_entity->getDetectedEntityIDs()[i]<<std::endl;
-
-            _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
-        }
-    }
-
-
-
+  }
+  //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
+  for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
+  {
+      if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
+      {
+          _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
+      }
+      if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
+      {
+          _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
+      }
+  }
 }
 
 void CellGraph::generateWalls()
 {
-    for (int i=0; i< m_cells.size(); i++)
+    for (unsigned int i=0; i< m_numberOfCells; i++)
     {
         bool upperWall = true, lowerWall = true, leftWall =  true,  rightWall= true;
 
         //Test for each wall against 3 conditions,
         //if no neighbour centre is detected, the bool remains true:
+
         for ( int j =0; j < m_cells[i].getPerpendicularNeighbourCellIDs().size(); j ++)
         {
             ngl::Vec3 currentNeighbourCentre = m_cells[m_cells[i].getPerpendicularNeighbourCellIDs()[j]].getCentre();
@@ -357,31 +377,31 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
             //std::cout<<"cell "<<i<<" upperWallstart: "<<start.m_x<<" "<<start.m_z<<" upperwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(lowerWall == true)
         {
-            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
-            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_w, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
             Wall newWall;
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
             //std::cout<<"cell "<<i<<" lowerWallstart: "<<start.m_x<<" "<<start.m_z<<" lowerwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(leftWall == true)
         {
-            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
-            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 start = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_y);
+            ngl::Vec3 end = ngl::Vec3(m_cells[i].getBoundaries().m_z, 0.0f, m_cells[i].getBoundaries().m_x);
             Wall newWall;
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
-           //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
+            m_cells[i].addWallInCell(newWall);
 
         }
         if(rightWall == true)
@@ -393,12 +413,27 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
             //std::cout<<"cell "<<i<<" rightWallstart: "<<start.m_x<<" "<<start.m_z<<" rightwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
-            m_cells[i].addWall(newWall);
+            m_cells[i].addWallInCell(newWall);
         }
 
 
     }
+    for (int i =0; i < m_numberOfCells; i++)
+    {
+        int numberOfNeighbours = m_cells[i].getNeighbourCellIDs().size();
 
+        for(int j = 0; j < numberOfNeighbours; j++)
+        {
+            for( int k=0; k<m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell().size();k++)
+            {
+                //std::cout<<"adding Wall"<<std::endl;
+                Wall wallToAdd = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell()[k];
+                m_cells[i].addWall(wallToAdd);
+            }
+
+        }
+
+    }
 }
 
 //TO D000 :Instead of cells as inputs, use Vec3's

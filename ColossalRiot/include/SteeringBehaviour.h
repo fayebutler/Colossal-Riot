@@ -4,6 +4,7 @@
 #include "EntityManager.h"
 #include <ngl/Transformation.h>
 #include <vector>
+#include <list>
 
 
 class Vehicle;
@@ -23,7 +24,7 @@ private:
         wander             = 0x00010,
         cohesion           = 0x00020,
         separation         = 0x00040,
-        alignment         = 0x00080,
+        alignment          = 0x00080,
         obstacle_avoidance = 0x00100,
         wall_avoidance     = 0x00200,
         follow_path        = 0x00400,
@@ -55,7 +56,8 @@ private:
 
     float m_viewDistance;
 
-    std::vector<int> m_neighbours;
+    std::vector<int> m_friendlyNeighbours;
+    std::vector<int> m_allNeighbours;
 
 
 
@@ -91,13 +93,13 @@ private:
     ngl::Vec3 Evade(const Vehicle* agent);
 
     ngl::Vec3 ObstacleAvoidance();
+    ngl::Vec3 WallAvoidance();
 
     ngl::Vec3 Separation(std::vector<int> neighbours);
     ngl::Vec3 Alignment(std::vector<int> neighbours);
     ngl::Vec3 Cohesion(std::vector<int> neighbours);
 
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
-    ngl::Vec3 localToWorldSpace(ngl::Vec3 pointLocalPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading);
 
 // add in group steering behaviours
 // add in collision avoidance
@@ -165,14 +167,26 @@ public:
     void ObstacleAvoidOn() { m_activeFlags |= obstacle_avoidance; }
     void ObstacleAvoidOff() { if(on(obstacle_avoidance)) m_activeFlags ^= obstacle_avoidance; }
     bool isObstacleAvoidOn() { return on(obstacle_avoidance); }
+    void setObstacleAvoidWeight(double m_newWeight){m_weightObstacleAvoidance = m_newWeight;}
+    double getObstacleAvoidWeight(){return m_weightObstacleAvoidance;}
+
+    void WallAvoidOn() { m_activeFlags |= wall_avoidance; }
+    void WallAvoidOff() { if(on(wall_avoidance)) m_activeFlags ^= wall_avoidance; }
+    bool isWallAvoidOn() { return on(wall_avoidance); }
+    void setWallAvoidWeight(double m_newWeight){m_weightWallAvoidance = m_newWeight;}
+    double getWallAvoidWeight(){return m_weightWallAvoidance;}
 
 
     void setTarget(ngl::Vec3);
     void setTargetAgent(Vehicle* agent){m_targetAgent = agent;}
 
-    void addNeighbours(std::vector<int> neighbours);
-    void clearNeighbours() { m_neighbours.clear(); }
+    void addFriendlyNeighbours(std::vector<int> neighbours);
+    void clearFriendlyNeighbours() { m_friendlyNeighbours.clear(); }
 
+    void addAllNeighbours(std::vector<int> neighbours);
+    void clearAllNeighbours() { m_allNeighbours.clear(); }
+
+    bool lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &distToIntersect, ngl::Vec3 &intersectPoint);
 
     ngl::Vec3 calculate();
 
@@ -184,6 +198,9 @@ public:
 
     double forwardComponent();
     double sideComponent();
+
+    void OverlapAvoidance();
+
 
 
 };

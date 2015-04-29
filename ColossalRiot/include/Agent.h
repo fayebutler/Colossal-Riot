@@ -44,8 +44,12 @@ public:
   void setDamage(float _val) { m_damage = _val; }
 
   int getTargetID() const { return m_targetID; }
-  void setTargetID(int _val) { m_targetID = _val;
-    Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));}
+
+  void setTargetID(int _val);
+
+  virtual void findTargetID(float _health) = 0;
+
+  void checkValidTarget(float _dist, float _health);
 
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }
