@@ -18,7 +18,7 @@ GameWorld::GameWorld()
 
 
 
-  for (int i = 0; i < 1000; ++i)
+  for (int i = 0; i < 500; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(2.f);
