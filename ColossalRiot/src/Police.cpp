@@ -36,7 +36,7 @@ Police::Police(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->WanderOn();
 //    Vehicle::Steering()->setWanderWeight(0.5);
 
-   // Vehicle::Steering()->ObstacleAvoidOn();
+    Vehicle::Steering()->ObstacleAvoidOn();
 
 //    Vehicle::Steering()->CohesionOn();
 //    Vehicle::Steering()->setCohesionWeight(0.8f);
@@ -48,6 +48,8 @@ Police::Police(GameWorld* world) : Agent(world)
     Vehicle::Steering()->SeparationOn();
     Vehicle::Steering()->setSeparationWeight(0.6f);
 
+
+    Vehicle::Steering()->WallAvoidOn();
 }
 
 Police::~Police()
@@ -69,7 +71,8 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addFriendlyNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
-  Vehicle::Steering()->OverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
+  Vehicle::Steering()->WallOverlapAvoidance();
 
   Vehicle::setMaxSpeed(0.8);
 }
@@ -78,8 +81,7 @@ void Police::update(double timeElapsed, double currentTime)
 void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  ngl::VAOPrimitives::instance()->draw("teapot");
-
+  ngl::VAOPrimitives::instance()->draw("cube");
 }
 
 void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -98,7 +100,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,m_hop+0.5f,getPos().m_z);
+  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 

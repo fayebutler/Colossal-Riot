@@ -2,10 +2,10 @@
 #define CELL_H
 
 #include <vector>
+#include <list>
 #include <glm/glm.hpp>
 #include <ngl/Transformation.h>
 #include <iostream>
-#include <Agent.h>
 
 struct Wall
 {
@@ -40,8 +40,7 @@ public:
     std::vector<int> getDynamicEntityIDs();
     ngl::Vec4 getBoundaries(){ return m_boundries;}
     void addWall(Wall _wall);
-
-
+    std::vector<Wall> getWalls(){return m_walls;}
     ngl::Vec3 getCentre();
     float getSize();
 
