@@ -23,19 +23,24 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    Vehicle::Steering()->WanderOn();
-    //Vehicle::Steering()->SeekOn();
-    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-//    Vehicle::Steering()->ObstacleAvoidOn();
+    //m_targetID = 400;
 
-    Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(1.f);
+//    Vehicle::Steering()->WanderOn();
+////    //Vehicle::Steering()->SeekOn();
+////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+    Vehicle::Steering()->ObstacleAvoidOn();
+//   // Vehicle::Steering()->EvadeOn();
+//  // Vehicle::Steering()->CohesionOn();
+//////    Vehicle::Steering()->setCohesionWeight(1.f);
 
-//    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(1.f);
+//   Vehicle::Steering()->AlignmentOn();
+//////    Vehicle::Steering()->setAlignmentWeight(1.f);
 
     Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.f);
+////    Vehicle::Steering()->setSeparationWeight(1.f);
+
+    Vehicle::Steering()->WallAvoidOn();
+
 
 }
 
@@ -65,7 +70,7 @@ void Rioter::update(double timeElapsed, double currentTime)
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  ngl::VAOPrimitives::instance()->draw("teapot");
+  ngl::VAOPrimitives::instance()->draw("cube");
 
 }
 
@@ -83,7 +88,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,m_hop+0.5f,getPos().m_z);
+  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 

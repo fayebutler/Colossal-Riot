@@ -13,6 +13,7 @@
 #include "Squad.h"
 
 
+
 typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
 class GameWorld
@@ -31,7 +32,12 @@ private:
     std::vector<Rioter*> m_rioters;
     //std::vector<Police*> m_police;
     std::vector<Squad*> m_squads;
+    int m_numberOfRioters;
 
+    std::vector<Police*> m_police;
+    int m_numberOfPolice;
+
+    int m_numberOfEntities;
     CellGraph m_cellGraph;
     ngl::Obj *m_worldMesh;
 

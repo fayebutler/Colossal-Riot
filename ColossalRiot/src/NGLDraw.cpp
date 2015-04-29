@@ -62,7 +62,7 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(0,15,0);
+  ngl::Vec3 from(0,100,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
   // now load to our new camera
@@ -77,7 +77,7 @@ NGLDraw::NGLDraw()
   ngl::Mat4 iv=m_cam->getViewMatrix();
   iv.transpose();
   m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
-  m_light->setTransform(iv);
+  //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
 

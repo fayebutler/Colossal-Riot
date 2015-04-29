@@ -6,6 +6,8 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include <vector>
+#include <list>
+#include "Cell.h"
 
 enum entityType
 {
@@ -31,6 +33,7 @@ protected:
   ngl::Vec3 m_pos;
   float m_boundingRadius;
 
+  Cell m_currentCell;
   int m_currentCellID;
   std::vector<int> m_detectedDynamicEntityIDs;
   float m_detectionRadius;
@@ -67,7 +70,9 @@ public:
 
 
     void setCurrentCellID(int _ID);
-    int getCurrentCell();
+    int getCurrentCellID();
+    void setCurrentCell(Cell _inCell);
+    Cell getCurrentCell();
 
     float getDetectionRadius();
     void setDetectionRadius(float _r);
