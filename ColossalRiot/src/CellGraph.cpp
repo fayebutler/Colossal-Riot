@@ -1,4 +1,4 @@
-#include "CellGraph.h"
+﻿#include "CellGraph.h"
 
 CellGraph::CellGraph(const char *_fileName)
 {
@@ -140,7 +140,7 @@ CellGraph::CellGraph(const char *_fileName)
         }
 
     }
-    ///////////////////////////////////PERPENDICULAR////////////////////////////////////////////////////////////////////////////////
+    //Give each cell a list of its perpendicular
     for ( int i =0; i< m_cells.size(); i++)
     {
         for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
@@ -156,7 +156,6 @@ CellGraph::CellGraph(const char *_fileName)
         }
 
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 }
@@ -437,18 +436,34 @@ void CellGraph::generateWalls()
 
 
 
-void CellGraph::findPath(int _from, int _to)
+std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
 
+    std::vector<ngl::Vec3> finalPath;
 
+    int endCellID;
 
-   int startCellID = _from;
-   Cell *endCell = &m_cells[_to];
+    for (int i=0; i<m_numberOfCells; i++)
+    {
+        float upper = m_cells[i].getBoundaries().m_x;
+        float lower = m_cells[i].getBoundaries().m_y;
+        float left  = m_cells[i].getBoundaries().m_z;
+        float right = m_cells[i].getBoundaries().m_w;
+
+        if(_to.m_z > upper && _to.m_z < lower &&
+           _to.m_x > left && _to.m_x < right)
+        {
+             endCellID = i;
+
+        }
+    }
+
+   int startCellID = _from->getCurrentCellID();
+   Cell *endCell = &m_cells[endCellID];
    int currentCellID = startCellID;
    Cell *currentCell = &m_cells[currentCellID];
 
 
-//   ngl::Vec3 destinationPos = _to;
 
    std::vector<int> frontierCells; //IDs of cells to be tested
    std::vector<int> frontierMemory; // list of all cell IDs that have ever been held in frontierCells.
@@ -461,15 +476,15 @@ void CellGraph::findPath(int _from, int _to)
    //Create start SPT, the firt element of which is  _from
    std::vector<int> newSPT;
    //Push it into SPTs
+   newSPT.push_back(startCellID);
    SPTs.push_back(newSPT);
 
-
-    frontierMemory.push_back(startCellID);
+   frontierMemory.push_back(startCellID);
 
 ///////////////////////////////LOOOOOP////////////////////////////////////////////////////////////////////////////////////
-    for( int c =0; c<10; c++)
+//    for( int c =0; c<6; c++)
 
-//    while (currentCellID != _to)
+    while (currentCellID != endCellID)
     {
 
     std::cout<<"----------------------------"<<std::endl;
@@ -578,35 +593,53 @@ void CellGraph::findPath(int _from, int _to)
 
 
 
-////3-Add currentCell to SPT
+//3-Add currentCell to SPT
   //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
 
-//    for (int i=0; i<SPTs.back().size();i-- )
-//    {
-//        for (int j=0; j<SPTs[i].size();j++)
-//        {
-//            Cell *SPTCell = &m_cells[SPTs[i][j]];
-//            for( int k=0; k<SPTCell->getPerpendicularNeighbourCellIDs().size();k++)
-//            {
-//                if ( currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
-//                {
-//                    if(j == SPTs[i].size())
-//                    {
-//                    SPTs[i].push_back(currentCellID);
-//                    break;
-//                    }
-//                    else {
-//                        //Else make a new SPT up to the first perpendicular cell in the last SPT. -___-?
-//                    }
-//                }
-//            }
+bool flag = false;
 
-//        }
-//    }
+if (currentCellID != startCellID)
+{
 
 
+    for (int i=SPTs.size()-1; i>=0;i--)
+    {
+        newSPT.clear();
+
+        for ( int j = 0; j < SPTs[i].size(); j++)
+        {
+            Cell *SPTCell = &m_cells[SPTs[i][j]];
+
+            newSPT.push_back(SPTs[i][j]);
+
+            for ( int k=0; k<SPTCell->getPerpendicularNeighbourCellIDs().size();k++)
+            {
+                if(flag == false)
+                {
+                    if(currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
+                    {
+                        if(j+1==SPTs[i].size())
+                        {
+                            newSPT.push_back(currentCellID);
+                            SPTs.back() = newSPT;
+                            flag = true;
 
 
+                        }
+                        else
+                        {
+                            std::cout<<"-------------------------------------------------------------"<<std::endl;
+                            newSPT.push_back(currentCellID);
+                            SPTs.push_back(newSPT);
+                            flag = true;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
     //Now actual search:
@@ -631,10 +664,24 @@ void CellGraph::findPath(int _from, int _to)
     ///5- If currentCell == _to (destination). while loop
 
 
-////4- Set currentCell to highest priority:
-
     currentCellID = priorityQueue[0];
     currentCell = &m_cells[currentCellID];
 
     }
+
+///////////////////////////////////////////LOOP/////////////////////////////////////////////////////////////////////
+
+    SPTs.back().push_back(endCellID);
+
+
+    for( int i = 0; i< SPTs.back().size(); i++)
+    {
+
+      finalPath.push_back(m_cells[SPTs.back()[i]].getCentre());
+      std::cout<<"Centre = "<<m_cells[SPTs.back()[i]].getCentre().m_z<<std::endl;
+      std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
+
+    }
+
+    return finalPath;
 }

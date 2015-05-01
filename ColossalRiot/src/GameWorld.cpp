@@ -9,20 +9,24 @@ GameWorld::GameWorld()
 {
 
 
-   m_mesh = new ngl::Obj("test_meshTest.obj"); //Obj to draw, must be triangulated
+   m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
 
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
-   m_cellGraph =  CellGraph("test_navTest.obj"); //Obj for cell graph, must be quads
+   m_cellGraph =  CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
    m_cellGraph.printCellGraph();
 
-   m_cellGraph.findPath(13,4);
 
 
+//   Rioter* newRioter = new Rioter(this);
+//       newRioter->setBoudingRadius(0.5f);
+//       newRioter->setDetectionRadius(3.f);
+//       newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
+//       newRioter->setPos(ngl::Vec3(-10.0f, 0.f, 2.0f));
 
-  for (int i = 0; i < 10 ; ++i)
+  for (int i = 0; i < 500 ; ++i)
 
 
   {
@@ -58,6 +62,8 @@ GameWorld::GameWorld()
   //m_numberOfPolice = m_police.size();
 
 
+
+
 }
 
 void GameWorld::Update(double timeElapsed, double currentTime)
@@ -86,6 +92,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
       }
     }
+    //std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), ngl::Vec3 (10, 0, -9));
 
     /// ----------------------------------------------------
 
