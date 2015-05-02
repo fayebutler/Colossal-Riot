@@ -71,8 +71,9 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addFriendlyNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
-  Vehicle::Steering()->ObjectOverlapAvoidance();
+
   Vehicle::Steering()->WallOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(0.8);
 }

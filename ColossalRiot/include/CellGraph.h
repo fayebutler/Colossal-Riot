@@ -20,7 +20,6 @@ private:
     float m_cellSize;
     float m_maxDist; //Maximum distance from the centre of the cell within the cell.
 
-
 public:
     CellGraph();
     CellGraph(const char *_fileName);
@@ -34,6 +33,8 @@ public:
     void clearCells();
     void addEntities(BaseGameEntity *_entity);
     void generateWalls();
+
+    std::vector<ngl::Vec3> findPath(BaseGameEntity *_from, ngl::Vec3 _to); //Returns the centre of cells in path
 
 };
 
