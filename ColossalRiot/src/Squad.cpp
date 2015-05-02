@@ -89,7 +89,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
+    trans.setPosition(m_pos.m_x,m_pos.m_y, m_pos.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
 
@@ -137,7 +137,7 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat4 M;
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
-
+    ngl::Mat3 normalMatrix;
 //    MV=t.getMatrix()*mouseGlobalTX*cam->getViewMatrix() ;
 //    MVP=MV*cam->getVPMatrix();
 //    shader->setShaderParamFromMat4("MVP",MVP);
@@ -145,11 +145,11 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     M=t.getMatrix()*mouseGlobalTX;
     MV=  M*cam->getViewMatrix();
     MVP= M*cam->getVPMatrix();
-//    normalMatrix=MV;
-//    normalMatrix.inverse();
+    normalMatrix=MV;
+    normalMatrix.inverse();
 //    shader->setShaderParamFromMat4("MV",MV);
     shader->setShaderParamFromMat4("MVP",MVP);
-//    shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+    shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
 //    shader->setShaderParamFromMat4("M",M);
     ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,120);
     ngl::VAOPrimitives::instance()->draw("squad");

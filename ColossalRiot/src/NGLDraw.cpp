@@ -57,8 +57,6 @@ NGLDraw::NGLDraw()
 
 
 
-
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
@@ -111,7 +109,7 @@ void NGLDraw::resize(int _w, int _h)
 
   m_height = _h;
   m_width = _w;
-  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
+//  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
 
 
   // now set the camera size values as the screen size has changed
@@ -142,7 +140,6 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_gameworld->draw(m_cam, m_mouseGlobalTX);
-
 
 }
 
@@ -329,23 +326,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
   //ngl::Mat4 t=ngl::perspective(45, (float)m_width/m_height,0.05,350);
   ngl::Mat4 t=m_cam->getProjectionMatrix();
-  ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
-
-//  t.m_00 = 1.7918;
-//  t.m_01 = 0.f;
- // t.m_32 = -1.f;
- // t.m_22 = -1.f;
-
-  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_00<<" "<<t.m_01<<" "<<t.m_02<<" "<<t.m_03<<std::endl;
-  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_10<<" "<<t.m_11<<" "<<t.m_12<<" "<<t.m_13<<std::endl;
-  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_20<<" "<<t.m_21<<" "<<t.m_22<<" "<<t.m_23<<std::endl;
-  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_30<<" "<<t.m_31<<" "<<t.m_32<<" "<<t.m_33<<std::endl;
-
-
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_00<<" "<<v.m_01<<" "<<v.m_02<<" "<<v.m_03<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_10<<" "<<v.m_11<<" "<<v.m_12<<" "<<v.m_13<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_20<<" "<<v.m_21<<" "<<v.m_22<<" "<<v.m_23<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_30<<" "<<v.m_31<<" "<<v.m_32<<" "<<v.m_33<<std::endl;
+  ngl::Mat4 v=m_cam->getViewMatrix()* m_mouseGlobalTX;
 
   // as ngl:: and OpenGL use different formats need to transpose the matrix.
   t.transpose();
@@ -353,19 +334,16 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
   ngl::Mat4 inverse=(t*v).inverse();
   //inverse = m_mouseGlobalTX*inverse;
 
-  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_00<<" "<<inverse.m_01<<" "<<inverse.m_02<<" "<<inverse.m_03<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_10<<" "<<inverse.m_11<<" "<<inverse.m_12<<" "<<inverse.m_13<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_20<<" "<<inverse.m_21<<" "<<inverse.m_22<<" "<<inverse.m_23<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_30<<" "<<inverse.m_31<<" "<<inverse.m_32<<" "<<inverse.m_33<<std::endl;
 
-  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
+//  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
 
-  ngl::Vec4 tmp(0,0,1.0f,1.0f);
+  ngl::Vec4 tmp(0.0,0.0,0.5f,1.0f);
   // convert into NDC
-  tmp.m_x=(2.0f * _x) / m_width - 1.0f;
+  tmp.m_x=((2.0f * _x) / m_width - 1.0f);
   tmp.m_y=1.0f - (2.0f * _y) / m_height;
 
-  std::cout<<"tmp "<<tmp.m_x<<" "<<tmp.m_y<<" "<<tmp.m_z<<" "<<tmp.m_w<<std::endl;
+  tmp.m_x=tanf(m_cam->getFOV()*0.5f)*(_x/(m_width/2.0)-1.0f)/m_cam->getAspect();
+  tmp.m_y=tanf(m_cam->getFOV()*0.5f)*(1.0f-_y/(m_height/2.0));
 
   // scale by inverse MV * Project transform
   ngl::Vec4 obj=inverse*tmp;
@@ -376,16 +354,13 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
   obj/=obj.m_w;
 
-  std::cout<<obj.m_w*75.0<<std::endl;
-    std::cout<<obj.m_w<<std::endl;
 
 
-  obj.m_y = 0.0;
-
-
+//  obj.m_y = 0.5;
 
 
   return obj.toVec3();
+
 
 
 }

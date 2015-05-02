@@ -171,7 +171,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
   loadMatricesToShader(cam, mouseGlobalTX);
-//  m_mesh->draw();
+  m_mesh->draw();
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
