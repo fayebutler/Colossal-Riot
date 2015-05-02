@@ -11,7 +11,7 @@ Vehicle::Vehicle(GameWorld* world,
                  float max_force,
                  float max_speed,
                  float max_turnrate,
-                 float scale): MovingEntity(position,
+                 float scale): MovingEntity(world, position,
                                             scale,
                                             velocity,
                                             max_speed,
@@ -19,12 +19,16 @@ Vehicle::Vehicle(GameWorld* world,
                                             mass,
                                             max_turnrate,
                                             max_force),
-                                m_world(world),
                                 m_timeElapsed(0.0)
 {
    m_steering =  new SteeringBehaviour(this);
 
 
+}
+
+Vehicle::~Vehicle()
+{
+    delete m_steering;
 }
 
 void Vehicle::update(double time_elapsed)

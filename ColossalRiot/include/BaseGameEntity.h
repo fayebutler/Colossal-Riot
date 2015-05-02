@@ -2,11 +2,13 @@
 #define BASEGAMEENTITY_H
 
 #include <ngl/Transformation.h>
+#include <vector>
+#include <list>
+
+//#include "GameWorld.h"
 #include "EntityManager.h"
 #include "Message.h"
 #include "MessageManager.h"
-#include <vector>
-#include <list>
 #include "Cell.h"
 
 enum entityType
@@ -19,15 +21,21 @@ enum entityType
 
 };
 
+class GameWorld;
 class EntityManager;
 
 class BaseGameEntity
 {
 protected:
 
+  GameWorld* m_world;
+
   int m_ID;
   static int m_nextValidID;
   void setID(int _val) { m_ID = _val; }
+  bool m_resetID;
+
+
   EntityManager* m_entityMgr;
   entityType m_entityType;
   ngl::Vec3 m_pos;
@@ -45,9 +53,9 @@ protected:
 
 public:
     BaseGameEntity();
-    BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r);
+    BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Vec3 pos, float r);
 
- //   ~BaseGameEntity();
+    ~BaseGameEntity();
 
     int getID() const { return m_ID; }
 
@@ -81,6 +89,7 @@ public:
     std::vector<int> getNeighbourRioterIDs() { return m_neighbourRioterIDs; }
 
     virtual bool handleMessage(const Message& _message) = 0;
+
 };
 
 #endif // BASEGAMEENTITY_H

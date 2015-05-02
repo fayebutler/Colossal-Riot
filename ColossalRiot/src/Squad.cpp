@@ -2,15 +2,15 @@
 
 ngl::Vec3 Squad::s_nextSelectionColour = ngl::Vec3(0.0,0.0,0.0);
 
-Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEntity(typeSquad,pos,r)
+Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEntity(world, typeSquad,pos,r)
 {
 //    m_squadPos = ngl::Vec3(2.0,0,2.0);
     //m_squadPos = pos;
 
     //m_boundingRad = r;
-    m_squadColour = ngl::Colour(1.0f,0.0f,0.0f,1.0f);
+    m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
-    m_squadRadius = squadSize*m_boundingRadius/2.0f;
+    m_squadRadius = squadSize*m_boundingRadius;
 
     for (int i = 0; i < squadSize; ++i)
     {
@@ -40,7 +40,6 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
             s_nextSelectionColour.m_z += 0.1;
         }
     }
-
 }
 
 void Squad::update(double timeElapsed, double currentTime)
@@ -51,11 +50,6 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
         currentPolice->update(timeElapsed, currentTime);
-    }
-
-    if (currentTime > 40.0 && currentTime < 40.17)
-    {
-        setPos(getPos()+ngl::Vec3(1.0,0.0,1.0));
     }
 }
 

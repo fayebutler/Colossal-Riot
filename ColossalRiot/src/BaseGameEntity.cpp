@@ -1,4 +1,5 @@
-#include "include/BaseGameEntity.h"
+#include "BaseGameEntity.h"
+#include "GameWorld.h"
 
 int BaseGameEntity::m_nextValidID = 0;
 
@@ -11,8 +12,16 @@ BaseGameEntity::BaseGameEntity()
   m_entityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
+BaseGameEntity::BaseGameEntity(GameWorld *world, entityType entity_type, ngl::Vec3 pos, float r)
 {
+  m_world = world;
+
+  if(m_world->getResetID()==1)
+  {
+      m_nextValidID = 0;
+      m_world->setResetID(0);
+  }
+
   setID(m_nextValidID);
   m_nextValidID++;
 
@@ -23,9 +32,15 @@ BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
   m_pos = pos;
   m_boundingRadius = r;
   m_entityType = entity_type;
-  m_detectionRadius = m_boundingRadius*3; // CHANGE TO VARIABLE
+  m_detectionRadius = r * 3; // CHANGE TO VARIABLE
 
 }
+
+BaseGameEntity::~BaseGameEntity()
+{
+    delete m_entityMgr;
+}
+
 
 void BaseGameEntity::setCurrentCellID(int _ID)
 {

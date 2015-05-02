@@ -4,6 +4,7 @@
 #include "Agent.h"
 #include "StateMachine.h"
 
+
 class Rioter : public Agent
 {
 public:

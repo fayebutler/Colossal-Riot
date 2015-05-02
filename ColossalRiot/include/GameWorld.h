@@ -1,9 +1,6 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
-
-#include "BaseGameEntity.h"
-
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 
@@ -11,8 +8,6 @@
 #include "Police.h"
 #include "CellGraph.h"
 #include "Squad.h"
-
-
 
 typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
@@ -41,11 +36,13 @@ private:
     CellGraph m_cellGraph;
     ngl::Obj *m_worldMesh;
 
+    bool m_resetID;
+
 
 
 
 public:
-    GameWorld();
+    GameWorld(int numberOfRioters);
     ~GameWorld();
 
     ngl::Obj* m_mesh;
@@ -59,6 +56,11 @@ public:
     //std::vector<Police*> getPolice() { return m_police; }
 
     std::vector<Squad*> getSquads() {return m_squads;}
+
+    void createSquad(int size);
+
+    void setResetID(bool _resetID){m_resetID = _resetID;}
+    bool getResetID()const{return m_resetID;}
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 

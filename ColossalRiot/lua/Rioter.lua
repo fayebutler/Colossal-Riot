@@ -7,7 +7,7 @@ makeRioter = function()
    rioter.m_damage = 0.1
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
-   --rioter:wander(0.2)
+   rioter:wander(0.2)
 end
 
 
@@ -63,7 +63,7 @@ end
 
 protest["execute"] = function()
 --  print("LUA RIOTER protest execute")
---  rioter.m_morale = rioter.m_morale - 0.3
+  rioter.m_morale = rioter.m_morale - 0.3
 --rioter:attack()
   rioter.m_rage = rioter.m_rage + 0.1;
   if rioter.m_health < 30 then
@@ -90,7 +90,7 @@ end
 
 flee["execute"] = function()
 --  print("RIOTER flee execute")
-  rioter.m_morale = rioter.m_health + 0.2
+  rioter.m_morale = rioter.m_morale + 0.2
   rioter.m_rage = rioter.m_rage - 0.1;
 
   rioter:checkValidTarget(1.0, 50.0)

@@ -3,23 +3,24 @@
 #include <iostream>
 
 
-
-
-GameWorld::GameWorld()
+GameWorld::GameWorld(int numberOfRioters)
 {
+   m_resetID = 1;
 
    m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
+
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
    m_cellGraph =  CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
+   m_cellGraph.printCellGraph();
 
 
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < numberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this);
-    newRioter->setBoudingRadius(1.f);
+    newRioter->setBoudingRadius(0.5f);
     newRioter->setDetectionRadius(3.f);
     newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
     newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
@@ -30,27 +31,29 @@ GameWorld::GameWorld()
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
     }
     m_rioters.push_back(newRioter);
+    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 
-  for (int i = 0; i < 1; ++i)
-  {
-
-      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f), 1.f);
-      m_squads.push_back(newSquad);
-  }
     m_numberOfEntities = m_entityMgr->getSize();
 
   for (unsigned int i=0; i<m_numberOfEntities; i++)
   {
       //Adds entities to cells and cell ID to entities
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
-
   }
   m_numberOfEntities = m_entityMgr->getSize();
   m_numberOfRioters = m_rioters.size();
   //m_numberOfPolice = m_police.size();
 
+}
 
+GameWorld::~GameWorld()
+{
+   m_rioters.clear();
+   m_police.clear();
+   m_squads.clear();
+   delete m_mesh;
+   delete m_entityMgr;
 }
 
 void GameWorld::Update(double timeElapsed, double currentTime)
@@ -79,6 +82,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
       }
     }
+    //std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), ngl::Vec3 (10, 0, -9));
 
     /// ----------------------------------------------------
 
@@ -171,7 +175,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
   loadMatricesToShader(cam, mouseGlobalTX);
-//  m_mesh->draw();
+  m_mesh->draw();
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
@@ -181,6 +185,20 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
   {
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
+  }
+}
+
+void GameWorld::createSquad(int size)
+{
+    Squad* newSquad = new Squad(this, size, ngl::Vec3(14.0f,0.0f,6.0f), 0.5f);
+    m_squads.push_back(newSquad);
+
+    m_numberOfEntities = m_entityMgr->getSize();
+
+  for (unsigned int i=m_numberOfEntities-(size+1); i<m_numberOfEntities; i++)
+  {
+      //Adds entities to cells and cell ID to entities
+      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
   }
 }
 

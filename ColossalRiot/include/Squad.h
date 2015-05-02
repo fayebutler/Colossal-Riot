@@ -1,8 +1,7 @@
-#include "Police.h"
-#include "BaseGameEntity.h"
-
 #ifndef SQUAD_H
 #define SQUAD_H
+
+#include "Police.h"
 
 class Squad : public BaseGameEntity
 {
