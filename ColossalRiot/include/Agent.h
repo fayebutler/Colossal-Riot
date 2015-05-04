@@ -69,8 +69,13 @@ public:
 
   void evade(double weight);
 
+  void seek(double weight);
 
+  void cohesion(double weight);
 
+  void separation(double weight);
+
+  void alignment(double weight);
 
 
 protected:

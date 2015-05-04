@@ -28,7 +28,7 @@ public:
     ngl::Colour getSquadColour() const { return m_squadColour; }
     void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
 
-    void setPath(std::vector<ngl::Vec3> _path) {m_path = _path;}
+    void setPath(std::vector<ngl::Vec3> _path);
     std::vector<ngl::Vec3> getPath() const {return m_path;}
 
 private:
@@ -46,6 +46,7 @@ private:
     ngl::Colour m_squadColour;
 
     std::vector<ngl::Vec3> m_path;
+    ngl::Vec3 averagePolicePos();
 
     int m_pathIndex;
     //int m_policeArrived;

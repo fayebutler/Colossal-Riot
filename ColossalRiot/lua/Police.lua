@@ -41,12 +41,40 @@ global["execute"] = function()
         stateMachine:changeState("dead")
     end
   end
+  if stateMachine.m_currentState ~= "move" then
+    if police.m_isMoving == true then
+        stateMachine:changeState("move")
+    end
+  end
 end
 
 global["exit"] = function()
 end
 
+-- move state
 
+move = {}
+move["enter"] = function()
+  police:pursuit(0.0)
+  police:wander(0.0)
+  police:squadCohesion(0.0)
+  police:cohesion(0.1)
+  police:separation(0.1)
+  police:alignment(0.0)
+  police:seek(1.0)
+  print("LUA POLICE move enter")
+end
+
+move["execute"] = function()
+  print("LUA POLICE move execute")
+  if police.m_isMoving == false then
+    stateMachine:changeState(stateMachine.m_previousState)
+  end
+end
+
+move["exit"] = function()
+  print("LUA POLICE move exit")
+end
 
 -- work state
 
@@ -56,6 +84,10 @@ work["enter"] = function()
   print("LUA POLICE work enter")
  -- police:checkValidTarget(1.0, 20.0)
  -- police:pursuit(1.0)
+   police:cohesion(0.4)
+   police:separation(0.8)
+   police:alignment(0.3)
+   police:seek(0.0)
 end
 
 work["execute"] = function()

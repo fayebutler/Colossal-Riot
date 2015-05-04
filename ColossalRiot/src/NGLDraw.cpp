@@ -347,11 +347,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
 //    pixel.m_x = round(pixel.m_x);
     std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
 
-    if (m_selectedSquad!= NULL)
-    {
-        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
-    }
-
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {

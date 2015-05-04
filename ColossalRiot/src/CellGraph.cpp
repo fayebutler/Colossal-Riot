@@ -698,5 +698,7 @@ if (currentCellID != startCellID)
 
     }
 
+    finalPath.push_back(_to);
+
     return finalPath;
 }
