@@ -4,21 +4,9 @@
 #include <iostream>
 #include <ngl/NGLInit.h>
 #include <ngl/Transformation.h>
-
 #include "Timer.h"
-
 #include "NGLDraw.h"
-
-//#include "MovingEntity.h"
-//#include "Vehicle.h"
-//#include "GameWorld.h"
-
-
-//#include "Rioter.h"
-//#include "Police.h"
-
-//#include "EntityManager.h"
-
+#include <AntTweakBar.h>
 
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
@@ -26,7 +14,6 @@ void SDLErrorExit(const std::string &_msg);
 
 /// @brief initialize SDL OpenGL context
 SDL_GLContext createOpenGLContext( SDL_Window *window);
-
 
 int main()
 {
@@ -56,8 +43,6 @@ int main()
   {
     SDLErrorExit("Unable to create window");
   }
-
-
   // Create our opengl context and attach it to our window
 
    SDL_GLContext glContext=createOpenGLContext(window);
@@ -69,6 +54,14 @@ int main()
    SDL_GL_MakeCurrent(window, glContext);
   /* This makes our buffer swap syncronized with the monitor's vertical refresh */
   SDL_GL_SetSwapInterval(1);
+
+
+  TwInit(TW_OPENGL_CORE, NULL);
+  TwWindowSize(rect.w, rect.h);
+  TwBar *myBar;
+  myBar = TwNewBar("nameOfMyBar");
+
+
   // we need to initialise the NGL lib which will load all of the OpenGL functions, this must
   // be done once we have a valid GL context but before we call any GL commands. If we dont do
   // this everything will crash
@@ -80,6 +73,7 @@ int main()
   bool quit=false;
   // sdl event processing data structure
   SDL_Event event;
+  int handled;
   // now we create an instance of our ngl class, this will init NGL and setup basic
   // opengl stuff ext. When this falls out of scope the dtor will be called and cleanup
   // our gl stuff
@@ -93,93 +87,102 @@ int main()
   double timeElapsed = 0.0;
   double currentTime = 0.0;
 
+
+
 //-------MAIN LOOP----------------------------------------------------------------------
   while(!quit)
   {
-
     while ( SDL_PollEvent(&event) )
     {
-      switch (event.type)
+      handled = TwEventSDL(&event, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+      std::cout<<handled<<std::endl;
+      if (!handled)
       {
-        // this is the window x being clicked.
-        case SDL_QUIT : quit = true; break;
 
-        // process the mouse data by passing it to ngl class
-
-        case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion);break;
-        case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button);break;
-        case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
-        case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
-
-        // if the window is re-sized pass it to the ngl class to change gl viewport
-        // note this is slow as the context is re-create by SDL each time
-        case SDL_WINDOWEVENT :
-          int w,h;
-          // get the new window size
-          SDL_GetWindowSize(window,&w,&h);
-
-          ngldraw.resize(w,h);
-        break;
-
-          // now we look for a keydown event
-        case SDL_KEYDOWN:
+        switch (event.type)
         {
-          if(ngldraw.getGameState() == play)
+          // this is the window x being clicked.
+          case SDL_QUIT : quit = true; break;
+
+          // process the mouse data by passing it to ngl class
+
+          case SDL_MOUSEMOTION : ngldraw.mouseMoveEvent(event.motion);break;
+          case SDL_MOUSEBUTTONDOWN : ngldraw.mousePressEvent(event.button);break;
+          case SDL_MOUSEBUTTONUP : ngldraw.mouseReleaseEvent(event.button); break;
+          case SDL_MOUSEWHEEL : ngldraw.wheelEvent(event.wheel); break;
+
+          // if the window is re-sized pass it to the ngl class to change gl viewport
+          // note this is slow as the context is re-create by SDL each time
+          case SDL_WINDOWEVENT :
+            int w,h;
+            // get the new window size
+            SDL_GetWindowSize(window,&w,&h);
+
+            ngldraw.resize(w, h);
+            TwWindowSize(w, h);
+
+          break;
+
+            // now we look for a keydown event
+          case SDL_KEYDOWN:
           {
-              switch( event.key.keysym.sym )
-              {
-                // if it's the escape key quit
-                case SDLK_ESCAPE :  quit = true; break;
-                case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
-                case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
-                case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
-                                glViewport(0,0,rect.w,rect.h);
-                                break;
-                case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
+            if(ngldraw.getGameState() == play)
+            {
+                switch( event.key.keysym.sym )
+                {
+                  // if it's the escape key quit
+                  case SDLK_ESCAPE :  quit = true; break;
+                  case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+                  case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+                  case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
+                                  glViewport(0,0,rect.w,rect.h);
+                                  break;
+                  case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(menu); ngldraw.endGame(); break;
+                  case SDLK_RETURN : ngldraw.setGameState(menu); ngldraw.endGame(); break;
 
-                case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
-                case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
-                case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
+                  case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
+                  case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
+                  case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
-                case SDLK_5 : ngldraw.createSquad(5); break;
-                case SDLK_6 : ngldraw.createSquad(6); break;
-                case SDLK_7 : ngldraw.createSquad(7); break;
-                case SDLK_8 : ngldraw.createSquad(8); break;
-                case SDLK_9 : ngldraw.createSquad(9); break;
-                case SDLK_0 : ngldraw.createSquad(10); break;
+                  case SDLK_5 : ngldraw.createSquad(5); break;
+                  case SDLK_6 : ngldraw.createSquad(6); break;
+                  case SDLK_7 : ngldraw.createSquad(7); break;
+                  case SDLK_8 : ngldraw.createSquad(8); break;
+                  case SDLK_9 : ngldraw.createSquad(9); break;
+                  case SDLK_0 : ngldraw.createSquad(10); break;
 
-                default : break;
-              }
-          }
+                  default : break;
+                }
+            }
 
-          else if(ngldraw.getGameState() == menu)
-          {
-              switch( event.key.keysym.sym )
-              {
-                // if it's the escape key quit
-                case SDLK_ESCAPE :  quit = true; break;
-                case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
-                case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
-                case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
-                                glViewport(0,0,rect.w,rect.h);
-                                break;
-                case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
+            else if(ngldraw.getGameState() == menu)
+            {
+                switch( event.key.keysym.sym )
+                {
+                  // if it's the escape key quit
+                  case SDLK_ESCAPE :  quit = true; break;
+                  case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+                  case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+                  case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
+                                  glViewport(0,0,rect.w,rect.h);
+                                  break;
+                  case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); paused = 1; break;
+                  case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); paused = 1; break;
 
-                case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
-                case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
+                  case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
+                  case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
-                default : break;
-              }
-           }
-        } //end of key down
+                  default : break;
+                }
+             }
+          } //end of key down
 
-        default : break;
+          default : break;
 
-      } // end of event switch
+        } // end of event switch
+      }
 
     } // end of poll events
 
@@ -188,26 +191,35 @@ int main()
     {
         if(paused == 0)
         {
+          //SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+
+
         timeElapsed=gameTimer.timeElapsed();
         currentTime=gameTimer.getCurrentTime();
 
         std::cout<<"------------- TICK -------------"<<std::endl;
         ngldraw.update(timeElapsed,currentTime);
         }
+
         // now we draw ngl
         ngldraw.draw();
+        TwDraw();
     }
     if(ngldraw.getGameState() == menu)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
     }
+
+
     // swap the buffers
     SDL_GL_SwapWindow(window);
 
 //--------------------------------------------------------------------------------------------------------------------
 
   }
+  TwTerminate();
   // now tidy up and exit SDL
  SDL_Quit();
 }
@@ -251,6 +263,7 @@ void SDLErrorExit(const std::string &_msg)
 {
   std::cerr<<_msg<<"\n";
   std::cerr<<SDL_GetError()<<"\n";
+  TwTerminate();
   SDL_Quit();
   exit(EXIT_FAILURE);
 }

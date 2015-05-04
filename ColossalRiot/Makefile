@@ -15,10 +15,10 @@ CXX           = g++
 DEFINES       = -DQT5BUILD -DNGL_DEBUG -DLINUX -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -I/usr/local/include/SDL2 -D_REENTRANT -msse -msse2 -msse3 -march=native -march=native -g -Wall -W -Wno-unused-parameter -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/opt/Qt/5.3/gcc_64/mkspecs/linux-g++ -I. -Iinclude -I../lua/include -I../LuaBridge -I/home/i7776126/NGL/include -I/opt/Qt/5.3/gcc_64/include -I/opt/Qt/5.3/gcc_64/include/QtOpenGL -I/opt/Qt/5.3/gcc_64/include/QtWidgets -I/opt/Qt/5.3/gcc_64/include/QtGui -I/opt/Qt/5.3/gcc_64/include/QtCore -Imoc
+INCPATH       = -I/opt/Qt/5.3/gcc_64/mkspecs/linux-g++ -I. -Iinclude -I../lua/include -I../LuaBridge -I../AntTweakBar2.0/include -I/home/i7776126/NGL/include -I/opt/Qt/5.3/gcc_64/include -I/opt/Qt/5.3/gcc_64/include/QtOpenGL -I/opt/Qt/5.3/gcc_64/include/QtWidgets -I/opt/Qt/5.3/gcc_64/include/QtGui -I/opt/Qt/5.3/gcc_64/include/QtCore -Imoc
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt/5.3/gcc_64 -Wl,-rpath,/opt/Qt/5.3/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/lib -Wl,-rpath,/usr/local/lib -lSDL2 -L/$(HOME)/NGL/lib -l NGL -L../lua/lib -llua -ldl -L/opt/Qt/5.3/gcc_64/lib -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -Wl,-rpath,/usr/local/lib -lSDL2 -L/$(HOME)/NGL/lib -l NGL -L../lua/lib -llua -ldl -L../AntTweakBar2.0/lib -lAntTweakBar -L/opt/Qt/5.3/gcc_64/lib -lQt5OpenGL -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 QMAKE         = /opt/Qt/5.3/gcc_64/bin/qmake
@@ -1350,7 +1350,8 @@ obj/main.o: src/main.cpp /home/i7776126/NGL/include/ngl/NGLInit.h \
 		/home/i7776126/NGL/include/ngl/Texture.h \
 		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
 		/home/i7776126/NGL/include/ngl/BBox.h \
-		include/Squad.h
+		include/Squad.h \
+		../AntTweakBar2.0/include/AntTweakBar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \

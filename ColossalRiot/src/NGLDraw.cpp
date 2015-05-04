@@ -3,9 +3,7 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-//#include "Vehicle.h"
 #include "GameWorld.h"
-
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
@@ -149,7 +147,7 @@ void NGLDraw::endGame()
     ngl::Vec3 up(0,0,-1);
 
     m_cam = new ngl::Camera(from,to,up);
-    m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+    m_cam->setShape(45,(float)m_width/m_height,0.05,50);
 
     m_mouseGlobalTX = ngl::Mat4();
     m_modelPos = ngl::Vec3(0,0,0);
@@ -251,16 +249,15 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
      if(_event.button == SDL_BUTTON_LEFT)
       {
-            ngl::Vec4 worldPos = getWorldSpace(_event.x, _event.y);
-//             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
-//            if(m_selected == true)
-//            {
-//                 doMovement(_event.x, _event.y);
-//             }
-//             else
-//             {
-//                doSelection(_event.x, _event.y);
-//             }
+            std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+            if(m_selected == true)
+            {
+                 doMovement(_event.x, _event.y);
+             }
+             else
+             {
+                doSelection(_event.x, _event.y);
+             }
 
       }
    }
@@ -378,116 +375,52 @@ void NGLDraw::doMovement(const int _x, const int _y)
 
 ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 {
-//  std::cout<<"Mouse pos "<<_x<<" "<<_y<<" ";
 
+    ngl::Mat4 m;
+    m = m*m_mouseGlobalTX;
+    ngl::Mat4 t=m_cam->getProjectionMatrix();
+    ngl::Mat4 v=m_cam->getViewMatrix();
 
-//  //ngl::Mat4 t=ngl::perspective(45, (float)m_width/m_height,0.05,350);
-//  ngl::Mat4 t=m_cam->getProjectionMatrix();
-  ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
+    // as ngl:: and OpenGL use different formats need to transpose the matrix.
+    t.transpose();
+    v.transpose();
+    m.transpose();
+    ngl::Mat4 inverse=(t*v*m).inverse();
 
-//  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_00<<" "<<t.m_01<<" "<<t.m_02<<" "<<t.m_03<<std::endl;
-//  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_10<<" "<<t.m_11<<" "<<t.m_12<<" "<<t.m_13<<std::endl;
-//  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_20<<" "<<t.m_21<<" "<<t.m_22<<" "<<t.m_23<<std::endl;
-//  std::cout<<"m_cam.getProjectionMatrix() "<<t.m_30<<" "<<t.m_31<<" "<<t.m_32<<" "<<t.m_33<<std::endl;
+    ngl::Vec4 tmp(0,0,-1.0f,1.0f);
+    // convert into NDC
+    tmp.m_x=(2.0f * _x) / m_width- 1.0f;
+    tmp.m_y=1.0f - (2.0f * _y) / m_height;
+    // scale by inverse MV * Project transform
 
+    ngl::Vec4 near(tmp.m_x,tmp.m_y,-1.0f,1.0f);
+    ngl::Vec4 far(tmp.m_x,tmp.m_y,1.0f,1.0f);
 
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_00<<" "<<v.m_01<<" "<<v.m_02<<" "<<v.m_03<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_10<<" "<<v.m_11<<" "<<v.m_12<<" "<<v.m_13<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_20<<" "<<v.m_21<<" "<<v.m_22<<" "<<v.m_23<<std::endl;
-  std::cout<<"m_cam.getViewMatrix() "<<v.m_30<<" "<<v.m_31<<" "<<v.m_32<<" "<<v.m_33<<std::endl;
+    //get world point on near and far clipping planes
+    ngl::Vec4 obj_near=inverse*near;
+    ngl::Vec4 obj_far=inverse*far;
 
-//  // as ngl:: and OpenGL use different formats need to transpose the matrix.
-//  t.transpose();
-//  v.transpose();
-//  ngl::Mat4 inverse=(t*v).inverse();
-//  //inverse = m_mouseGlobalTX*inverse;
+    // Scale by w
+    obj_near/=obj_near.m_w;
+    obj_far/=obj_far.m_w;
 
-//  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_00<<" "<<inverse.m_01<<" "<<inverse.m_02<<" "<<inverse.m_03<<std::endl;
-//  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_10<<" "<<inverse.m_11<<" "<<inverse.m_12<<" "<<inverse.m_13<<std::endl;
-//  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_20<<" "<<inverse.m_21<<" "<<inverse.m_22<<" "<<inverse.m_23<<std::endl;
-//  std::cout<<"m_cam.getViewMatrix() "<<inverse.m_30<<" "<<inverse.m_31<<" "<<inverse.m_32<<" "<<inverse.m_33<<std::endl;
+    ngl::Vec3 nearPoint(obj_near.m_x,obj_near.m_y,obj_near.m_z);
+    ngl::Vec3 farPoint(obj_far.m_x,obj_far.m_y,obj_far.m_z);
 
-//  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
+    //create ray
+    ngl::Vec3 rayDir(farPoint-nearPoint);
+    rayDir.normalize();
 
-//  ngl::Vec4 tmp(0,0,0.99015f,1.0f);
-//  // convert into NDC
-//  tmp.m_x=(2.0f * _x) / m_width - 1.0f;
-//  tmp.m_y=1.0f - (2.0f * _y) / m_height;
+    //calculate distance to zx plane
+    float dist = (-nearPoint.m_y)/rayDir.m_y;
 
-//  std::cout<<"tmp "<<tmp.m_x<<" "<<tmp.m_y<<" "<<tmp.m_z<<" "<<tmp.m_w<<std::endl;
+    //set world space coordinate where y = 0
+    ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
-//  // scale by inverse MV * Project transform
-//  ngl::Vec4 obj=inverse*tmp;
+    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+    obj.m_y = 0.f;
 
-//  std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<obj.m_w<<std::endl;
-
-//  // Scale by w
-
-//  obj/=obj.m_w;
-
-//  std::cout<<obj.m_w*75.0<<std::endl;
-//    std::cout<<obj.m_w<<std::endl;
-
-
-//  obj.m_y = 0.0;
-
-
-
-
-
-
-  ngl::Vec2 mouseRay = ngl::Vec2(_x, _y);
-  std::cout<<"mouseRay   = "<<mouseRay.m_x<<", "<<mouseRay.m_y<<std::endl;
-
-  ngl::Vec3 NDC;
-  NDC.m_x = (2.f * mouseRay.m_x) / m_width - 1.f;
-  NDC.m_y = 1.f - (2.f * mouseRay.m_y) / m_height;
-  NDC.m_z = 1.f;
-  std::cout<<"NDC        = "<<NDC.m_x<<", "<<NDC.m_y<<", "<<NDC.m_z<<std::endl;
-
-  ngl::Vec4 clipRay = ngl::Vec4(NDC.m_x, NDC.m_y, -1.f, 1.f);
-  std::cout<<"clipRay    = "<<clipRay.m_x<<", "<<clipRay.m_y<<", "<<clipRay.m_z<<", "<<clipRay.m_w<<std::endl;
-
-  ngl::Mat4 projection = m_cam->getProjectionMatrix();
-  ngl::Mat4 projectionInverse = projection.inverse();
-
-  ngl::Vec4 eyeRay = projectionInverse * clipRay;
-  std::cout<<"eyeRayA    = "<<eyeRay.m_x<<", "<<eyeRay.m_y<<", "<<eyeRay.m_z<<", "<<eyeRay.m_w<<std::endl;
-  eyeRay = ngl::Vec4(eyeRay.m_x, eyeRay.m_y, -1.f, 0.f);
-  std::cout<<"eyeRayB    = "<<eyeRay.m_x<<", "<<eyeRay.m_y<<", "<<eyeRay.m_z<<", "<<eyeRay.m_w<<std::endl;
-
-
-  ngl::Mat4 view = m_cam->getViewMatrix() * m_mouseGlobalTX;
-  ngl::Mat4 viewInverse = view.inverse();
-
-
-  ngl::Vec3 worldRay = (viewInverse * eyeRay).toVec3();
-  std::cout<<"worldRayA  = "<<worldRay.m_x<<", "<<worldRay.m_y<<", "<<worldRay.m_z<<std::endl;
-  worldRay.normalize();
-  worldRay = ngl::Vec3(worldRay.m_x, -worldRay.m_y, -worldRay.m_z);
-  std::cout<<"worldRayB  = "<<worldRay.m_x<<", "<<worldRay.m_y<<", "<<worldRay.m_z<<std::endl;
-
-
-
-  ngl::Vec4 cam = m_cam->getEye() * m_mouseGlobalTX;
-  std::cout<<"m_cam->getEye()  = "<<cam.m_x<<", "<<cam.m_y<<", "<<cam.m_z<<std::endl;
-  std::cout<<"m_modelPos  = "<<m_modelPos.m_x<<", "<<m_modelPos.m_y<<", "<<m_modelPos.m_z<<std::endl;
-  ngl::Vec3 camPos = m_cam->getEye().toVec3() - m_modelPos;
-  std::cout<<"camPos  = "<<camPos.m_x<<", "<<camPos.m_y<<", "<<camPos.m_z<<std::endl;
-
-
-
-
-
-
-  //return obj.toVec3();
-
-
-
-
-
-
-
+    return obj;
 }
 
 void NGLDraw::createSquad(int size)

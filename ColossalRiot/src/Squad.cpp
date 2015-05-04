@@ -26,6 +26,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
     }
 
     m_selectionColour = s_nextSelectionColour;
+    std::cout<<"SELECTION COLOUR "<<m_selectionColour.m_x<<" "<<m_selectionColour.m_y<<" "<<m_selectionColour.m_z<<std::endl;
 
     s_nextSelectionColour.m_x += 0.1;
 
