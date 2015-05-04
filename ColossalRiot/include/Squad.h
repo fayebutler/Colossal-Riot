@@ -48,6 +48,10 @@ private:
     std::vector<ngl::Vec3> m_path;
 
     int m_pathIndex;
+    //int m_policeArrived;
+
+    std::vector <bool> m_policeArrived;
+    bool m_allArrived;
 
 };
 

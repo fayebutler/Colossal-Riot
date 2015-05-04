@@ -449,7 +449,7 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 
     std::vector<ngl::Vec3> finalPath;
 
-    int endCellID;
+    int endCellID = -1;
 
     for (int i=0; i<m_numberOfCells; i++)
     {
@@ -462,8 +462,15 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
            _to.m_x > left && _to.m_x < right)
         {
              endCellID = i;
+             break;
 
         }
+
+    }
+    if(endCellID == -1)
+    {
+        std::cout<<"You have not chosen a valid position"<<std::endl;
+        return finalPath;
     }
 
    int startCellID = _from->getCurrentCellID();

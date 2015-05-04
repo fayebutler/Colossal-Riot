@@ -9,8 +9,10 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
 
     //m_boundingRad = r;
 
-
+    m_allArrived = false;
+    m_squadSize = squadSize;
     m_pathIndex =0;
+
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius;
@@ -25,10 +27,12 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
       newPolice->setSquadRadius(m_squadRadius);
       newPolice->setSquadID(m_ID);
       m_squadPolice.push_back(newPolice);
+      m_policeArrived.push_back(false);
 
     }
 
     m_selectionColour = s_nextSelectionColour;
+    std::cout<<"SELECTION COLOUR "<<m_selectionColour.m_x<<" "<<m_selectionColour.m_y<<" "<<m_selectionColour.m_z<<std::endl;
 
     s_nextSelectionColour.m_x += 0.1;
 
@@ -47,12 +51,68 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
 
 void Squad::update(double timeElapsed, double currentTime)
 {
-    for(unsigned int i=0; i<m_squadPolice.size(); ++i)
+    for(unsigned int i=0; i<m_squadSize; ++i)
+    {
+        if(m_policeArrived[i]==false)
+        {
+            m_allArrived = false;
+            break;
+        }
+        else
+        {
+            m_allArrived = true;
+        }
+    }
+
+    for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
         currentPolice->update(timeElapsed, currentTime);
+
+        if(m_path.size() != 0)
+        {
+            if (m_pathIndex == m_path.size())
+            {
+                std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
+                m_path.clear();
+                m_pathIndex = 0;
+                currentPolice->Steering()->SeekOff();
+
+            }
+            currentPolice->Vehicle::update(timeElapsed);
+            currentPolice->Steering()->SeekOn();
+
+            currentPolice->setCrosshair(m_path[m_pathIndex]);
+
+            std::cout<<"CROSSHAIR "<<currentPolice->getCrosshair().m_x<<" "<<currentPolice->getCrosshair().m_y<<" "<<currentPolice->getCrosshair().m_z<<std::endl;
+
+
+
+            if((currentPolice->getPos() - currentPolice->getCrosshair()).lengthSquared() < 16)
+            {
+//                m_pathIndex += 1;
+                m_policeArrived[i] = true;
+                m_pos = m_path[m_pathIndex];
+
+
+            }
+
+            std::cout<<"squad size "<<m_squadSize<<std::endl;
+            if(m_allArrived)
+            {
+                std::cout<<"squad size "<<m_squadSize<<std::endl;
+                m_pathIndex += 1;
+                m_allArrived = false;
+                for (int j = 0; j < m_squadSize; j++)
+                {
+                m_policeArrived[j] = false;
+                }
+            }
+            std::cout<<"PATH SIZE "<<m_path.size()<<std::endl;
+
+        }
     }
 
     std::cout<< " SQUAD ID "<< getID()<<std::endl;
@@ -60,39 +120,36 @@ void Squad::update(double timeElapsed, double currentTime)
 //    Vehicle::update(timeElapsed);
     //std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), m_pos);
 
-    if(m_path.size() != 0)
-    {
-        if (m_pathIndex == m_path.size())
-        {
-            std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
-            m_path.clear();
-            m_pathIndex = 0;
-            Vehicle::Steering()->SeekOff();
+//    if(m_path.size() != 0)
+//    {
+//        if (m_pathIndex == m_path.size())
+//        {
+//            std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
+//            m_path.clear();
+//            m_pathIndex = 0;
+//            Vehicle::Steering()->SeekOff();
 
-        }
-        Vehicle::update(timeElapsed);
-        Vehicle::Steering()->SeekOn();
+//        }
+//        Vehicle::update(timeElapsed);
+//        Vehicle::Steering()->SeekOn();
 
-        Vehicle::setCrosshair(m_path[m_pathIndex]);
+//        Vehicle::setCrosshair(m_path[m_pathIndex]);
 
-        if((getPos() - getCrosshair()).lengthSquared() < 1.0)
-        {
-            m_pathIndex += 1;
-//            if (m_pathIndex == m_path.size()-1)
-//            {
-//                std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
-//                m_path.clear();
-//                Vehicle::Steering()->SeekOff();
+//        if((getPos() - getCrosshair()).lengthSquared() < 1.0)
+//        {
+//            m_pathIndex += 1;
+////            if (m_pathIndex == m_path.size()-1)
+////            {
+////                std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
+////                m_path.clear();
+////                Vehicle::Steering()->SeekOff();
 
-//            }
+////            }
 
-        }
-        std::cout<<"PATH SIZE "<<m_path.size()<<std::endl;
+//        }
+//        std::cout<<"PATH SIZE "<<m_path.size()<<std::endl;
 
-    }
-
-
-
+//    }
 
 
 }

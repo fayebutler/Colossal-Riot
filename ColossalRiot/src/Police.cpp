@@ -36,7 +36,7 @@ Police::Police(GameWorld* world) : Agent(world)
 
 
     Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.0f);
+    Vehicle::Steering()->setSeparationWeight(0.8f);
 
 
     Vehicle::Steering()->WallAvoidOn();
@@ -67,7 +67,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(0.8);
+  Vehicle::setMaxSpeed(2);
 
 
 }

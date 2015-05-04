@@ -154,7 +154,7 @@ void NGLDraw::endGame()
     ngl::Vec3 up(0,0,-1);
 
     m_cam = new ngl::Camera(from,to,up);
-    m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+    m_cam->setShape(45,(float)m_width/m_height,0.05,50);
 
     m_mouseGlobalTX = ngl::Mat4();
     m_modelPos = ngl::Vec3(0,0,0);
@@ -384,41 +384,54 @@ void NGLDraw::doMovement(const int _x, const int _y)
 
 ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 {
-  std::cout<<"Mouse pos "<<_x<<" "<<_y<<" ";
 
+    ngl::Mat4 m;
+    m = m*m_mouseGlobalTX;
+    ngl::Mat4 t=m_cam->getProjectionMatrix();
+    ngl::Mat4 v=m_cam->getViewMatrix();
 
-  //ngl::Mat4 t=ngl::perspective(45, (float)m_width/m_height,0.05,350);
-  ngl::Mat4 t=m_cam->getProjectionMatrix();
-  ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
+    // as ngl:: and OpenGL use different formats need to transpose the matrix.
+    t.transpose();
+    v.transpose();
+    m.transpose();
+    ngl::Mat4 inverse=(t*v*m).inverse();
 
-  // as ngl:: and OpenGL use different formats need to transpose the matrix.
-  t.transpose();
-  v.transpose();
-  ngl::Mat4 inverse=(t*v).inverse();
-  //inverse = m_mouseGlobalTX*inverse;
+    ngl::Vec4 tmp(0,0,-1.0f,1.0f);
+    // convert into NDC
+    tmp.m_x=(2.0f * _x) / m_width- 1.0f;
+    tmp.m_y=1.0f - (2.0f * _y) / m_height;
+    // scale by inverse MV * Project transform
 
-//  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
+    ngl::Vec4 near(tmp.m_x,tmp.m_y,-1.0f,1.0f);
+    ngl::Vec4 far(tmp.m_x,tmp.m_y,1.0f,1.0f);
 
-  ngl::Vec4 tmp(0.0,0.0,0.99015f,1.0f);
-  // convert into NDC
-  tmp.m_x=((2.0f * _x) / m_width - 1.0f);
-  tmp.m_y=1.0f - (2.0f * _y) / m_height;
+    //get world point on near and far clipping planes
+    ngl::Vec4 obj_near=inverse*near;
+    ngl::Vec4 obj_far=inverse*far;
 
+    // Scale by w
+    obj_near/=obj_near.m_w;
+    obj_far/=obj_far.m_w;
 
-  // scale by inverse MV * Project transform
-  ngl::Vec4 obj=inverse*tmp;
+    ngl::Vec3 nearPoint(obj_near.m_x,obj_near.m_y,obj_near.m_z);
+    ngl::Vec3 farPoint(obj_far.m_x,obj_far.m_y,obj_far.m_z);
 
-  std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<obj.m_w<<std::endl;
+    //create ray
+    ngl::Vec3 rayDir(farPoint-nearPoint);
+    rayDir.normalize();
 
-  // Scale by w
+    //calculate distance to zx plane
+    float dist = (-nearPoint.m_y)/rayDir.m_y;
 
-  obj/=obj.m_w;
+    //set world space coordinate where y = 0
+    ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
-  obj.m_y = 0.0;
+    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
 
+    obj.m_y = 0.0;
 
+    return obj;
 
-  return obj.toVec3();
 
 
 }
