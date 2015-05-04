@@ -33,6 +33,22 @@ GameWorld::GameWorld(int numberOfRioters)
     m_rioters.push_back(newRioter);
     std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
+//  for (int i = 0; i < 100 ; ++i)
+//  {
+//    Police* newRioter = new Police(this);
+//    newRioter->setBoudingRadius(0.5f);
+//    newRioter->setDetectionRadius(3.5f);
+//    newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
+//    newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+//    m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+//    while (newRioter->getCurrentCellID() < 0)
+//    {
+//      newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+//      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+//    }
+//    m_police.push_back(newRioter);
+//  }
+
 
 //  for (int i = 0; i < 1; ++i)
 //  {
@@ -95,32 +111,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
 
-/// switchy magic:
-
-//    switch (EntityMgr->getEntityFromID(i)->getEntityType())
-//    {
-//    case typePolice:
-
-
-//        std::cout<<"Chub Police"<<std::endl;
-//        break;
-
-//    case typeRioter:
-
-//        std::cout<<"Chub Rioter"<<std::endl;
-//        break;
-
-//    case typeWall:
-//        std::cout<<"Chub Wall"<<std::endl;
-//        break;
-
-//    default:
-//        std::cout<<"Who knows?"<<std::endl;
-//        break;
-//    }
-
-/// end of switchy magic
-
     //1. for each agent -> updateCells
     // finds the cell agent is in; adds agentID to cell and cellID to agent.
 
@@ -142,6 +132,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         currentRioter->update(timeElapsed, currentTime);
 
     }
+
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];
@@ -197,15 +188,25 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 
 void GameWorld::createSquad(int size)
 {
-    Squad* newSquad = new Squad(this, size, ngl::Vec3(14.0f,0.0f,6.0f), 0.5f);
+    Squad* newSquad = new Squad(this, size, ngl::Vec3(13.0f,0.0f,5.0f), 0.5f);
     m_squads.push_back(newSquad);
 
     m_numberOfEntities = m_entityMgr->getSize();
 
-  for (unsigned int i=m_numberOfEntities-(size+1); i<m_numberOfEntities; i++)
-  {
       //Adds entities to cells and cell ID to entities
-      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
-  }
+    for (unsigned int i=m_numberOfEntities-(size+1); i<m_numberOfEntities; i++)
+    {
+        //Adds entities to cells and cell ID to entities
+        m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
+    }
+
+    m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newSquad->getID()));
 }
 
+void GameWorld::createPath(Squad* selectedSquad, ngl::Vec3 target)
+{
+
+    std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
+
+    selectedSquad->setPath(path);
+}

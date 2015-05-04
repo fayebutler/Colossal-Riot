@@ -2,13 +2,15 @@
 
 ngl::Vec3 Squad::s_nextSelectionColour = ngl::Vec3(0.0,0.0,0.0);
 
-Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEntity(world, typeSquad,pos,r)
+Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(world, pos, ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
 //    m_squadPos = ngl::Vec3(2.0,0,2.0);
     //m_squadPos = pos;
 
     //m_boundingRad = r;
 
+
+    m_pathIndex =0;
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius;
@@ -53,9 +55,46 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->update(timeElapsed, currentTime);
     }
 
-//    std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), m_pos);
-    Vehicle::Steering()->SeekOn();
-    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
+    std::cout<< " SQUAD ID "<< getID()<<std::endl;
+    std::cout<< " CELL ID "<< getCurrentCellID()<<std::endl;
+//    Vehicle::update(timeElapsed);
+    //std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), m_pos);
+
+    if(m_path.size() != 0)
+    {
+        if (m_pathIndex == m_path.size())
+        {
+            std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
+            m_path.clear();
+            m_pathIndex = 0;
+            Vehicle::Steering()->SeekOff();
+
+        }
+        Vehicle::update(timeElapsed);
+        Vehicle::Steering()->SeekOn();
+
+        Vehicle::setCrosshair(m_path[m_pathIndex]);
+
+        if((getPos() - getCrosshair()).lengthSquared() < 1.0)
+        {
+            m_pathIndex += 1;
+//            if (m_pathIndex == m_path.size()-1)
+//            {
+//                std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
+//                m_path.clear();
+//                Vehicle::Steering()->SeekOff();
+
+//            }
+
+        }
+        std::cout<<"PATH SIZE "<<m_path.size()<<std::endl;
+
+    }
+
+
+
+
+
 }
 
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -154,6 +193,7 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 
 }
+
 
 bool Squad::handleMessage(const Message& _message)
 {

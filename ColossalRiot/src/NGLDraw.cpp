@@ -375,7 +375,8 @@ void NGLDraw::doMovement(const int _x, const int _y)
     std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
 
     //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-    m_selectedSquad->setPos(m_clickPosition);
+//    m_selectedSquad->setPos(m_clickPosition);
+    m_gameworld->createPath(m_selectedSquad, m_clickPosition);
     //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
     m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     m_selected = false;

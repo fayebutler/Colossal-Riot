@@ -182,6 +182,7 @@ void CellGraph::printCellGraph()
 bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
 {
   //check up down left right
+
   float upper = m_cells[_cellID].getBoundaries().m_x;
   float lower = m_cells[_cellID].getBoundaries().m_y;
   float left  = m_cells[_cellID].getBoundaries().m_z;
@@ -212,7 +213,9 @@ void CellGraph::initializeCells(BaseGameEntity *_entity)
               _entity->setCurrentCell(m_cells[i]);
               return;
           }
+
       }
+
       _entity->setCurrentCellID(-1);
 }
 
