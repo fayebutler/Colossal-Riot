@@ -17,7 +17,15 @@ private:
 
     double m_timeElapsed;
 
-      ngl::Vec3 m_crosshair;
+    ngl::Vec3 m_crosshair;
+
+    ngl::Vec3 m_smoothHeading;
+    std::vector <ngl::Vec3> m_headingHistory;
+    int m_nextSlot;
+    int m_sampleSize;
+    bool m_smoothingOn;
+
+
 
 
 
@@ -35,6 +43,8 @@ public:
 
     ngl::Vec3 getCrosshair()const{return m_crosshair;}
     void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
+
+    ngl::Vec3 smoothingUpdate(ngl::Vec3 m_recentHeading);
 
 };
 
