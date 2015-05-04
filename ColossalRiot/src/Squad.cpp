@@ -73,14 +73,18 @@ void Squad::update(double timeElapsed, double currentTime)
 
         if(m_path.size() != 0)
         {
+            currentPolice->setIsMoving(true);
             if (m_pathIndex == m_path.size())
             {
                 std::cout<<"REACHED MY DESTINATIONS!"<<std::endl;
                 m_path.clear();
                 m_pathIndex = 0;
-                currentPolice->Steering()->SeekOff();
-
+                for(unsigned int i=0; i<m_squadSize; ++i)
+                {
+                    m_squadPolice[i]->setIsMoving(false);
+                }
             }
+
             currentPolice->Vehicle::update(timeElapsed);
             currentPolice->Steering()->SeekOn();
 

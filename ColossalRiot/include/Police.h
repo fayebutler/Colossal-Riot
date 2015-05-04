@@ -39,6 +39,9 @@ public:
     int getSquadID()const{return m_squadID;}
     void setSquadID(int squadID){m_squadID = squadID;}
 
+    bool getIsMoving() const { return m_isMoving; }
+    void setIsMoving(bool _val) { m_isMoving = _val; }
+
 
 protected:
     MessageManager* m_messageMgr;
@@ -48,6 +51,8 @@ protected:
     ngl::Vec3 m_squadPos;
     float m_squadRadius;
     int m_squadID;
+
+    bool m_isMoving;
 };
 
 #endif // POLICE_H
