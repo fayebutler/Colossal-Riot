@@ -167,7 +167,7 @@ int main()
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(0); paused = 1; break;
+                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); paused = 1; break;
 
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
