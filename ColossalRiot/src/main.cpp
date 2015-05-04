@@ -2,20 +2,22 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include "NGLDraw.h"
 #include <ngl/NGLInit.h>
-#include "MovingEntity.h"
+#include <ngl/Transformation.h>
 
 #include "Timer.h"
 
-#include "Vehicle.h"
-#include "GameWorld.h"
-#include <ngl/Transformation.h>
+#include "NGLDraw.h"
 
-#include "Rioter.h"
-#include "Police.h"
+//#include "MovingEntity.h"
+//#include "Vehicle.h"
+//#include "GameWorld.h"
 
-#include "EntityManager.h"
+
+//#include "Rioter.h"
+//#include "Police.h"
+
+//#include "EntityManager.h"
 
 
 /// @brief function to quit SDL with error message
@@ -24,7 +26,6 @@ void SDLErrorExit(const std::string &_msg);
 
 /// @brief initialize SDL OpenGL context
 SDL_GLContext createOpenGLContext( SDL_Window *window);
-
 
 
 int main()
@@ -95,6 +96,7 @@ int main()
 //-------MAIN LOOP----------------------------------------------------------------------
   while(!quit)
   {
+
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)
@@ -119,46 +121,87 @@ int main()
           ngldraw.resize(w,h);
         break;
 
-
-        // now we look for a keydown event
+          // now we look for a keydown event
         case SDL_KEYDOWN:
         {
-          switch( event.key.keysym.sym )
+          if(ngldraw.getGameState() == play)
           {
-            // if it's the escape key quit
-            case SDLK_ESCAPE :  quit = true; break;
-            case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
-            case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
-            case SDLK_f :
-            SDL_SetWindowFullscreen(window,SDL_TRUE);
-            glViewport(0,0,rect.w,rect.h);
-            break;
+              switch( event.key.keysym.sym )
+              {
+                // if it's the escape key quit
+                case SDLK_ESCAPE :  quit = true; break;
+                case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+                case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+                case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
+                                glViewport(0,0,rect.w,rect.h);
+                                break;
+                case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
+                case SDLK_RETURN : ngldraw.setGameState(menu); ngldraw.endGame(); break;
 
-            case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
-            case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
-            case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
+                case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
+                case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
+                case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
-            case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
-            default : break;
-          } // end of key process
-        } // end of keydown
+                case SDLK_5 : ngldraw.createSquad(5); break;
+                case SDLK_6 : ngldraw.createSquad(6); break;
+                case SDLK_7 : ngldraw.createSquad(7); break;
+                case SDLK_8 : ngldraw.createSquad(8); break;
+                case SDLK_9 : ngldraw.createSquad(9); break;
+                case SDLK_0 : ngldraw.createSquad(10); break;
+
+                default : break;
+              }
+          }
+
+          else if(ngldraw.getGameState() == menu)
+          {
+              switch( event.key.keysym.sym )
+              {
+                // if it's the escape key quit
+                case SDLK_ESCAPE :  quit = true; break;
+                case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
+                case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
+                case SDLK_f : SDL_SetWindowFullscreen(window,SDL_TRUE);
+                                glViewport(0,0,rect.w,rect.h);
+                                break;
+                case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
+
+                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); paused = 1; break;
+
+                case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
+                case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
+
+                default : break;
+              }
+           }
+        } //end of key down
 
         default : break;
-      }
-// end of event switch
+
+      } // end of event switch
+
     } // end of poll events
 
-    if(paused == 0)
-    {
-    timeElapsed=gameTimer.timeElapsed();
-    currentTime=gameTimer.getCurrentTime();
 
-    std::cout<<"------------- TICK -------------"<<std::endl;
-    ngldraw.update(timeElapsed,currentTime);
+    if(ngldraw.getGameState() == play)
+    {
+        if(paused == 0)
+        {
+        timeElapsed=gameTimer.timeElapsed();
+        currentTime=gameTimer.getCurrentTime();
+
+        std::cout<<"------------- TICK -------------"<<std::endl;
+        ngldraw.update(timeElapsed,currentTime);
+        }
+        // now we draw ngl
+        ngldraw.draw();
     }
-    // now we draw ngl
-    ngldraw.draw();
+    if(ngldraw.getGameState() == menu)
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+    }
     // swap the buffers
     SDL_GL_SwapWindow(window);
 

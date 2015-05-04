@@ -2,7 +2,7 @@
 #define MOVINGENTITY_H
 
 #include <ngl/Transformation.h>
-#include <include/BaseGameEntity.h>
+#include "BaseGameEntity.h"
 
 class MovingEntity: public BaseGameEntity
 {

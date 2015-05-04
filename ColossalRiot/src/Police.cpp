@@ -1,12 +1,6 @@
 #include "Police.h"
 #include <math.h>
 
-extern "C" {
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-}
-
 Police::Police(GameWorld* world) : Agent(world)
 {
   m_messageMgr = new MessageManager();
@@ -36,26 +30,28 @@ Police::Police(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->WanderOn();
 //    Vehicle::Steering()->setWanderWeight(0.5);
 
-    Vehicle::Steering()->ObstacleAvoidOn();
+  //  Vehicle::Steering()->ObstacleAvoidOn();
 
-//    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(0.8f);
+    Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(0.4f);
 
-//    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(0.3f);
+    Vehicle::Steering()->AlignmentOn();
+    Vehicle::Steering()->setAlignmentWeight(0.3f);
 
 
     Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(0.4f);
+    Vehicle::Steering()->setSeparationWeight(1.0f);
 
 
     Vehicle::Steering()->WallAvoidOn();
+    Vehicle::Steering()->setWallAvoidWeight(0.2);
 }
 
 Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
+  delete m_messageMgr;
 }
 
 void Police::update(double timeElapsed, double currentTime)
@@ -76,6 +72,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(0.8);
+
 }
 
 

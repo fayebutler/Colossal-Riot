@@ -23,31 +23,26 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    //m_targetID = 400;
+    //Vehicle::Steering()->ObstacleAvoidOn();
 
-    Vehicle::Steering()->WanderOn();
-    //Vehicle::Steering()->SeekOn();
-    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-//    Vehicle::Steering()->ObstacleAvoidOn();
-//    Vehicle::Steering()->EvadeOn();
-   Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(0.7f);
+    Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(0.2f);
 
-   Vehicle::Steering()->AlignmentOn();
-    Vehicle::Steering()->setAlignmentWeight(0.4f);
+    Vehicle::Steering()->AlignmentOn();
+    Vehicle::Steering()->setAlignmentWeight(0.5f);
 
     Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(0.8f);
+    Vehicle::Steering()->setSeparationWeight(1.0f);
 
     Vehicle::Steering()->WallAvoidOn();
-
 
 }
 
 Rioter::~Rioter()
 {
   lua_close(L);
-  delete m_stateMachine; 
+  delete m_stateMachine;
+  delete m_messageMgr;
 }
 
 void Rioter::update(double timeElapsed, double currentTime)

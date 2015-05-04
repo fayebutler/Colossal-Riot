@@ -3,11 +3,9 @@
 #include <iostream>
 
 
-
-
-GameWorld::GameWorld()
+GameWorld::GameWorld(int numberOfRioters)
 {
-
+   m_resetID = 1;
 
    m_mesh = new ngl::Obj("test_mesh.obj"); //Obj to draw, must be triangulated
 
@@ -19,15 +17,7 @@ GameWorld::GameWorld()
    m_cellGraph.printCellGraph();
 
 
-
-//   Rioter* newRioter = new Rioter(this);
-//       newRioter->setBoudingRadius(0.5f);
-//       newRioter->setDetectionRadius(3.f);
-//       newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
-//       newRioter->setPos(ngl::Vec3(-10.0f, 0.f, 2.0f));
-
-
-  for (int i = 0; i < 300; ++i)
+  for (int i = 0; i < numberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(0.5f);
@@ -41,14 +31,16 @@ GameWorld::GameWorld()
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
     }
     m_rioters.push_back(newRioter);
+    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 
-  for (int i = 0; i < 1; ++i)
-  {
+//  for (int i = 0; i < 1; ++i)
+//  {
 
-      Squad* newSquad = new Squad(this, 6, ngl::Vec3(10.0f,0.0f,8.0f), 1.f);
-      m_squads.push_back(newSquad);
-  }
+//      Squad* newSquad = new Squad(this, 6, ngl::Vec3(10.0f,0.0f,8.0f), 1.f);
+//      m_squads.push_back(newSquad);
+//  }
+
     m_numberOfEntities = m_entityMgr->getSize();
 
   for (unsigned int i=0; i<m_numberOfEntities; i++)
@@ -60,9 +52,15 @@ GameWorld::GameWorld()
   m_numberOfRioters = m_rioters.size();
   //m_numberOfPolice = m_police.size();
 
+}
 
-
-
+GameWorld::~GameWorld()
+{
+   m_rioters.clear();
+   m_police.clear();
+   m_squads.clear();
+   delete m_mesh;
+   delete m_entityMgr;
 }
 
 void GameWorld::Update(double timeElapsed, double currentTime)
@@ -194,6 +192,20 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
   {
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
+  }
+}
+
+void GameWorld::createSquad(int size)
+{
+    Squad* newSquad = new Squad(this, size, ngl::Vec3(14.0f,0.0f,6.0f), 0.5f);
+    m_squads.push_back(newSquad);
+
+    m_numberOfEntities = m_entityMgr->getSize();
+
+  for (unsigned int i=m_numberOfEntities-(size+1); i<m_numberOfEntities; i++)
+  {
+      //Adds entities to cells and cell ID to entities
+      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(i));
   }
 }
 

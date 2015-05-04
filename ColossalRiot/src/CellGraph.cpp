@@ -165,6 +165,11 @@ CellGraph::CellGraph()
   //m_entityMgr = new EntityManager();
 }
 
+CellGraph::~CellGraph()
+{
+  delete m_entityMgr;
+}
+
 void CellGraph::printCellGraph()
 {
 

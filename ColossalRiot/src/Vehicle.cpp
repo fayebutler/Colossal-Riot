@@ -27,6 +27,11 @@ Vehicle::Vehicle(GameWorld* world,
 
 }
 
+Vehicle::~Vehicle()
+{
+    delete m_steering;
+}
+
 void Vehicle::update(double time_elapsed)
 {
 

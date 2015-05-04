@@ -8,9 +8,10 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
     //m_squadPos = pos;
 
     //m_boundingRad = r;
-    m_squadColour = ngl::Colour(1.0f,0.0f,0.0f,1.0f);
 
-    m_squadRadius = squadSize*m_boundingRadius/2.0f;
+    m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
+
+    m_squadRadius = squadSize*m_boundingRadius;
 
     for (int i = 0; i < squadSize; ++i)
     {
@@ -40,7 +41,6 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
             s_nextSelectionColour.m_z += 0.1;
         }
     }
-
 }
 
 void Squad::update(double timeElapsed, double currentTime)
@@ -51,11 +51,6 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
         currentPolice->update(timeElapsed, currentTime);
-    }
-
-    if (currentTime > 40.0 && currentTime < 40.17)
-    {
-        setPos(getPos()+ngl::Vec3(1.0,0.0,1.0));
     }
 }
 
@@ -89,7 +84,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos.m_x,m_pos.m_y, m_pos.m_z);
+    trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
 
@@ -137,19 +132,18 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat4 M;
     ngl::Mat4 MV;
     ngl::Mat4 MVP;
-    ngl::Mat3 normalMatrix;
-//    MV=t.getMatrix()*mouseGlobalTX*cam->getViewMatrix() ;
-//    MVP=MV*cam->getVPMatrix();
-//    shader->setShaderParamFromMat4("MVP",MVP);
+//    ngl::Mat3 normalMatrix;
 
     M=t.getMatrix()*mouseGlobalTX;
     MV=  M*cam->getViewMatrix();
     MVP= M*cam->getVPMatrix();
-    normalMatrix=MV;
-    normalMatrix.inverse();
+
+//    normalMatrix=MV;
+//    normalMatrix.inverse();
 //    shader->setShaderParamFromMat4("MV",MV);
     shader->setShaderParamFromMat4("MVP",MVP);
-    shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+//    shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+
 //    shader->setShaderParamFromMat4("M",M);
     ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,120);
     ngl::VAOPrimitives::instance()->draw("squad");

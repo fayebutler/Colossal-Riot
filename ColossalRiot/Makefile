@@ -691,7 +691,54 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
-		include/Cell.h
+		include/Cell.h \
+		include/GameWorld.h \
+		/home/i7715430/NGL/include/ngl/Camera.h \
+		/home/i7715430/NGL/include/ngl/RibExport.h \
+		/home/i7715430/NGL/include/ngl/Plane.h \
+		include/Rioter.h \
+		include/Agent.h \
+		include/Vehicle.h \
+		include/MovingEntity.h \
+		include/SteeringBehaviour.h \
+		/home/i7715430/NGL/include/ngl/ShaderLib.h \
+		/home/i7715430/NGL/include/ngl/Colour.h \
+		/home/i7715430/NGL/include/ngl/Shader.h \
+		/home/i7715430/NGL/include/ngl/ShaderProgram.h \
+		/home/i7715430/NGL/include/ngl/Util.h \
+		/home/i7715430/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7715430/NGL/include/ngl/Mat3.h \
+		/home/i7715430/NGL/include/ngl/NGLInit.h \
+		/home/i7715430/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7715430/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7715430/NGL/include/ngl/Material.h \
+		../lua/include/lua.h \
+		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		../LuaBridge/LuaBridge.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/LuaHelpers.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/TypeTraits.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/TypeList.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/FuncTraits.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/Constructor.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/Stack.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/ClassInfo.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/LuaException.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/LuaRef.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/Iterator.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/Userdata.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/CFunctions.h \
+		/home/i7715430/Colossal/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h \
+		include/CellGraph.h \
+		/home/i7715430/NGL/include/ngl/Obj.h \
+		/home/i7715430/NGL/include/ngl/Texture.h \
+		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
+		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/BaseGameEntity.o src/BaseGameEntity.cpp
 
 obj/Cell.o: src/Cell.cpp include/Cell.h \
@@ -952,7 +999,6 @@ obj/EntityManager.o: src/EntityManager.cpp include/EntityManager.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/EntityManager.o src/EntityManager.cpp
 
 obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
-		include/BaseGameEntity.h \
 		/home/i7715430/NGL/include/ngl/Transformation.h \
 		/home/i7715430/NGL/include/ngl/Mat4.h \
 		/home/i7715430/NGL/include/ngl/Types.h \
@@ -1075,10 +1121,6 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7715430/NGL/include/ngl/Vec4.h \
 		/home/i7715430/NGL/include/ngl/Vec2.h \
 		/home/i7715430/NGL/include/ngl/Vec3.h \
-		include/EntityManager.h \
-		include/Message.h \
-		include/MessageManager.h \
-		include/Cell.h \
 		/home/i7715430/NGL/include/ngl/Camera.h \
 		/home/i7715430/NGL/include/ngl/RibExport.h \
 		/home/i7715430/NGL/include/ngl/Plane.h \
@@ -1086,6 +1128,11 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
+		include/BaseGameEntity.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Cell.h \
 		include/SteeringBehaviour.h \
 		/home/i7715430/NGL/include/ngl/ShaderLib.h \
 		/home/i7715430/NGL/include/ngl/Colour.h \
@@ -1127,8 +1174,8 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
-obj/main.o: src/main.cpp include/NGLDraw.h \
-		/home/i7715430/NGL/include/ngl/Camera.h \
+obj/main.o: src/main.cpp /home/i7715430/NGL/include/ngl/NGLInit.h \
+		/home/i7715430/NGL/include/ngl/Singleton.h \
 		/home/i7715430/NGL/include/ngl/Types.h \
 		/home/i7715430/NGL/include/ngl/glew.h \
 		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
@@ -1244,38 +1291,39 @@ obj/main.o: src/main.cpp include/NGLDraw.h \
 		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7715430/NGL/include/ngl/Vec4.h \
-		/home/i7715430/NGL/include/ngl/Vec2.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7715430/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7715430/NGL/include/ngl/Vec3.h \
+		/home/i7715430/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7715430/NGL/include/ngl/Transformation.h \
 		/home/i7715430/NGL/include/ngl/Mat4.h \
 		/home/i7715430/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7715430/NGL/include/ngl/NGLassert.h \
+		/home/i7715430/NGL/include/ngl/Vec4.h \
+		/home/i7715430/NGL/include/ngl/Vec2.h \
+		include/Timer.h \
+		include/NGLDraw.h \
+		/home/i7715430/NGL/include/ngl/Camera.h \
 		/home/i7715430/NGL/include/ngl/RibExport.h \
 		/home/i7715430/NGL/include/ngl/Plane.h \
 		/home/i7715430/NGL/include/ngl/Light.h \
 		/home/i7715430/NGL/include/ngl/Colour.h \
 		include/GameWorld.h \
-		include/BaseGameEntity.h \
-		/home/i7715430/NGL/include/ngl/Transformation.h \
-		/home/i7715430/NGL/include/ngl/NGLassert.h \
-		include/EntityManager.h \
-		include/Message.h \
-		include/MessageManager.h \
-		include/Cell.h \
 		include/Rioter.h \
 		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
+		include/BaseGameEntity.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Cell.h \
 		include/SteeringBehaviour.h \
 		/home/i7715430/NGL/include/ngl/ShaderLib.h \
 		/home/i7715430/NGL/include/ngl/Shader.h \
 		/home/i7715430/NGL/include/ngl/ShaderProgram.h \
 		/home/i7715430/NGL/include/ngl/Util.h \
-		/home/i7715430/NGL/include/ngl/Singleton.h \
-		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7715430/NGL/include/ngl/Mat3.h \
-		/home/i7715430/NGL/include/ngl/NGLInit.h \
-		/home/i7715430/NGL/include/ngl/VAOPrimitives.h \
-		/home/i7715430/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7715430/NGL/include/ngl/Material.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
@@ -1302,8 +1350,7 @@ obj/main.o: src/main.cpp include/NGLDraw.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
-		include/Squad.h \
-		include/Timer.h
+		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
@@ -1692,17 +1739,17 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7715430/NGL/include/ngl/Light.h \
 		/home/i7715430/NGL/include/ngl/Colour.h \
 		include/GameWorld.h \
-		include/BaseGameEntity.h \
 		/home/i7715430/NGL/include/ngl/Transformation.h \
 		/home/i7715430/NGL/include/ngl/NGLassert.h \
-		include/EntityManager.h \
-		include/Message.h \
-		include/MessageManager.h \
-		include/Cell.h \
 		include/Rioter.h \
 		include/Agent.h \
 		include/Vehicle.h \
 		include/MovingEntity.h \
+		include/BaseGameEntity.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Cell.h \
 		include/SteeringBehaviour.h \
 		/home/i7715430/NGL/include/ngl/ShaderLib.h \
 		/home/i7715430/NGL/include/ngl/Shader.h \

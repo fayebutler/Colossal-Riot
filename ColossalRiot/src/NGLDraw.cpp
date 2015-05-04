@@ -3,7 +3,7 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-#include "Vehicle.h"
+//#include "Vehicle.h"
 #include "GameWorld.h"
 
 
@@ -57,8 +57,6 @@ NGLDraw::NGLDraw()
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
 
-
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
@@ -74,8 +72,8 @@ NGLDraw::NGLDraw()
 
 //  int w=this->size().width();
 //  int h=this->size().height();
-  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
-  m_cam->setShape(45,(float)m_width/m_height,0.5,50);
+
+  m_cam->setShape(45,(float)m_width/m_height,0.05,350);
 
   //m_cam->setShape(45,(float)m_width/m_height,0.05,350);
   //m_cam->setShape(45,(float)w/h,0.05,350);
@@ -90,10 +88,12 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-  m_gameworld = new GameWorld();
+//  m_gameworld = new GameWorld();
 
-  m_selected = false;
-  m_selectedSquad = NULL;
+//  m_selected = false;
+//  m_selectedSquad = NULL;
+  m_gameState = menu;
+
 
 }
 
@@ -112,11 +112,53 @@ void NGLDraw::resize(int _w, int _h)
 
   m_height = _h;
   m_width = _w;
-//  std::cout<<"W = "<<m_width<<"H = "<<m_height<<std::endl;
 
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
+}
+
+void NGLDraw::startGame(int level)
+{
+  switch(level)
+  {
+    case 0:
+        m_gameworld = new GameWorld(0);
+        break;
+    case 1:
+        m_gameworld = new GameWorld(100);
+        break;
+    case 2:
+        m_gameworld = new GameWorld(200);
+        break;
+    case 3:
+        m_gameworld = new GameWorld(300);
+        break;
+    case 4:
+        m_gameworld = new GameWorld(400);
+        break;
+  }
+
+    m_selected = false;
+    m_selectedSquad = NULL;
+
+}
+
+void NGLDraw::endGame()
+{
+    delete m_gameworld;
+
+    // reset camera
+    ngl::Vec3 from(0,cameraHeight,0);
+    ngl::Vec3 to(0,0,0);
+    ngl::Vec3 up(0,0,-1);
+
+    m_cam = new ngl::Camera(from,to,up);
+    m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+
+    m_mouseGlobalTX = ngl::Mat4();
+    m_modelPos = ngl::Vec3(0,0,0);
+
 }
 
 void NGLDraw::draw()
@@ -185,13 +227,11 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //    m_modelPos.m_x += INCREMENT * diffX;
 //    m_modelPos.m_y -= INCREMENT * diffY;
 
-//    m_cam->move(INCREMENT * diffX,0,INCREMENT * diffZ);
 
 //    INCREMENT = INCREMENT*;
 
     //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-
 
   }
 
@@ -204,26 +244,29 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 {
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
-
- if(_event.button == SDL_BUTTON_MIDDLE)
+  if(m_gameState == play)
   {
-    m_origXPos = _event.x;
-    m_origYPos = _event.y;
-    m_translate=true;
-  }
- if(_event.button == SDL_BUTTON_LEFT)
-  {
-     std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
-     if(m_selected == true)
-     {
-         doMovement(_event.x, _event.y);
-     }
-     else
-     {
-        doSelection(_event.x, _event.y);
-     }
 
-  }
+     if(_event.button == SDL_BUTTON_MIDDLE)
+      {
+        m_origXPos = _event.x;
+        m_origYPos = _event.y;
+        m_translate=true;
+      }
+     if(_event.button == SDL_BUTTON_LEFT)
+      {
+             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+            if(m_selected == true)
+            {
+                 doMovement(_event.x, _event.y);
+             }
+             else
+             {
+                doSelection(_event.x, _event.y);
+             }
+
+      }
+   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -309,6 +352,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
         m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
     }
 
+
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
@@ -329,9 +373,11 @@ void NGLDraw::doMovement(const int _x, const int _y)
     m_clickPosition = getWorldSpace(_x, _y);
 
     std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
-    std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+
+    //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
     m_selectedSquad->setPos(m_clickPosition);
-    std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+    //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+    m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     m_selected = false;
 }
 
@@ -342,7 +388,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
   //ngl::Mat4 t=ngl::perspective(45, (float)m_width/m_height,0.05,350);
   ngl::Mat4 t=m_cam->getProjectionMatrix();
-  ngl::Mat4 v=m_cam->getViewMatrix()* m_mouseGlobalTX;
+  ngl::Mat4 v=m_cam->getViewMatrix()*m_mouseGlobalTX;
 
   // as ngl:: and OpenGL use different formats need to transpose the matrix.
   t.transpose();
@@ -350,16 +396,13 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
   ngl::Mat4 inverse=(t*v).inverse();
   //inverse = m_mouseGlobalTX*inverse;
 
-
 //  std::cout<<"WIDTH "<<m_width<<"HEIGHT "<<m_height<<std::endl;
 
-  ngl::Vec4 tmp(0.0,0.0,0.5f,1.0f);
+  ngl::Vec4 tmp(0.0,0.0,0.99015f,1.0f);
   // convert into NDC
   tmp.m_x=((2.0f * _x) / m_width - 1.0f);
   tmp.m_y=1.0f - (2.0f * _y) / m_height;
 
-  tmp.m_x=tanf(m_cam->getFOV()*0.5f)*(_x/(m_width/2.0)-1.0f)/m_cam->getAspect();
-  tmp.m_y=tanf(m_cam->getFOV()*0.5f)*(1.0f-_y/(m_height/2.0));
 
   // scale by inverse MV * Project transform
   ngl::Vec4 obj=inverse*tmp;
@@ -372,13 +415,14 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
 
 
-//  obj.m_y = 0.5;
-
-
   return obj.toVec3();
 
 
+}
 
+void NGLDraw::createSquad(int size)
+{
+    m_gameworld->createSquad(size);
 }
 
 

@@ -37,6 +37,10 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
 }
 
+SteeringBehaviour::~SteeringBehaviour()
+{
+    delete m_entityMgr;
+}
 
 
 ngl::Vec3 SteeringBehaviour::calculate()
