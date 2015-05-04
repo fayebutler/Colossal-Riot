@@ -12,7 +12,7 @@ GameWorld::GameWorld(int numberOfRioters)
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
-   m_cellGraph =  CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
+   m_cellGraph = CellGraph("test_nav.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
    m_cellGraph.printCellGraph();
 

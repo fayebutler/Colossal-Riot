@@ -68,7 +68,7 @@ public:
     {
 
         m_previousState = m_currentState;
-        luaCallState(m_currentState, "exit");
+
         if (m_currentState != NULL)
         {
             m_previousState = m_currentState;
