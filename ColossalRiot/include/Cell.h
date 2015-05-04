@@ -36,11 +36,15 @@ public:
     Cell();
     Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs,std::vector<int> _perpendicularCellIDs);
     void printCellInfo();
+
     std::vector<int> getNeighbourCellIDs();
+
     void addDynamicEntityID(int _ID);
     void clearDynamicEntityIDs();
+
     std::vector<int> getDynamicEntityIDs();
     ngl::Vec4 getBoundaries(){ return m_boundries;}
+
     void addWall(Wall _wall);
     void addWallInCell(Wall _wall);
 

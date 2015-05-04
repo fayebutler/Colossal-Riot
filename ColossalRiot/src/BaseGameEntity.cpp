@@ -11,7 +11,7 @@ BaseGameEntity::BaseGameEntity()
   m_entityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r)
+BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Vec3 pos, float r)
 {
   setID(m_nextValidID);
   m_nextValidID++;

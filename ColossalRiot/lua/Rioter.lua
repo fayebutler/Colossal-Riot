@@ -57,7 +57,7 @@ protest = {}
 protest["enter"] = function()
 --  rioter:pursuit(1.0)
   rioter:evade(0.0)
-  rioter:wander(1.0)
+  rioter:wander(0.5)
 --  print("LUA RIOTER protest enter")
 end
 

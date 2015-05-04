@@ -8,6 +8,9 @@
 #include <vector>
 #include <list>
 #include "Cell.h"
+//#include "GameWorld.h"
+
+class GameWorld;
 
 enum entityType
 {
@@ -45,7 +48,7 @@ protected:
 
 public:
     BaseGameEntity();
-    BaseGameEntity(entityType entity_type, ngl::Vec3 pos, float r);
+    BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Vec3 pos, float r);
 
  //   ~BaseGameEntity();
 

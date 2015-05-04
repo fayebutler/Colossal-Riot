@@ -27,7 +27,7 @@ GameWorld::GameWorld()
 //       newRioter->setPos(ngl::Vec3(-10.0f, 0.f, 2.0f));
 
 
-  for (int i = 0; i < 5; ++i)
+  for (int i = 0; i < 300; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(0.5f);
@@ -46,7 +46,7 @@ GameWorld::GameWorld()
   for (int i = 0; i < 1; ++i)
   {
 
-      Squad* newSquad = new Squad(this, 10, ngl::Vec3(6.0f,0.0f,6.0f), 1.f);
+      Squad* newSquad = new Squad(this, 6, ngl::Vec3(10.0f,0.0f,8.0f), 1.f);
       m_squads.push_back(newSquad);
   }
     m_numberOfEntities = m_entityMgr->getSize();

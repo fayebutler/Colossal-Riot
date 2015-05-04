@@ -2,7 +2,7 @@
 
 ngl::Vec3 Squad::s_nextSelectionColour = ngl::Vec3(0.0,0.0,0.0);
 
-Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEntity(typeSquad,pos,r)
+Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEntity(world, typeSquad,pos,r)
 {
 //    m_squadPos = ngl::Vec3(2.0,0,2.0);
     //m_squadPos = pos;
@@ -16,7 +16,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
     {
       Police* newPolice = new Police(world);
       newPolice->setBoudingRadius(m_boundingRadius);
-      newPolice->setDetectionRadius(5.f);
+      newPolice->setDetectionRadius(3.5f);
       newPolice->setPos(ngl::Vec3((((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_x, 0.0f, (((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_z));
       newPolice->setSquadPos(m_pos);
       newPolice->setSquadRadius(m_squadRadius);

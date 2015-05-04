@@ -26,18 +26,18 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     //m_targetID = 400;
 
     Vehicle::Steering()->WanderOn();
-//////    //Vehicle::Steering()->SeekOn();
-//////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-    Vehicle::Steering()->ObstacleAvoidOn();
-////   // Vehicle::Steering()->EvadeOn();
-////  // Vehicle::Steering()->CohesionOn();
-////////    Vehicle::Steering()->setCohesionWeight(1.f);
+    //Vehicle::Steering()->SeekOn();
+    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
+//    Vehicle::Steering()->ObstacleAvoidOn();
+//    Vehicle::Steering()->EvadeOn();
+   Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(0.7f);
 
-////   Vehicle::Steering()->AlignmentOn();
-////////    Vehicle::Steering()->setAlignmentWeight(1.f);
+   Vehicle::Steering()->AlignmentOn();
+    Vehicle::Steering()->setAlignmentWeight(0.4f);
 
     Vehicle::Steering()->SeparationOn();
-//////    Vehicle::Steering()->setSeparationWeight(1.f);
+    Vehicle::Steering()->setSeparationWeight(0.8f);
 
     Vehicle::Steering()->WallAvoidOn();
 

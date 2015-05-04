@@ -7,14 +7,11 @@
 
 class SteeringBehaviour;
 
-class GameWorld;
-
 
 class Vehicle: public MovingEntity
 {
 private:
 
-    GameWorld* m_world;
 
     SteeringBehaviour* m_steering;
 
@@ -29,7 +26,7 @@ public:
     Vehicle(GameWorld* world, ngl::Vec3 position, ngl::Vec3 velocity, float rotation, float mass, float max_force, float max_speed, float max_turnrate, float scale);
     ~Vehicle(){;}
     SteeringBehaviour* Steering(){return m_steering;}
-    GameWorld* World(){return m_world;}
+//    GameWorld* World(){return m_world;}
     double TimeElapsed()const{return m_timeElapsed;}
 
     virtual bool handleMessage(const Message& _message);

@@ -46,7 +46,7 @@ Police::Police(GameWorld* world) : Agent(world)
 
 
     Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(0.6f);
+    Vehicle::Steering()->setSeparationWeight(0.4f);
 
 
     Vehicle::Steering()->WallAvoidOn();

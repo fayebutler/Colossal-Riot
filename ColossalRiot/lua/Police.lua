@@ -67,7 +67,7 @@ work["execute"] = function()
     police:attack()
   else
     police:wander(0.5)
-    police:squadCohesion(1.0)
+    police:squadCohesion(0.3)
   end
 
   if police.m_morale < 30 then
