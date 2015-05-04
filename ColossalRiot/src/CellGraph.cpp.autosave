@@ -492,13 +492,10 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 
 
 
-
-///////1-Update frontier:
-
-    //Clear priority Q:
+//Clear priorityQueue:
     priorityQueue.clear();
 
-    //Remove currentCell from frontierCells:
+//Remove currentCell from frontierCells:
     for (std::vector<int>::iterator iter = frontierCells.begin(); iter != frontierCells.end(); ++iter)
     {
         if( *iter == currentCellID)
@@ -509,43 +506,48 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     }
 
 
-    //Add perpendicular neighbours to frontierCells:
+//Update Frontier with current cells' perpendicular neighbours.
+    
     int numberOfPerpendicularNeighbours = currentCell->getPerpendicularNeighbourCellIDs().size();
     for ( int i=0; i <numberOfPerpendicularNeighbours;i++)
     {
         bool isInMemory = false;
 
-        for (int j=0; j<frontierMemory.size();j++)
+        int frontierMemorySize = frontierMemory.size();
+        for (int j = 0; j < frontierMemorySize; j++)
         {
             if( currentCell->getPerpendicularNeighbourCellIDs()[i] == frontierMemory[j])
             {
+                //if perpendicular neighbour cell is in the memory: break.
                 isInMemory = true;
                 break;
             }
-
-
         }
 
         if ( isInMemory ==false)
         {
 
+            // if perpendicular neighbour cell is not in memory: add to frontier and frontier memory.
             frontierCells.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
             frontierMemory.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
         }
-
     }
 
 
-//////2-Update priorityQueue:
-    //Order frontier cells:
+//Order the frontier cells in distance to destination, store as priority Queue
+    
+    //Copy of frontier cells used for ordering
     std::vector<int>frontierCopy = frontierCells;
 
-    while (priorityQueue.size() < frontierCells.size())
+    int numberOfFrontierCells = frontierCells.size()
+    while (priorityQueue.size() < numberOfFrontierCells)
     {
-        float shortestDist = 10000000000.0f;
+        // set shortest distance to huge value
+        float shortestDist = 99999999999.0f;
         int shortestID;
-
-        for (int i=0; i<frontierCopy.size();i++ )
+            
+        int frontierCopySize = frontierCopy.size()
+        for (int i = 0; i < frontierCopySize; i++)
         {
             ngl::Vec3 distance = (m_cells[frontierCopy[i]].getCentre() - endCell->getCentre());
 
@@ -553,8 +555,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
             {
                 shortestDist = distance.lengthSquared();
                 shortestID = frontierCopy[i];
-
-
             }
         }
 
@@ -566,6 +566,7 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
                 break;
             }
         }
+        
         priorityQueue.push_back(shortestID);
     }
 

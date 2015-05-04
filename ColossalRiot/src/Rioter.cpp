@@ -76,7 +76,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getHealth()/100.0f, 0.0f, 0.0f, 1.0f));
+  m.setDiffuse(ngl::Colour(getHealth()/100.0f, getHealth()/100.0f*0.4, getHealth()/100.0f*0.01, 1.0f));
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();

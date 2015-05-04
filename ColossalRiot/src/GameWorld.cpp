@@ -92,7 +92,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_cellGraph.addEntities(m_entityMgr->getEntityFromID(i));
       }
     }
-    //std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), ngl::Vec3 (10, 0, -9));
+    std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), ngl::Vec3 (10, 0, -9));
 
     /// ----------------------------------------------------
 
@@ -156,7 +156,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.1f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.45f,0.44f,0.34f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
   m.loadToShader("material");
 
