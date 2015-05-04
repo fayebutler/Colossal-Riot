@@ -21,7 +21,7 @@ GameWorld::GameWorld(int numberOfRioters)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(0.5f);
-    newRioter->setDetectionRadius(3.f);
+    newRioter->setDetectionRadius(3.5f);
     newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
     newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
     m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));

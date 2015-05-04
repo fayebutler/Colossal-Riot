@@ -413,6 +413,8 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
   obj/=obj.m_w;
 
+  obj.m_y = 0.0;
+
 
 
   return obj.toVec3();

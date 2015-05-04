@@ -58,6 +58,7 @@ void Rioter::update(double timeElapsed, double currentTime)
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
     Vehicle::Steering()->WallOverlapAvoidance();
     Vehicle::Steering()->ObjectOverlapAvoidance();
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)

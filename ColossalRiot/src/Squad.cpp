@@ -30,12 +30,12 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):BaseGameEn
 
     s_nextSelectionColour.m_x += 0.1;
 
-    if(s_nextSelectionColour.m_x == 1)
+    if(s_nextSelectionColour.m_x >= 1)
     {
         s_nextSelectionColour.m_x = 0;
         s_nextSelectionColour.m_y += 0.1;
 
-        if(s_nextSelectionColour.m_y == 1)
+        if(s_nextSelectionColour.m_y >= 1)
         {
             s_nextSelectionColour.m_y = 0;
             s_nextSelectionColour.m_z += 0.1;

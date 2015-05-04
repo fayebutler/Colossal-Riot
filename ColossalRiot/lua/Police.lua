@@ -62,13 +62,13 @@ work["execute"] = function()
   print("LUA POLICE work execute")
   print(police.m_targetID)
   police:checkValidTarget(3.0, 20.0)
-  if police.m_targetID >= 0 then
-    police:wander(0.0)
+--  if police.m_targetID >= 0 then
+--    police:wander(0.0)
 --    police:attack()
-  else
-    police:wander(0.5)
-    police:squadCohesion(0.4)
-  end
+--  else
+  police:wander(0.5)
+  police:squadCohesion(0.4)
+--  end
 
   if police.m_morale < 30 then
     stateMachine:changeState("flee")
