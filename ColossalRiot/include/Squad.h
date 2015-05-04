@@ -1,8 +1,7 @@
-#include "Police.h"
-#include "BaseGameEntity.h"
-
 #ifndef SQUAD_H
 #define SQUAD_H
+
+#include "Police.h"
 
 class Squad : public BaseGameEntity
 {
@@ -23,6 +22,11 @@ public:
 
 //    ngl::Vec3 getSquadPos() const { return m_squadPos; }
 //    void setSquadPos(ngl::Vec3 _val) { m_squadPos = _val; }
+    bool checkSelectionColour(const ngl::Vec3 colour);
+    void selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
+
+    ngl::Colour getSquadColour() const { return m_squadColour; }
+    void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
 
 private:
 
@@ -30,7 +34,14 @@ private:
     float m_squadRadius;
 //    ngl::Vec3 m_squadPos;
 
+    ngl::Vec3 m_selectionColour;
+
+    static ngl::Vec3 s_nextSelectionColour;
+
     std::vector <Police*> m_squadPolice;
+
+    ngl::Colour m_squadColour;
+
 };
 
 #endif // SQUAD_H

@@ -5,7 +5,13 @@ EntityMap EntityManager::m_entityMap;
 
 EntityManager::EntityManager()
 {
+      std::cout<<"MAP: SIZE- "<<getSize()<<std::endl;
+}
 
+EntityManager::~EntityManager()
+{
+    m_entityMap.clear();
+    std::cout<<"DELETING MAP: SIZE- "<<getSize()<<std::endl;
 }
 
 //template <typename Type>

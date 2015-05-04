@@ -53,6 +53,7 @@ public:
 
     std::vector<Wall> getWalls(){return m_walls;}
     std::vector<Wall> getWallsInCell(){return m_wallsInCell;}
+    int getID(){return m_ID;}
 
     ngl::Vec3 getCentre();
     float getSize();

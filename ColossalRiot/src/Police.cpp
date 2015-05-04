@@ -1,12 +1,6 @@
 #include "Police.h"
 #include <math.h>
 
-extern "C" {
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-}
-
 Police::Police(GameWorld* world) : Agent(world)
 {
   m_messageMgr = new MessageManager();
@@ -36,7 +30,7 @@ Police::Police(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->WanderOn();
 //    Vehicle::Steering()->setWanderWeight(0.5);
 
-    Vehicle::Steering()->ObstacleAvoidOn();
+  //  Vehicle::Steering()->ObstacleAvoidOn();
 
 //    Vehicle::Steering()->CohesionOn();
 //    Vehicle::Steering()->setCohesionWeight(0.8f);
@@ -46,15 +40,18 @@ Police::Police(GameWorld* world) : Agent(world)
 
 
     Vehicle::Steering()->SeparationOn();
-    //Vehicle::Steering()->setSeparationWeight(0.4f);
+    Vehicle::Steering()->setSeparationWeight(0.6f);
+
 
     Vehicle::Steering()->WallAvoidOn();
+    Vehicle::Steering()->setWallAvoidWeight(0.2);
 }
 
 Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
+  delete m_messageMgr;
 }
 
 void Police::update(double timeElapsed, double currentTime)
@@ -70,10 +67,12 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addFriendlyNeighbours(getNeighbourPoliceIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
-  Vehicle::Steering()->ObjectOverlapAvoidance();
+
   Vehicle::Steering()->WallOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(0.8);
+
 }
 
 
@@ -85,13 +84,14 @@ void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 
 void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+      (*shader)["Phong"]->use();
 
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
   m.setDiffuse(ngl::Colour(0.0f, 0.0f, getHealth()/100.0f, 1.0f));
   m.loadToShader("material");
 
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
@@ -144,13 +144,13 @@ void Police::findTargetID(float _health)
     if (currentTarget == NULL)
     {
         setTargetID(-1);
-        std::cout<< "NO NEARBY TARGETS"<<std::endl;
+//        std::cout<< "NO NEARBY TARGETS"<<std::endl;
     }
     else
     {
         int target = currentTarget->getID();
         setTargetID(target);
-        std::cout<< "FOUND TARGET"<<std::endl;
+//        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }
 

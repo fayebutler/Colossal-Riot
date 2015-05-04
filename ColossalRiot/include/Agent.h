@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Vehicle.h"
-#include "EntityManager.h"
+//#include "EntityManager.h"
 
 #include <ngl/ShaderLib.h>
 #include <ngl/NGLInit.h>

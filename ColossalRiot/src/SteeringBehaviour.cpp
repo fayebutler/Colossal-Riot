@@ -37,6 +37,10 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
 }
 
+SteeringBehaviour::~SteeringBehaviour()
+{
+    delete m_entityMgr;
+}
 
 
 ngl::Vec3 SteeringBehaviour::calculate()
@@ -49,7 +53,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
     //use weight truncated running sum prioritisation
     //truncate force to maxforce
-    if(m_steeringForce.length() >= m_vehicle->getMaxForce())
+    if(m_steeringForce.lengthSquared() >= (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
     {
         m_steeringForce.normalize();
         m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
@@ -96,7 +100,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 
    //truncate steering force to max force
-    if(m_steeringForce.length() > m_vehicle->getMaxForce())
+    if(m_steeringForce.lengthSquared() > (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
     {
         m_steeringForce.normalize();
         m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
@@ -182,11 +186,11 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-            std::cout<<"pursuit NULL"<<std::endl;
+//            std::cout<<"pursuit NULL"<<std::endl;
         }
         else
         {
-            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
+//            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {
@@ -204,7 +208,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-            std::cout<<"evade NULL"<<std::endl;
+//            std::cout<<"evade NULL"<<std::endl;
         }
         else
         {
@@ -274,7 +278,7 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force
     {
         return false;
     }
-    else if(force.length() > forceLeft)
+    else if(force.lengthSquared() > (forceLeft * forceLeft))
     {
       force.normalize();
       force *= m_vehicle->getMaxForce();
