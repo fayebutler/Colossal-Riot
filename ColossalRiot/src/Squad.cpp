@@ -49,6 +49,14 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     }
 }
 
+ngl::Vec3 Squad::averagePolicePos()
+{
+    for (int i = 0; i< m_squadSize; i++)
+    {
+
+    }
+}
+
 void Squad::update(double timeElapsed, double currentTime)
 {
     for(unsigned int i=0; i<m_squadSize; ++i)
