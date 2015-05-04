@@ -420,6 +420,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
     std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+    obj.m_y=0.f;
 
     return obj;
 

@@ -20,6 +20,8 @@ Police::Police(GameWorld* world) : Agent(world)
 
     // Set initial variables
 
+    m_enRoute = false;
+
     m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
@@ -177,6 +179,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("attack", &Police::attack)
                 .addFunction("findTargetID", &Police::findTargetID)
                 .addFunction("squadCohesion", &Police::squadCohesion)
+                .addProperty("m_enRoute", &Police::getEnRoute, &Police::setEnRoute)
         .endClass();
 }
 

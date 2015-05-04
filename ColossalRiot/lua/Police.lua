@@ -41,9 +41,34 @@ global["execute"] = function()
         stateMachine:changeState("dead")
     end
   end
+  if police.m_enRoute == true then
+    stateMachine:changeState("move")
+  end
 end
 
 global["exit"] = function()
+end
+
+
+
+-- move state
+
+move = {}
+move["enter"] = function()
+  police:pursuit(0.0)
+  police:squadCohesion(0.0)
+  print("LUA POLICE move enter")
+end
+
+move["execute"] = function()
+  print("LUA POLICE move execute")
+  if police.m_enRoute == false then
+    stateMachine:changeState(stateMachine.m_previousState)
+  end
+end
+
+move["exit"] = function()
+  print("LUA POLICE move exit")
 end
 
 

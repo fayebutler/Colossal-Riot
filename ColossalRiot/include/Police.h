@@ -39,6 +39,9 @@ public:
     int getSquadID()const{return m_squadID;}
     void setSquadID(int squadID){m_squadID = squadID;}
 
+    int getEnRoute()const{return m_enRoute;}
+    void setEnRoute(int enRoute){m_enRoute = enRoute;}
+
 
 protected:
     MessageManager* m_messageMgr;
@@ -48,6 +51,8 @@ protected:
     ngl::Vec3 m_squadPos;
     float m_squadRadius;
     int m_squadID;
+
+    bool m_enRoute;
 };
 
 #endif // POLICE_H

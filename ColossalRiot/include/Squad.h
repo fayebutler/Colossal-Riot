@@ -28,6 +28,7 @@ public:
     ngl::Colour getSquadColour() const { return m_squadColour; }
     void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
 
+
 private:
 
     int m_squadSize;
