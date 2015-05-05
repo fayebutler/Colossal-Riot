@@ -12,9 +12,10 @@ GameWorld::GameWorld(int numberOfRioters)
    m_mesh->createVAO();
 
    m_entityMgr = new EntityManager();
-   m_cellGraph = CellGraph("navMesh.obj"); //Obj for cell graph, must be quads
+   m_cellGraph = CellGraph("navMesh.obj", 1); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
-   m_cellGraph.printCellGraph();
+   std::cout<<"mapBoundries are: "<<m_cellGraph.getMapBounds()[0]<<" "<<m_cellGraph.getMapBounds()[1]<<" "<<m_cellGraph.getMapBounds()[2]<<" "<<m_cellGraph.getMapBounds()[3]<<std::endl;
+//   m_cellGraph.printCellGraph();
 
 
   for (int i = 0; i < numberOfRioters ; ++i)
@@ -31,7 +32,7 @@ GameWorld::GameWorld(int numberOfRioters)
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
     }
     m_rioters.push_back(newRioter);
-    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
+    //std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 //  for (int i = 0; i < 100 ; ++i)
 //  {
@@ -145,8 +146,8 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.0f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
-  m.setSpecularExponent(5.f);
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  m.setSpecularExponent(3.f);
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();

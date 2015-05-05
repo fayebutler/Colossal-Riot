@@ -1,26 +1,38 @@
-﻿#include "CellGraph.h"
+#include "CellGraph.h"
 
-CellGraph::CellGraph(const char *_fileName)
+
+//reads in obj with uniform quads, makes a cell from each face. Cells are used for cell space partitioning and path finding. Obj should be the walkable area of the map.
+CellGraph::CellGraph(const char *_fileName, int _borderSize)
 {
 
-   m_entityMgr = new EntityManager();
+    m_entityMgr = new EntityManager();
 
     std::vector<ngl::Vec3> vertices;
     std::vector<ngl::Vec4> faces;
+    float upperBoundry = 0.0f;
+    float lowerBoundry = 0.0f;
+    float leftBoundry = 0.0f;
+    float rightBoundry = 0.0f;
 
     std::ifstream in(_fileName, std::ios::in);
-    if (!in) { std::cerr << "Cannot open file: " << _fileName << std::endl; exit(1); }
+    if (!in) { std::cerr<< "Cannot open file: " << _fileName << std::endl; exit(1); }
 
     std::string line;
     while (getline(in, line))
     {
+        //make a vector of vertices
         if (line.substr(0,2) == "v ")
         {
-
           std::istringstream s(line.substr(2));
           ngl::Vec3 v; s >> v.m_x; s >> v.m_y; s >> v.m_z;
           vertices.push_back(v);
+          if(v.m_z < upperBoundry){upperBoundry = v.m_z;}
+          if(v.m_z > lowerBoundry){lowerBoundry = v.m_z;}
+          if(v.m_x < leftBoundry){leftBoundry = v.m_x;}
+          if(v.m_x > rightBoundry){rightBoundry = v.m_x;}
         }
+
+        //make a vector of faces
         else if (line.substr(0,2) == "f ")
         {
            std::istringstream s(line.substr(2));
@@ -88,7 +100,7 @@ CellGraph::CellGraph(const char *_fileName)
         else { /* ignoring this line */ }
     }
 
-///NOW ACTUALLY MAKE THE CELLS
+    //Now we make the cells from the informations stored in faces.
     m_numberOfCells = faces.size();
     for (unsigned int j = 0; j < m_numberOfCells; j++)
     {
@@ -100,7 +112,7 @@ CellGraph::CellGraph(const char *_fileName)
         fourCorners.push_back(vertices[(faces[j].m_w-1)]);
 
 
-       //FIND NEIGHBOURS
+       //find the neighbouring cells (cells that share vertices)
 
        std::vector<int> neighbourIDs;
        std::vector<int> perpendicularNeighbourIDs;
@@ -132,15 +144,14 @@ CellGraph::CellGraph(const char *_fileName)
         Cell newCell(j,fourCorners,neighbourIDs, perpendicularNeighbourIDs);
         m_cells.push_back(newCell);
 
-
         if (j == 0)
         {
             m_cellSize = m_cells[0].getSize();
-            std::cout<<"cell size = "<<m_cellSize<<std::endl;
         }
 
     }
-    //Give each cell a list of its perpendicular
+
+    //Give each cell a list of its perpendicular nieghbours
     for ( int i =0; i< m_cells.size(); i++)
     {
         for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
@@ -150,14 +161,15 @@ CellGraph::CellGraph(const char *_fileName)
                  || m_cells[m_cells[i].getNeighbourCellIDs()[j]].getCentre().m_z == m_cells[i].getCentre().m_z)
             {
                 m_cells[i].addPerpendicularNeighbourID(m_cells[i].getNeighbourCellIDs()[j]);
-
             }
-
         }
-
     }
 
-
+    //now we offset the boundries to define playable area
+    m_mapBounds.push_back(upperBoundry+m_cellSize*_borderSize);
+    m_mapBounds.push_back(lowerBoundry-m_cellSize*_borderSize);
+    m_mapBounds.push_back(leftBoundry+m_cellSize*_borderSize);
+    m_mapBounds.push_back(rightBoundry-m_cellSize*_borderSize);
 }
 
 CellGraph::CellGraph()
@@ -213,9 +225,7 @@ void CellGraph::initializeCells(BaseGameEntity *_entity)
               _entity->setCurrentCell(m_cells[i]);
               return;
           }
-
       }
-
       _entity->setCurrentCellID(-1);
 }
 
@@ -241,7 +251,6 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
       }
     }
   }
-
 }
 
 void CellGraph::clearCells()
@@ -337,7 +346,6 @@ void CellGraph::generateWalls()
                     && currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_w)
             {
                 upperWall = false;
-                //std::cout<< "Cell: "<< i<< "   UpperWall? " << upperWall<<std::endl;
             }
             //Check for lower wall:
             if(currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_y
@@ -345,7 +353,6 @@ void CellGraph::generateWalls()
                     && currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_w)
             {
                 lowerWall = false;
-              //std::cout<< "Cell: "<< i<< "   LowerWall? " << lowerWall<<std::endl;
             }
             //Check for left wall:
             if(currentNeighbourCentre.m_x < m_cells[i].getBoundaries().m_z
@@ -353,7 +360,6 @@ void CellGraph::generateWalls()
                     && currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_x)
             {
                 leftWall = false;
-                //std::cout<< "Cell: "<< i<< "   LeftWall? " << leftWall<<std::endl;
             }
             //Check for right wall
             if(currentNeighbourCentre.m_x > m_cells[i].getBoundaries().m_w
@@ -361,7 +367,6 @@ void CellGraph::generateWalls()
                     && currentNeighbourCentre.m_z > m_cells[i].getBoundaries().m_x)
             {
                 rightWall = false;
-               // std::cout<< "Cell: "<< i<< "   rightWall? " << rightWall<<std::endl;
             }
 
 
@@ -377,7 +382,6 @@ void CellGraph::generateWalls()
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
-            //std::cout<<"cell "<<i<<" upperWallstart: "<<start.m_x<<" "<<start.m_z<<" upperwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
             m_cells[i].addWallInCell(newWall);
 
         }
@@ -389,7 +393,6 @@ void CellGraph::generateWalls()
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
-            //std::cout<<"cell "<<i<<" lowerWallstart: "<<start.m_x<<" "<<start.m_z<<" lowerwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
             m_cells[i].addWallInCell(newWall);
 
         }
@@ -401,7 +404,6 @@ void CellGraph::generateWalls()
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
-            //std::cout<<"cell "<<i<<" leftWallstart: "<<start.m_x<<" "<<start.m_z<<" leftwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
             m_cells[i].addWallInCell(newWall);
 
         }
@@ -413,7 +415,6 @@ void CellGraph::generateWalls()
             newWall.start =start;
             newWall.end = end;
             newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
-            //std::cout<<"cell "<<i<<" rightWallstart: "<<start.m_x<<" "<<start.m_z<<" rightwallend: "<<end.m_x<<" "<<end.m_z<<std::endl;
             m_cells[i].addWallInCell(newWall);
         }
 
@@ -432,7 +433,6 @@ void CellGraph::generateWalls()
             {
                 for( int k=0; k<m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell().size();k++)
                 {
-                    //std::cout<<"adding Wall"<<std::endl;
                     Wall wallToAdd = m_cells[m_cells[i].getNeighbourCellIDs()[j]].getWallsInCell()[k];
                     m_cells[i].addWall(wallToAdd);
                 }
@@ -502,13 +502,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     while (currentCellID != endCellID)
     {
 
-    std::cout<<"----------------------------"<<std::endl;
-    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
-    std::cout<<"----------------------------"<<std::endl;
-
-
-
-
 ///////1-Update frontier:
 
     //Clear priority Q:
@@ -569,8 +562,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
             {
                 shortestDist = distance.lengthSquared();
                 shortestID = frontierCopy[i];
-
-
             }
         }
 
@@ -586,29 +577,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     }
 
 
-    std::cout<<"Frontier Cells"<< std::endl;
-    for (int i = 0;i<frontierCells.size();i++)
-    {
-        std::cout<<frontierCells[i]<<std::endl;
-
-    }
-
-    std::cout<< "PRIORITY QUEUEUE:   "<<std::endl;
-    for (int i =0; i< priorityQueue.size();i++)
-    {
-        std::cout<< priorityQueue[i]<<std::endl;
-    }
-
-    std::cout<<"Frontier Memory: "<< std::endl;
-    for (int i = 0;i<frontierMemory.size();i++)
-    {
-        std::cout<<frontierMemory[i]<<std::endl;
-
-    }
-
-
-
-
 //3-Add currentCell to SPT
   //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
 
@@ -618,7 +586,7 @@ if (currentCellID != startCellID)
 {
 
 
-    for (int i=SPTs.size()-1; i>=0;i--)
+    for (int i = SPTs.size()-1; i >= 0; i--)
     {
         newSPT.clear();
 
@@ -652,7 +620,6 @@ if (currentCellID != startCellID)
                         }
                         else
                         {
-                            std::cout<<"-------------------------------------------------------------"<<std::endl;
                             newSPT.push_back(currentCellID);
                             SPTs.push_back(newSPT);
                             flag = true;
@@ -700,11 +667,7 @@ if (currentCellID != startCellID)
 
     for( int i = 0; i< SPTs.back().size(); i++)
     {
-
       finalPath.push_back(m_cells[SPTs.back()[i]].getCentre());
-      std::cout<<"Centre = "<<m_cells[SPTs.back()[i]].getCentre().m_z<<std::endl;
-      std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
-
     }
 
     finalPath.push_back(_to);
