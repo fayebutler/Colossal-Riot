@@ -673,7 +673,7 @@ if (currentCellID != startCellID)
     // If not, then create a new SPT vector from the start of the current SPT to the first perpendicular element, append currentCell.
     // If not perpendicular to ANY elements in the latest SPT, go to the previous SPT and perform check again. -Do not delete the last SPT.
 
-    ///4-Go to highes priority cell:
+    ///4-Go to highest priority cell:
     // Set currentCell to the first element of priorityQueue.
 
     ///5- If currentCell == _to (destination). while loop
@@ -697,6 +697,8 @@ if (currentCellID != startCellID)
       std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
 
     }
+
+    finalPath.push_back(_to);
 
     return finalPath;
 }

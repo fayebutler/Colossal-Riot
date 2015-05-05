@@ -19,7 +19,9 @@ Police::Police(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Police>(this);
 
     // Set initial variables
+    m_pathIndex = 0;
     m_isMoving = false;
+
     m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
@@ -28,19 +30,19 @@ Police::Police(GameWorld* world) : Agent(world)
     //m_targetID = 0;
 
 
-    Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(0.4f);
+//    Vehicle::Steering()->CohesionOn();
+//    Vehicle::Steering()->setCohesionWeight(0.4f);
 
-    Vehicle::Steering()->AlignmentOn();
-    Vehicle::Steering()->setAlignmentWeight(0.3f);
-
-
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(0.8f);
+//    Vehicle::Steering()->AlignmentOn();
+//    Vehicle::Steering()->setAlignmentWeight(0.3f);
 
 
-    Vehicle::Steering()->WallAvoidOn();
-    Vehicle::Steering()->setWallAvoidWeight(0.4);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(0.8f);
+
+
+//    Vehicle::Steering()->WallAvoidOn();
+//    Vehicle::Steering()->setWallAvoidWeight(0.4);
 }
 
 Police::~Police()

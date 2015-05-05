@@ -128,19 +128,19 @@ void NGLDraw::startGame(int level)
   switch(level)
   {
     case 0:
-        m_gameworld = new GameWorld(0);
+        m_gameworld = new GameWorld(0, 100);
         break;
     case 1:
-        m_gameworld = new GameWorld(100);
+        m_gameworld = new GameWorld(100, 50);
         break;
     case 2:
-        m_gameworld = new GameWorld(200);
+        m_gameworld = new GameWorld(200, 40);
         break;
     case 3:
-        m_gameworld = new GameWorld(300);
+        m_gameworld = new GameWorld(300, 30);
         break;
     case 4:
-        m_gameworld = new GameWorld(400);
+        m_gameworld = new GameWorld(400, 25);
         break;
   }
 
@@ -193,7 +193,7 @@ void NGLDraw::draw()
   shader->setShaderParamFromMat4("MVP",MVP);
 
   ngl::VAOPrimitives::instance()->createDisk("squad",1.0,120);
-  ngl::VAOPrimitives::instance()->draw("squad");
+  //ngl::VAOPrimitives::instance()->draw("squad");
 
   (*shader)["Phong"]->use();
 
@@ -365,11 +365,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 
-    if (m_selectedSquad!= NULL)
-    {
-        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
-    }
-
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
@@ -440,6 +435,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
     std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+    obj.m_y=0.f;
 
     obj.m_y = 0.0;
 

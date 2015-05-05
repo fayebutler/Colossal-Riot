@@ -38,11 +38,11 @@ private:
 
     bool m_resetID;
 
-
+    int m_availablePolice;
 
 
 public:
-    GameWorld(int numberOfRioters);
+    GameWorld(int numberOfRioters, int availablePolice);
     ~GameWorld();
 
     ngl::Obj* m_mesh;
