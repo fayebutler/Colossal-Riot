@@ -57,7 +57,6 @@ NGLDraw::NGLDraw()
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
 
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
@@ -89,7 +88,12 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
+//  m_gameworld = new GameWorld();
+
+//  m_selected = false;
+//  m_selectedSquad = NULL;
   m_gameState = menu;
+
 
 }
 
@@ -108,6 +112,7 @@ void NGLDraw::resize(int _w, int _h)
 
   m_height = _h;
   m_width = _w;
+
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
@@ -181,7 +186,6 @@ void NGLDraw::draw()
 
   m_gameworld->draw(m_cam, m_mouseGlobalTX);
 
-
 }
 
 void NGLDraw::update(double timeElapsed, double currentTime)
@@ -224,7 +228,6 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //    m_modelPos.m_y -= INCREMENT * diffY;
 
 
-
 //    INCREMENT = INCREMENT*;
 
     //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
@@ -243,6 +246,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(m_gameState == play)
   {
+
      if(_event.button == SDL_BUTTON_MIDDLE)
       {
         m_origXPos = _event.x;
@@ -343,10 +347,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
 //    pixel.m_x = round(pixel.m_x);
     std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
 
-//    if (m_selectedSquad!= NULL)
-//    {
-//        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
-//    }
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
@@ -368,8 +368,10 @@ void NGLDraw::doMovement(const int _x, const int _y)
     m_clickPosition = getWorldSpace(_x, _y);
 
     std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+
     //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-    m_selectedSquad->setPos(m_clickPosition);
+//    m_selectedSquad->setPos(m_clickPosition);
+    m_gameworld->createPath(m_selectedSquad, m_clickPosition);
     //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
     m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     m_selected = false;
@@ -422,7 +424,10 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
     obj.m_y=0.f;
 
+    obj.m_y = 0.0;
+
     return obj;
+
 
 
 }

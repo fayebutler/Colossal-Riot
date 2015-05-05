@@ -7,8 +7,6 @@
 
 class SteeringBehaviour;
 
-//class GameWorld;
-
 
 class Vehicle: public MovingEntity
 {
@@ -19,7 +17,15 @@ private:
 
     double m_timeElapsed;
 
-      ngl::Vec3 m_crosshair;
+    ngl::Vec3 m_crosshair;
+
+    ngl::Vec3 m_smoothHeading;
+    std::vector <ngl::Vec3> m_headingHistory;
+    int m_nextSlot;
+    int m_sampleSize;
+    bool m_smoothingOn;
+
+
 
 
 
@@ -27,8 +33,6 @@ public:
     Vehicle(GameWorld* world, ngl::Vec3 position, ngl::Vec3 velocity, float rotation, float mass, float max_force, float max_speed, float max_turnrate, float scale);
     ~Vehicle();
     SteeringBehaviour* Steering(){return m_steering;}
-
-    //GameWorld* World(){return m_world;}
     double TimeElapsed()const{return m_timeElapsed;}
 
     virtual bool handleMessage(const Message& _message);
@@ -39,6 +43,8 @@ public:
 
     ngl::Vec3 getCrosshair()const{return m_crosshair;}
     void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
+
+    ngl::Vec3 smoothingUpdate(ngl::Vec3 m_recentHeading);
 
 };
 

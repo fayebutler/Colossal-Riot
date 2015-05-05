@@ -58,6 +58,7 @@ void Rioter::update(double timeElapsed, double currentTime)
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
     Vehicle::Steering()->WallOverlapAvoidance();
     Vehicle::Steering()->ObjectOverlapAvoidance();
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -81,7 +82,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
+  trans.setPosition(getPos().m_x,0,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 

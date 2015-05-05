@@ -17,7 +17,8 @@ protected:
 
 public:
     MovingEntity();
-    MovingEntity(GameWorld* world, ngl::Vec3 pos,
+    MovingEntity(GameWorld* world,
+                 ngl::Vec3 pos,
                  float r,
                  ngl::Vec3 velocity,
                  float max_speed,

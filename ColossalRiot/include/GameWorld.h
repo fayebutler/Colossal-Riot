@@ -62,6 +62,8 @@ public:
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
 
+    void createPath(Squad *selectedSquad, ngl::Vec3 target);
+
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 
     //std::vector<Wall2D> m_Walls;

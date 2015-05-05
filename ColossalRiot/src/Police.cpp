@@ -19,8 +19,8 @@ Police::Police(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Police>(this);
 
     // Set initial variables
-
-    m_enRoute = false;
+    m_pathIndex = 0;
+    m_isMoving = false;
 
     m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
@@ -29,24 +29,20 @@ Police::Police(GameWorld* world) : Agent(world)
 
     //m_targetID = 0;
 
-//    Vehicle::Steering()->WanderOn();
-//    Vehicle::Steering()->setWanderWeight(0.5);
-
-  //  Vehicle::Steering()->ObstacleAvoidOn();
 
 //    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(0.8f);
+//    Vehicle::Steering()->setCohesionWeight(0.4f);
 
 //    Vehicle::Steering()->AlignmentOn();
 //    Vehicle::Steering()->setAlignmentWeight(0.3f);
 
 
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(0.6f);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(0.8f);
 
 
-    Vehicle::Steering()->WallAvoidOn();
-    Vehicle::Steering()->setWallAvoidWeight(0.2);
+//    Vehicle::Steering()->WallAvoidOn();
+//    Vehicle::Steering()->setWallAvoidWeight(0.4);
 }
 
 Police::~Police()
@@ -73,7 +69,8 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(0.8);
+  Vehicle::setMaxSpeed(2);
+
 
 }
 
@@ -179,7 +176,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("attack", &Police::attack)
                 .addFunction("findTargetID", &Police::findTargetID)
                 .addFunction("squadCohesion", &Police::squadCohesion)
-                .addProperty("m_enRoute", &Police::getEnRoute, &Police::setEnRoute)
+                .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
         .endClass();
 }
 
@@ -195,5 +192,6 @@ void Police::squadCohesion(double weight)
     Vehicle::Steering()->setSeekWeight(weight);
 
     Vehicle::Steering()->SeekOn();
+
 
 }

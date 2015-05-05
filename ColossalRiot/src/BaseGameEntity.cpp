@@ -12,7 +12,8 @@ BaseGameEntity::BaseGameEntity()
   m_entityMgr->registerEntity(this);
 }
 
-BaseGameEntity::BaseGameEntity(GameWorld *world, entityType entity_type, ngl::Vec3 pos, float r)
+
+BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Vec3 pos, float r)
 {
   m_world = world;
 
