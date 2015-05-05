@@ -72,6 +72,58 @@ void Agent::evade(double weight)
     }
 }
 
+void Agent::seek(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SeekOff();
+    }
+    else
+    {
+      Vehicle::Steering()->SeekOn();
+      Vehicle::Steering()->setSeekWeight(weight);
+    }
+}
+
+void Agent::cohesion(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->CohesionOff();
+    }
+    else
+    {
+      Vehicle::Steering()->CohesionOn();
+      Vehicle::Steering()->setCohesionWeight(weight);
+    }
+}
+
+void Agent::separation(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SeparationOff();
+    }
+    else
+    {
+      Vehicle::Steering()->SeparationOn();
+      Vehicle::Steering()->setSeparationWeight(weight);
+    }
+}
+
+void Agent::alignment(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->AlignmentOff();
+    }
+    else
+    {
+      Vehicle::Steering()->AlignmentOn();
+      Vehicle::Steering()->setAlignmentWeight(weight);
+    }
+}
+
 bool Agent::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
@@ -129,6 +181,10 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
+                .addFunction("seek", &Agent::seek)
+                .addFunction("cohesion", &Agent::cohesion)
+                .addFunction("separation", &Agent::separation)
+                .addFunction("alignment", &Agent::alignment)
                 .addFunction("checkValidTarget", &Agent::checkValidTarget)
 
         .endClass();

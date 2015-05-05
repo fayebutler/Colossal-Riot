@@ -41,26 +41,58 @@ global["execute"] = function()
         stateMachine:changeState("dead")
     end
   end
+  if stateMachine.m_currentState ~= "move" then
+    if police.m_isMoving == true then
+        stateMachine:changeState("move")
+    end
+  end
 end
 
 global["exit"] = function()
 end
 
+-- move state
 
+move = {}
+move["enter"] = function()
+  police:pursuit(0.0)
+  police:wander(0.0)
+  police:squadCohesion(0.0)
+  police:cohesion(0.1)
+  police:separation(0.1)
+  police:alignment(0.0)
+  police:seek(1.0)
+--  print("LUA POLICE move enter")
+end
+
+move["execute"] = function()
+--  print("LUA POLICE move execute")
+  if police.m_isMoving == false then
+    stateMachine:changeState(stateMachine.m_previousState)
+  end
+end
+
+move["exit"] = function()
+--  print("LUA POLICE move exit")
+end
 
 -- work state
 
 work = {}
 work["enter"] = function()
 
-  print("LUA POLICE work enter")
+--  print("LUA POLICE work enter")
  -- police:checkValidTarget(1.0, 20.0)
  -- police:pursuit(1.0)
+   police:cohesion(0.4)
+   police:separation(0.8)
+   police:alignment(0.3)
+   police:seek(0.0)
 end
 
 work["execute"] = function()
-  print("LUA POLICE work execute")
-  print(police.m_targetID)
+--  print("LUA POLICE work execute")
+--  print(police.m_targetID)
   police:checkValidTarget(3.0, 20.0)
 --  if police.m_targetID >= 0 then
 --    police:wander(0.0)
@@ -87,11 +119,11 @@ flee = {}
 flee["enter"] = function()
     police:pursuit(0.0)
 --  police:setTargetID(1)
-  print("LUA POLICE flee enter")
+--  print("LUA POLICE flee enter")
 end
 
 flee["execute"] = function()
-  print("LUA POLICE flee execute")
+--  print("LUA POLICE flee execute")
   police.m_morale = police.m_morale + 0.5
   if police.m_morale > 75 then
     stateMachine:changeState("work")
@@ -110,11 +142,11 @@ dead = {}
 dead["enter"] = function()
 --  police:pursuit(0.0)
 --  police:wander(1.0)
-  print("LUA POLICE dead enter")
+--  print("LUA POLICE dead enter")
 end
 
 dead["execute"] = function()
-  print("LUA POLICE dead execute")
+--  print("LUA POLICE dead execute")
   police.m_health = 0
 end
 

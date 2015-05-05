@@ -57,6 +57,8 @@ protest = {}
 protest["enter"] = function()
 --  rioter:pursuit(1.0)
   rioter:evade(0.0)
+  rioter:cohesion(0.8)
+  rioter:alignment(0.4)
   rioter:wander(0.5)
 --  print("LUA RIOTER protest enter")
 end
@@ -83,7 +85,9 @@ flee = {}
 flee["enter"] = function()
   rioter:checkValidTarget(1.0, 50.0)
 --  rioter:pursuit(0.0)
-  rioter:evade(0.6)
+  rioter:cohesion(0.0)
+  rioter:alignment(0.0)
+  rioter:evade(0.8)
   rioter:wander(0.0)
 --  print("LUA RIOTER flee enter")
 end
