@@ -127,13 +127,13 @@ void Rioter::findTargetID(float _health)
     if (currentTarget == NULL)
     {
         setTargetID(-1);
-        std::cout<< "NO NEARBY TARGETS"<<std::endl;
+//        std::cout<< "NO NEARBY TARGETS"<<std::endl;
     }
     else
     {
         int target = currentTarget->getID();
         setTargetID(target);
-        std::cout<< "FOUND TARGET"<<std::endl;
+//        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }
 

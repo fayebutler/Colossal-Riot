@@ -136,7 +136,7 @@ CellGraph::CellGraph(const char *_fileName)
         if (j == 0)
         {
             m_cellSize = m_cells[0].getSize();
-            std::cout<<"cell size = "<<m_cellSize<<std::endl;
+//            std::cout<<"cell size = "<<m_cellSize<<std::endl;
         }
 
     }
@@ -458,8 +458,8 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
         float left  = m_cells[i].getBoundaries().m_z;
         float right = m_cells[i].getBoundaries().m_w;
 
-        if(_to.m_z > upper && _to.m_z < lower &&
-           _to.m_x > left && _to.m_x < right)
+        if(_to.m_z >= upper && _to.m_z <= lower &&
+           _to.m_x >= left && _to.m_x <= right)
         {
              endCellID = i;
              break;
@@ -502,9 +502,9 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     while (currentCellID != endCellID)
     {
 
-    std::cout<<"----------------------------"<<std::endl;
-    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
-    std::cout<<"----------------------------"<<std::endl;
+//    std::cout<<"----------------------------"<<std::endl;
+//    std::cout<<"CURRENT CELL ID :  "<< currentCellID<<std::endl;
+//    std::cout<<"----------------------------"<<std::endl;
 
 
 
@@ -585,23 +585,23 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     }
 
 
-    std::cout<<"Frontier Cells"<< std::endl;
+//    std::cout<<"Frontier Cells"<< std::endl;
     for (int i = 0;i<frontierCells.size();i++)
     {
-        std::cout<<frontierCells[i]<<std::endl;
+//        std::cout<<frontierCells[i]<<std::endl;
 
     }
 
-    std::cout<< "PRIORITY QUEUEUE:   "<<std::endl;
+//    std::cout<< "PRIORITY QUEUEUE:   "<<std::endl;
     for (int i =0; i< priorityQueue.size();i++)
     {
-        std::cout<< priorityQueue[i]<<std::endl;
+//        std::cout<< priorityQueue[i]<<std::endl;
     }
 
-    std::cout<<"Frontier Memory: "<< std::endl;
+//    std::cout<<"Frontier Memory: "<< std::endl;
     for (int i = 0;i<frontierMemory.size();i++)
     {
-        std::cout<<frontierMemory[i]<<std::endl;
+//        std::cout<<frontierMemory[i]<<std::endl;
 
     }
 
@@ -643,7 +643,7 @@ if (currentCellID != startCellID)
                         }
                         else
                         {
-                            std::cout<<"-------------------------------------------------------------"<<std::endl;
+//                            std::cout<<"-------------------------------------------------------------"<<std::endl;
                             newSPT.push_back(currentCellID);
                             SPTs.push_back(newSPT);
                             flag = true;
@@ -693,8 +693,8 @@ if (currentCellID != startCellID)
     {
 
       finalPath.push_back(m_cells[SPTs.back()[i]].getCentre());
-      std::cout<<"Centre = "<<m_cells[SPTs.back()[i]].getCentre().m_z<<std::endl;
-      std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
+//      std::cout<<"Centre = "<<m_cells[SPTs.back()[i]].getCentre().m_z<<std::endl;
+//      std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
 
     }
 

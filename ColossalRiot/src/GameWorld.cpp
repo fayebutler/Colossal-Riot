@@ -31,7 +31,7 @@ GameWorld::GameWorld(int numberOfRioters)
       m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
     }
     m_rioters.push_back(newRioter);
-    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
+//    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 //  for (int i = 0; i < 100 ; ++i)
 //  {
@@ -107,6 +107,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 //    std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), ngl::Vec3 (10, 0, -9));
 
+
     /// ----------------------------------------------------
 
     //(WHEN MAKING CELLS THEY NEED TO HAVE VECTORS OF ALL STATIC ENTITIES (walls n shit))
@@ -138,7 +139,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
     }
-
 }
 
 void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -206,7 +206,33 @@ void GameWorld::createSquad(int size)
 void GameWorld::createPath(Squad* selectedSquad, ngl::Vec3 target)
 {
 
+    selectedSquad->getPath().clear();
     std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
 
     selectedSquad->setPath(path);
+}
+
+bool GameWorld::loseGame()
+{
+    int numberDeadPolice = 0;
+    for(int i =0; i < m_numberOfPolice; i++)
+    {
+        Police* policeMan = m_police[i];
+        if(policeMan->getHealth() == 0.0)
+        {
+            numberDeadPolice += 1;
+        }
+
+    }
+//    std::cout<<"number of police = "<<m_numberOfPolice<<std::endl;
+//    std::cout<<"dead police = "<<numberDeadPolice<<std::endl;
+    if(m_numberOfPolice > 0 &&  numberDeadPolice == m_numberOfPolice)
+    {
+//        std::cout<<" YOU LOOOOSEEEE"<<std::endl;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

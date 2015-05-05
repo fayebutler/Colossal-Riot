@@ -12,7 +12,9 @@
 enum gameState
 {
     menu,
-    play
+    play,
+    win,
+    lose
 };
 
 class NGLDraw

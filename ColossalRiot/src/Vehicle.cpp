@@ -56,7 +56,14 @@ void Vehicle::update(double time_elapsed)
 
     if(m_velocity.length() > m_maxSpeed)
     {
-       m_velocity.normalize();
+        if(m_velocity.lengthSquared() == 0.0f)
+        {
+            std::cout<<"Velocity in vehicle update equals zero, can't normalise"<<std::endl;
+        }
+        else
+        {
+          m_velocity.normalize();
+        }
        m_velocity = m_velocity * m_maxSpeed;
     }
 
@@ -67,7 +74,16 @@ void Vehicle::update(double time_elapsed)
     {
        ngl::Vec3 tempVel;
        tempVel = m_velocity;
-       tempVel.normalize();
+
+       if(tempVel.lengthSquared() == 0.0f)
+       {
+           std::cout<<"tempVel in vehicle update equals zero, can't normalise"<<std::endl;
+       }
+       else
+       {
+         tempVel.normalize();
+       }
+
        m_heading = tempVel;
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
     }

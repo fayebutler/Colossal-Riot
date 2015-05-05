@@ -101,6 +101,7 @@ work["execute"] = function()
   police:wander(0.5)
   police:squadCohesion(0.4)
 --  end
+--  police.m_health = police.m_health - 1.0
 
   if police.m_morale < 30 then
     stateMachine:changeState("flee")

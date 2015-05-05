@@ -167,7 +167,7 @@ int main()
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); paused = 1; break;
+                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(4); paused = 1; break;
 
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
@@ -191,13 +191,18 @@ int main()
         timeElapsed=gameTimer.timeElapsed();
         currentTime=gameTimer.getCurrentTime();
 
-        std::cout<<"------------- TICK -------------"<<std::endl;
+//        std::cout<<"------------- TICK -------------"<<std::endl;
         ngldraw.update(timeElapsed,currentTime);
         }
         // now we draw ngl
         ngldraw.draw();
     }
     if(ngldraw.getGameState() == menu)
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+    }
+    if(ngldraw.getGameState() == lose)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0f, 0.3f, 0.3f, 1.0f);

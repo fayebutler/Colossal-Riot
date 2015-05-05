@@ -41,6 +41,7 @@ private:
 
 
 
+
 public:
     GameWorld(int numberOfRioters);
     ~GameWorld();
@@ -54,6 +55,7 @@ public:
 
     std::vector<Rioter*> getRioters() { return m_rioters; }
     //std::vector<Police*> getPolice() { return m_police; }
+    void addPolice(Police* policeman) { m_police.push_back(policeman);}
 
     std::vector<Squad*> getSquads() {return m_squads;}
 
@@ -63,6 +65,8 @@ public:
     bool getResetID()const{return m_resetID;}
 
     void createPath(Squad *selectedSquad, ngl::Vec3 target);
+
+    bool loseGame();
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 

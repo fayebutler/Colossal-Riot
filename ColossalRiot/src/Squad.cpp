@@ -32,7 +32,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     }
 
     m_selectionColour = s_nextSelectionColour;
-    std::cout<<"SELECTION COLOUR "<<m_selectionColour.m_x<<" "<<m_selectionColour.m_y<<" "<<m_selectionColour.m_z<<std::endl;
+//    std::cout<<"SELECTION COLOUR "<<m_selectionColour.m_x<<" "<<m_selectionColour.m_y<<" "<<m_selectionColour.m_z<<std::endl;
 
     s_nextSelectionColour.m_x += 0.1;
 
@@ -69,6 +69,7 @@ void Squad::update(double timeElapsed, double currentTime)
         Police* currentPolice = m_squadPolice[i];
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
+
 
         if(m_path.size() != 0)
         {
@@ -169,15 +170,15 @@ bool Squad::checkSelectionColour(const ngl::Vec3 colour)
             m_selectionColour.m_y >= colour.m_y-0.01f && m_selectionColour.m_y <= colour.m_y+0.01f &&
             m_selectionColour.m_z >= colour.m_z-0.01f && m_selectionColour.m_z <= colour.m_z+0.01f)
     {
-        std::cout<<"MATCHES!!";
-        std::cout<<"SQUAD ID "<<getID()<<std::endl;
+//        std::cout<<"MATCHES!!";
+//        std::cout<<"SQUAD ID "<<getID()<<std::endl;
 
         return true;
     }
     else
     {
-        std::cout<<"DOESNT MATCH!";
-        std::cout<<"SQUAD ID "<<getID()<<std::endl;
+//        std::cout<<"DOESNT MATCH!";
+//        std::cout<<"SQUAD ID "<<getID()<<std::endl;
         return false;
     }
 }
@@ -216,11 +217,13 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Squad::setPath(std::vector<ngl::Vec3> _path)
 {
+    m_path.clear();
     m_path = _path;
     for (int i=0; i<m_squadSize; i++)
     {
         m_policeArrived[i] = false;
         m_squadPolice[i]->setIsMoving(true);
+        m_squadPolice[i]->setPathIndex(0);
     }
 }
 

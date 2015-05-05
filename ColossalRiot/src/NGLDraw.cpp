@@ -170,7 +170,6 @@ void NGLDraw::draw()
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   (*shader)["Phong"]->use();
 
-
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
@@ -191,6 +190,12 @@ void NGLDraw::draw()
 void NGLDraw::update(double timeElapsed, double currentTime)
 {
   m_gameworld->Update(timeElapsed, currentTime);
+
+  // if percentage of rioters is below certain value then set gamestate to win!
+  if(m_gameworld->loseGame() == true)
+  {
+      setGameState(lose);
+  }
 }
 
 
@@ -255,7 +260,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
      if(_event.button == SDL_BUTTON_LEFT)
       {
-             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+//             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
             if(m_selected == true)
             {
                  doMovement(_event.x, _event.y);
@@ -345,7 +350,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 //    pixel.m_x = round(pixel.m_x);
-    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
 
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -367,7 +372,7 @@ void NGLDraw::doMovement(const int _x, const int _y)
 {
     m_clickPosition = getWorldSpace(_x, _y);
 
-    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+//    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
 
     //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
 //    m_selectedSquad->setPos(m_clickPosition);
@@ -413,7 +418,14 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
     //create ray
     ngl::Vec3 rayDir(farPoint-nearPoint);
-    rayDir.normalize();
+    if(rayDir.lengthSquared() == 0.0f)
+    {
+        std::cout<<"Ray Direction in getWorldSpace equals zero, can't normalise"<<std::endl;
+    }
+    else
+    {
+        rayDir.normalize();
+    }
 
     //calculate distance to zx plane
     float dist = (-nearPoint.m_y)/rayDir.m_y;
@@ -421,7 +433,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     //set world space coordinate where y = 0
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
-    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+//    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
 
     obj.m_y = 0.0;
 
