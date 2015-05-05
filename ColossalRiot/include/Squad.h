@@ -31,6 +31,8 @@ public:
     void setPath(std::vector<ngl::Vec3> _path);
     std::vector<ngl::Vec3> getPath() const {return m_path;}
 
+    void formWall();
+
 private:
 
     int m_squadSize;

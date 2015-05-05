@@ -55,7 +55,6 @@ public:
 
     std::vector<Rioter*> getRioters() { return m_rioters; }
     //std::vector<Police*> getPolice() { return m_police; }
-    void addPolice(Police* policeman) { m_police.push_back(policeman);}
 
     std::vector<Squad*> getSquads() {return m_squads;}
 

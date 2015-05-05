@@ -241,3 +241,39 @@ bool Squad::handleMessage(const Message& _message)
     return false;
   }
 }
+
+void Squad::formWall()
+{
+    std::vector<ngl::Vec3> wallNormals;
+    std::vector<ngl::Vec3> wallCentres;
+    for (int j= 0; j < this->getCurrentCell().getWalls().size(); ++j)
+    {
+      ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWalls()[j].start;
+      ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWalls()[j].end;
+      ngl::Vec3 wallLine = wallEnd - wallStart;
+      ngl::Vec3 wallNormal = wallLine.cross(ngl::Vec3(0.f, 1.f, 0.f));
+
+      ngl::Vec3 wallPos = (wallStart + wallEnd)/2;
+
+      wallNormals.push_back(wallNormal);
+      wallCentres.push_back(wallPos);
+    }
+    float closestDist = 0;
+    float wallID = -1;
+
+    //reorder cells
+
+    for(int i=0; i<wallCentres.size(); i++)
+    {
+        for(int j=0; j<wallCentres.size(); j++)
+        {
+
+        }
+    }
+
+    for(int i =0; i<m_squadSize; i++)
+    {
+        Police* policeman = m_squadPolice[i];
+        policeman->getCurrentCell().getWalls();
+    }
+}
