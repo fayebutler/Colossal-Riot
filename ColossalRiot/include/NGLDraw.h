@@ -8,11 +8,14 @@
 #include "Vehicle.h"
 #include "Police.h"
 #include "Rioter.h"
+#include "UIButton.h"
+#include "Text.h"
 
 enum gameState
 {
     menu,
-    play
+    play,
+    paused
 };
 
 class NGLDraw
@@ -22,6 +25,7 @@ class NGLDraw
     /// @brief ctor this will have a valid OpenGL context so we can create gl stuff
     //----------------------------------------------------------------------------------------------------------------------
     NGLDraw();
+    NGLDraw(int _width, int _height);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief dtor used to remove any NGL stuff created
     //----------------------------------------------------------------------------------------------------------------------
@@ -77,6 +81,8 @@ class NGLDraw
 
     gameState getGameState()const{return m_gameState;}
     void setGameState(gameState _gameState){m_gameState = _gameState;}
+
+    void drawMenu();
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -144,6 +150,9 @@ class NGLDraw
 
     gameState m_gameState;
 
+    std::vector<UIButton*> m_UI;
+    UIButton* m_UIButton;
+    Text* m_text;
 
 };
 

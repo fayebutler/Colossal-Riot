@@ -26,14 +26,13 @@ CONFIG-=app_bundle
 SOURCES+= $$PWD/src/*.cpp \
 
 # same for the .h files
-HEADERS+= $$PWD/include/*.h \
+HEADERS+= $$PWD/include/*.h
 
 # and add the include dir into the search path for Qt and make
 INCLUDEPATH +=./include \
               ../lua/include \
               ../LuaBridge \
-              #../AntTweakBar/include \
-              ../AntTweakBar2.0/include
+              ../SDL2_ttf/include/SDL2
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
@@ -76,8 +75,7 @@ DEFINES +=NGL_DEBUG
 unix:LIBS += -L/usr/local/lib \
              -L/$(HOME)/NGL/lib -l NGL \
              -L../lua/lib -llua -ldl \
-             #-L../AntTweakBar/lib -lAntTweakBar \
-             -L../AntTweakBar2.0/lib -lAntTweakBar
+             -L../SDL2_ttf/lib -lSDL2_ttf \
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{

@@ -9,7 +9,7 @@ const static float INCREMENT=-0.02;
 const static float ZOOM=5;
 float cameraHeight =125 ;
 
-NGLDraw::NGLDraw()
+NGLDraw::NGLDraw(int _width, int _height)
 {
   m_rotate=false;
   // mouse rotation values set to 0
@@ -55,27 +55,17 @@ NGLDraw::NGLDraw()
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
 
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-
   ngl::Vec3 from(0,cameraHeight,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
-
   // now load to our new camera
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
-
-//  int w=this->size().width();
-//  int h=this->size().height();
-
   m_cam->setShape(45,(float)m_width/m_height,0.05,350);
-
-  //m_cam->setShape(45,(float)m_width/m_height,0.05,350);
-  //m_cam->setShape(45,(float)w/h,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -87,8 +77,19 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-  m_gameState = menu;
+  m_width = _width;
+  m_height = _height;
 
+  m_gameState = menu;
+  m_UIButton = new UIButton("../font/arial.ttf", 40);
+  m_UIButton->setScreenDimensions(ngl::Vec2(m_width, m_height));
+  m_UIButton->updateButton(ngl::Vec2(-0.5, 0.5f), ngl::Vec2(0.5f, 0.5f), ngl::Vec4(0.f, 1.f, 0.f, 1.f));
+  m_UIButton->updateText("wooo", ngl::Vec3(1.f, 0.f, 1.f), ngl::Vec2(0.f, 0.f));
+  m_UIButton->setTextColour(ngl::Vec3(0.f, 1.f, 1.f));
+
+  m_UI.push_back(m_UIButton);
+
+  //m_text = new Text("../font/arial.ttf", 40);
 }
 
 NGLDraw::~NGLDraw()
@@ -109,6 +110,24 @@ void NGLDraw::resize(int _w, int _h)
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
+
+  m_UIButton->setScreenDimensions(ngl::Vec2(m_width, m_height));
+
+  m_text->setScreenSize(_w, _h);
+  // Ok so this is still a bit of a hack we need to scale our text based
+  // on max screen size so first get the size of the screen
+  SDL_Rect s;
+  SDL_GetDisplayBounds(0,&s);
+  float x,y;
+  // now get a scale transform for the text shader
+
+
+  x=1.0-float(s.w-_w)/s.w;
+  y=1.0-float(s.h-_h)/s.h;
+  std::cout<<s.w-_w<<" "<<s.h-_h<<"\n";
+  std::cout<<x<<" "<<y<<"\n";
+  // now set the new transform element for this shader
+  m_text->setTransform(x,y);
 }
 
 void NGLDraw::startGame(int level)
@@ -163,7 +182,6 @@ void NGLDraw::draw()
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   (*shader)["Phong"]->use();
 
-
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
   ngl::Mat4 rotY;
@@ -178,8 +196,11 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_gameworld->draw(m_cam, m_mouseGlobalTX);
+}
 
-
+void NGLDraw::drawMenu()
+{
+  m_UIButton->draw();
 }
 
 void NGLDraw::update(double timeElapsed, double currentTime)
@@ -237,6 +258,18 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 {
+  unsigned int numberOfUIObjects = m_UI.size();
+  for (unsigned int i = 0; i < numberOfUIObjects; i++)
+  {
+    if (m_UI[i]->isClicked(_event.x, _event.y))
+    {
+      m_UI[i]->executeClick();
+      m_UI[i]->setTextColour(ngl::Vec3(0.f, 0.f, 1.f));
+      m_UI[i]->setButtonColour(ngl::Vec4(1.f, 1.f, 0.f, 1.f));
+      m_gameState = play;
+      startGame(1);
+    }
+  }
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
   if(m_gameState == play)
@@ -249,16 +282,14 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
      if(_event.button == SDL_BUTTON_LEFT)
       {
-            std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
-            if(m_selected == true)
-            {
-                 doMovement(_event.x, _event.y);
-             }
-             else
-             {
-                doSelection(_event.x, _event.y);
-             }
-
+         if(m_selected == true)
+         {
+            doMovement(_event.x, _event.y);
+         }
+         else
+         {
+            doSelection(_event.x, _event.y);
+         }
       }
    }
 }
