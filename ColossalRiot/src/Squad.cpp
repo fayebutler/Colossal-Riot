@@ -54,8 +54,8 @@ void Squad::update(double timeElapsed, double currentTime)
     }
 
 //    std::vector<ngl::Vec3> path = m_cellGraph.findPath(m_entityMgr->getEntityFromID(0), m_pos);
-    Vehicle::Steering()->SeekOn();
-    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
+//    Vehicle::Steering()->SeekOn();
+//    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
 }
 
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
