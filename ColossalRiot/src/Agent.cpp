@@ -24,7 +24,7 @@ void Agent::setTargetID(int _val)
     m_targetID = _val;
     if (_val < 0)
     {
-        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
+//        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
         Vehicle::Steering()->setTargetAgent(NULL);
     }
     else
@@ -72,6 +72,58 @@ void Agent::evade(double weight)
     }
 }
 
+void Agent::seek(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SeekOff();
+    }
+    else
+    {
+      Vehicle::Steering()->SeekOn();
+      Vehicle::Steering()->setSeekWeight(weight);
+    }
+}
+
+void Agent::cohesion(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->CohesionOff();
+    }
+    else
+    {
+      Vehicle::Steering()->CohesionOn();
+      Vehicle::Steering()->setCohesionWeight(weight);
+    }
+}
+
+void Agent::separation(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SeparationOff();
+    }
+    else
+    {
+      Vehicle::Steering()->SeparationOn();
+      Vehicle::Steering()->setSeparationWeight(weight);
+    }
+}
+
+void Agent::alignment(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->AlignmentOff();
+    }
+    else
+    {
+      Vehicle::Steering()->AlignmentOn();
+      Vehicle::Steering()->setAlignmentWeight(weight);
+    }
+}
+
 bool Agent::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
@@ -98,17 +150,17 @@ void Agent::checkValidTarget(float _dist, float _health)
 
         if(distFromEachOther>m_boundingRadius*_dist || target->getHealth()<_health)
         {
-            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
+//            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
             findTargetID(_health);
         }
         else
         {
-            std::cout<<"TARGET A-OKAY"<<std::endl;
+//            std::cout<<"TARGET A-OKAY"<<std::endl;
         }
     }
     else
     {
-        std::cout<<"TARGET NOT SET"<<std::endl;
+//        std::cout<<"TARGET NOT SET"<<std::endl;
         findTargetID(_health);
     }
 }
@@ -129,6 +181,10 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
+                .addFunction("seek", &Agent::seek)
+                .addFunction("cohesion", &Agent::cohesion)
+                .addFunction("separation", &Agent::separation)
+                .addFunction("alignment", &Agent::alignment)
                 .addFunction("checkValidTarget", &Agent::checkValidTarget)
 
         .endClass();

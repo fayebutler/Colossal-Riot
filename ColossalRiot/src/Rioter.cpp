@@ -23,31 +23,26 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    //m_targetID = 400;
+    //Vehicle::Steering()->ObstacleAvoidOn();
 
-    Vehicle::Steering()->WanderOn();
-//////    //Vehicle::Steering()->SeekOn();
-//////    //setCrosshair(ngl::Vec3(5.f, 0.f, 1.f));
-    Vehicle::Steering()->ObstacleAvoidOn();
-////   // Vehicle::Steering()->EvadeOn();
-////  // Vehicle::Steering()->CohesionOn();
-////////    Vehicle::Steering()->setCohesionWeight(1.f);
+    Vehicle::Steering()->CohesionOn();
+    Vehicle::Steering()->setCohesionWeight(0.2f);
 
-////   Vehicle::Steering()->AlignmentOn();
-////////    Vehicle::Steering()->setAlignmentWeight(1.f);
+    Vehicle::Steering()->AlignmentOn();
+    Vehicle::Steering()->setAlignmentWeight(0.5f);
 
     Vehicle::Steering()->SeparationOn();
-//////    Vehicle::Steering()->setSeparationWeight(1.f);
+    Vehicle::Steering()->setSeparationWeight(1.0f);
 
     Vehicle::Steering()->WallAvoidOn();
-
 
 }
 
 Rioter::~Rioter()
 {
   lua_close(L);
-  delete m_stateMachine; 
+  delete m_stateMachine;
+  delete m_messageMgr;
 }
 
 void Rioter::update(double timeElapsed, double currentTime)
@@ -63,6 +58,7 @@ void Rioter::update(double timeElapsed, double currentTime)
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
     Vehicle::Steering()->WallOverlapAvoidance();
     Vehicle::Steering()->ObjectOverlapAvoidance();
+
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -86,7 +82,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
+  trans.setPosition(getPos().m_x,0,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 

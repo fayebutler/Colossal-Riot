@@ -4,6 +4,7 @@
 #include <map>
 #include <cassert>
 #include "BaseGameEntity.h"
+#include <iostream>
 
 
 class BaseGameEntity;

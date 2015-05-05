@@ -165,6 +165,11 @@ CellGraph::CellGraph()
   //m_entityMgr = new EntityManager();
 }
 
+CellGraph::~CellGraph()
+{
+  delete m_entityMgr;
+}
+
 void CellGraph::printCellGraph()
 {
 
@@ -177,6 +182,7 @@ void CellGraph::printCellGraph()
 bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
 {
   //check up down left right
+
   float upper = m_cells[_cellID].getBoundaries().m_x;
   float lower = m_cells[_cellID].getBoundaries().m_y;
   float left  = m_cells[_cellID].getBoundaries().m_z;
@@ -207,7 +213,9 @@ void CellGraph::initializeCells(BaseGameEntity *_entity)
               _entity->setCurrentCell(m_cells[i]);
               return;
           }
+
       }
+
       _entity->setCurrentCellID(-1);
 }
 
@@ -440,8 +448,9 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
 
     std::vector<ngl::Vec3> finalPath;
+    finalPath.clear();
 
-    int endCellID;
+    int endCellID = -1;
 
     for (int i=0; i<m_numberOfCells; i++)
     {
@@ -454,8 +463,15 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
            _to.m_x > left && _to.m_x < right)
         {
              endCellID = i;
+             break;
 
         }
+
+    }
+    if(endCellID == -1)
+    {
+        std::cout<<"You have not chosen a valid position"<<std::endl;
+        return finalPath;
     }
 
    int startCellID = _from->getCurrentCellID();
@@ -621,7 +637,15 @@ if (currentCellID != startCellID)
                         if(j+1==SPTs[i].size())
                         {
                             newSPT.push_back(currentCellID);
-                            SPTs.back() = newSPT;
+
+                            if(i == SPTs.size())
+                            {
+                                SPTs.back() = newSPT;
+                            }
+                            else
+                            {
+                                SPTs.push_back(newSPT);
+                            }
                             flag = true;
 
 
@@ -682,6 +706,8 @@ if (currentCellID != startCellID)
       std::cout<<"Saved Centre = "<<finalPath[i].m_z<<std::endl;
 
     }
+
+    finalPath.push_back(_to);
 
     return finalPath;
 }

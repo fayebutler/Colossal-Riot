@@ -1,10 +1,9 @@
-#include "Police.h"
-#include "BaseGameEntity.h"
-
 #ifndef SQUAD_H
 #define SQUAD_H
 
-class Squad : public BaseGameEntity
+#include "Police.h"
+
+class Squad : public Vehicle
 {
 public:
     Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r);
@@ -23,6 +22,14 @@ public:
 
 //    ngl::Vec3 getSquadPos() const { return m_squadPos; }
 //    void setSquadPos(ngl::Vec3 _val) { m_squadPos = _val; }
+    bool checkSelectionColour(const ngl::Vec3 colour);
+    void selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
+
+    ngl::Colour getSquadColour() const { return m_squadColour; }
+    void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
+
+    void setPath(std::vector<ngl::Vec3> _path);
+    std::vector<ngl::Vec3> getPath() const {return m_path;}
 
 private:
 
@@ -30,7 +37,23 @@ private:
     float m_squadRadius;
 //    ngl::Vec3 m_squadPos;
 
+    ngl::Vec3 m_selectionColour;
+
+    static ngl::Vec3 s_nextSelectionColour;
+
     std::vector <Police*> m_squadPolice;
+
+    ngl::Colour m_squadColour;
+
+    std::vector<ngl::Vec3> m_path;
+    ngl::Vec3 averagePolicePos();
+
+    int m_pathIndex;
+    //int m_policeArrived;
+
+    std::vector <bool> m_policeArrived;
+    bool m_allArrived;
+
 };
 
 #endif // SQUAD_H

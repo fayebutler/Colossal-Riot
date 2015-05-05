@@ -9,6 +9,12 @@
 #include "Police.h"
 #include "Rioter.h"
 
+enum gameState
+{
+    menu,
+    play
+};
+
 class NGLDraw
 {
   public :
@@ -54,6 +60,23 @@ class NGLDraw
     /// @param _event the SDL mouse event structure containing all mouse info
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent(const SDL_MouseWheelEvent &_event);
+
+    void doSelection(const int _x, const int _y);
+
+    void doMovement(const int _x, const int _y);
+
+    void createSquad(int size);
+
+    ngl::Vec3 getWorldSpace(int _x, int _y);
+
+    void startGame(int level);
+    void endGame();
+
+    int m_width;
+    int m_height;
+
+    gameState getGameState()const{return m_gameState;}
+    void setGameState(gameState _gameState){m_gameState = _gameState;}
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -112,6 +135,16 @@ class NGLDraw
     ngl::Transformation m_trans;
 
     GameWorld* m_gameworld;
+    ngl::Obj *m_mesh;
+    Squad* m_selectedSquad;
+
+    ngl::Vec3 m_clickPosition;
+
+    bool m_selected;
+
+    gameState m_gameState;
+
+
 };
 
 

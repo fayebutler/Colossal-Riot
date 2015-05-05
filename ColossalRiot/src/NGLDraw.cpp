@@ -3,7 +3,7 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-#include "Vehicle.h"
+//#include "Vehicle.h"
 #include "GameWorld.h"
 
 
@@ -18,7 +18,7 @@ NGLDraw::NGLDraw()
   m_spinXFace=0;
   m_spinYFace=0;
 
-  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);			   // Grey Background
+  // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
 
@@ -57,25 +57,26 @@ NGLDraw::NGLDraw()
   // load our material values to the shader into the structure material (see Vertex shader)
   m.loadToShader("material");
 
-
-
-
-
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
 
-
   ngl::Vec3 from(0,cameraHeight,0);
-
-
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
+
   // now load to our new camera
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
-  m_cam->setShape(45,(float)720.0/576.0,0.05,350);
+
+//  int w=this->size().width();
+//  int h=this->size().height();
+
+  m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+
+  //m_cam->setShape(45,(float)m_width/m_height,0.05,350);
+  //m_cam->setShape(45,(float)w/h,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -87,9 +88,11 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-  m_gameworld = new GameWorld();
+//  m_gameworld = new GameWorld();
 
-
+//  m_selected = false;
+//  m_selectedSquad = NULL;
+  m_gameState = menu;
 
 
 }
@@ -106,14 +109,63 @@ NGLDraw::~NGLDraw()
 void NGLDraw::resize(int _w, int _h)
 {
   glViewport(0,0,_w,_h);
+
+  m_height = _h;
+  m_width = _w;
+
+
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
+}
+
+void NGLDraw::startGame(int level)
+{
+  switch(level)
+  {
+    case 0:
+        m_gameworld = new GameWorld(0);
+        break;
+    case 1:
+        m_gameworld = new GameWorld(100);
+        break;
+    case 2:
+        m_gameworld = new GameWorld(200);
+        break;
+    case 3:
+        m_gameworld = new GameWorld(300);
+        break;
+    case 4:
+        m_gameworld = new GameWorld(400);
+        break;
+  }
+
+    m_selected = false;
+    m_selectedSquad = NULL;
+
+}
+
+void NGLDraw::endGame()
+{
+    delete m_gameworld;
+
+    // reset camera
+    ngl::Vec3 from(0,cameraHeight,0);
+    ngl::Vec3 to(0,0,0);
+    ngl::Vec3 up(0,0,-1);
+
+    m_cam = new ngl::Camera(from,to,up);
+    m_cam->setShape(45,(float)m_width/m_height,0.05,50);
+
+    m_mouseGlobalTX = ngl::Mat4();
+    m_modelPos = ngl::Vec3(0,0,0);
+
 }
 
 void NGLDraw::draw()
 {
   // clear the screen and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
   // grab an instance of the shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -134,7 +186,6 @@ void NGLDraw::draw()
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
 
   m_gameworld->draw(m_cam, m_mouseGlobalTX);
-
 
 }
 
@@ -177,11 +228,11 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
 //    m_modelPos.m_x += INCREMENT * diffX;
 //    m_modelPos.m_y -= INCREMENT * diffY;
 
+
 //    INCREMENT = INCREMENT*;
 
     //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-
 
   }
 
@@ -194,17 +245,29 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 {
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
+  if(m_gameState == play)
+  {
 
- if(_event.button == SDL_BUTTON_MIDDLE)
-  {
-    m_origXPos = _event.x;
-    m_origYPos = _event.y;
-    m_translate=true;
-  }
- if(_event.button == SDL_BUTTON_LEFT)
-  {
-     std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
-  }
+     if(_event.button == SDL_BUTTON_MIDDLE)
+      {
+        m_origXPos = _event.x;
+        m_origYPos = _event.y;
+        m_translate=true;
+      }
+     if(_event.button == SDL_BUTTON_LEFT)
+      {
+             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
+            if(m_selected == true)
+            {
+                 doMovement(_event.x, _event.y);
+             }
+             else
+             {
+                doSelection(_event.x, _event.y);
+             }
+
+      }
+   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -258,3 +321,124 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
   }
 }
 //----------------------------------------------------------------------------------------------------------------------
+
+void NGLDraw::doSelection(const int _x, const int _y)
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+
+//    glReadPixels(_x, _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
+//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+
+    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+    {
+        Squad* currentSquad = m_gameworld->getSquads()[i];
+
+        currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
+
+    }
+//    unsigned char pixel[3];
+    ngl::Vec3 pixel;
+    //pixel = ngl::Vec3(0.f,0.f,0.f);
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
+//    pixel.m_x = round(pixel.m_x);
+    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+
+
+    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+    {
+        Squad* currentSquad = m_gameworld->getSquads()[i];
+
+
+        if(currentSquad->checkSelectionColour(pixel) == true)
+        {
+            currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+            m_selected = true;
+            m_selectedSquad = currentSquad;
+            break;
+        }
+    }
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void NGLDraw::doMovement(const int _x, const int _y)
+{
+    m_clickPosition = getWorldSpace(_x, _y);
+
+    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+
+    //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+//    m_selectedSquad->setPos(m_clickPosition);
+    m_gameworld->createPath(m_selectedSquad, m_clickPosition);
+    //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+    m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+    m_selected = false;
+}
+
+ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
+{
+
+    ngl::Mat4 m;
+    m = m*m_mouseGlobalTX;
+    ngl::Mat4 t=m_cam->getProjectionMatrix();
+    ngl::Mat4 v=m_cam->getViewMatrix();
+
+    // as ngl:: and OpenGL use different formats need to transpose the matrix.
+    t.transpose();
+    v.transpose();
+    m.transpose();
+    ngl::Mat4 inverse=(t*v*m).inverse();
+
+    ngl::Vec4 tmp(0,0,-1.0f,1.0f);
+    // convert into NDC
+    tmp.m_x=(2.0f * _x) / m_width- 1.0f;
+    tmp.m_y=1.0f - (2.0f * _y) / m_height;
+    // scale by inverse MV * Project transform
+
+    ngl::Vec4 near(tmp.m_x,tmp.m_y,-1.0f,1.0f);
+    ngl::Vec4 far(tmp.m_x,tmp.m_y,1.0f,1.0f);
+
+    //get world point on near and far clipping planes
+    ngl::Vec4 obj_near=inverse*near;
+    ngl::Vec4 obj_far=inverse*far;
+
+    // Scale by w
+    obj_near/=obj_near.m_w;
+    obj_far/=obj_far.m_w;
+
+    ngl::Vec3 nearPoint(obj_near.m_x,obj_near.m_y,obj_near.m_z);
+    ngl::Vec3 farPoint(obj_far.m_x,obj_far.m_y,obj_far.m_z);
+
+    //create ray
+    ngl::Vec3 rayDir(farPoint-nearPoint);
+    rayDir.normalize();
+
+    //calculate distance to zx plane
+    float dist = (-nearPoint.m_y)/rayDir.m_y;
+
+    //set world space coordinate where y = 0
+    ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
+
+    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+
+    obj.m_y = 0.0;
+
+    return obj;
+
+
+
+}
+
+void NGLDraw::createSquad(int size)
+{
+    m_gameworld->createSquad(size);
+}
+
+
+
+
+

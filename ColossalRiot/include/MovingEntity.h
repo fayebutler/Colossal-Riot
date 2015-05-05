@@ -2,7 +2,7 @@
 #define MOVINGENTITY_H
 
 #include <ngl/Transformation.h>
-#include <include/BaseGameEntity.h>
+#include "BaseGameEntity.h"
 
 class MovingEntity: public BaseGameEntity
 {
@@ -17,14 +17,15 @@ protected:
 
 public:
     MovingEntity();
-    MovingEntity(ngl::Vec3 pos,
+    MovingEntity(GameWorld* world,
+                 ngl::Vec3 pos,
                  float r,
                  ngl::Vec3 velocity,
                  float max_speed,
                  ngl::Vec3 heading,
                  float mass,
                  float turn_rate,
-                 float max_force):BaseGameEntity(typeMovingEntity,pos,r),
+                 float max_force):BaseGameEntity(world, typeMovingEntity,pos,r),
                                   m_velocity(velocity),
                                   m_maxSpeed(max_speed),
                                   m_heading(heading),
