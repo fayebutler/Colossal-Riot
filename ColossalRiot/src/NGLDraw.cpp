@@ -70,6 +70,11 @@ NGLDraw::NGLDraw()
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
 
+  ngl::Vec3 fr(0,0,10);
+  ngl::Vec3 t(0,0,0);
+  ngl::Vec3 u(0,1,0);
+
+  m_camOrth = new ngl::Camera(fr,t,u);
 //  int w=this->size().width();
 //  int h=this->size().height();
 
@@ -168,8 +173,29 @@ void NGLDraw::draw()
 
   // grab an instance of the shader manager
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
 
+  //ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  (*shader)["nglColourShader"]->use();
+  shader->setShaderParam4f("Colour", 1.0,0.0,0.0, 1);
+
+  ngl::Transformation t;
+  t.setPosition(-4,3,0);
+//  t.setRotation(90.0,0.0,0.0);
+
+  ngl::Mat4 M;
+  ngl::Mat4 MV;
+  ngl::Mat4 MVP;
+
+  M=t.getMatrix();//*mouseGlobalTX;
+  MV=  M*m_camOrth->getViewMatrix();
+  MVP= M*m_camOrth->getVPMatrix();
+
+  shader->setShaderParamFromMat4("MVP",MVP);
+
+  ngl::VAOPrimitives::instance()->createDisk("squad",1.0,120);
+  ngl::VAOPrimitives::instance()->draw("squad");
+
+  (*shader)["Phong"]->use();
 
   // Rotation based on the mouse position for our global transform
   ngl::Mat4 rotX;
@@ -325,11 +351,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-
-//    glReadPixels(_x, _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
-//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
-
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
@@ -337,15 +358,12 @@ void NGLDraw::doSelection(const int _x, const int _y)
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
 
     }
-//    unsigned char pixel[3];
+
     ngl::Vec3 pixel;
-    //pixel = ngl::Vec3(0.f,0.f,0.f);
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
 
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
-//    pixel.m_x = round(pixel.m_x);
-    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
 
     if (m_selectedSquad!= NULL)
     {
@@ -356,7 +374,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
-
 
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
@@ -372,12 +389,8 @@ void NGLDraw::doMovement(const int _x, const int _y)
 {
     m_clickPosition = getWorldSpace(_x, _y);
 
-    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
-
-    //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-//    m_selectedSquad->setPos(m_clickPosition);
     m_gameworld->createPath(m_selectedSquad, m_clickPosition);
-    //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
+
     m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     m_selected = false;
 }

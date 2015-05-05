@@ -151,6 +151,7 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
+
   ngl::Mat4 MV;
   ngl::Mat4 MVP;
   ngl::Mat3 normalMatrix;

@@ -57,6 +57,8 @@ int main()
     SDLErrorExit("Unable to create window");
   }
 
+//  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
 
   // Create our opengl context and attach it to our window
 
@@ -196,6 +198,19 @@ int main()
         }
         // now we draw ngl
         ngldraw.draw();
+
+
+//        SDL_Rect r;
+//        r.x = 50;
+//        r.y = 50;
+//        r.w = 50;
+//        r.h = 50;
+//        SDL_SetRenderDrawColor(renderer, 255,0,0,255);
+//        SDL_RenderFillRect(renderer, &r);
+//        SDL_RenderPresent(renderer);
+//          SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+
+//        SDL_RenderClear(renderer);
     }
     if(ngldraw.getGameState() == menu)
     {
