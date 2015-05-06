@@ -4,21 +4,8 @@
 #include <iostream>
 #include <ngl/NGLInit.h>
 #include <ngl/Transformation.h>
-
 #include "Timer.h"
-
 #include "NGLDraw.h"
-
-//#include "MovingEntity.h"
-//#include "Vehicle.h"
-//#include "GameWorld.h"
-
-
-//#include "Rioter.h"
-//#include "Police.h"
-
-//#include "EntityManager.h"
-
 
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
@@ -26,7 +13,6 @@ void SDLErrorExit(const std::string &_msg);
 
 /// @brief initialize SDL OpenGL context
 SDL_GLContext createOpenGLContext( SDL_Window *window);
-
 
 int main()
 {
@@ -56,10 +42,7 @@ int main()
   {
     SDLErrorExit("Unable to create window");
   }
-
-
   // Create our opengl context and attach it to our window
-
    SDL_GLContext glContext=createOpenGLContext(window);
    if(!glContext)
    {
@@ -69,6 +52,7 @@ int main()
    SDL_GL_MakeCurrent(window, glContext);
   /* This makes our buffer swap syncronized with the monitor's vertical refresh */
   SDL_GL_SetSwapInterval(1);
+
   // we need to initialise the NGL lib which will load all of the OpenGL functions, this must
   // be done once we have a valid GL context but before we call any GL commands. If we dont do
   // this everything will crash
@@ -83,20 +67,22 @@ int main()
   // now we create an instance of our ngl class, this will init NGL and setup basic
   // opengl stuff ext. When this falls out of scope the dtor will be called and cleanup
   // our gl stuff
-  NGLDraw ngldraw;
+  NGLDraw ngldraw(rect.w, rect.h);
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
-  bool paused = 1;
+  ngldraw.setGameState(gameMenu);
 
   Timer gameTimer;
   double timeElapsed = 0.0;
   double currentTime = 0.0;
 
+
+
+
 //-------MAIN LOOP----------------------------------------------------------------------
   while(!quit)
   {
-
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)
@@ -118,13 +104,14 @@ int main()
           // get the new window size
           SDL_GetWindowSize(window,&w,&h);
 
-          ngldraw.resize(w,h);
+          ngldraw.resize(w, h);
+
         break;
 
           // now we look for a keydown event
         case SDL_KEYDOWN:
         {
-          if(ngldraw.getGameState() == play)
+          if(ngldraw.getGameState() == gamePlay)
           {
               switch( event.key.keysym.sym )
               {
@@ -137,9 +124,9 @@ int main()
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(menu); ngldraw.endGame(); break;
+                case SDLK_RETURN : ngldraw.setGameState(gameMenu); ngldraw.endGame(); break;
 
-                case SDLK_p : paused = !paused; gameTimer.resetTimer(); break;
+                case SDLK_p : ngldraw.setGameState(gamePause); gameTimer.resetTimer(); break;
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
@@ -153,8 +140,7 @@ int main()
                 default : break;
               }
           }
-
-          else if(ngldraw.getGameState() == menu)
+          else if(ngldraw.getGameState() == gameMenu)
           {
               switch( event.key.keysym.sym )
               {
@@ -166,47 +152,49 @@ int main()
                                 glViewport(0,0,rect.w,rect.h);
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
-
-                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(4); paused = 1; break;
-
+                case SDLK_RETURN : ngldraw.setGameState(gamePlay); ngldraw.startGame(1); break;
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
                 default : break;
               }
            }
+          else if (ngldraw.getGameState() == gamePause)
+          {
+            switch (event.key.keysym.sym)
+            {
+              case SDLK_ESCAPE : quit = true; break;
+              case SDLK_p : ngldraw.setGameState(gamePlay); gameTimer.resetTimer(); break;
+
+             default : break;
+            }
+          }
         } //end of key down
 
         default : break;
 
-      } // end of event switch
-
-    } // end of poll events
-
-
-    if(ngldraw.getGameState() == play)
+    } // end of event switch
+} // end of poll events
+    if (ngldraw.getGameState() == gameQuit)
     {
-        if(paused == 0)
-        {
-        timeElapsed=gameTimer.timeElapsed();
-        currentTime=gameTimer.getCurrentTime();
 
-//        std::cout<<"------------- TICK -------------"<<std::endl;
-        ngldraw.update(timeElapsed,currentTime);
-        }
-        // now we draw ngl
-        ngldraw.draw();
+      quit = true;
     }
-    if(ngldraw.getGameState() == menu)
+    else if(ngldraw.getGameState() == gamePlay)
     {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      timeElapsed=gameTimer.timeElapsed();
+      currentTime=gameTimer.getCurrentTime();
+
+      //std::cout<<"------------- TICK -------------"<<std::endl;
+      ngldraw.update(timeElapsed,currentTime);
     }
-    if(ngldraw.getGameState() == lose)
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-    }
+
+    // now we draw ngl
+    ngldraw.draw();
+
+
+
+
     // swap the buffers
     SDL_GL_SwapWindow(window);
 

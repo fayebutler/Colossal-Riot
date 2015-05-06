@@ -14,7 +14,6 @@ GameWorld::GameWorld(int numberOfRioters)
    m_entityMgr = new EntityManager();
    m_cellGraph = CellGraph("navMesh.obj"); //Obj for cell graph, must be quads
    m_cellGraph.generateWalls();
-   m_cellGraph.printCellGraph();
 
 
   for (int i = 0; i < numberOfRioters ; ++i)

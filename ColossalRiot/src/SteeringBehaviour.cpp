@@ -53,7 +53,7 @@ ngl::Vec3 SteeringBehaviour::calculate()
 
     //use weight truncated running sum prioritisation
     //truncate force to maxforce
-    if(m_steeringForce.length() >= m_vehicle->getMaxForce())
+    if(m_steeringForce.lengthSquared() >= (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
     {
         if(m_steeringForce.lengthSquared() == 0.0f)
         {
@@ -107,7 +107,7 @@ ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
 
 
    //truncate steering force to max force
-    if(m_steeringForce.length() > m_vehicle->getMaxForce())
+    if(m_steeringForce.lengthSquared() > (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
     {
         if(m_steeringForce.lengthSquared() == 0.0f)
         {
@@ -304,7 +304,7 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force
     {
         return false;
     }
-    else if(force.length() > forceLeft)
+    else if(force.lengthSquared() > (forceLeft * forceLeft))
     {
         if(force.lengthSquared() == 0.0f)
         {

@@ -158,12 +158,11 @@ void Agent::checkValidTarget(float _dist, float _health)
         Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
 
         ngl::Vec3 toEntity = m_pos - target->getPos();
-        double distFromEachOther = toEntity.length();
+        double distSqFromEachOther = toEntity.lengthSquared();
 
-
-        if(distFromEachOther>m_boundingRadius*_dist || target->getHealth()<_health)
+        // change target
+        if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health)
         {
-//            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
             findTargetID(_health);
         }
         else

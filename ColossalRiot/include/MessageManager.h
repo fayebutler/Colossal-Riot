@@ -15,19 +15,14 @@ enum messageType
 class BaseGameEntity;
 class EntityManager;
 
-//#define MessageMgr MessageManager::instance()
-
 class MessageManager
 {
 public:
 
   MessageManager();
-  //static MessageManager* instance();
 
   void sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo);
   void sendDelayedMessages();
-
-
 
 private:
 

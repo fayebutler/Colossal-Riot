@@ -1,6 +1,12 @@
 #include "Timer.h"
 #include <iostream>
 
+long long Timer::m_currentTime;
+long long Timer::m_startTime;
+double    Timer::m_timeElapsed;
+double    Timer::m_previousTickTime;
+double    Timer::m_timeScale;
+
 Timer::Timer()
 {
     m_startTime = SDL_GetTicks();

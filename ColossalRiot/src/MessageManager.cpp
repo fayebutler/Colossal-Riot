@@ -6,13 +6,6 @@ MessageManager::MessageManager()
 
 }
 
-//MessageManager* MessageManager::instance()
-//{
-//  static MessageManager instance;
-
-//  return &instance;
-//}
-
 void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo)
 {
   EntityManager* entityMgr = new EntityManager();
@@ -33,7 +26,6 @@ void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, d
   }
   else
   {
-    // WE NEED CLOCK FUNCTIONALITY
   }
 }
 

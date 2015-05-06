@@ -3,15 +3,13 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-//#include "Vehicle.h"
 #include "GameWorld.h"
-
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
 float cameraHeight =125 ;
 
-NGLDraw::NGLDraw()
+NGLDraw::NGLDraw(int _width, int _height)
 {
   m_rotate=false;
   // mouse rotation values set to 0
@@ -60,23 +58,14 @@ NGLDraw::NGLDraw()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-
   ngl::Vec3 from(0,cameraHeight,0);
   ngl::Vec3 to(0,0,0);
   ngl::Vec3 up(0,0,-1);
-
   // now load to our new camera
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
-
-//  int w=this->size().width();
-//  int h=this->size().height();
-
   m_cam->setShape(45,(float)m_width/m_height,0.05,350);
-
-  //m_cam->setShape(45,(float)m_width/m_height,0.05,350);
-  //m_cam->setShape(45,(float)w/h,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
@@ -88,13 +77,44 @@ NGLDraw::NGLDraw()
   // load these values to the shader as well
   m_light->loadToShader("light");
 
-//  m_gameworld = new GameWorld();
+  m_width = _width;
+  m_height = _height;
 
-//  m_selected = false;
-//  m_selectedSquad = NULL;
-  m_gameState = menu;
+  m_gameState = gameMenu;
 
+  m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonPlay->updateText("New Game", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-98.f, -25.f));
+  m_buttons.push_back(m_buttonPlay);
 
+  m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
+  m_buttons.push_back(m_buttonQuit);
+
+  m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+  m_buttons.push_back(m_buttonPause);
+
+  m_buttonMenu = new UIButton(buttonMenu, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonMenu->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonMenu->updateText("Menu", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+  m_buttons.push_back(m_buttonMenu);
+
+  m_buttonCreateSquad = new UIButton(buttonCreateSquad, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonCreateSquad->updateButton(ngl::Vec2(0.f, -0.9f), ngl::Vec2(0.3f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
+  m_buttons.push_back(m_buttonCreateSquad);
+
+  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.03f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_squadSize = m_sliderSquadSize->calculateOutput();
+  std::cout<<"m_squadSize"<<m_squadSize<<std::endl;
+  m_ss.str(std::string());
+  m_ss << m_squadSize;
+  m_squadSizeString = m_ss.str();
+  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
 }
 
 NGLDraw::~NGLDraw()
@@ -103,6 +123,11 @@ NGLDraw::~NGLDraw()
   std::cout<<"Shutting down NGL, removing VAO's and Shaders\n";
   delete m_light;
   delete m_cam;
+  delete m_buttonPlay;
+  delete m_buttonQuit;
+  delete m_buttonPause;
+  delete m_buttonCreateSquad;
+  delete m_sliderSquadSize;
   Init->NGLQuit();
 }
 
@@ -116,6 +141,29 @@ void NGLDraw::resize(int _w, int _h)
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
+
+
+  unsigned int numberOfButtons = m_buttons.size();
+  for (unsigned int i = 0; i < numberOfButtons; i++)
+  {
+    m_buttons[i]->setScreenDimensions(ngl::Vec2(m_width, m_height));
+  }
+  m_sliderSquadSize->setScreenDimensions(ngl::Vec2(m_width, m_height));
+
+
+  m_text->setScreenSize(_w, _h);
+  // Ok so this is still a bit of a hack we need to scale our text based
+  // on max screen size so first get the size of the screen
+  SDL_Rect s;
+  SDL_GetDisplayBounds(0,&s);
+  float x,y;
+  // now get a scale transform for the text shader
+
+
+  x=1.0-float(s.w-_w)/s.w;
+  y=1.0-float(s.h-_h)/s.h;
+  // now set the new transform element for this shader
+  m_text->setTransform(x,y);
 }
 
 void NGLDraw::startGame(int level)
@@ -166,24 +214,80 @@ void NGLDraw::draw()
   // clear the screen and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // grab an instance of the shader manager
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
 
-  // Rotation based on the mouse position for our global transform
-  ngl::Mat4 rotX;
-  ngl::Mat4 rotY;
-  // create the rotation matrices
-  rotX.rotateX(m_spinXFace);
-  rotY.rotateY(m_spinYFace);
-  // multiply the rotations
-  m_mouseGlobalTX=rotY*rotX;
-  // add the translations
-  m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
-  m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
-  m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+  switch (m_gameState)
+  {
+    case gamePlay:
+    {
+      // grab an instance of the shader manager
+      ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+      (*shader)["Phong"]->use();
 
-  m_gameworld->draw(m_cam, m_mouseGlobalTX);
+      // Rotation based on the mouse position for our global transform
+      ngl::Mat4 rotX;
+      ngl::Mat4 rotY;
+      // create the rotation matrices
+      rotX.rotateX(m_spinXFace);
+      rotY.rotateY(m_spinYFace);
+      // multiply the rotations
+      m_mouseGlobalTX=rotY*rotX;
+      // add the translations
+      m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
+      m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
+      m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+
+      m_gameworld->draw(m_cam, m_mouseGlobalTX);
+
+      m_buttonPause->draw();
+      m_buttonMenu->draw();
+      m_buttonCreateSquad->draw();
+
+      m_sliderSquadSize->draw();
+
+      break;
+    }
+    case gameMenu:
+    {
+      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      m_buttonPlay->draw();
+      m_buttonQuit->draw();
+      break;
+    }
+    case gamePause:
+    {
+      // grab an instance of the shader manager
+      ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+      (*shader)["Phong"]->use();
+
+      // Rotation based on the mouse position for our global transform
+      ngl::Mat4 rotX;
+      ngl::Mat4 rotY;
+      // create the rotation matrices
+      rotX.rotateX(m_spinXFace);
+      rotY.rotateY(m_spinYFace);
+      // multiply the rotations
+      m_mouseGlobalTX=rotY*rotX;
+      // add the translations
+      m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
+      m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
+      m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
+      m_gameworld->draw(m_cam, m_mouseGlobalTX);
+
+      m_buttonPause->draw();
+      m_buttonMenu->draw();
+
+      break;
+    }
+    case gameQuit:
+    {
+      break;
+    }
+    default:
+    {
+      std::cout<<"Error: Invalid gameState"<<std::endl;
+      break;
+    }
+  }
 
 }
 
@@ -191,11 +295,10 @@ void NGLDraw::update(double timeElapsed, double currentTime)
 {
   m_gameworld->Update(timeElapsed, currentTime);
 
-  // if percentage of rioters is below certain value then set gamestate to win!
-  if(m_gameworld->loseGame() == true)
-  {
-      setGameState(lose);
-  }
+  m_ss.str(std::string());
+  m_ss << m_squadSize;
+  m_squadSizeString = m_ss.str();
+
 }
 
 
@@ -239,7 +342,11 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
 
   }
-
+  if (m_sliderSquadSize->getIsSliding() == true)
+  {
+    m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+    m_sliderSquadSize->setTextString(m_squadSizeString);
+  }
 
 }
 
@@ -249,29 +356,101 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 {
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
-  if(m_gameState == play)
-  {
-
-     if(_event.button == SDL_BUTTON_MIDDLE)
+    if(_event.button == SDL_BUTTON_MIDDLE)
+    {
+      m_origXPos = _event.x;
+      m_origYPos = _event.y;
+      m_translate=true;
+    }
+    if(_event.button == SDL_BUTTON_LEFT)
+    {
+      if (m_gameState == gamePlay)
       {
-        m_origXPos = _event.x;
-        m_origYPos = _event.y;
-        m_translate=true;
+         if(m_selected == true)
+         {
+            doMovement(_event.x, _event.y);
+         }
+         else
+         {
+            doSelection(_event.x, _event.y);
+         }
       }
-     if(_event.button == SDL_BUTTON_LEFT)
-      {
-//             std::cout<<"MOUSEBUTTON PRESS  "<<_event.x<<"  "<<_event.y<<std::endl;
-            if(m_selected == true)
-            {
-                 doMovement(_event.x, _event.y);
-             }
-             else
+
+       unsigned int numberOfButtons = m_buttons.size();
+       for (unsigned int i = 0; i < numberOfButtons; i++)
+       {
+         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
+         {
+           switch (m_buttons[i]->getName())
+           {
+             case buttonPlay:
              {
-                doSelection(_event.x, _event.y);
+               startGame(1);
+               m_gameState = gamePlay;
+               m_buttonQuit->setIsActive(false);
+               m_buttonPlay->setIsActive(false);
+               m_buttonPause->setIsActive(true);
+               m_buttonMenu->setIsActive(true);
+
+               break;
+             }
+             case buttonQuit :
+             {
+               m_gameState = gameQuit;
+               break;
+             }
+             case buttonPause :
+             {
+               if (m_gameState == gamePlay)
+               {
+                 m_gameState = gamePause;
+                 m_gameTimer.resetTimer();
+                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+                 m_buttonPause->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-33.f, -25.f));
+                 break;
+               }
+               else if (m_gameState == gamePause)
+               {
+                 m_gameState = gamePlay;
+                 m_gameTimer.resetTimer();
+                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+                 m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+                 break;
+               }
+               break;
+             }
+             case buttonMenu :
+             {
+               m_gameState = gameMenu;
+               //endGame();
+               m_buttonQuit->setIsActive(true);
+               m_buttonPlay->setIsActive(true);
+               m_buttonMenu->setIsActive(false);
+               m_buttonMenu->setIsActive(false);
+               break;
+
+             }
+             case buttonCreateSquad :
+             {
+               createSquad(m_squadSize);
+               break;
+             }
+             default:
+             {
+               break;
              }
 
-      }
-   }
+           }
+         }
+       }
+       if (m_sliderSquadSize->isClicked(_event.x, _event.y))
+       {
+         std::cout<<"SLIDER"<<std::endl;
+         m_sliderSquadSize->setIsSliding(true);
+         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+         m_sliderSquadSize->setTextString(m_squadSizeString);
+       }
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -281,7 +460,9 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
   // we then set Rotate to false
   if (_event.button == SDL_BUTTON_LEFT)
   {
+    m_sliderSquadSize->setIsSliding(false);
     m_rotate=false;
+
   }
   // right mouse translate mode
   if (_event.button == SDL_BUTTON_MIDDLE)
@@ -350,7 +531,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 //    pixel.m_x = round(pixel.m_x);
-//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
+
 
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -433,14 +614,11 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     //set world space coordinate where y = 0
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
-//    std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
+
 
     obj.m_y = 0.0;
 
     return obj;
-
-
-
 }
 
 void NGLDraw::createSquad(int size)

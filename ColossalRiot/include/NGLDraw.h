@@ -8,13 +8,19 @@
 #include "Vehicle.h"
 #include "Police.h"
 #include "Rioter.h"
+#include "UIButton.h"
+#include "UISlider.h"
+#include "Text.h"
+#include "Timer.h"
 
-enum gameState
+enum eGameState
 {
-    menu,
-    play,
-    win,
-    lose
+
+    gameMenu,
+    gamePlay,
+    gamePause,
+    gameQuit
+
 };
 
 class NGLDraw
@@ -24,6 +30,7 @@ class NGLDraw
     /// @brief ctor this will have a valid OpenGL context so we can create gl stuff
     //----------------------------------------------------------------------------------------------------------------------
     NGLDraw();
+    NGLDraw(int _width, int _height);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief dtor used to remove any NGL stuff created
     //----------------------------------------------------------------------------------------------------------------------
@@ -77,8 +84,8 @@ class NGLDraw
     int m_width;
     int m_height;
 
-    gameState getGameState()const{return m_gameState;}
-    void setGameState(gameState _gameState){m_gameState = _gameState;}
+    eGameState getGameState()const{return m_gameState;}
+    void setGameState(eGameState _gameState){m_gameState = _gameState;}
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -144,8 +151,26 @@ class NGLDraw
 
     bool m_selected;
 
-    gameState m_gameState;
+    eGameState m_gameState;
 
+    std::vector<UIButton*> m_buttons;
+
+    UIButton* m_buttonPlay;
+    UIButton* m_buttonQuit;
+    UIButton* m_buttonPause;
+    UIButton* m_buttonMenu;
+    UIButton* m_buttonCreateSquad;
+
+    UISlider* m_sliderSquadSize;
+
+    Text* m_text;
+
+    Timer m_gameTimer;
+
+    int m_squadSize;
+    std::string m_squadSizeString;
+
+    std::stringstream m_ss;
 
 };
 
