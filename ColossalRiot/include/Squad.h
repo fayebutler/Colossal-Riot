@@ -7,7 +7,7 @@ class Squad : public Vehicle
 {
 public:
     Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r);
-    ~Squad(){}
+    ~Squad();
 
     void update(double timeElapsed, double currentTime);
     void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
@@ -28,10 +28,12 @@ public:
     ngl::Colour getSquadColour() const { return m_squadColour; }
     void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
 
+    std::vector<Police*> getSquadPolice() const {return m_squadPolice;}
 
     void setPath(std::vector<ngl::Vec3> _path);
     std::vector<ngl::Vec3> getPath() const {return m_path;}
 
+    void checkDeaths();
 
 private:
 

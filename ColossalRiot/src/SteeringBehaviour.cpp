@@ -39,7 +39,7 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 
 SteeringBehaviour::~SteeringBehaviour()
 {
-    delete m_entityMgr;
+    //delete m_entityMgr;
 }
 
 
@@ -115,11 +115,13 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
     m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
 
+    //std::cout<<" calculate"<<std::endl;
 
     ngl::Vec3 force;
     if(on(wall_avoidance))
     {
       force = WallAvoidance() * m_weightWallAvoidance;
+
       if(!accumulateForce(m_steeringForce, force))
       {
         return m_steeringForce;
@@ -156,6 +158,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         m_steeringForce += force;
       }
     }
+
     if(on(cohesion))
     {
       force = Cohesion(m_friendlyNeighbours) * m_weightCohesion;
@@ -263,6 +266,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
+    //std::cout<<"finish calculate"<<std::endl;
     return m_steeringForce;
 
 
@@ -763,10 +767,10 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
 
 void SteeringBehaviour::ObjectOverlapAvoidance()
 {
-    // CHECKING AGAINST NEIGHBOURS DOESN'T WORK YET AS THEY MOVE OFF THE MAP
     for (unsigned int i = 0; i < m_allNeighbours.size(); i++)
 
     {
+
         Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
         if (curEntity)
         {

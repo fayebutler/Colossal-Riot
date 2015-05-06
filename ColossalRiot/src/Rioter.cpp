@@ -18,21 +18,21 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
     // Set initial variables
 
-    m_hopHeight = 0.0;
+    m_hopHeight = 1.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
     //Vehicle::Steering()->ObstacleAvoidOn();
 
-    Vehicle::Steering()->CohesionOn();
-    Vehicle::Steering()->setCohesionWeight(0.2f);
+//    Vehicle::Steering()->CohesionOn();
+//    Vehicle::Steering()->setCohesionWeight(0.2f);
 
-    Vehicle::Steering()->AlignmentOn();
-    Vehicle::Steering()->setAlignmentWeight(0.5f);
+//    Vehicle::Steering()->AlignmentOn();
+//    Vehicle::Steering()->setAlignmentWeight(0.5f);
 
-    Vehicle::Steering()->SeparationOn();
-    Vehicle::Steering()->setSeparationWeight(1.0f);
+//    Vehicle::Steering()->SeparationOn();
+//    Vehicle::Steering()->setSeparationWeight(1.0f);
 
     Vehicle::Steering()->WallAvoidOn();
 
@@ -47,18 +47,19 @@ Rioter::~Rioter()
 
 void Rioter::update(double timeElapsed, double currentTime)
 {
-    Agent::update(timeElapsed, currentTime);
-    m_stateMachine->update();
-
-    m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
     Vehicle::Steering()->clearFriendlyNeighbours();
     Vehicle::Steering()->clearAllNeighbours();
     Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
+
+    Agent::update(timeElapsed, currentTime);
+    m_stateMachine->update();
+    //m_hopSpeed += (m_rage/10.0);
+    m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
+
     Vehicle::Steering()->WallOverlapAvoidance();
     Vehicle::Steering()->ObjectOverlapAvoidance();
-
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -72,7 +73,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getHealth()/100.0f, 0.0f, 0.0f, 1.0f));
+  m.setDiffuse(ngl::Colour(getHealth()/100.0f, getHealth()/100.0f*0.4, getHealth()/100.0f*0.01, 1.0f));
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -82,7 +83,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(getPos().m_x,0,getPos().m_z);
+  trans.setPosition(getPos().m_x,m_hop,getPos().m_z);
 
   ngl::Real rot = atan(getHeading().m_z/getHeading().m_x);
 

@@ -58,17 +58,20 @@ protest["enter"] = function()
 --  rioter:pursuit(1.0)
   rioter:evade(0.0)
   rioter:wander(0.5)
+  rioter:separation(0.8)
+  rioter:alignment(0.5)
 --  print("LUA RIOTER protest enter")
 end
 
 protest["execute"] = function()
 --  print("LUA RIOTER protest execute")
+  rioter:cohesion(0.02*rioter.m_rage)
   rioter.m_morale = rioter.m_morale - 0.3
 --rioter:attack()
   rioter.m_rage = rioter.m_rage + 0.1;
-  if rioter.m_health < 30 then
-    stateMachine:changeState("flee")
-  end
+--  if rioter.m_health < 30 then
+--    stateMachine:changeState("flee")
+--  end
 end
 
 protest["exit"] = function()

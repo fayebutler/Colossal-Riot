@@ -24,7 +24,6 @@ void Agent::setTargetID(int _val)
     m_targetID = _val;
     if (_val < 0)
     {
-//        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
         Vehicle::Steering()->setTargetAgent(NULL);
     }
     else

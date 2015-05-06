@@ -8,6 +8,7 @@
 #include "Vehicle.h"
 #include "Police.h"
 #include "Rioter.h"
+#include "EntityManager.h"
 
 enum gameState
 {
@@ -72,8 +73,9 @@ class NGLDraw
     void startGame(int level);
     void endGame();
 
-    int m_width;
-    int m_height;
+    float m_width;
+    float m_height;
+    float m_longestSide;
 
     gameState getGameState()const{return m_gameState;}
     void setGameState(gameState _gameState){m_gameState = _gameState;}
@@ -138,12 +140,15 @@ class NGLDraw
     GameWorld* m_gameworld;
     ngl::Obj *m_mesh;
     Squad* m_selectedSquad;
+    int m_selectedSquadID;
 
     ngl::Vec3 m_clickPosition;
 
     bool m_selected;
 
     gameState m_gameState;
+
+    EntityManager* m_entityMgr;
 
 
 };

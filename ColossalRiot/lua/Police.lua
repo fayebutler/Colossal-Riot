@@ -75,34 +75,12 @@ move["exit"] = function()
   print("LUA POLICE move exit")
 end
 
--- move state
-
-move = {}
-move["enter"] = function()
-  police:pursuit(0.0)
-  police:squadCohesion(0.0)
-  print("LUA POLICE move enter")
-end
-
-move["execute"] = function()
-  print("LUA POLICE move execute")
-  if police.m_enRoute == false then
-    stateMachine:changeState(stateMachine.m_previousState)
-  end
-end
-
-move["exit"] = function()
-  print("LUA POLICE move exit")
-end
-
-
 
 -- work state
 
 work = {}
 work["enter"] = function()
-
-  print("LUA POLICE work enter")
+   print("LUA POLICE work enter")
    police:checkValidTarget(1.0, 20.0)
    police:pursuit(1.0)
    police:cohesion(0.4)
@@ -113,8 +91,9 @@ end
 
 work["execute"] = function()
   print("LUA POLICE work execute")
-  print(police.m_targetID)
   police:checkValidTarget(3.0, 20.0)
+  police.m_health = police.m_health - 0.5
+
   if police.m_targetID >= 0 then
     police:wander(0.0)
     police:attack()

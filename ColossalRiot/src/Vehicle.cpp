@@ -41,13 +41,10 @@ Vehicle::~Vehicle()
 
 void Vehicle::update(double time_elapsed)
 {
-
    m_timeElapsed = time_elapsed;
 
    ngl::Vec3 SteeringForce;
    SteeringForce = m_steering->calculatePrioritizedSum();
-
-
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
@@ -77,7 +74,6 @@ void Vehicle::update(double time_elapsed)
         m_smoothHeading = smoothingUpdate(getHeading());
         m_heading = m_smoothHeading;
     }
-
 }
 
 bool Vehicle::handleMessage(const Message& _message)

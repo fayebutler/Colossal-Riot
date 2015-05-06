@@ -1,8 +1,10 @@
 #include "MessageManager.h"
 
+EntityManager* MessageManager::m_entityMgr;
+
 MessageManager::MessageManager()
 {
-
+    m_entityMgr = new EntityManager();
 
 }
 
@@ -15,9 +17,10 @@ MessageManager::MessageManager()
 
 void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo)
 {
-  EntityManager* entityMgr = new EntityManager();
-  BaseGameEntity* sender = (BaseGameEntity*)entityMgr->getEntityFromID(_senderID);
-  BaseGameEntity* receiver = (BaseGameEntity*)entityMgr->getEntityFromID(_receiverID);
+  //EntityManager* entityMgr = new EntityManager();
+  //std::cout<<"called by message manager"<<std::endl;
+  BaseGameEntity* sender = (BaseGameEntity*)m_entityMgr->getEntityFromID(_senderID);
+  BaseGameEntity* receiver = (BaseGameEntity*)m_entityMgr->getEntityFromID(_receiverID);
 
   if (receiver == NULL)
   {
