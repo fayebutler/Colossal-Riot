@@ -31,6 +31,7 @@ public:
     void setPath(std::vector<ngl::Vec3> _path);
     std::vector<ngl::Vec3> getPath() const {return m_path;}
 
+    void findClosestWalls(Squad* squad);
     void formWall();
 
 private:
@@ -55,6 +56,9 @@ private:
 
     std::vector <bool> m_policeArrived;
     bool m_allArrived;
+    bool m_foundWall;
+
+    std::vector<Wall> m_closestWalls;
 
 };
 

@@ -94,6 +94,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     for (unsigned int i=0; i<m_numberOfEntities; i++)
     {
         //Adds entities to cells and cell ID to entities
+        ///needs to find ith ID in entity map
         m_cellGraph.updateCells(m_entityMgr->getEntityFromID(i));
     }
 

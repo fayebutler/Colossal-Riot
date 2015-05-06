@@ -554,8 +554,9 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 //////2-Update priorityQueue:
     //Order frontier cells:
     std::vector<int>frontierCopy = frontierCells;
+    int frontierSize = frontierCells.size();
 
-    while (priorityQueue.size() < frontierCells.size())
+    while (priorityQueue.size() < frontierSize)
     {
         float shortestDist = 10000000000.0f;
         int shortestID;
@@ -647,7 +648,6 @@ if (currentCellID != startCellID)
                             newSPT.push_back(currentCellID);
                             SPTs.push_back(newSPT);
                             flag = true;
-
                         }
                     }
                 }

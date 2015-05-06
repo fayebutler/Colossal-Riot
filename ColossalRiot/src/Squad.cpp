@@ -10,6 +10,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     //m_boundingRad = r;
 
     m_allArrived = false;
+    m_foundWall = false;
     m_squadSize = squadSize;
     m_pathIndex =0;
 
@@ -64,6 +65,10 @@ ngl::Vec3 Squad::averagePolicePos()
 void Squad::update(double timeElapsed, double currentTime)
 {
     // individual police loop
+    if(m_path.size() == 0)
+    {
+        this->formWall();
+    }
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -242,38 +247,199 @@ bool Squad::handleMessage(const Message& _message)
   }
 }
 
+
+
+void Squad::findClosestWalls(Squad* squad)
+{
+    m_closestWalls.clear();
+    std::vector<Wall> inWalls = squad->getCurrentCell().getWalls();
+    std::vector<int> wallMemory;
+    int numberOfWallsToCheck = inWalls.size();
+
+    std::cout<<"number of walls to check = "<<inWalls.size()<<std::endl;
+    while (m_closestWalls.size() < numberOfWallsToCheck)
+    {
+        float shortestDist;
+        Wall closestWall;
+        int closestWallID = 0;
+        bool isInMemory = false;
+        for (int i = 0; i < inWalls.size(); i++ )
+        {
+            shortestDist = 10000000000.0f;
+            isInMemory = false;
+            for (std::vector<int>::iterator iter = wallMemory.begin(); iter != wallMemory.end(); ++iter)
+            {
+
+                if( *iter == i)
+                {
+                    isInMemory = true;
+                    break;
+                }
+
+            }
+            if(isInMemory == true){break;}
+            Wall currentWall = inWalls[i];
+            ngl::Vec3 currentCenter = (currentWall.start+currentWall.end)/2;
+
+            ngl::Vec3 distance = (currentCenter-m_pos);
+
+            if(distance.lengthSquared() < shortestDist)
+            {
+                shortestDist = distance.lengthSquared();
+                closestWall = inWalls[i];
+                closestWallID = i;
+            }
+        }
+        wallMemory.push_back(closestWallID);
+        m_closestWalls.push_back(closestWall);
+
+    }
+    inWalls.clear();
+    wallMemory.clear();
+//    return m_closestWalls;
+
+}
+
+
 void Squad::formWall()
 {
-    std::vector<ngl::Vec3> wallNormals;
-    std::vector<ngl::Vec3> wallCentres;
-    for (int j= 0; j < this->getCurrentCell().getWalls().size(); ++j)
+//    findClosestWalls(this);
+
+    int numberOfWallsToCheck =0;
+    if(m_foundWall == false)
     {
-      ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWalls()[j].start;
-      ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWalls()[j].end;
-      ngl::Vec3 wallLine = wallEnd - wallStart;
-      ngl::Vec3 wallNormal = wallLine.cross(ngl::Vec3(0.f, 1.f, 0.f));
-
-      ngl::Vec3 wallPos = (wallStart + wallEnd)/2;
-
-      wallNormals.push_back(wallNormal);
-      wallCentres.push_back(wallPos);
+        numberOfWallsToCheck = m_closestWalls.size();
+        findClosestWalls(this);
     }
-    float closestDist = 0;
-    float wallID = -1;
+//bool foundWall = false;
 
-    //reorder cells
-
-    for(int i=0; i<wallCentres.size(); i++)
+//    if(m_foundWall == false)
+//    {
+//         findClosestWalls(this);
+    for(int i=0; i<numberOfWallsToCheck; i++)
     {
-        for(int j=0; j<wallCentres.size(); j++)
+        if(m_foundWall == false)
         {
+            Wall currentWall = m_closestWalls[i];
+            ngl::Vec3 currentNormal = currentWall.normal;
+            ngl::Vec3 currentCenter = (currentWall.start+currentWall.end)/2;
+            for(int j=0; j<numberOfWallsToCheck; j++)
+            {
+                if(i!=j)
+                {
+                    Wall testWall = m_closestWalls[j];
+                    ngl::Vec3 testNormal = testWall.normal;
+                    ngl::Vec3 testCenter = (testWall.start+testWall.end)/2;
+                   // std::cout<<"test normals = "<<testNormal.m_x<<" "<<testNormal.m_y<<" "<<testNormal.m_z<<std::endl;
+                    //std::cout<<"current normals = "<<currentNormal.m_x<<" "<<currentNormal.m_y<<" "<<currentNormal.m_z<<std::endl;
 
-        }
-    }
+                    if(currentNormal + testNormal == ngl::Vec3(0.0,0.0,0.0))
+                    {
+                        //if vertical line
+                        if(currentCenter.m_x - testCenter.m_x == 0)
+                        {
+                            ngl::Vec3 distance = currentCenter - testCenter;
+                            ngl::Vec3 upperCenter = ngl::Vec3(0.0,0.0,0.0);
 
-    for(int i =0; i<m_squadSize; i++)
-    {
-        Police* policeman = m_squadPolice[i];
-        policeman->getCurrentCell().getWalls();
-    }
+                            if(currentCenter.m_z < testCenter.m_z)
+                            {
+                                upperCenter = currentCenter;
+                            }
+                            else if(currentCenter.m_z > testCenter.m_z)
+                            {
+                                upperCenter = testCenter;
+                            }
+                            float dist = distance.length();
+                            float numberOf= dist/m_boundingRadius;
+                            std::cout<<"upperCenter = "<<upperCenter.m_x <<std::endl;
+
+                            if(numberOf >= m_squadSize)
+                            {
+                                //send as many police to this
+                                float spacing = dist/(m_squadSize*2);
+                                std::vector<ngl::Vec3> positions;
+                                positions.clear();
+                                for(int i =0; i< m_squadSize*2; i+=2)
+                                {
+                                    ngl::Vec3 position = ngl::Vec3(upperCenter.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
+
+                                    positions.push_back(position);
+                                }
+                                for(int i =0; i <m_squadSize; i++)
+                                {
+                                    Police* policeman = m_squadPolice[i];
+                                    ngl::Vec3 position = positions[i];
+                                    policeman->setPos(position);
+                                    //policeman->setCrosshair(position);
+                                   // Steering()->ArriveOn();
+                                   // Steering()->SeekOn();
+                                }
+
+                             }
+                             m_foundWall = true;
+                             break;
+
+                          }
+
+                          else if(currentCenter.m_z - testCenter.m_z == 0)
+                          {
+                            //if horizontal line
+                            ngl::Vec3 distance = currentCenter - testCenter;
+                            ngl::Vec3 leftCenter = ngl::Vec3(0.0,0.0,0.0);
+                            if(currentCenter.m_x < testCenter.m_x)
+                            {
+                                leftCenter = currentCenter;
+                            }
+                            else if(currentCenter.m_x > testCenter.m_x)
+                            {
+                                leftCenter = testCenter;
+                            }
+                            float dist = distance.length();
+                            float numberOf= dist/m_boundingRadius;
+
+                            if(numberOf >= m_squadSize)
+                            {
+                                //send as many police to this
+                                float spacing = dist/(m_squadSize*2);
+                                std::vector<ngl::Vec3> positions;
+                                positions.clear();
+                                for(int i =0; i< m_squadSize*2; i+=2)
+                                {
+                                    ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, leftCenter.m_z);
+                                    positions.push_back(position);
+                                }
+                                for(int i =0; i <m_squadSize; i++)
+                                {
+                                    Police* policeman = m_squadPolice[i];
+                                    ngl::Vec3 position = positions[i];
+                                    policeman->setPos(position);
+                                }
+                             }
+                            m_foundWall = true;
+                            break;
+
+                          }
+                          else
+                          {
+                            m_foundWall = false;
+                            std::cout<<" CANT FORM WALL "<<std::endl;
+                          }
+
+
+                     }
+
+                  }
+
+             }
+
+
+          }
+
+
+      }
+
+   m_foundWall = false;
+
 }
+
+

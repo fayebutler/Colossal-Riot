@@ -263,6 +263,18 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             m_steeringForce += force;
         }
     }
+    if(on(arrive))
+    {
+        force = Arrive(m_vehicle->getCrosshair(), 0.5) * m_weightArrive;
+        if(!accumulateForce(m_steeringForce, force))
+        {
+            return m_steeringForce;
+        }
+        else
+        {
+            m_steeringForce += force;
+        }
+    }
 
     if(on(wander))
     {
