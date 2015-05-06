@@ -84,7 +84,8 @@ void Vehicle::update(double time_elapsed)
          tempVel.normalize();
        }
 
-       m_heading = tempVel;
+        m_heading = tempVel;
+
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
     }
 

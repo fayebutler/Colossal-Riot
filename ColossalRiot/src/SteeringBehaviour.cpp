@@ -379,11 +379,11 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 {
-
+    std::cout<<"CALLING ARRIVE"<<std::endl;
     ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
-    if(dist>0)
+    if(dist>0.1)
     {
         double decelerationTweak = 0.3;
 
@@ -396,6 +396,12 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 
         ngl::Vec3 desiredVelocity = toTarget * speed/dist;
         return(desiredVelocity - m_vehicle->getVelocity());
+    }
+    else if(dist <= 0.1 )
+    {
+//        m_vehicle->setHeading(ngl::Vec3(-1,0,0));
+        ArriveOff();
+        return ngl::Vec3(0,0,0);
     }
 
     return ngl::Vec3(0,0,0);

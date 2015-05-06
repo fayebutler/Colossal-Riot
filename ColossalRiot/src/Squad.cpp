@@ -303,7 +303,6 @@ void Squad::findClosestWalls(Squad* squad)
 
 void Squad::formWall()
 {
-//    findClosestWalls(this);
 
     int numberOfWallsToCheck =0;
     if(m_foundWall == false)
@@ -369,10 +368,10 @@ void Squad::formWall()
                                 {
                                     Police* policeman = m_squadPolice[i];
                                     ngl::Vec3 position = positions[i];
-                                    policeman->setPos(position);
-                                    //policeman->setCrosshair(position);
-                                   // Steering()->ArriveOn();
-                                   // Steering()->SeekOn();
+//                                    policeman->setPos(position);
+                                    policeman->setCrosshair(position);
+                                    policeman->Steering()->ArriveOn();
+//                                    policeman->Steering()->SeekOff();
                                 }
 
                              }
@@ -441,5 +440,7 @@ void Squad::formWall()
    m_foundWall = false;
 
 }
+
+
 
 

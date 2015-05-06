@@ -70,6 +70,7 @@ public:
   void evade(double weight);
 
   void seek(double weight);
+  void arrive(double weight);
 
   void cohesion(double weight);
 

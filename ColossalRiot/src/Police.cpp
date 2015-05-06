@@ -38,10 +38,13 @@ Police::Police(GameWorld* world) : Agent(world)
 
 //    Vehicle::Steering()->SeparationOn();
 //    Vehicle::Steering()->setSeparationWeight(0.8f);
+//    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
+//    Vehicle::Steering()->SeekOn();
+//    Vehicle::Steering()->ArriveOn();
 
 
-//    Vehicle::Steering()->WallAvoidOn();
-//    Vehicle::Steering()->setWallAvoidWeight(0.4);
+    Vehicle::Steering()->WallAvoidOn();
+    Vehicle::Steering()->setWallAvoidWeight(0.4);
 }
 
 Police::~Police()
@@ -66,7 +69,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
 
   Vehicle::Steering()->WallOverlapAvoidance();
-  Vehicle::Steering()->ObjectOverlapAvoidance();
+//  Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(2);
 
@@ -176,6 +179,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("findTargetID", &Police::findTargetID)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+
         .endClass();
 }
 

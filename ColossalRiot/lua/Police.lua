@@ -84,9 +84,9 @@ work["enter"] = function()
 --  print("LUA POLICE work enter")
  -- police:checkValidTarget(1.0, 20.0)
  -- police:pursuit(1.0)
-   police:cohesion(0.4)
-   police:separation(0.8)
-   police:alignment(0.3)
+ --  police:cohesion(0.4)
+--   police:separation(0.8)
+--   police:alignment(0.3)
    police:seek(0.0)
 end
 
@@ -98,8 +98,8 @@ work["execute"] = function()
 --    police:wander(0.0)
 --    police:attack()
 --  else
-  police:wander(0.5)
-  police:squadCohesion(0.4)
+--  police:wander(0.5)
+--  police:squadCohesion(0.4)
 --  end
 --  police.m_health = police.m_health - 1.0
 
@@ -112,6 +112,7 @@ work["exit"] = function()
 --  print("LUA POLICE work exit")
 end
 
+-- hold state
 
 
 -- flee state

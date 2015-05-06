@@ -9,6 +9,8 @@ public:
     Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r);
     ~Squad(){}
 
+//    lua_State* getLuaState() const { return L ; }
+
     void update(double timeElapsed, double currentTime);
     void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
     void loadMatricesToShader(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
@@ -33,6 +35,7 @@ public:
 
     void findClosestWalls(Squad* squad);
     void formWall();
+//    void registerClass(lua_State* _L);
 
 private:
 
@@ -59,6 +62,7 @@ private:
     bool m_foundWall;
 
     std::vector<Wall> m_closestWalls;
+
 
 };
 

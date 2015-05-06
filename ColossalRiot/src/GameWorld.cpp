@@ -33,17 +33,17 @@ GameWorld::GameWorld(int numberOfRioters)
     m_rioters.push_back(newRioter);
 //    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
-//  for (int i = 0; i < 100 ; ++i)
+//  for (int i = 0; i < 1 ; ++i)
 //  {
 //    Police* newRioter = new Police(this);
 //    newRioter->setBoudingRadius(0.5f);
 //    newRioter->setDetectionRadius(3.5f);
 //    newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
-//    newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+//    newRioter->setPos(ngl::Vec3(2,0,2));
 //    m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 //    while (newRioter->getCurrentCellID() < 0)
 //    {
-//      newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+//      newRioter->setPos(ngl::Vec3(2,0,2));
 //      m_cellGraph.initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 //    }
 //    m_police.push_back(newRioter);
@@ -135,6 +135,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     }
 
+
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];
@@ -180,6 +181,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       Rioter* currentRioter = m_rioters[a];
       currentRioter->draw(cam, mouseGlobalTX);
   }
+
   for(unsigned int a=0; a<m_squads.size(); ++a)
   {
       Squad* currentSquad = m_squads[a];

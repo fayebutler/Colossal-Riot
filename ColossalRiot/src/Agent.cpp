@@ -85,6 +85,19 @@ void Agent::seek(double weight)
     }
 }
 
+void Agent::arrive(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->ArriveOff();
+    }
+    else
+    {
+      Vehicle::Steering()->ArriveOn();
+      Vehicle::Steering()->setArriveWeight(weight);
+    }
+}
+
 void Agent::cohesion(double weight)
 {
     if(weight <= 0.0)
@@ -181,6 +194,7 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
+                .addFunction("arrive", &Agent::arrive)
                 .addFunction("seek", &Agent::seek)
                 .addFunction("cohesion", &Agent::cohesion)
                 .addFunction("separation", &Agent::separation)
