@@ -115,11 +115,6 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
-
-//  m_gameworld = new GameWorld();
-
-//  m_selected = false;
-//  m_selectedSquad = NULL;
 }
 
 NGLDraw::~NGLDraw()
