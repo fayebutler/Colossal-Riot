@@ -3,7 +3,7 @@
 
 #include "Police.h"
 
-class Squad : public BaseGameEntity
+class Squad : public Vehicle
 {
 public:
     Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r);
@@ -28,6 +28,9 @@ public:
     ngl::Colour getSquadColour() const { return m_squadColour; }
     void setSquadColour(ngl::Colour _val) { m_squadColour = _val; }
 
+    void setPath(std::vector<ngl::Vec3> _path);
+    std::vector<ngl::Vec3> getPath() const {return m_path;}
+
 private:
 
     int m_squadSize;
@@ -41,6 +44,15 @@ private:
     std::vector <Police*> m_squadPolice;
 
     ngl::Colour m_squadColour;
+
+    std::vector<ngl::Vec3> m_path;
+    ngl::Vec3 averagePolicePos();
+
+    int m_pathIndex;
+    //int m_policeArrived;
+
+    std::vector <bool> m_policeArrived;
+    bool m_allArrived;
 
 };
 

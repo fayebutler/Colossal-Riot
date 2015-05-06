@@ -85,8 +85,6 @@ class NGLDraw
     eGameState getGameState()const{return m_gameState;}
     void setGameState(eGameState _gameState){m_gameState = _gameState;}
 
-    void drawMenu();
-
   private :
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform data to the shaders

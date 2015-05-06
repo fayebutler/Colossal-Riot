@@ -11,7 +11,8 @@ Vehicle::Vehicle(GameWorld* world,
                  float max_force,
                  float max_speed,
                  float max_turnrate,
-                 float scale): MovingEntity(world, position,
+                 float scale): MovingEntity(world,
+                                            position,
                                             scale,
                                             velocity,
                                             max_speed,
@@ -22,7 +23,14 @@ Vehicle::Vehicle(GameWorld* world,
                                 m_timeElapsed(0.0)
 {
    m_steering =  new SteeringBehaviour(this);
-
+   m_nextSlot = 0;
+   m_smoothingOn = true;
+   m_sampleSize = 25.0;
+   for(int i =0; i<m_sampleSize; i++)
+   {
+      ngl::Vec3 zeroValue = ngl::Vec3(0,0,0);
+      m_headingHistory.push_back(zeroValue);
+   }
 
 }
 
@@ -64,6 +72,11 @@ void Vehicle::update(double time_elapsed)
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
    }
 
+    if(m_smoothingOn == true);
+    {
+        m_smoothHeading = smoothingUpdate(getHeading());
+        m_heading = m_smoothHeading;
+    }
 
 }
 
@@ -76,3 +89,30 @@ void Vehicle::render()
 {
 
 }
+
+ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 m_recentHeading)
+{
+    m_headingHistory[m_nextSlot++] = m_recentHeading;
+
+    if(m_nextSlot == m_headingHistory.size())
+    {
+        m_nextSlot = 0;
+    }
+
+    ngl::Vec3 sum = ngl::Vec3(0,0,0);
+    std::vector<ngl::Vec3>::iterator it = m_headingHistory.begin();
+
+    for(it; it!=m_headingHistory.end(); it++)
+    {
+        sum += *it;
+    }
+
+    return sum / m_headingHistory.size();
+}
+
+
+
+
+
+
+

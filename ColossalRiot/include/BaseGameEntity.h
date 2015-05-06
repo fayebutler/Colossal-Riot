@@ -10,6 +10,9 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include "Cell.h"
+//#include "GameWorld.h"
+
+class GameWorld;
 
 enum entityType
 {

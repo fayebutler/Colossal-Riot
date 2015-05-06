@@ -115,6 +115,11 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
+
+//  m_gameworld = new GameWorld();
+
+//  m_selected = false;
+//  m_selectedSquad = NULL;
 }
 
 NGLDraw::~NGLDraw()
@@ -137,6 +142,7 @@ void NGLDraw::resize(int _w, int _h)
 
   m_height = _h;
   m_width = _w;
+
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
@@ -288,11 +294,6 @@ void NGLDraw::draw()
   }
 }
 
-void NGLDraw::drawMenu()
-{
-
-}
-
 void NGLDraw::update(double timeElapsed, double currentTime)
 {
   m_gameworld->Update(timeElapsed, currentTime);
@@ -335,7 +336,6 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
     m_origYPos=_event.y;
 //    m_modelPos.m_x += INCREMENT * diffX;
 //    m_modelPos.m_y -= INCREMENT * diffY;
-
 
 
 //    INCREMENT = INCREMENT*;
@@ -532,10 +532,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 //    pixel.m_x = round(pixel.m_x);
 
-//    if (m_selectedSquad!= NULL)
-//    {
-//        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,0.0f,0.0f,1.0f));
-//    }
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
@@ -557,8 +553,10 @@ void NGLDraw::doMovement(const int _x, const int _y)
     m_clickPosition = getWorldSpace(_x, _y);
 
     std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+
     //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-    m_selectedSquad->setPos(m_clickPosition);
+//    m_selectedSquad->setPos(m_clickPosition);
+    m_gameworld->createPath(m_selectedSquad, m_clickPosition);
     //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
     m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     m_selected = false;
@@ -610,6 +608,8 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
     std::cout<<"obj "<<obj.m_x<<" "<<obj.m_y<<" "<<obj.m_z<<" "<<std::endl;
     obj.m_y = 0.f;
+
+    obj.m_y = 0.0;
 
     return obj;
 }
