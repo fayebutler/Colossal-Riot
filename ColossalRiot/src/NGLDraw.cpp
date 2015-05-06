@@ -83,12 +83,12 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_gameState = gameMenu;
 
   m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.3f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonPlay->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
+  m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonPlay->updateText("New Game", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-98.f, -25.f));
   m_buttons.push_back(m_buttonPlay);
 
   m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.3f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
   m_buttons.push_back(m_buttonQuit);
 
@@ -97,15 +97,24 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
   m_buttons.push_back(m_buttonPause);
 
+  m_buttonMenu = new UIButton(buttonMenu, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonMenu->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonMenu->updateText("Menu", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+  m_buttons.push_back(m_buttonMenu);
+
   m_buttonCreateSquad = new UIButton(buttonCreateSquad, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonCreateSquad->updateButton(ngl::Vec2(0.f, -0.9f), ngl::Vec2(0.3f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
   m_buttons.push_back(m_buttonCreateSquad);
 
-  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(0.f, 0.f), ngl::Vec2(0.05f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f));
-  m_sliderSquadSize->updateText("num", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(60.f, -13.f));
-
+  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.03f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_squadSize = m_sliderSquadSize->calculateOutput();
+  std::cout<<"m_squadSize"<<m_squadSize<<std::endl;
+  m_ss.str(std::string());
+  m_ss << m_squadSize;
+  m_squadSizeString = m_ss.str();
+  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
 }
 
 NGLDraw::~NGLDraw()
@@ -118,6 +127,7 @@ NGLDraw::~NGLDraw()
   delete m_buttonQuit;
   delete m_buttonPause;
   delete m_buttonCreateSquad;
+  delete m_sliderSquadSize;
   Init->NGLQuit();
 }
 
@@ -200,8 +210,6 @@ void NGLDraw::endGame()
 
 void NGLDraw::draw()
 {
-  std::cout<<m_sliderSquadSize->getIsSliding()<<std::endl;
-
   // clear the screen and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -228,8 +236,8 @@ void NGLDraw::draw()
 
       m_gameworld->draw(m_cam, m_mouseGlobalTX);
 
-      m_buttonQuit->draw();
       m_buttonPause->draw();
+      m_buttonMenu->draw();
       m_buttonCreateSquad->draw();
 
       m_sliderSquadSize->draw();
@@ -240,7 +248,6 @@ void NGLDraw::draw()
     {
       glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
       m_buttonPlay->draw();
-
       m_buttonQuit->draw();
       break;
     }
@@ -265,9 +272,7 @@ void NGLDraw::draw()
       m_gameworld->draw(m_cam, m_mouseGlobalTX);
 
       m_buttonPause->draw();
-
-      m_buttonQuit->draw();
-
+      m_buttonMenu->draw();
 
       break;
     }
@@ -291,6 +296,10 @@ void NGLDraw::drawMenu()
 void NGLDraw::update(double timeElapsed, double currentTime)
 {
   m_gameworld->Update(timeElapsed, currentTime);
+
+  m_ss.str(std::string());
+  m_ss << m_squadSize;
+  m_squadSizeString = m_ss.str();
 }
 
 
@@ -337,7 +346,8 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
   }
   if (m_sliderSquadSize->getIsSliding() == true)
   {
-    m_sliderSquadSize->slideBar(_event.x);
+    m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+    m_sliderSquadSize->setTextString(m_squadSizeString);
   }
 
 }
@@ -350,12 +360,9 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
     if(_event.button == SDL_BUTTON_MIDDLE)
     {
-      if (m_gameState == gamePlay)
-      {
-        m_origXPos = _event.x;
-        m_origYPos = _event.y;
-        m_translate=true;
-      }
+      m_origXPos = _event.x;
+      m_origYPos = _event.y;
+      m_translate=true;
     }
     if(_event.button == SDL_BUTTON_LEFT)
     {
@@ -381,9 +388,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
              {
                startGame(1);
                m_gameState = gamePlay;
-               m_buttonQuit->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-               m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-30.f, -18.f));
+               m_buttonQuit->setIsActive(false);
                m_buttonPlay->setIsActive(false);
+               m_buttonPause->setIsActive(true);
+               m_buttonMenu->setIsActive(true);
 
                break;
              }
@@ -412,9 +420,19 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
                }
                break;
              }
+             case buttonMenu :
+             {
+               m_gameState = gameMenu;
+               //endGame();
+               m_buttonQuit->setIsActive(true);
+               m_buttonPlay->setIsActive(true);
+               m_buttonMenu->setIsActive(false);
+               m_buttonMenu->setIsActive(false);
+               break;
+             }
              case buttonCreateSquad :
              {
-               createSquad(5);
+               createSquad(m_squadSize);
                break;
              }
              default:
@@ -429,7 +447,8 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
        {
          std::cout<<"SLIDER"<<std::endl;
          m_sliderSquadSize->setIsSliding(true);
-         m_sliderSquadSize->slideBar(_event.x);
+         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+         m_sliderSquadSize->setTextString(m_squadSizeString);
        }
     }
 }

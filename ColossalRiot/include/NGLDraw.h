@@ -158,6 +158,7 @@ class NGLDraw
     UIButton* m_buttonPlay;
     UIButton* m_buttonQuit;
     UIButton* m_buttonPause;
+    UIButton* m_buttonMenu;
     UIButton* m_buttonCreateSquad;
 
     UISlider* m_sliderSquadSize;
@@ -165,6 +166,11 @@ class NGLDraw
     Text* m_text;
 
     Timer m_gameTimer;
+
+    int m_squadSize;
+    std::string m_squadSizeString;
+
+    std::stringstream m_ss;
 
 };
 

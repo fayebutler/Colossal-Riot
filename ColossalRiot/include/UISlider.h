@@ -18,7 +18,7 @@ public:
 
   void addText(std::string _font, int _fontSize);
 
-  void updateSlider(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _colour, ngl::Vec2 _barPos, ngl::Vec2 _barDimensions, ngl::Vec4 _barColour);
+  void updateSlider(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _colour, ngl::Vec2 _barPos, ngl::Vec2 _barDimensions, ngl::Vec4 _barColour, int _outputMin, int _outputMax);
   void updateText(std::string _text, ngl::Vec3 _colour, ngl::Vec2 _offset);
 
   eSliderName getName() { return m_name; }
@@ -56,8 +56,10 @@ public:
   void setScreenDimensions(ngl::Vec2 _screenDimensions) { m_screenDimensions = _screenDimensions; }
 
   bool isClicked(int _x, int _y);
-  void slideBar(int _x);
+  int slideBar(int _x);
   void executeClick();
+
+  int calculateOutput();
 
 
   void draw();
@@ -77,6 +79,11 @@ private:
   ngl::Vec2 m_sliderBarPos;
   ngl::Vec2 m_sliderBarDimensions;
   ngl::Vec4 m_sliderBarColour;
+
+  int m_output;
+  int m_outputMin;
+  int m_outputMax;
+
 
   Text* m_text;
   bool m_hasText;

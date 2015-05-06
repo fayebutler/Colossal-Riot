@@ -8,6 +8,7 @@ enum eButtonName
   buttonPlay,
   buttonQuit,
   buttonPause,
+  buttonMenu,
   buttonCreateSquad,
 };
 

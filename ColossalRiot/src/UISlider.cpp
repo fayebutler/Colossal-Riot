@@ -29,7 +29,7 @@ UISlider::~UISlider()
 
 void UISlider::addText(std::string _font, int _fontSize)
 {
-  if (m_hasText = false)
+  if (m_hasText == false)
   {
     m_text = new Text(_font, _fontSize);
     m_hasText = true;
@@ -40,7 +40,7 @@ void UISlider::addText(std::string _font, int _fontSize)
   }
 }
 
-void UISlider::updateSlider(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _colour, ngl::Vec2 _barPos, ngl::Vec2 _barDimensions, ngl::Vec4 _barColour)
+void UISlider::updateSlider(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _colour, ngl::Vec2 _barPos, ngl::Vec2 _barDimensions, ngl::Vec4 _barColour, int _outputMin, int _outputMax)
 {
   m_sliderPos = _pos;
   m_sliderDimensions = _dimensions;
@@ -48,6 +48,9 @@ void UISlider::updateSlider(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _co
   m_sliderBarPos = _barPos;
   m_sliderBarDimensions = _barDimensions;
   m_sliderBarColour = _barColour;
+  m_outputMin = _outputMin;
+  m_outputMax = _outputMax;
+  calculateOutput();
 }
 
 void UISlider::updateText(std::string _text, ngl::Vec3 _colour, ngl::Vec2 _offset)
@@ -73,6 +76,8 @@ bool UISlider::isClicked(int _x, int _y)
   ndc.m_x = ((2.f * _x) / m_screenDimensions.m_x) - 1.f;
   ndc.m_y = 1.f - ((2.f * _y) / m_screenDimensions.m_y);
 
+  std::cout<<"ndc "<<ndc.m_x<<" "<<ndc.m_y<<std::endl;
+
   if (ndc.m_x >= (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc.m_x <= (m_sliderPos.m_x + m_sliderDimensions.m_x/2) &&
       ndc.m_y >= (m_sliderPos.m_y - m_sliderDimensions.m_y/2) && ndc.m_y <= (m_sliderPos.m_y + m_sliderDimensions.m_y/2))
   {
@@ -84,13 +89,24 @@ bool UISlider::isClicked(int _x, int _y)
   }
 }
 
-void UISlider::slideBar(int _x)
+int UISlider::slideBar(int _x)
 {
-  float ndc_x = ((2.f * _x) / m_screenDimensions.m_x) - 1.f;
-  if (ndc_x >= (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc_x <= (m_sliderPos.m_x + m_sliderDimensions.m_x/2))
+  double ndc_x = ((2.f * _x) / m_screenDimensions.m_x) - 1.f;
+  if (ndc_x > (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc_x < (m_sliderPos.m_x + m_sliderDimensions.m_x/2))
   {
     m_sliderBarPos.m_x = ndc_x;
+    //calculateOutput();
   }
+  return calculateOutput();
+}
+
+int UISlider::calculateOutput()
+{
+  double sliderParam = (m_sliderBarPos.m_x - (m_sliderPos.m_x - m_sliderDimensions.m_x/2)) / ((m_sliderPos.m_x + m_sliderDimensions.m_x/2) - (m_sliderPos.m_x - m_sliderDimensions.m_x/2));
+  double outputDivisions = 1.0 / ((m_outputMax - m_outputMin) + 1);
+  int outputSection = (sliderParam / outputDivisions);
+  m_output = m_outputMin + outputSection;
+  return m_output;
 }
 
 void UISlider::draw()
@@ -104,6 +120,7 @@ void UISlider::draw()
 
   if (m_hasText == true)
   {
+    std::cout<<m_textString<<std::endl;
     m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
   }
 }

@@ -27,7 +27,7 @@ UIButton::~UIButton()
 
 void UIButton::addText(std::string _font, int _fontSize)
 {
-  if (m_hasText = false)
+  if (m_hasText == false)
   {
     m_text = new Text(_font, _fontSize);
     m_hasText = true;
