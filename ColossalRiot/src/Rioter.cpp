@@ -56,7 +56,7 @@ void Rioter::update(double timeElapsed, double currentTime)
 
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
-    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
+//    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
     m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
     Vehicle::Steering()->WallOverlapAvoidance();
