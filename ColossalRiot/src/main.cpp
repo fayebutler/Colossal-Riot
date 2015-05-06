@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "NGLDraw.h"
 
+
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
 void SDLErrorExit(const std::string &_msg);
@@ -152,7 +153,9 @@ int main()
                                 glViewport(0,0,rect.w,rect.h);
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
+
                 case SDLK_RETURN : ngldraw.setGameState(gamePlay); ngldraw.startGame(1); break;
+
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 

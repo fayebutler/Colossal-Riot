@@ -1,10 +1,10 @@
 #include "Squad.h"
+#include "GameWorld.h"
 
 ngl::Vec3 Squad::s_nextSelectionColour = ngl::Vec3(0.0,0.0,0.0);
 
 Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(world, pos, ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
-//    m_squadPos = ngl::Vec3(2.0,0,2.0);
     //m_squadPos = pos;
 
     //m_boundingRad = r;
@@ -12,7 +12,6 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     m_allArrived = false;
     m_foundWall = false;
     m_squadSize = squadSize;
-    m_pathIndex =0;
 
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
@@ -24,6 +23,12 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
       newPolice->setBoudingRadius(m_boundingRadius);
       newPolice->setDetectionRadius(3.5f);
       newPolice->setPos(ngl::Vec3((((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_x, 0.0f, (((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_z));
+      world->getCellGraph()->initializeCells(m_entityMgr->getEntityFromID(newPolice->getID()));
+      while (newPolice->getCurrentCellID() < 0)
+      {
+        newPolice->setPos(ngl::Vec3((((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_x, 0.0f, (((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_z));
+        world->getCellGraph()->initializeCells(m_entityMgr->getEntityFromID(newPolice->getID()));
+      }
       newPolice->setSquadPos(m_pos);
       newPolice->setSquadRadius(m_squadRadius);
       newPolice->setSquadID(m_ID);
@@ -33,7 +38,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     }
 
     m_selectionColour = s_nextSelectionColour;
-//    std::cout<<"SELECTION COLOUR "<<m_selectionColour.m_x<<" "<<m_selectionColour.m_y<<" "<<m_selectionColour.m_z<<std::endl;
+
 
     s_nextSelectionColour.m_x += 0.1;
 
@@ -48,6 +53,12 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
             s_nextSelectionColour.m_z += 0.1;
         }
     }
+    std::cout<<"MADE SQUAD"<<std::endl;
+}
+
+Squad::~Squad()
+{
+    m_squadPolice.clear();
 }
 
 ngl::Vec3 Squad::averagePolicePos()
@@ -64,6 +75,7 @@ ngl::Vec3 Squad::averagePolicePos()
 
 void Squad::update(double timeElapsed, double currentTime)
 {
+
     // individual police loop
     if(m_path.size() == 0)
     {
@@ -91,7 +103,8 @@ void Squad::update(double timeElapsed, double currentTime)
 
             currentPolice->setCrosshair(m_path[currentPolice->getPathIndex()]);
 
-           if((currentPolice->getPos() - currentPolice->getCrosshair()).lengthSquared() < 4)
+           if((currentPolice->getPos() - m_path[currentPolice->getPathIndex()]).lengthSquared() <= 4)
+
            {
                currentPolice->setPathIndex(currentPolice->getPathIndex()+1);
            }
@@ -100,10 +113,6 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->update(timeElapsed, currentTime);
     }
 
-    for (int i=0; i<m_squadSize; ++i )
-    {
-//        std::cout<<"police"<<i<<" = "<<m_policeArrived[i]<<std::endl;
-    }
     // a loop
     if(m_path.size() != 0)
     {
@@ -120,6 +129,8 @@ void Squad::update(double timeElapsed, double currentTime)
         m_allArrived = true;
         m_path.clear();
     }
+
+    std::cout<< "finished squad update"<<std::endl;
 
 }
 
@@ -229,6 +240,25 @@ void Squad::setPath(std::vector<ngl::Vec3> _path)
         m_policeArrived[i] = false;
         m_squadPolice[i]->setIsMoving(true);
         m_squadPolice[i]->setPathIndex(0);
+
+    }
+}
+
+void Squad::checkDeaths()
+{
+    for(int i=0; i<m_squadSize; i++)
+    {
+        Police* currentPolice = m_squadPolice[i];
+        if(currentPolice->getHealth()<=0)
+        {
+            m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentPolice));
+            delete currentPolice;
+            m_squadPolice.erase(m_squadPolice.begin()+i);
+            m_squadSize -= 1;
+            std::cout<<"REMOVING POLICE "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
+            i--;
+        }
+
     }
 }
 

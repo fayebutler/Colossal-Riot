@@ -292,6 +292,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
         for (unsigned int i = 0; i < numberOfEntiesInCurrentCell; i++)
         {
+            //std::cout<<"called by addEntities"<<std::endl;
 
           ngl::Vec3 vectorToEntity = _entity->getPos()- (m_entityMgr->getEntityFromID(m_cells[currentNeighbourCell].getDynamicEntityIDs()[i])->getPos());
           if(vectorToEntity.lengthSquared() <= (_entity->getDetectionRadius()*_entity->getDetectionRadius()))
@@ -306,10 +307,12 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
   //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
   for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)
   {
+      //std::cout<<"called by add Entities 2"<<std::endl;
       if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typePolice)
       {
           _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
       }
+      //std::cout<<"called by addEntities 3"<<std::endl;
       if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
       {
           _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
@@ -448,6 +451,7 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
 
     std::vector<ngl::Vec3> finalPath;
+    finalPath.clear();
 
     int endCellID = -1;
 
@@ -497,7 +501,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
    frontierMemory.push_back(startCellID);
 
 ///////////////////////////////LOOOOOP////////////////////////////////////////////////////////////////////////////////////
-//    for( int c =0; c<6; c++)
 
     while (currentCellID != endCellID)
     {
@@ -526,7 +529,8 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 
 
     //Add perpendicular neighbours to frontierCells:
-    for ( int i=0; i <currentCell->getPerpendicularNeighbourCellIDs().size();i++)
+    int numberOfPerpendicularNeighbours = currentCell->getPerpendicularNeighbourCellIDs().size();
+    for ( int i=0; i <numberOfPerpendicularNeighbours;i++)
     {
         bool isInMemory = false;
 
@@ -637,7 +641,15 @@ if (currentCellID != startCellID)
                         if(j+1==SPTs[i].size())
                         {
                             newSPT.push_back(currentCellID);
-                            SPTs.back() = newSPT;
+
+                            if(i == SPTs.size())
+                            {
+                                SPTs.back() = newSPT;
+                            }
+                            else
+                            {
+                                SPTs.push_back(newSPT);
+                            }
                             flag = true;
 
 
@@ -673,7 +685,7 @@ if (currentCellID != startCellID)
     // If not, then create a new SPT vector from the start of the current SPT to the first perpendicular element, append currentCell.
     // If not perpendicular to ANY elements in the latest SPT, go to the previous SPT and perform check again. -Do not delete the last SPT.
 
-    ///4-Go to highes priority cell:
+    ///4-Go to highest priority cell:
     // Set currentCell to the first element of priorityQueue.
 
     ///5- If currentCell == _to (destination). while loop

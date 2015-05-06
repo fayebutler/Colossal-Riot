@@ -1,9 +1,9 @@
 -- set up initial rioter variables
 
 makeRioter = function()
-   rioter.m_health = 100
+   rioter.m_health = math.random(100)
    rioter.m_morale = 100
-   rioter.m_rage = math.random(100)
+   rioter.m_rage = math.random(100)-20
    rioter.m_damage = 0.1
    stateMachine.m_currentState = "protest"
    stateMachine.m_globalState = "global"
@@ -60,17 +60,21 @@ protest["enter"] = function()
   rioter:cohesion(0.8)
   rioter:alignment(0.4)
   rioter:wander(0.5)
+  rioter:separation(0.8)
+  rioter:alignment(0.5)
 --  print("LUA RIOTER protest enter")
 end
 
 protest["execute"] = function()
 --  print("LUA RIOTER protest execute")
+  rioter:cohesion(0.02*rioter.m_rage)
   rioter.m_morale = rioter.m_morale - 0.3
+  rioter.m_health = rioter.m_health - 0.01
 --rioter:attack()
-  rioter.m_rage = rioter.m_rage + 0.1;
-  if rioter.m_health < 30 then
-    stateMachine:changeState("flee")
-  end
+  rioter.m_rage = rioter.m_rage + 0.01;
+--  if rioter.m_health < 30 then
+--    stateMachine:changeState("flee")
+--  end
 end
 
 protest["exit"] = function()

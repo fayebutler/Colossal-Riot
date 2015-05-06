@@ -16,7 +16,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_spinXFace=0;
   m_spinYFace=0;
 
-  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);			   // Grey Background
+  // Grey Background
   // enable depth testing for drawing
   glEnable(GL_DEPTH_TEST);
 
@@ -65,6 +65,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_cam= new ngl::Camera(from,to,up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
+
   m_cam->setShape(45,(float)m_width/m_height,0.05,350);
   shader->setShaderParam3f("viewerPos",m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z);
   // now create our light this is done after the camera so we can pass the
@@ -72,7 +73,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   // transformations
   ngl::Mat4 iv=m_cam->getViewMatrix();
   iv.transpose();
-  m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(1,1,1,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
   //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
@@ -115,10 +116,20 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
+
+//  m_gameworld = new GameWorld();
+
+//  m_selected = false;
+//  m_selectedSquad = NULL;
+
+
+  m_entityMgr = new EntityManager();
+
 }
 
 NGLDraw::~NGLDraw()
 {
+  delete m_entityMgr;
   ngl::NGLInit *Init = ngl::NGLInit::instance();
   std::cout<<"Shutting down NGL, removing VAO's and Shaders\n";
   delete m_light;
@@ -138,6 +149,11 @@ void NGLDraw::resize(int _w, int _h)
   m_height = _h;
   m_width = _w;
 
+  m_longestSide = _h;
+  if (_w > _h)
+  {
+      m_longestSide = _w;
+  }
 
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
@@ -171,24 +187,28 @@ void NGLDraw::startGame(int level)
   switch(level)
   {
     case 0:
-        m_gameworld = new GameWorld(0);
+        m_gameworld = new GameWorld(0, 100);
         break;
     case 1:
-        m_gameworld = new GameWorld(100);
+        m_gameworld = new GameWorld(100, 50);
         break;
     case 2:
-        m_gameworld = new GameWorld(200);
+        m_gameworld = new GameWorld(200, 40);
         break;
     case 3:
-        m_gameworld = new GameWorld(300);
+        m_gameworld = new GameWorld(300, 30);
         break;
     case 4:
-        m_gameworld = new GameWorld(400);
+        m_gameworld = new GameWorld(400, 25);
         break;
+  default:
+      std::cout<<"undefined level"<<std::endl;
+      break;
   }
 
     m_selected = false;
     m_selectedSquad = NULL;
+    m_selectedSquadID = -1;
 
 }
 
@@ -213,6 +233,8 @@ void NGLDraw::draw()
 {
   // clear the screen and depth buffer
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
 
 
   switch (m_gameState)
@@ -328,24 +350,52 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
   // right mouse translate code
 if(m_translate && _event.state &SDL_BUTTON_MMASK)
   {
+    std::cout<<"EYE: "<<m_cam->getEye().m_x<<" "<< m_cam->getEye().m_z<<std::endl;
+
     int diffX = (int)(_event.x - m_origXPos);
     int diffZ = (int)(_event.y - m_origYPos);
     m_origXPos=_event.x;
     m_origYPos=_event.y;
-//    m_modelPos.m_x += INCREMENT * diffX;
-//    m_modelPos.m_y -= INCREMENT * diffY;
 
-
-//    INCREMENT = INCREMENT*;
-
-    //m_cam->move((INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffX,0,(INCREMENT*((m_modelPos.m_y*0.2f)+1.0f)) * diffZ);
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
+
+
+
 
   }
   if (m_sliderSquadSize->getIsSliding() == true)
   {
+      float cameraLimitX = (50.0);
+      //cameraLimitX += (m_modelPos.m_y/2.0);
+
+      float cameraLimitZ = (50.0);
+      //cameraLimitZ += (m_modelPos.m_y/2.0);
+
+  //    float cameraLimitX = 50;
+  //    float cameraLimitZ = 50;
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
     m_sliderSquadSize->setTextString(m_squadSizeString);
+
+    std::cout<<"MODELPOS "<<m_modelPos.m_x<<" "<<m_modelPos.m_y<<" "<<m_modelPos.m_z<<std::endl;
+
+    if(m_cam->getEye().m_x> cameraLimitX)
+    {
+        m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
+    }
+    if(m_cam->getEye().m_x< -cameraLimitX)
+    {
+        m_cam->setEye(ngl::Vec3(-cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
+    }
+    if(m_cam->getEye().m_z> cameraLimitZ)
+    {
+        m_cam->setEye(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,cameraLimitZ));
+    }
+    if(m_cam->getEye().m_z< -cameraLimitZ)
+    {
+        m_cam->setEye(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,-cameraLimitZ));
+    }
+
+
   }
 
 }
@@ -478,43 +528,33 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
   // check the diff of the wheel position (0 means no change)
   if(_event.y > 0)
   {
-    if(abs(m_modelPos.m_y-cameraHeight) > 2)
-    {
-    m_modelPos.m_y+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-//    this->draw();
-    }
-  }
-  else if(_event.y < 0 )
-  {
-    m_modelPos.m_y-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-//    this->draw();
-  }
+      m_modelPos.m_y+=(ZOOM*(cameraHeight-m_modelPos.m_y)*0.05);
 
-  // check the diff of the wheel position (0 means no change)
-  if(_event.x > 0)
-  {
-    m_modelPos.m_x-=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-//    this->draw();
-  }
-  else if(_event.x <0 )
-  {
-      if(abs(m_modelPos.m_y-cameraHeight) > 2)
+      float nearest = 3.0;
+
+      if(cameraHeight-m_modelPos.m_y < nearest)
       {
-    m_modelPos.m_x+=(ZOOM*(abs(m_modelPos.m_y-cameraHeight)*0.05));
-//    this->draw();
+        m_modelPos.m_y = cameraHeight - nearest;
       }
   }
+  else if(_event.y < 0)
+  {
+      m_modelPos.m_y-=(ZOOM*(cameraHeight-m_modelPos.m_y)*0.05);
+
+      float furthest = ((49.0*5000.0)/(m_longestSide));
+
+      if(cameraHeight-m_modelPos.m_y > furthest)
+      {
+        m_modelPos.m_y= cameraHeight - furthest;
+      }
+  }
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-
-//    glReadPixels(_x, _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
-//    std::cout<<"PIXEL COLOUR  "<< pixel[0]<<"  "<<pixel[1]<<"  "<<pixel[2]<<std::endl;
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
@@ -523,43 +563,47 @@ void NGLDraw::doSelection(const int _x, const int _y)
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
 
     }
-//    unsigned char pixel[3];
+
     ngl::Vec3 pixel;
-    //pixel = ngl::Vec3(0.f,0.f,0.f);
+
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
 
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
-//    pixel.m_x = round(pixel.m_x);
-
 
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
-
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
             currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
             m_selected = true;
             m_selectedSquad = currentSquad;
+            m_selectedSquadID = currentSquad->getID();
             break;
         }
     }
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }
 
 void NGLDraw::doMovement(const int _x, const int _y)
 {
-    m_clickPosition = getWorldSpace(_x, _y);
+    std::map<int, BaseGameEntity*>::const_iterator entity = m_entityMgr->getEntityMap().find(m_selectedSquadID);
 
-//    std::cout<<" MOVE TO :  "<<m_clickPosition.m_x<<"  "<<m_clickPosition.m_y<<"  "<<m_clickPosition.m_z<<std::endl;
+    if(entity->first !=  m_entityMgr->getEntityMap().end()->first)
+    {
+        m_clickPosition = getWorldSpace(_x, _y);
 
-    //std::cout<<"SQUAD POSITION BEFORE MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-//    m_selectedSquad->setPos(m_clickPosition);
-    m_gameworld->createPath(m_selectedSquad, m_clickPosition);
-    //std::cout<<"SQUAD POSITION AFTER MOVE : "<<m_selectedSquad->getPos().m_x<<"  "<<m_selectedSquad->getPos().m_y<<"  "<<m_selectedSquad->getPos().m_z<<std::endl;
-    m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+        m_gameworld->createPath(m_selectedSquad, m_clickPosition);
+
+        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+    }
+
+
     m_selected = false;
 }
 

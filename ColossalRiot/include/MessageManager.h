@@ -27,6 +27,7 @@ public:
 private:
 
   static std::set<Message> m_queue;
+  static EntityManager* m_entityMgr;
 
   void send(BaseGameEntity *_receiver, const Message &_message);
 

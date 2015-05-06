@@ -21,13 +21,11 @@ Police::Police(GameWorld* world) : Agent(world)
     // Set initial variables
     m_pathIndex = 0;
     m_isMoving = false;
+
     m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
-
-    //m_targetID = 0;
-
 
 //    Vehicle::Steering()->CohesionOn();
 //    Vehicle::Steering()->setCohesionWeight(0.4f);
@@ -42,9 +40,9 @@ Police::Police(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->SeekOn();
 //    Vehicle::Steering()->ArriveOn();
 
-
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
+
 }
 
 Police::~Police()
@@ -56,11 +54,6 @@ Police::~Police()
 
 void Police::update(double timeElapsed, double currentTime)
 {
-  Agent::update(timeElapsed, currentTime);
-  m_stateMachine->update();
-
-  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-
   //make a friendly and opposing neightbours vector as seperation wants all neighbours bu alignment & cohesion doesn't
   Vehicle::Steering()->clearFriendlyNeighbours();
   Vehicle::Steering()->clearAllNeighbours();
@@ -68,11 +61,16 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
 
+  Agent::update(timeElapsed, currentTime);
+  m_stateMachine->update();
+
+  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+
+
   Vehicle::Steering()->WallOverlapAvoidance();
 //  Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(2);
-
 
 }
 
@@ -90,7 +88,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(0.0f, 0.0f, getHealth()/100.0f, 1.0f));
+  m.setDiffuse(ngl::Colour((getHealth()/100.0f)*0.2, 0.3f, 0.7f, 1.0f));
   m.loadToShader("material");
 
 
@@ -165,7 +163,6 @@ bool Police::handleMessage(const Message& _message)
 
 void Police::attack()
 {
-
   m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 }
 
@@ -195,6 +192,5 @@ void Police::squadCohesion(double weight)
     Vehicle::Steering()->setSeekWeight(weight);
 
     Vehicle::Steering()->SeekOn();
-
 
 }

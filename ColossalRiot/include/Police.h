@@ -58,6 +58,7 @@ protected:
     int m_pathIndex;
 
     bool m_isMoving;
+
 };
 
 #endif // POLICE_H

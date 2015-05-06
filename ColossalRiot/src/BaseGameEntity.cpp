@@ -23,6 +23,8 @@ BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Ve
       m_world->setResetID(0);
   }
 
+  //m_nextValidID = m_entityMgr->getSize();
+
   setID(m_nextValidID);
   m_nextValidID++;
 
@@ -35,11 +37,13 @@ BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Ve
   m_entityType = entity_type;
   m_detectionRadius = r * 3; // CHANGE TO VARIABLE
 
+  world->getCellGraph()->initializeCells(this);
+
 }
 
 BaseGameEntity::~BaseGameEntity()
 {
-    delete m_entityMgr;
+    //delete m_entityMgr;
 }
 
 

@@ -2308,7 +2308,14 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Namespace.h \
-		include/StateMachine.h
+		include/StateMachine.h \
+		include/GameWorld.h \
+		include/Rioter.h \
+		include/CellGraph.h \
+		/home/i7715430/NGL/include/ngl/Obj.h \
+		/home/i7715430/NGL/include/ngl/Texture.h \
+		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
+		/home/i7715430/NGL/include/ngl/BBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Squad.o src/Squad.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \

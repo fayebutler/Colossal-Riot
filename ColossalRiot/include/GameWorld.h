@@ -27,23 +27,24 @@ private:
     std::vector<Rioter*> m_rioters;
     //std::vector<Police*> m_police;
     std::vector<Squad*> m_squads;
+
     int m_numberOfRioters;
+    int m_numberOfSquads;
 
-    std::vector<Police*> m_police;
-    int m_numberOfPolice;
-
-    int m_numberOfEntities;
-    CellGraph m_cellGraph;
+    CellGraph* m_cellGraph;
     ngl::Obj *m_worldMesh;
 
     bool m_resetID;
 
-
+    int m_availablePolice;
+    int m_activePolice;
 
 
 
 public:
-    GameWorld(int numberOfRioters);
+
+    GameWorld(int numberOfRioters, int availablePolice);
+
     ~GameWorld();
 
     ngl::Obj* m_mesh;
@@ -63,9 +64,10 @@ public:
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
 
+    CellGraph* getCellGraph()const{return m_cellGraph;}
+
     void createPath(Squad *selectedSquad, ngl::Vec3 target);
 
-    bool loseGame();
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
 
