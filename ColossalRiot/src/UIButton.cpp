@@ -1,17 +1,23 @@
 #include "UIButton.h"
 #include "ngl/VAOPrimitives.h"
 #include "ngl/ShaderLib.h"
-#include "ngl/Transformation.h"
+#include <ngl/Camera.h>
 
-UIButton::UIButton()
+UIButton::UIButton(eButtonName _name, ngl::Vec2 _screenDimensions)
 {
+  m_name = _name;
+  m_screenDimensions = _screenDimensions;
   m_hasText = false;
+  m_isActive = true;
 }
 
-UIButton::UIButton(std::string _font, int _fontSize)
+UIButton::UIButton(eButtonName _name, std::string _font, int _fontSize, ngl::Vec2 _screenDimensions)
 {
+  m_name = _name;
   m_text = new Text(_font, _fontSize);
+  m_screenDimensions = _screenDimensions;
   m_hasText = true;
+  m_isActive = true;
 }
 
 UIButton::~UIButton()
@@ -81,9 +87,12 @@ void UIButton::executeClick()
 void UIButton::draw()
 {
   loadMatricesToShader();
-  ngl::VAOPrimitives::instance()->createTrianglePlane("button", m_buttonDimensions.m_x, m_buttonDimensions.m_y, 1, 1, ngl::Vec3(0, 1, 1));
+  ngl::VAOPrimitives::instance()->createTrianglePlane("button", m_buttonDimensions.m_x, m_buttonDimensions.m_y, 1, 1, ngl::Vec3(0, 1, 0));
   ngl::VAOPrimitives::instance()->draw("button");
-  m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
+  if (m_hasText == true)
+  {
+    m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
+  }
 }
 
 void UIButton::loadMatricesToShader()
@@ -93,8 +102,8 @@ void UIButton::loadMatricesToShader()
   shader->setShaderParam4f("Colour", m_buttonColour.m_x, m_buttonColour.m_y,m_buttonColour.m_z, 1.f);
 
   ngl::Transformation t;
-  t.setPosition(ngl::Vec3(m_buttonPos.m_x, m_buttonPos.m_y, -10.f));
-  t.setRotation(90.0,0.0,0.0);
+  t.setPosition(ngl::Vec3(m_buttonPos.m_x, m_buttonPos.m_y, 0.f));
+  t.setRotation(90.f, 0.f, 0.f);
 
   ngl::Mat4 M;
   ngl::Mat4 MV;

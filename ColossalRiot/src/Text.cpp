@@ -300,7 +300,6 @@ void Text::setScreenSize(int _w, int _h )
   // screen dimensions change
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
   (*shader)["nglTextShader"]->use();
-  std::cout<<"scaleX "<<scaleX <<" "<<scaleY<<"\n";
   shader->setRegisteredUniform1f("scaleX",scaleX);
   shader->setRegisteredUniform1f("scaleY",scaleY);
 }

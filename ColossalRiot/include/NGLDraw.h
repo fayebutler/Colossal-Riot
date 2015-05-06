@@ -9,13 +9,16 @@
 #include "Police.h"
 #include "Rioter.h"
 #include "UIButton.h"
+#include "UISlider.h"
 #include "Text.h"
+#include "Timer.h"
 
-enum gameState
+enum eGameState
 {
-    menu,
-    play,
-    paused
+    gameMenu,
+    gamePlay,
+    gamePause,
+    gameQuit
 };
 
 class NGLDraw
@@ -79,8 +82,8 @@ class NGLDraw
     int m_width;
     int m_height;
 
-    gameState getGameState()const{return m_gameState;}
-    void setGameState(gameState _gameState){m_gameState = _gameState;}
+    eGameState getGameState()const{return m_gameState;}
+    void setGameState(eGameState _gameState){m_gameState = _gameState;}
 
     void drawMenu();
 
@@ -148,11 +151,20 @@ class NGLDraw
 
     bool m_selected;
 
-    gameState m_gameState;
+    eGameState m_gameState;
 
-    std::vector<UIButton*> m_UI;
-    UIButton* m_UIButton;
+    std::vector<UIButton*> m_buttons;
+
+    UIButton* m_buttonPlay;
+    UIButton* m_buttonQuit;
+    UIButton* m_buttonPause;
+    UIButton* m_buttonCreateSquad;
+
+    UISlider* m_sliderSquadSize;
+
     Text* m_text;
+
+    Timer m_gameTimer;
 
 };
 

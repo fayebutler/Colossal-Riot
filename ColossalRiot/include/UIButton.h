@@ -1,19 +1,33 @@
 #ifndef UIBUTTON_H
 #define UIBUTTON_H
 #include <ngl/Transformation.h>
-#include <ngl/Camera.h>
 #include "Text.h"
+
+enum eButtonName
+{
+  buttonPlay,
+  buttonQuit,
+  buttonPause,
+  buttonCreateSquad,
+};
+
 class UIButton
 {
 public:
-  UIButton();
-  UIButton(std::string _font, int _fontSize);
+  UIButton(eButtonName _name, ngl::Vec2 _screenDimensions);
+  UIButton(eButtonName _name, std::string _font, int _fontSize, ngl::Vec2 _screenDimensions);
   ~UIButton();
 
   void addText(std::string _font, int _fontSize);
 
   void updateButton(ngl::Vec2 _pos, ngl::Vec2 _dimensions, ngl::Vec4 _colour);
   void updateText(std::string _text, ngl::Vec3 _colour, ngl::Vec2 _offset);
+
+  eButtonName getName() { return m_name; }
+  void setName(eButtonName _name) { m_name = _name; }
+
+  bool getIsActive() { return m_isActive; }
+  void setIsActive(bool _inBool) { m_isActive = _inBool; }
 
   ngl::Vec2 getButtonPosition() { return m_buttonPos; }
   void setButtonPosition(ngl::Vec2 _pos) { m_buttonPos = _pos; }
@@ -43,6 +57,10 @@ public:
 
 
 private:
+  eButtonName m_name;
+
+  bool m_isActive;
+
   ngl::Vec2 m_buttonPos;
   ngl::Vec2 m_buttonDimensions;
   ngl::Vec4 m_buttonColour;

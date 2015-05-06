@@ -71,7 +71,7 @@ int main()
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
-  ngldraw.setGameState(menu);
+  ngldraw.setGameState(gameMenu);
 
   Timer gameTimer;
   double timeElapsed = 0.0;
@@ -111,7 +111,7 @@ int main()
           // now we look for a keydown event
         case SDL_KEYDOWN:
         {
-          if(ngldraw.getGameState() == play)
+          if(ngldraw.getGameState() == gamePlay)
           {
               switch( event.key.keysym.sym )
               {
@@ -124,9 +124,9 @@ int main()
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(menu); ngldraw.endGame(); break;
+                case SDLK_RETURN : ngldraw.setGameState(gameMenu); ngldraw.endGame(); break;
 
-                case SDLK_p : ngldraw.setGameState(paused); gameTimer.resetTimer(); break;
+                case SDLK_p : ngldraw.setGameState(gamePause); gameTimer.resetTimer(); break;
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
 
@@ -140,7 +140,7 @@ int main()
                 default : break;
               }
           }
-          else if(ngldraw.getGameState() == menu)
+          else if(ngldraw.getGameState() == gameMenu)
           {
               switch( event.key.keysym.sym )
               {
@@ -153,7 +153,7 @@ int main()
                                 break;
                 case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
 
-                case SDLK_RETURN : ngldraw.setGameState(play); ngldraw.startGame(1); break;
+                case SDLK_RETURN : ngldraw.setGameState(gamePlay); ngldraw.startGame(1); break;
 
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
@@ -161,12 +161,12 @@ int main()
                 default : break;
               }
            }
-          else if (ngldraw.getGameState() == paused)
+          else if (ngldraw.getGameState() == gamePause)
           {
             switch (event.key.keysym.sym)
             {
               case SDLK_ESCAPE : quit = true; break;
-              case SDLK_p : ngldraw.setGameState(play); gameTimer.resetTimer(); break;
+              case SDLK_p : ngldraw.setGameState(gamePlay); gameTimer.resetTimer(); break;
 
              default : break;
             }
@@ -177,23 +177,21 @@ int main()
 
     } // end of event switch
 } // end of poll events
-
-    if(ngldraw.getGameState() == menu)
+    if (ngldraw.getGameState() == gameQuit)
     {
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-      ngldraw.drawMenu();
+      quit = true;
     }
-    else if(ngldraw.getGameState() == play)
+    else if(ngldraw.getGameState() == gamePlay)
     {
       timeElapsed=gameTimer.timeElapsed();
       currentTime=gameTimer.getCurrentTime();
 
       std::cout<<"------------- TICK -------------"<<std::endl;
       ngldraw.update(timeElapsed,currentTime);
-      // now we draw ngl
-      ngldraw.draw();
     }
+    // now we draw ngl
+    ngldraw.draw();
+
 
 
 
