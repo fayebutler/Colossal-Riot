@@ -113,17 +113,17 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_buttons.push_back(m_buttonCreateSquad);
 
   m_buttonSquadFormWall = new UIButton(buttonSquadFormWall, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonSquadFormWall->updateButton(ngl::Vec2(0.f, 0.0f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonSquadFormWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -13.f));
+  m_buttonSquadFormWall->updateButton(ngl::Vec2(0.4f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadFormWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadFormWall);
 
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.03f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
-  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
+  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
 
   m_entityMgr = new EntityManager();
 
@@ -270,6 +270,14 @@ void NGLDraw::draw()
       m_buttonCreateSquad->draw();
       if (m_selectedSquad)
       {
+        if (m_selectedSquad->getIsWall() == true)
+        {
+          m_buttonSquadFormWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+        }
+        if (m_selectedSquad->getIsWall() == false)
+        {
+          m_buttonSquadFormWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+        }
         m_buttonSquadFormWall->draw();
       }
 
@@ -278,7 +286,7 @@ void NGLDraw::draw()
 
       m_ss.str(std::string());
       m_ss << m_gameworld->getAvailablePolice();
-      m_textMedium->renderText(800.f, 950.f, m_ss.str());
+      m_textMedium->renderText(750.f, 950.f, m_ss.str());
 
       break;
     }
