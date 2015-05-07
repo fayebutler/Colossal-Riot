@@ -50,16 +50,30 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
 
-  Agent::update(timeElapsed, currentTime);
-  m_stateMachine->update();
-
-  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-
-
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(2);
+
+  Agent::update(timeElapsed, currentTime);
+  m_stateMachine->update();
+
+  // calculate influence of neighbouring rioters based on their rage
+  int nearbyRioters = m_neighbourRioterIDs.size();
+  m_rioterInfluence = 0.0;
+
+  for (int i=0; i<nearbyRioters; i++)
+  {
+      Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
+      if (rioter)
+      {
+          m_rioterInfluence += rioter->getRage();
+      }
+  }
+
+
+  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+
 
 }
 
@@ -162,6 +176,7 @@ void Police::registerClass(lua_State* _L)
         .deriveClass<Police, Agent>("Police")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Police::attack)
+                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
 

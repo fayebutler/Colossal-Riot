@@ -18,7 +18,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
     // Set initial variables
 
-    m_hopHeight = 1.0;
+    m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
@@ -39,20 +39,34 @@ Rioter::~Rioter()
 
 void Rioter::update(double timeElapsed, double currentTime)
 {
-    std::cout<<"updating RIOTER: "<<m_ID<<std::endl;
     Vehicle::Steering()->clearFriendlyNeighbours();
     Vehicle::Steering()->clearAllNeighbours();
     Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
     Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
 
+    Vehicle::Steering()->WallOverlapAvoidance();
+    Vehicle::Steering()->ObjectOverlapAvoidance();
+
     Agent::update(timeElapsed, currentTime);
     m_stateMachine->update();
+
+   // calculate influence of neighbouring police based on their rage
+    int nearbyPolice = m_neighbourPoliceIDs.size();
+    m_policeInfluence = 0.0;
+
+    for (int i=0; i<nearbyPolice; i++)
+    {
+        Agent* policeman = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourPoliceIDs[i]));
+        if (policeman)
+        {
+            m_policeInfluence += policeman->getRage();
+        }
+    }
+
 //    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
     m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
-    Vehicle::Steering()->WallOverlapAvoidance();
-    Vehicle::Steering()->ObjectOverlapAvoidance();
 }
 
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
@@ -158,6 +172,6 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Rioter::attack)
-//                .addFunction("findTargetID", &Rioter::findTargetID)
+                .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)
         .endClass();
 }

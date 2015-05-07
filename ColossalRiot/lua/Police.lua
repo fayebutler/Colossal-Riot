@@ -155,7 +155,7 @@ defensive["execute"] = function()
 
   print("LUA POLICE defensive execute")
 
-  police:checkValidTarget(3.0, 20.0)
+  police:checkValidTarget(1.0, 20.0)
 
   if police.m_targetID >= 0 then
     police:wander(0.0)

@@ -45,6 +45,8 @@ public:
     int getPathIndex()const{return m_pathIndex;}
     void setPathIndex(int pathIndex){m_pathIndex = pathIndex;}
 
+    float getRioterInfluence()const{return m_rioterInfluence;}
+
 
 protected:
     MessageManager* m_messageMgr;
