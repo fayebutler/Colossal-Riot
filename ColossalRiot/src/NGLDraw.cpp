@@ -300,6 +300,20 @@ void NGLDraw::draw()
 
       break;
     }
+    case gameWin:
+    {
+      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      m_buttonMenu->draw();
+      m_buttonQuit->draw();
+      break;
+    }
+    case gameLose:
+    {
+      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      m_buttonMenu->draw();
+      m_buttonQuit->draw();
+      break;
+    }
     case gameQuit:
     {
       break;
@@ -320,6 +334,19 @@ void NGLDraw::update(double timeElapsed, double currentTime)
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
+
+
+  if(m_gameworld->hasWon()==1)
+  {
+      m_gameState = gameWin;
+      endGame();
+  }
+  else if(m_gameworld->hasLost()==1)
+  {
+      m_gameState = gameLose;
+      endGame();
+  }
+
 
 }
 

@@ -93,7 +93,39 @@ work["execute"] = function()
 
   print("LUA POLICE work execute")
   police:checkValidTarget(3.0, 20.0)
---  police.m_health = police.m_health - 0.5
+--police.m_health = police.m_health - 0.5
+
+  police:wander(0.5)
+  police:squadCohesion(0.4)
+
+  if police.m_morale < 30 then
+    stateMachine:changeState("flee")
+  end
+end
+
+work["exit"] = function()
+  print("LUA POLICE work exit")
+end
+
+
+-- defensive state
+
+defensive = {}
+defensive["enter"] = function()
+   print("LUA POLICE defensive enter")
+   police:checkValidTarget(1.0, 20.0)
+   police:pursuit(1.0)
+   police:cohesion(0.4)
+   police:separation(0.8)
+   police:alignment(0.3)
+   police:seek(0.0)
+end
+
+defensive["execute"] = function()
+
+  print("LUA POLICE defensive execute")
+  police:checkValidTarget(3.0, 20.0)
+--police.m_health = police.m_health - 0.5
 
   if police.m_targetID >= 0 then
     police:wander(0.0)
@@ -109,11 +141,85 @@ work["execute"] = function()
   end
 end
 
-work["exit"] = function()
-  print("LUA POLICE work exit")
+defensive["exit"] = function()
+  print("LUA POLICE defensive exit")
 end
 
--- hold state
+
+-- aggressive state
+
+aggressive = {}
+aggressive["enter"] = function()
+   print("LUA POLICE aggressive enter")
+   police:checkValidTarget(1.0, 20.0)
+   police:pursuit(1.0)
+   police:cohesion(0.4)
+   police:separation(0.8)
+   police:alignment(0.3)
+   police:seek(0.0)
+end
+
+aggressive["execute"] = function()
+
+  print("LUA POLICE aggressive execute")
+  police:checkValidTarget(3.0, 20.0)
+--police.m_health = police.m_health - 0.5
+
+  if police.m_targetID >= 0 then
+    police:wander(0.0)
+    police:attack()
+  else
+    police:wander(0.5)
+    police:squadCohesion(0.4)
+  end
+
+
+  if police.m_morale < 30 then
+    stateMachine:changeState("flee")
+  end
+end
+
+aggressive["exit"] = function()
+  print("LUA POLICE aggressive exit")
+end
+
+
+-- wall state
+
+wall = {}
+wall["enter"] = function()
+   print("LUA POLICE wall enter")
+   police:checkValidTarget(1.0, 20.0)
+   police:pursuit(1.0)
+   police:cohesion(0.4)
+   police:separation(0.8)
+   police:alignment(0.3)
+   police:seek(0.0)
+end
+
+wall["execute"] = function()
+
+  print("LUA POLICE wall execute")
+  police:checkValidTarget(3.0, 20.0)
+--police.m_health = police.m_health - 0.5
+
+  if police.m_targetID >= 0 then
+    police:wander(0.0)
+    police:attack()
+  else
+    police:wander(0.5)
+    police:squadCohesion(0.4)
+  end
+
+
+  if police.m_morale < 30 then
+    stateMachine:changeState("flee")
+  end
+end
+
+wall["exit"] = function()
+  print("LUA POLICE wall exit")
+end
 
 
 -- flee state

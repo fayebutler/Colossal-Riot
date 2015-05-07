@@ -120,7 +120,7 @@ void UISlider::draw()
 
   if (m_hasText == true)
   {
-//    std::cout<<m_textString<<std::endl;
+
     m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
   }
 }

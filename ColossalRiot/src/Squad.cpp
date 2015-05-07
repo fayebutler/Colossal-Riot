@@ -244,8 +244,10 @@ void Squad::setPath(std::vector<ngl::Vec3> _path)
     }
 }
 
-void Squad::checkDeaths()
+int Squad::checkDeaths()
 {
+    int numberOfDeaths = 0;
+
     for(int i=0; i<m_squadSize; i++)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -255,11 +257,13 @@ void Squad::checkDeaths()
             delete currentPolice;
             m_squadPolice.erase(m_squadPolice.begin()+i);
             m_squadSize -= 1;
-//            std::cout<<"REMOVING POLICE "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
+            numberOfDeaths++;
+
             i--;
         }
-
     }
+
+    return numberOfDeaths;
 }
 
 
