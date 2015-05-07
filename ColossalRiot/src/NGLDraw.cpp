@@ -135,6 +135,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
+
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
@@ -445,8 +446,6 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
     float cameraLimitX = (50.0);
     float cameraLimitZ = (50.0);
-    //cameraLimitX += (m_modelPos.m_y/2.0);
-    //cameraLimitZ += (m_modelPos.m_y/2.0);
     if(m_cam->getEye().m_x> cameraLimitX)
     {
         m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
@@ -703,7 +702,7 @@ void NGLDraw::doMovement(const int _x, const int _y)
     {
         m_clickPosition = getWorldSpace(_x, _y);
 
-        m_gameworld->createPath(m_selectedSquad, m_clickPosition);
+        m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
 
         m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     }

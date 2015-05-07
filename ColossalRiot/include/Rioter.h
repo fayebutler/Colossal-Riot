@@ -31,6 +31,7 @@ public:
     float getPoliceInfluence()const{return m_policeInfluence;}
 
 
+
 protected:
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;

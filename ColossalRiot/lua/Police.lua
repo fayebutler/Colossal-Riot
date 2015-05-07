@@ -84,6 +84,7 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
+--   police:seek(1.0)
   print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)

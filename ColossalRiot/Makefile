@@ -3172,7 +3172,51 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		include/Message.h \
 		include/MessageManager.h \
 		include/Cell.h \
-		include/SteeringBehaviour.h
+		include/SteeringBehaviour.h \
+		include/GameWorld.h \
+		/home/i7776126/NGL/include/ngl/Camera.h \
+		/home/i7776126/NGL/include/ngl/RibExport.h \
+		/home/i7776126/NGL/include/ngl/Plane.h \
+		include/Rioter.h \
+		include/Agent.h \
+		/home/i7776126/NGL/include/ngl/ShaderLib.h \
+		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/Shader.h \
+		/home/i7776126/NGL/include/ngl/ShaderProgram.h \
+		/home/i7776126/NGL/include/ngl/Util.h \
+		/home/i7776126/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7776126/NGL/include/ngl/Mat3.h \
+		/home/i7776126/NGL/include/ngl/NGLInit.h \
+		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7776126/NGL/include/ngl/Material.h \
+		../lua/include/lua.h \
+		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
+		../lua/include/lauxlib.h \
+		../lua/include/lualib.h \
+		../LuaBridge/LuaBridge.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaHelpers.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/TypeList.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/FuncTraits.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Constructor.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Stack.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/ClassInfo.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaException.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/LuaRef.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Iterator.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Userdata.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/CFunctions.h \
+		/home/i7776126/compAnim02/colossal/LuaBridge/detail/Namespace.h \
+		include/StateMachine.h \
+		include/Police.h \
+		include/CellGraph.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
+		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Vehicle.o src/Vehicle.cpp
 
 ####### Install

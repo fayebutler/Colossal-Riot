@@ -19,7 +19,7 @@ Police::Police(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Police>(this);
 
     // Set initial variables
-    m_pathIndex = 0;
+//    m_pathIndex = 0;
     m_isMoving = false;
 
     m_hopHeight = 0.0;
@@ -27,6 +27,7 @@ Police::Police(GameWorld* world) : Agent(world)
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
 
+    m_blockadePosition = NULL;
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
 
@@ -73,8 +74,32 @@ void Police::update(double timeElapsed, double currentTime)
 
 
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+  Vehicle::Steering()->WallOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
 
+  Vehicle::setMaxSpeed(4);
 
+    if(m_blockadePosition != NULL)
+    {
+        this->setCrosshair(m_blockadePosition);
+        if((this->getPos() - m_blockadePosition).lengthSquared() <=0.1)
+        {
+            this->Steering()->ArriveOff();
+            this->setVelocity(ngl::Vec3(0,0,0));
+            this->setMaxTurnRate(0.0);
+            std::cout<< " ARRIVE OFF "<<std::endl;
+        }
+        else
+        {
+ //           this->setCrosshair(m_blockadePosition);
+            this->Steering()->ArriveOn();
+            std::cout<< " ARrIVE ON "<<std::endl;
+        }
+
+    }
+  std::cout<<"Seek weight "<<Vehicle::Steering()->getSeekWeight()<<std::endl;
+
+  std::cout<<"cohesion weight "<<Vehicle::Steering()->getCohesionWeight()<<std::endl;
 }
 
 
@@ -186,15 +211,17 @@ void Police::registerClass(lua_State* _L)
 
 void Police::squadCohesion(double weight)
 {
+  // MUST FIX!
+  if (weight > 0.f)
+  {
     ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
     double distance = fabs(toSquad.length());
 
     weight = (weight*distance*1.5f)/m_squadRadius;
 
-
     Vehicle::setCrosshair(m_squadPos);
     Vehicle::Steering()->setSeekWeight(weight);
 
     Vehicle::Steering()->SeekOn();
-
+  }
 }

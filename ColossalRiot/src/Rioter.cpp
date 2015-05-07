@@ -27,7 +27,6 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     Vehicle::Steering()->setWallAvoidWeight(0.4);
 
      m_policeInfluence = 0.0;
-
 }
 
 Rioter::~Rioter()
@@ -116,7 +115,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Rioter::findTargetID(float _health)
 {
-    std::cout<<"Trying to find target"<<std::endl;
+//    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
 
     std::cout<<police.size()<<std::endl;
@@ -138,7 +137,7 @@ void Rioter::findTargetID(float _health)
 
     if (currentTarget == NULL)
     {
-        std::cout<< "NO NEARBY TARGETS"<<std::endl;
+ //       std::cout<< "NO NEARBY TARGETS"<<std::endl;
         setTargetID(-1);
     }
     else
