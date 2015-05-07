@@ -29,6 +29,7 @@ public:
     void registerClass(lua_State* _L);
 
 
+
 protected:
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;

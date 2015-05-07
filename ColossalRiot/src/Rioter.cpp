@@ -18,7 +18,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
     // Set initial variables
 
-    m_hopHeight = 1.0;
+    m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();

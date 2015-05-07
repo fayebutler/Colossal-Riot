@@ -205,7 +205,7 @@ Text::Text( const std::string &_f, int _size)
     // thing we do
     m_characters[c]=fc;
   }
-  std::cout<<"created "<<widthVAO.size()<<" unique billboards\n";
+//  std::cout<<"created "<<widthVAO.size()<<" unique billboards\n";
   // set a default colour (black) incase user forgets
   this->setColour(0,0,0);
   setTransform(1.0,1.0);

@@ -111,7 +111,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.03f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
-  std::cout<<"m_squadSize"<<m_squadSize<<std::endl;
+//  std::cout<<"m_squadSize"<<m_squadSize<<std::endl;
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
@@ -350,7 +350,7 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
   // right mouse translate code
 if(m_translate && _event.state &SDL_BUTTON_MMASK)
   {
-    std::cout<<"EYE: "<<m_cam->getEye().m_x<<" "<< m_cam->getEye().m_z<<std::endl;
+//    std::cout<<"EYE: "<<m_cam->getEye().m_x<<" "<< m_cam->getEye().m_z<<std::endl;
 
     int diffX = (int)(_event.x - m_origXPos);
     int diffZ = (int)(_event.y - m_origYPos);
@@ -376,7 +376,7 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
     m_sliderSquadSize->setTextString(m_squadSizeString);
 
-    std::cout<<"MODELPOS "<<m_modelPos.m_x<<" "<<m_modelPos.m_y<<" "<<m_modelPos.m_z<<std::endl;
+//    std::cout<<"MODELPOS "<<m_modelPos.m_x<<" "<<m_modelPos.m_y<<" "<<m_modelPos.m_z<<std::endl;
 
     if(m_cam->getEye().m_x> cameraLimitX)
     {
@@ -495,7 +495,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
        }
        if (m_sliderSquadSize->isClicked(_event.x, _event.y))
        {
-         std::cout<<"SLIDER"<<std::endl;
+//         std::cout<<"SLIDER"<<std::endl;
          m_sliderSquadSize->setIsSliding(true);
          m_squadSize = m_sliderSquadSize->slideBar(_event.x);
          m_sliderSquadSize->setTextString(m_squadSizeString);

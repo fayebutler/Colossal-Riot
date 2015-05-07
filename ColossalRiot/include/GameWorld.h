@@ -41,6 +41,7 @@ private:
 
 
 
+
 public:
 
     GameWorld(int numberOfRioters, int availablePolice);

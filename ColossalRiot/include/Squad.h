@@ -68,6 +68,7 @@ private:
     bool m_foundWall;
 
     std::vector<Wall> m_closestWalls;
+    std::vector<ngl::Vec3> m_blockadePositions;
 
 
 };

@@ -76,7 +76,7 @@ bool UISlider::isClicked(int _x, int _y)
   ndc.m_x = ((2.f * _x) / m_screenDimensions.m_x) - 1.f;
   ndc.m_y = 1.f - ((2.f * _y) / m_screenDimensions.m_y);
 
-  std::cout<<"ndc "<<ndc.m_x<<" "<<ndc.m_y<<std::endl;
+//  std::cout<<"ndc "<<ndc.m_x<<" "<<ndc.m_y<<std::endl;
 
   if (ndc.m_x >= (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc.m_x <= (m_sliderPos.m_x + m_sliderDimensions.m_x/2) &&
       ndc.m_y >= (m_sliderPos.m_y - m_sliderDimensions.m_y/2) && ndc.m_y <= (m_sliderPos.m_y + m_sliderDimensions.m_y/2))
@@ -120,7 +120,7 @@ void UISlider::draw()
 
   if (m_hasText == true)
   {
-    std::cout<<m_textString<<std::endl;
+//    std::cout<<m_textString<<std::endl;
     m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
   }
 }

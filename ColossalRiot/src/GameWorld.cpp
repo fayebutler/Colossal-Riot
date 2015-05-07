@@ -75,7 +75,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             delete currentRioter;
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters -= 1;
-            std::cout<<"REMOVING RIOTER "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
+//            std::cout<<"REMOVING RIOTER "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
             i--;
         }
     }
@@ -84,13 +84,13 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_squads.size(); i++)
     {
-        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
+//        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
         if (m_squads[i]->getSquadSize() <= 0)
         {
             m_entityMgr->removeEntity(m_squads[i]);
             delete m_squads[i];
             m_squads.erase(m_squads.begin()+i);
-            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
+//            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
 
@@ -120,7 +120,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_numberOfRioters = m_rioters.size();
 
-    std::cout<<"updating rioters"<<std::endl;
+//    std::cout<<"updating rioters"<<std::endl;
     for(unsigned int a=0; a<m_numberOfRioters; ++a)
     {
         Rioter* currentRioter = m_rioters[a];
@@ -131,7 +131,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_numberOfSquads = m_squads.size();
 
-    std::cout<<"updating squads"<<std::endl;
+//    std::cout<<"updating squads"<<std::endl;
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];
