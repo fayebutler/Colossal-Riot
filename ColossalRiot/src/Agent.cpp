@@ -75,10 +75,12 @@ void Agent::seek(double weight)
 {
     if(weight <= 0.0)
     {
+      std::cout<<"SEEK OFF"<<std::endl;
       Vehicle::Steering()->SeekOff();
     }
     else
     {
+        std::cout<<"SEEK WEIGHT "<<weight<<std::endl;
       Vehicle::Steering()->SeekOn();
       Vehicle::Steering()->setSeekWeight(weight);
     }

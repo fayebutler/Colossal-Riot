@@ -169,20 +169,6 @@ void Police::attack()
   m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
 }
 
-void Police::registerClass(lua_State* _L)
-{
-    registerLua(_L);
-    luabridge::getGlobalNamespace(_L)
-        .deriveClass<Police, Agent>("Police")
-            .addConstructor <void (*) (GameWorld*)> ()
-                .addFunction("attack", &Police::attack)
-                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
-                .addFunction("squadCohesion", &Police::squadCohesion)
-                .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
-
-        .endClass();
-}
-
 void Police::squadCohesion(double weight)
 {
     ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
@@ -197,3 +183,18 @@ void Police::squadCohesion(double weight)
     Vehicle::Steering()->SeekOn();
 
 }
+
+void Police::registerClass(lua_State* _L)
+{
+    registerLua(_L);
+    luabridge::getGlobalNamespace(_L)
+        .deriveClass<Police, Agent>("Police")
+            .addConstructor <void (*) (GameWorld*)> ()
+                .addFunction("attack", &Police::attack)
+                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
+                .addFunction("squadCohesion", &Police::squadCohesion)
+                .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+
+        .endClass();
+}
+
