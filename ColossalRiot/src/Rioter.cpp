@@ -23,19 +23,10 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
 
-    //Vehicle::Steering()->ObstacleAvoidOn();
-
-//    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(0.2f);
-
-//    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(0.5f);
-
-
-//    Vehicle::Steering()->SeparationOn();
-//    Vehicle::Steering()->setSeparationWeight(1.0f);
-
     Vehicle::Steering()->WallAvoidOn();
+    Vehicle::Steering()->setWallAvoidWeight(0.4);
+
+     m_policeInfluence = 0.0;
 
 }
 
@@ -48,6 +39,7 @@ Rioter::~Rioter()
 
 void Rioter::update(double timeElapsed, double currentTime)
 {
+    std::cout<<"updating RIOTER: "<<m_ID<<std::endl;
     Vehicle::Steering()->clearFriendlyNeighbours();
     Vehicle::Steering()->clearAllNeighbours();
     Vehicle::Steering()->addFriendlyNeighbours(getNeighbourRioterIDs());
@@ -110,8 +102,12 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Rioter::findTargetID(float _health)
 {
+    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
-    float currentHealth = 0;
+
+    std::cout<<police.size()<<std::endl;
+
+    float currentHealth = -1;
     Agent* currentTarget = NULL;
     for (int i=0; i<police.size(); i++)
     {
@@ -128,14 +124,14 @@ void Rioter::findTargetID(float _health)
 
     if (currentTarget == NULL)
     {
+        std::cout<< "NO NEARBY TARGETS"<<std::endl;
         setTargetID(-1);
-//        std::cout<< "NO NEARBY TARGETS"<<std::endl;
     }
     else
     {
+        std::cout<< "FOUND TARGET"<<std::endl;
         int target = currentTarget->getID();
         setTargetID(target);
-//        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }
 
@@ -162,6 +158,6 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Rioter::attack)
-                .addFunction("findTargetID", &Rioter::findTargetID)
+//                .addFunction("findTargetID", &Rioter::findTargetID)
         .endClass();
 }

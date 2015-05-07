@@ -59,6 +59,8 @@ protected:
 
     bool m_isMoving;
 
+    float m_rioterInfluence;
+
 };
 
 #endif // POLICE_H

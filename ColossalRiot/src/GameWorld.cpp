@@ -77,7 +77,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     for(int i=0; i<m_numberOfRioters; i++)
     {
         Rioter* currentRioter = m_rioters[i];
-        if(currentRioter->getHealth()<=0)
+        if(currentRioter->getHealth()<=0.0)
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
