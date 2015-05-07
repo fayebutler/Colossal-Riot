@@ -3,7 +3,7 @@
 
 ngl::Vec3 Squad::s_nextSelectionColour = ngl::Vec3(0.0,0.0,0.0);
 
-Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(world, pos, ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
+Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *_mesh):Vehicle(world, pos, ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
     //m_squadPos = pos;
 
@@ -16,10 +16,11 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius;
+    m_mesh = _mesh;
 
     for (int i = 0; i < squadSize; ++i)
     {
-      Police* newPolice = new Police(world);
+      Police* newPolice = new Police(world, m_mesh);
       newPolice->setBoudingRadius(m_boundingRadius);
       newPolice->setDetectionRadius(3.5f);
       newPolice->setPos(ngl::Vec3((((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_x, 0.0f, (((float)rand()/RAND_MAX)*m_squadRadius*2)-m_squadRadius+ m_pos.m_z));
