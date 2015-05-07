@@ -60,10 +60,6 @@ public:
     float getSpeed()const{return m_velocity.length();}
 
     virtual bool handleMessage(const Message& _message);
-
-
-    void stopOverlap(BaseGameEntity* _selfEntity, std::vector<BaseGameEntity*> _otherEntities);
-
 };
 
 #endif // MOVINGENTITY_H

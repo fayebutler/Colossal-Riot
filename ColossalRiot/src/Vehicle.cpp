@@ -41,43 +41,56 @@ Vehicle::~Vehicle()
 
 void Vehicle::update(double time_elapsed)
 {
+    m_timeElapsed = time_elapsed;
 
-   m_timeElapsed = time_elapsed;
-
-   ngl::Vec3 SteeringForce;
-   SteeringForce = m_steering->calculatePrioritizedSum();
-
-
+    ngl::Vec3 SteeringForce;
+    SteeringForce = m_steering->calculatePrioritizedSum();
 
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
 
-   //velocity truncate by maxspeed
+    //velocity truncate by maxspeed
 
-   if(m_velocity.length() > m_maxSpeed)
-   {
-       m_velocity.normalize();
+    if(m_velocity.length() > m_maxSpeed)
+    {
+        if(m_velocity.lengthSquared() == 0.0f)
+        {
+            std::cout<<"Velocity in vehicle update equals zero, can't normalise"<<std::endl;
+        }
+        else
+        {
+          m_velocity.normalize();
+        }
        m_velocity = m_velocity * m_maxSpeed;
-   }
+    }
 
 
-   m_pos += m_velocity * time_elapsed;
+    m_pos += m_velocity * time_elapsed;
 
-   if(m_velocity.lengthSquared()>0.000000001)
-   {
+    if(m_velocity.lengthSquared()>0.000000001)
+    {
        ngl::Vec3 tempVel;
        tempVel = m_velocity;
-       tempVel.normalize();
-       m_heading = tempVel;
+
+       if(tempVel.lengthSquared() == 0.0f)
+       {
+           std::cout<<"tempVel in vehicle update equals zero, can't normalise"<<std::endl;
+       }
+       else
+       {
+         tempVel.normalize();
+       }
+
+        m_heading = tempVel;
+
        m_side = m_heading.cross(ngl::Vec3(0,1,0));
-   }
+    }
 
     if(m_smoothingOn == true);
     {
         m_smoothHeading = smoothingUpdate(getHeading());
         m_heading = m_smoothHeading;
     }
-
 }
 
 bool Vehicle::handleMessage(const Message& _message)

@@ -24,7 +24,6 @@ void Agent::setTargetID(int _val)
     m_targetID = _val;
     if (_val < 0)
     {
-//        std::cout<<"TARGETID NULL : "<<m_targetID<<std::endl;
         Vehicle::Steering()->setTargetAgent(NULL);
     }
     else
@@ -82,6 +81,19 @@ void Agent::seek(double weight)
     {
       Vehicle::Steering()->SeekOn();
       Vehicle::Steering()->setSeekWeight(weight);
+    }
+}
+
+void Agent::arrive(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->ArriveOff();
+    }
+    else
+    {
+      Vehicle::Steering()->ArriveOn();
+      Vehicle::Steering()->setArriveWeight(weight);
     }
 }
 
@@ -145,12 +157,11 @@ void Agent::checkValidTarget(float _dist, float _health)
         Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
 
         ngl::Vec3 toEntity = m_pos - target->getPos();
-        double distFromEachOther = toEntity.length();
+        double distSqFromEachOther = toEntity.lengthSquared();
 
-
-        if(distFromEachOther>m_boundingRadius*_dist || target->getHealth()<_health)
+        // change target
+        if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health)
         {
-//            std::cout<<"OMG CHANGE TARGET YOU IDIOT"<<std::endl;
             findTargetID(_health);
         }
         else
@@ -181,6 +192,7 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
+                .addFunction("arrive", &Agent::arrive)
                 .addFunction("seek", &Agent::seek)
                 .addFunction("cohesion", &Agent::cohesion)
                 .addFunction("separation", &Agent::separation)

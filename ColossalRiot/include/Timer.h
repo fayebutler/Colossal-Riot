@@ -7,12 +7,12 @@
 class Timer
 {
 private:
-    long long m_currentTime;
-    long long m_startTime;
+    static long long m_currentTime;
+    static long long m_startTime;
 
-    double m_timeElapsed;
-    double m_previousTickTime;
-    double m_timeScale;
+    static double m_timeElapsed;
+    static double m_previousTickTime;
+    static double m_timeScale;
 
 public:
     Timer();

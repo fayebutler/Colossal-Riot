@@ -125,6 +125,8 @@ public:
     void ArriveOn(){m_activeFlags |= arrive;}
     void ArriveOff(){if(on(arrive)) m_activeFlags ^= arrive;}
     bool isArriveOn(){return on(arrive);}
+    void setArriveWeight(double m_newWeight){m_weightArrive = m_newWeight;}
+    double getArriveWeight(){return m_weightArrive;}
 
     void WanderOn(){m_activeFlags |= wander;}
     void WanderOff(){if(on(wander)) m_activeFlags ^= wander;}

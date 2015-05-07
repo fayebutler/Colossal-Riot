@@ -9,10 +9,22 @@
 #include "Police.h"
 #include "Rioter.h"
 
-enum gameState
+#include "UIButton.h"
+#include "UISlider.h"
+#include "Text.h"
+#include "Timer.h"
+
+#include "EntityManager.h"
+
+
+enum eGameState
 {
-    menu,
-    play
+
+    gameMenu,
+    gamePlay,
+    gamePause,
+    gameQuit
+
 };
 
 class NGLDraw
@@ -22,6 +34,7 @@ class NGLDraw
     /// @brief ctor this will have a valid OpenGL context so we can create gl stuff
     //----------------------------------------------------------------------------------------------------------------------
     NGLDraw();
+    NGLDraw(int _width, int _height);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief dtor used to remove any NGL stuff created
     //----------------------------------------------------------------------------------------------------------------------
@@ -72,11 +85,12 @@ class NGLDraw
     void startGame(int level);
     void endGame();
 
-    int m_width;
-    int m_height;
+    float m_width;
+    float m_height;
+    float m_longestSide;
 
-    gameState getGameState()const{return m_gameState;}
-    void setGameState(gameState _gameState){m_gameState = _gameState;}
+    eGameState getGameState()const{return m_gameState;}
+    void setGameState(eGameState _gameState){m_gameState = _gameState;}
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -123,6 +137,7 @@ class NGLDraw
     /// @brief Our Camera
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Camera *m_cam;
+    ngl::Camera *m_camOrth;
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief the model position for mouse movement
     //----------------------------------------------------------------------------------------------------------------------
@@ -137,12 +152,35 @@ class NGLDraw
     GameWorld* m_gameworld;
     ngl::Obj *m_mesh;
     Squad* m_selectedSquad;
+    int m_selectedSquadID;
 
     ngl::Vec3 m_clickPosition;
 
     bool m_selected;
 
-    gameState m_gameState;
+    eGameState m_gameState;
+
+    std::vector<UIButton*> m_buttons;
+
+    UIButton* m_buttonPlay;
+    UIButton* m_buttonQuit;
+    UIButton* m_buttonPause;
+    UIButton* m_buttonMenu;
+    UIButton* m_buttonCreateSquad;
+
+    UISlider* m_sliderSquadSize;
+
+    Text* m_text;
+
+    Timer m_gameTimer;
+
+    int m_squadSize;
+    std::string m_squadSizeString;
+
+    std::stringstream m_ss;
+
+    EntityManager* m_entityMgr;
+
 
 
 };
