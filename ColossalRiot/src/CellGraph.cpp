@@ -152,7 +152,7 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
     }
 
     //Give each cell a list of its perpendicular nieghbours
-    for ( int i =0; i< m_cells.size(); i++)
+    for ( int i =0; i< m_numberOfCells; i++)
     {
         for ( int j=0; j< m_cells[i].getNeighbourCellIDs().size();j++)
         {
@@ -165,11 +165,26 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
         }
     }
 
+
     //now we offset the boundries to define playable area
     m_mapBounds.push_back(upperBoundry+m_cellSize*_borderSize);
     m_mapBounds.push_back(lowerBoundry-m_cellSize*_borderSize);
     m_mapBounds.push_back(leftBoundry+m_cellSize*_borderSize);
     m_mapBounds.push_back(rightBoundry-m_cellSize*_borderSize);
+
+    //now we make the vector of exitCells
+    for (int i =0; i< m_numberOfCells; i++)
+    {
+        if (m_cells[i].getCentre().m_z < m_mapBounds[0]
+                || m_cells[i].getCentre().m_z > m_mapBounds[1]
+                || m_cells[i].getCentre().m_x < m_mapBounds[2]
+                || m_cells[i].getCentre().m_x > m_mapBounds[3])
+        {
+            std::cout<<i<<std::endl;
+            m_exitPoints.push_back(m_cells[i].getCentre());
+        }
+    }
+
 }
 
 CellGraph::CellGraph()
@@ -446,10 +461,8 @@ void CellGraph::generateWalls()
 }
 
 
-
 std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
-
     std::vector<ngl::Vec3> finalPath;
     finalPath.clear();
 

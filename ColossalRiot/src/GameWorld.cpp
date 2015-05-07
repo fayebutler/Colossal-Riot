@@ -29,7 +29,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
 
 
-  for (int i = 0; i < numberOfRioters ; ++i)
+  for (int i = 0; i < 20 ; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(0.5f);
@@ -46,6 +46,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
     m_rioters.push_back(newRioter);
 //    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
+
 
 
 
@@ -103,6 +104,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
+
     }
 
     //check for empty squads
@@ -118,6 +120,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 //            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
+//    std::vector<ngl::Vec3> path;
+//    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
+//    currentRioter->followPath(path);
 
 
 
@@ -148,6 +153,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
+        std::vector<ngl::Vec3> path;
+        path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
+        currentRioter->followPath(path);
 
     }
 

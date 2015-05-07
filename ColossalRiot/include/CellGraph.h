@@ -16,6 +16,7 @@ private:
     EntityManager* m_entityMgr;
 
     std::vector <Cell> m_cells;
+    std::vector <ngl::Vec3> m_exitPoints;
     std::vector<float> m_mapBounds;
     int m_numberOfCells;
     float m_cellSize;
@@ -38,6 +39,7 @@ public:
     void generateWalls();
 
     std::vector<float> getMapBounds(){return m_mapBounds;}
+    std::vector<ngl::Vec3> getExitPoints(){return m_exitPoints;}
     std::vector<ngl::Vec3> findPath(BaseGameEntity *_from, ngl::Vec3 _to); //Returns the centre of cells in path
 
 };

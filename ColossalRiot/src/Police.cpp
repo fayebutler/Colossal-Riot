@@ -19,7 +19,7 @@ Police::Police(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Police>(this);
 
     // Set initial variables
-    m_pathIndex = 0;
+//    m_pathIndex = 0;
     m_isMoving = false;
 
     m_hopHeight = 0.0;

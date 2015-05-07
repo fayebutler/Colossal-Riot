@@ -90,8 +90,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         if(m_path.size() != 0)
         {
-//            std::cout<<"EN ROUUTTEEEE"<<std::endl;
-
             m_pos = averagePolicePos();
 
             if ((currentPolice->getPos()-m_path.back()).lengthSquared()<16)
@@ -120,17 +118,15 @@ void Squad::update(double timeElapsed, double currentTime)
         {
             if(m_policeArrived[i]==false)
             {
-//                std::cout<<"I'm false!!! "<<i<<" = "<<m_policeArrived[i]<<std::endl;
                 m_allArrived = false;
                 return;
             }
         }
-//        std::cout<<"we're all here yay"<<std::endl;
         m_allArrived = true;
         m_path.clear();
     }
 
-//    std::cout<< "finished squad update"<<std::endl;
+
 
 }
 

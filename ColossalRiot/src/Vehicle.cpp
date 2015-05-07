@@ -1,6 +1,6 @@
 #include "Vehicle.h"
 #include "math.h"
-
+#include "GameWorld.h"
 
 
 Vehicle::Vehicle(GameWorld* world,
@@ -26,6 +26,7 @@ Vehicle::Vehicle(GameWorld* world,
    m_nextSlot = 0;
    m_smoothingOn = true;
    m_sampleSize = 25.0;
+   m_pathIndex = 0;
    for(int i =0; i<m_sampleSize; i++)
    {
       ngl::Vec3 zeroValue = ngl::Vec3(0,0,0);
@@ -123,6 +124,44 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 m_recentHeading)
     return sum / m_headingHistory.size();
 }
 
+std::vector<ngl::Vec3> Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
+{
+    //find nearest point to current positiong and set that as path thing
+
+    ngl::Vec3 bestExit;
+    float dist = 1000000000.0;
+    int exitSize = _exits.size();
+    for(int i = 0; i<exitSize; i++)
+    {
+        ngl::Vec3 currentExit = _exits[i];
+        float testDist = (currentExit- this->getPos()).length();
+        if(testDist < dist)
+        {
+            bestExit = currentExit;
+            dist = testDist;
+        }
+    }
+    std::vector<ngl::Vec3> path;
+
+    path = m_world->getCellGraph()->findPath(this, bestExit);
+
+    return path;
+}
+
+void Vehicle::followPath(std::vector<ngl::Vec3> _path)
+{
+    //go through each vec3 and set as crosshair to follow the path
+
+
+    if ((this->getPos() - _path[m_pathIndex]).lengthSquared()<= 4)
+    {
+        setPathIndex(m_pathIndex += 1);
+    }
+    this->setCrosshair(_path[m_pathIndex]);
+    this->Steering()->SeekOn();
+
+
+}
 
 
 

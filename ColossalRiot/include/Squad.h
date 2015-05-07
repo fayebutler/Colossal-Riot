@@ -60,7 +60,7 @@ private:
     std::vector<ngl::Vec3> m_path;
     ngl::Vec3 averagePolicePos();
 
-    int m_pathIndex;
+//    int m_pathIndex;
     //int m_policeArrived;
 
     std::vector <bool> m_policeArrived;
