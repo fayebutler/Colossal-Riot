@@ -106,7 +106,6 @@ private:
 
 
 public:
-
     SteeringBehaviour(Vehicle* agent);
 
     ~SteeringBehaviour();

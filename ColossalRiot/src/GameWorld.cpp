@@ -24,7 +24,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
    m_entityMgr = new EntityManager();
 
-   m_cellGraph = new CellGraph("navMesh.obj"); //Obj for cell graph, must be quads
+   m_cellGraph = new CellGraph("navMesh.obj", 1); //Obj for cell graph, must be quads
    m_cellGraph->generateWalls();
 
 
@@ -235,5 +235,3 @@ void GameWorld::createPath(Squad* selectedSquad, ngl::Vec3 target)
     std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
     selectedSquad->setPath(path);
 }
-
-
