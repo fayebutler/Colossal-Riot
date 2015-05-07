@@ -436,7 +436,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
              case buttonPlay:
              {
                startGame(1);
-               m_gameState = gamePlay;
+               m_gameState = gamePause;
                m_buttonQuit->setIsActive(false);
                m_buttonPlay->setIsActive(false);
                m_buttonPause->setIsActive(true);
