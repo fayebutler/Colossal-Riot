@@ -24,6 +24,7 @@ private:
     int m_nextSlot;
     int m_sampleSize;
     bool m_smoothingOn;
+    std::vector<ngl::Vec3> m_path;
     int m_pathIndex;
 
 
@@ -47,11 +48,17 @@ public:
 
     ngl::Vec3 smoothingUpdate(ngl::Vec3 m_recentHeading);
 
-    std::vector<ngl::Vec3> findNearestExit(std::vector<ngl::Vec3> _exits);
-    void followPath(std::vector<ngl::Vec3> _path);
+    ngl::Vec3 findNearestExit(std::vector<ngl::Vec3> _exits);
+    void followPath();
+    void findPath(ngl::Vec3 _target);
 
     int getPathIndex(){return m_pathIndex;}
     void setPathIndex(int _index){m_pathIndex = _index;}
+
+
+    std::vector<ngl::Vec3> getPath(){return m_path;}
+    void setPath(std::vector<ngl::Vec3> _path){m_path = _path;}
+
 
 };
 

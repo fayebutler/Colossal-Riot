@@ -75,7 +75,8 @@ public:
 
     CellGraph* getCellGraph()const{return m_cellGraph;}
 
-    void createPath(Squad *selectedSquad, ngl::Vec3 target);
+    void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
+
 
     bool hasWon()const{return m_win;}
     bool hasLost()const{return m_lose;}

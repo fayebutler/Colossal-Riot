@@ -29,7 +29,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
 
 
-  for (int i = 0; i < 20 ; ++i)
+  for (int i = 0; i < numberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this);
     newRioter->setBoudingRadius(0.5f);
@@ -43,6 +43,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 
     }
+//    newRioter->findPath(newRioter->findNearestExit(m_cellGraph->getExitPoints()));
     m_rioters.push_back(newRioter);
 //    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
@@ -95,6 +96,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
                 currentRioter->getPos().m_z >= map_bounds[1] ||
                 currentRioter->getPos().m_x <= map_bounds[2] ||
                 currentRioter->getPos().m_x >= map_bounds[3])
+
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
@@ -153,9 +155,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
-        std::vector<ngl::Vec3> path;
-        path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
-        currentRioter->followPath(path);
+//        ngl::Vec3 target = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
+//        currentRioter->findPath(ngl::Vec3(0,0,0));
 
     }
 
@@ -166,6 +167,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
+
     }
 
 
@@ -186,7 +188,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_lose = 1;
     }
 
-    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
+//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -253,9 +255,10 @@ void GameWorld::createSquad(int size)
     }
 }
 
-void GameWorld::createPath(Squad* selectedSquad, ngl::Vec3 target)
+void GameWorld::squadTarget(Squad* selectedSquad, ngl::Vec3 target)
 {
 
-    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
-    selectedSquad->setPath(path);
+//    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
+    selectedSquad->setTarget(target);
+//      selectedSquad->findPath(target);
 }

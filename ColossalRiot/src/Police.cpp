@@ -27,18 +27,8 @@ Police::Police(GameWorld* world) : Agent(world)
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
 
-//    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(0.4f);
-
-//    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(0.3f);
-
-
-//    Vehicle::Steering()->SeparationOn();
-//    Vehicle::Steering()->setSeparationWeight(0.8f);
-//    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
-//    Vehicle::Steering()->SeekOn();
-//    Vehicle::Steering()->ArriveOn();
+    m_blockadePosition = NULL;
+//    m_blockadePosition = ngl::Vec3(0,0,0);
 
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
@@ -68,9 +58,30 @@ void Police::update(double timeElapsed, double currentTime)
 
 
   Vehicle::Steering()->WallOverlapAvoidance();
-//  Vehicle::Steering()->ObjectOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(2);
+  Vehicle::setMaxSpeed(4);
+
+    if(m_blockadePosition != NULL)
+    {
+        this->setCrosshair(m_blockadePosition);
+        if((this->getPos() - m_blockadePosition).lengthSquared() <=0.1)
+        {
+            this->Steering()->ArriveOff();
+            this->setVelocity(ngl::Vec3(0,0,0));
+            this->setMaxTurnRate(0.0);
+            std::cout<< " ARRIVE OFF "<<std::endl;
+        }
+        else
+        {
+ //           this->setCrosshair(m_blockadePosition);
+            this->Steering()->ArriveOn();
+            std::cout<< " ARrIVE ON "<<std::endl;
+        }
+
+    }
+
+
 
 }
 

@@ -180,7 +180,6 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
                 || m_cells[i].getCentre().m_x < m_mapBounds[2]
                 || m_cells[i].getCentre().m_x > m_mapBounds[3])
         {
-            std::cout<<i<<std::endl;
             m_exitPoints.push_back(m_cells[i].getCentre());
         }
     }

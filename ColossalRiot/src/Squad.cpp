@@ -10,8 +10,9 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
     //m_boundingRad = r;
 
     m_allArrived = false;
-    m_foundWall = false;
+    m_inBlockade = false;
     m_squadSize = squadSize;
+    m_foundTarget =false;
 
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
@@ -34,7 +35,6 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
       newPolice->setSquadID(m_ID);
       m_squadPolice.push_back(newPolice);
       m_policeArrived.push_back(false);
-
     }
 
     m_selectionColour = s_nextSelectionColour;
@@ -77,54 +77,49 @@ void Squad::update(double timeElapsed, double currentTime)
 {
 
     // individual police loop
-    if(m_path.size() == 0)
-    {
-        this->formWall();
-    }
+
+//    this->formWall();
+
+
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
 
-
-        if(m_path.size() != 0)
-        {
-            m_pos = averagePolicePos();
-
-            if ((currentPolice->getPos()-m_path.back()).lengthSquared()<16)
-            {
-                    currentPolice->setIsMoving(false);
-                    currentPolice->setPathIndex(0);
-                    m_policeArrived[i]=true;
-            }
-
-            currentPolice->setCrosshair(m_path[currentPolice->getPathIndex()]);
-
-           if((currentPolice->getPos() - m_path[currentPolice->getPathIndex()]).lengthSquared() <= 4)
-
-           {
-               currentPolice->setPathIndex(currentPolice->getPathIndex()+1);
-           }
-
-        }
         currentPolice->update(timeElapsed, currentTime);
+        if(currentPolice->getPath().size() == 0)
+        {
+            m_policeArrived[i] = true;
+        }
+        if(m_allArrived ==true)
+        {
+            currentPolice->setIsMoving(false);
+        }
+        if(m_inBlockade == true)
+        {
+            currentPolice->setIsMoving(false);
+            currentPolice->setBlockadePos(m_blockadePositions[i]);
+        }
     }
 
-    // a loop
-    if(m_path.size() != 0)
+    if(m_allArrived == false)
     {
-        for(unsigned int i=0; i<m_squadSize; ++i)
-        {
-            if(m_policeArrived[i]==false)
-            {
-                m_allArrived = false;
-                return;
-            }
-        }
-        m_allArrived = true;
-        m_path.clear();
+     m_pos = averagePolicePos();
     }
+
+    for(unsigned int i=0; i<m_squadSize; ++i)
+    {
+         if(m_policeArrived[i]==false)
+         {
+             m_allArrived = false;
+             return;
+         }
+     }
+
+    m_allArrived = true;
+
+
 
 
 
@@ -227,18 +222,22 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 }
 
-void Squad::setPath(std::vector<ngl::Vec3> _path)
+void Squad::setTarget(ngl::Vec3 _target)
 {
-    m_path.clear();
-    m_path = _path;
-    for (int i=0; i<m_squadSize; i++)
+    std::cout<<" SET THE TARGET "<<std::endl;
+    for(unsigned int i=0; i<m_squadSize; ++i)
     {
+        Police* currentPolice = m_squadPolice[i];
+        currentPolice->setSquadPos(m_pos);
+        currentPolice->setSquadRadius(m_squadRadius);
+        currentPolice->findPath(_target);
+        currentPolice->setIsMoving(true);
         m_policeArrived[i] = false;
-        m_squadPolice[i]->setIsMoving(true);
-        m_squadPolice[i]->setPathIndex(0);
-
     }
+    m_allArrived = false;
 }
+
+
 
 int Squad::checkDeaths()
 {
@@ -334,21 +333,18 @@ void Squad::findClosestWalls(Squad* squad)
 void Squad::formWall()
 {
 
+    m_inBlockade = false;
     int numberOfWallsToCheck =0;
-    if(m_foundWall == false)
+    if(m_generatedBlockade == false)
     {
         numberOfWallsToCheck = m_closestWalls.size();
         findClosestWalls(this);
     }
-//bool foundWall = false;
 
-//    if(m_foundWall == false)
-//    {
-//         findClosestWalls(this);
     m_blockadePositions.clear();
     for(int i=0; i<numberOfWallsToCheck; i++)
     {
-        if(m_foundWall == false)
+        if(m_generatedBlockade == false)
         {
             Wall currentWall = m_closestWalls[i];
             ngl::Vec3 currentNormal = currentWall.normal;
@@ -360,8 +356,6 @@ void Squad::formWall()
                     Wall testWall = m_closestWalls[j];
                     ngl::Vec3 testNormal = testWall.normal;
                     ngl::Vec3 testCenter = (testWall.start+testWall.end)/2;
-                   // std::cout<<"test normals = "<<testNormal.m_x<<" "<<testNormal.m_y<<" "<<testNormal.m_z<<std::endl;
-                    //std::cout<<"current normals = "<<currentNormal.m_x<<" "<<currentNormal.m_y<<" "<<currentNormal.m_z<<std::endl;
 
                     if(currentNormal + testNormal == ngl::Vec3(0.0,0.0,0.0))
                     {
@@ -381,7 +375,6 @@ void Squad::formWall()
                             }
                             float dist = distance.length();
                             float numberOf= dist/m_boundingRadius;
-//                            std::cout<<"upperCenter = "<<upperCenter.m_x <<std::endl;
 
                             if(numberOf >= m_squadSize)
                             {
@@ -397,18 +390,19 @@ void Squad::formWall()
 //                                    positions.push_back(position);
                                     m_blockadePositions.push_back(position);
                                 }
-                                for(int i =0; i <m_squadSize; i++)
-                                {
-                                    Police* policeman = m_squadPolice[i];
-                                    ngl::Vec3 position = m_blockadePositions[i];
-//                                    policeman->setPos(position);
-                                    policeman->setCrosshair(position);
-                                    policeman->Steering()->ArriveOn();
-//                                    policeman->Steering()->SeekOff();
-                                }
+//                                for(int i =0; i <m_squadSize; i++)
+//                                {
+//                                    Police* policeman = m_squadPolice[i];
+//                                    ngl::Vec3 position = m_blockadePositions[i];
+////                                    policeman->setPos(position);
+//                                    policeman->setCrosshair(position);
+//                                    policeman->Steering()->ArriveOn();
+////                                    policeman->Steering()->SeekOff();
+//                                }
 
                              }
-                             m_foundWall = true;
+                             m_generatedBlockade = true;
+                             m_inBlockade = true;
                              break;
 
                           }
@@ -442,22 +436,24 @@ void Squad::formWall()
 //                                    positions.push_back(position);
                                     m_blockadePositions.push_back(position);
                                 }
-                                for(int i =0; i <m_squadSize; i++)
-                                {
-                                    Police* policeman = m_squadPolice[i];
-                                    ngl::Vec3 position = m_blockadePositions[i];
-//                                    policeman->setPos(position);
-                                    policeman->setCrosshair(position);
-                                    policeman->Steering()->ArriveOn();
-                                }
+//                                for(int i =0; i <m_squadSize; i++)
+//                                {
+//                                    Police* policeman = m_squadPolice[i];
+//                                    ngl::Vec3 position = m_blockadePositions[i];
+////                                    policeman->setPos(position);
+//                                    policeman->setCrosshair(position);
+//                                    policeman->Steering()->ArriveOn();
+//                                }
                              }
-                            m_foundWall = true;
+                            m_generatedBlockade = true;
+                            m_inBlockade = true;
                             break;
 
                           }
                           else
                           {
-                            m_foundWall = false;
+                            m_generatedBlockade = false;
+                            m_inBlockade = true;
                             std::cout<<" CANT FORM WALL "<<std::endl;
                           }
 
@@ -474,9 +470,22 @@ void Squad::formWall()
 
       }
 
-   m_foundWall = false;
+   m_generatedBlockade = false;
 
 }
+
+//void setBlockadePositions()
+//{
+//    for(int i =0; i <m_squadSize; i++)
+//    {
+//        Police* policeman = m_squadPolice[i];
+//        ngl::Vec3 position = m_blockadePositions[i];
+//        policeman->setCrosshair(position);
+//        policeman->Steering()->ArriveOn();
+
+//    }
+//}
+
 
 
 

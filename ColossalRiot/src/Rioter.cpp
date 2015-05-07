@@ -35,7 +35,8 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 //    Vehicle::Steering()->SeparationOn();
 //    Vehicle::Steering()->setSeparationWeight(1.0f);
 
-    Vehicle::setMaxSpeed(5);
+    Vehicle::setMaxSpeed(2);
+
 
     Vehicle::Steering()->WallAvoidOn();
 

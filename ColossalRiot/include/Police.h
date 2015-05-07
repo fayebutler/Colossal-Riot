@@ -42,8 +42,8 @@ public:
     bool getIsMoving() const { return m_isMoving; }
     void setIsMoving(bool _val) { m_isMoving = _val; }
 
-//    int getPathIndex()const{return m_pathIndex;}
-//    void setPathIndex(int pathIndex){m_pathIndex = pathIndex;}
+    ngl::Vec3 getBlockadePos()const{return m_blockadePosition;}
+    void setBlockadePos(ngl::Vec3 newBlockadePos) {m_blockadePosition = newBlockadePos;}
 
 
 protected:
@@ -55,9 +55,8 @@ protected:
     float m_squadRadius;
     int m_squadID;
 
-//    int m_pathIndex;
-
     bool m_isMoving;
+    ngl::Vec3 m_blockadePosition;
 
 };
 

@@ -58,14 +58,14 @@ move["enter"] = function()
   police:wander(0.0)
   police:squadCohesion(0.0)
   police:cohesion(0.1)
-  police:separation(0.1)
+  police:separation(0.4)
   police:alignment(0.0)
   police:seek(1.0)
---  print("LUA POLICE move enter")
+  print("LUA POLICE move enter")
 end
 
 move["execute"] = function()
---  print("LUA POLICE move execute")
+  print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
   end
@@ -82,7 +82,7 @@ work = {}
 work["enter"] = function()
    print("LUA POLICE work enter")
    police:checkValidTarget(1.0, 20.0)
-   police:pursuit(1.0)
+   police:pursuit(0.0)
    police:cohesion(0.4)
    police:separation(0.8)
    police:alignment(0.3)
@@ -104,7 +104,7 @@ work["execute"] = function()
 end
 
 work["exit"] = function()
-  print("LUA POLICE work exit")
+--  print("LUA POLICE work exit")
 end
 
 
@@ -142,7 +142,7 @@ defensive["execute"] = function()
 end
 
 defensive["exit"] = function()
-  print("LUA POLICE defensive exit")
+--  print("LUA POLICE defensive exit")
 end
 
 
@@ -150,7 +150,7 @@ end
 
 aggressive = {}
 aggressive["enter"] = function()
-   print("LUA POLICE aggressive enter")
+--   print("LUA POLICE aggressive enter")
    police:checkValidTarget(1.0, 20.0)
    police:pursuit(1.0)
    police:cohesion(0.4)
@@ -180,7 +180,7 @@ aggressive["execute"] = function()
 end
 
 aggressive["exit"] = function()
-  print("LUA POLICE aggressive exit")
+ -- print("LUA POLICE aggressive exit")
 end
 
 
@@ -199,7 +199,7 @@ end
 
 wall["execute"] = function()
 
-  print("LUA POLICE wall execute")
+ print("LUA POLICE wall execute")
   police:checkValidTarget(3.0, 20.0)
 --police.m_health = police.m_health - 0.5
 
@@ -218,7 +218,7 @@ wall["execute"] = function()
 end
 
 wall["exit"] = function()
-  print("LUA POLICE wall exit")
+--  print("LUA POLICE wall exit")
 end
 
 
@@ -231,7 +231,7 @@ flee["enter"] = function()
 end
 
 flee["execute"] = function()
---  print("LUA POLICE flee execute")
+  print("LUA POLICE flee execute")
   police.m_morale = police.m_morale + 0.5
   if police.m_morale > 75 then
     stateMachine:changeState("work")
@@ -239,7 +239,7 @@ flee["execute"] = function()
 end
 
 flee["exit"] = function()
-  print("LUA POLICE flee exit")
+--  print("LUA POLICE flee exit")
 end
 
 
@@ -250,7 +250,7 @@ dead = {}
 dead["enter"] = function()
   police:pursuit(0.0)
   police:wander(0.0)
-  print("LUA POLICE dead enter")
+--  print("LUA POLICE dead enter")
 end
 
 dead["execute"] = function()

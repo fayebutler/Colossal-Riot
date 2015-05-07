@@ -92,6 +92,20 @@ void Vehicle::update(double time_elapsed)
         m_smoothHeading = smoothingUpdate(getHeading());
         m_heading = m_smoothHeading;
     }
+
+
+    if(m_path.size() != 0)
+    {
+        this->followPath();
+        if((this->getPos() - m_path.back()).lengthSquared() <= 4)
+        {
+            //std::cout<<" ARRIVED WAHOO "<<std::endl;
+            m_pathIndex = 0;
+            m_path.clear();
+        }
+    }
+
+
 }
 
 bool Vehicle::handleMessage(const Message& _message)
@@ -124,7 +138,7 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 m_recentHeading)
     return sum / m_headingHistory.size();
 }
 
-std::vector<ngl::Vec3> Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
+ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
 {
     //find nearest point to current positiong and set that as path thing
 
@@ -141,23 +155,30 @@ std::vector<ngl::Vec3> Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
             dist = testDist;
         }
     }
-    std::vector<ngl::Vec3> path;
 
-    path = m_world->getCellGraph()->findPath(this, bestExit);
-
-    return path;
+    return bestExit;
 }
 
-void Vehicle::followPath(std::vector<ngl::Vec3> _path)
+void Vehicle::findPath(ngl::Vec3 _target)
+{
+    m_path.clear();
+    m_pathIndex =0;
+    std::vector<ngl::Vec3> path;
+    path = m_world->getCellGraph()->findPath(this, _target);
+    m_path = path;
+
+}
+
+void Vehicle::followPath()
 {
     //go through each vec3 and set as crosshair to follow the path
 
 
-    if ((this->getPos() - _path[m_pathIndex]).lengthSquared()<= 4)
+    if ((this->getPos() - m_path[m_pathIndex]).lengthSquared()<= 4)
     {
         setPathIndex(m_pathIndex += 1);
     }
-    this->setCrosshair(_path[m_pathIndex]);
+    this->setCrosshair(m_path[m_pathIndex]);
     this->Steering()->SeekOn();
 
 

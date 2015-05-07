@@ -625,7 +625,7 @@ void NGLDraw::doMovement(const int _x, const int _y)
     {
         m_clickPosition = getWorldSpace(_x, _y);
 
-        m_gameworld->createPath(m_selectedSquad, m_clickPosition);
+        m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
 
         m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     }
