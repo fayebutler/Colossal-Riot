@@ -146,7 +146,7 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.35f,0.34f,0.3f, 1.0), ngl::Colour(0.0f,0.0f,0.0f, 1.0));
   m.setSpecularExponent(3.f);
   m.loadToShader("material");
 
