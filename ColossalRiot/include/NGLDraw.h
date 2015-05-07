@@ -23,6 +23,8 @@ enum eGameState
     gameMenu,
     gamePlay,
     gamePause,
+    gameLose,
+    gameWin,
     gameQuit
 
 };

@@ -40,7 +40,7 @@ public:
     void formWall();
 
 
-    void checkDeaths();
+    int checkDeaths();
 
 
 private:

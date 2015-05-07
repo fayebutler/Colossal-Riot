@@ -5,6 +5,14 @@
 
 GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 {
+   m_win = 0;
+   m_lose = 0;
+
+   m_numberOfRiotersDead = 0;
+   m_numberOfRiotersHome = 0;
+
+   m_initialNumberOfRioters = numberOfRioters;
+
    m_availablePolice = availablePolice;
    m_activePolice = 0;
 
@@ -61,7 +69,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_numberOfSquads; i++)
     {
-        m_squads[i]->checkDeaths();
+        m_activePolice -= m_squads[i]->checkDeaths();
     }
 
     m_numberOfRioters = m_rioters.size();
@@ -74,7 +82,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
             m_rioters.erase(m_rioters.begin()+i);
-            m_numberOfRioters -= 1;
+            m_numberOfRioters--;
+            m_numberOfRiotersDead ++;
             std::cout<<"REMOVING RIOTER "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
             i--;
         }
@@ -120,7 +129,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_numberOfRioters = m_rioters.size();
 
-    std::cout<<"updating rioters"<<std::endl;
     for(unsigned int a=0; a<m_numberOfRioters; ++a)
     {
         Rioter* currentRioter = m_rioters[a];
@@ -131,12 +139,31 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_numberOfSquads = m_squads.size();
 
-    std::cout<<"updating squads"<<std::endl;
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
     }
+
+
+    // check for win/lose states
+
+
+    if(m_numberOfRiotersHome == m_initialNumberOfRioters)
+    {
+        m_win = 1;
+    }
+    if(m_availablePolice == 0 && m_activePolice == 0)
+    {
+        m_lose = 1;
+    }
+    if(m_numberOfRiotersDead == m_initialNumberOfRioters)
+    {
+        m_lose = 1;
+    }
+
+    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
+
 }
 
 void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
