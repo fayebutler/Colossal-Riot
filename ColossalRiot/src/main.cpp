@@ -178,9 +178,9 @@ int main()
 
     } // end of event switch
 } // end of poll events
+
     if (ngldraw.getGameState() == gameQuit)
     {
-
       quit = true;
     }
     else if(ngldraw.getGameState() == gamePlay)

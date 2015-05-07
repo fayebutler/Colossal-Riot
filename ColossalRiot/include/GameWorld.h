@@ -28,6 +28,8 @@ private:
     //std::vector<Police*> m_police;
     std::vector<Squad*> m_squads;
 
+    int m_initialNumberOfRioters;
+
     int m_numberOfRioters;
     int m_numberOfSquads;
 
@@ -38,6 +40,12 @@ private:
 
     int m_availablePolice;
     int m_activePolice;
+
+    bool m_win;
+    bool m_lose;
+
+    int m_numberOfRiotersDead;
+    int m_numberOfRiotersHome;
 
 
 
@@ -70,6 +78,9 @@ public:
     CellGraph* getCellGraph()const{return m_cellGraph;}
 
     void createPath(Squad *selectedSquad, ngl::Vec3 target);
+
+    bool hasWon()const{return m_win;}
+    bool hasLost()const{return m_lose;}
 
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}

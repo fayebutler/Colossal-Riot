@@ -27,21 +27,10 @@ Police::Police(GameWorld* world) : Agent(world)
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
 
-//    Vehicle::Steering()->CohesionOn();
-//    Vehicle::Steering()->setCohesionWeight(0.4f);
-
-//    Vehicle::Steering()->AlignmentOn();
-//    Vehicle::Steering()->setAlignmentWeight(0.3f);
-
-
-//    Vehicle::Steering()->SeparationOn();
-//    Vehicle::Steering()->setSeparationWeight(0.8f);
-//    Vehicle::setCrosshair(ngl::Vec3(0,0,0));
-//    Vehicle::Steering()->SeekOn();
-//    Vehicle::Steering()->ArriveOn();
-
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
+
+    m_rioterInfluence = 0.0;
 
 }
 
@@ -68,7 +57,7 @@ void Police::update(double timeElapsed, double currentTime)
 
 
   Vehicle::Steering()->WallOverlapAvoidance();
-//  Vehicle::Steering()->ObjectOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(2);
 
@@ -125,7 +114,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void Police::findTargetID(float _health)
 {
     std::vector<int> rioters = getNeighbourRioterIDs();
-    float currentRage = -100;
+    float currentRage = -1;
     Agent* currentTarget = NULL;
     for (int i=0; i<rioters.size(); i++)
     {
@@ -149,6 +138,7 @@ void Police::findTargetID(float _health)
     {
         int target = currentTarget->getID();
         setTargetID(target);
+        std::cout<<"TARGET"<<target<<std::endl;
 //        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }
@@ -173,7 +163,6 @@ void Police::registerClass(lua_State* _L)
         .deriveClass<Police, Agent>("Police")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Police::attack)
-                .addFunction("findTargetID", &Police::findTargetID)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
 

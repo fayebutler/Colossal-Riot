@@ -32,6 +32,8 @@ public:
 protected:
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
+
+    float m_policeInfluence;
 };
 
 #endif // RIOTER_H

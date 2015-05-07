@@ -23,6 +23,8 @@ enum eGameState
     gameMenu,
     gamePlay,
     gamePause,
+    gameLose,
+    gameWin,
     gameQuit
 
 };
@@ -168,7 +170,11 @@ class NGLDraw
     UIButton* m_buttonPause;
     UIButton* m_buttonMenu;
     UIButton* m_buttonCreateSquad;
-    UIButton* m_buttonSquadFormWall;
+
+    UIButton* m_buttonSquadPatrol;
+    UIButton* m_buttonSquadAggressive;
+    UIButton* m_buttonSquadDefensive;
+    UIButton* m_buttonSquadWall;
 
     UISlider* m_sliderSquadSize;
 

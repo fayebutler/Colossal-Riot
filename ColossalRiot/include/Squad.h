@@ -3,6 +3,14 @@
 
 #include "Police.h"
 
+enum eSquadState
+{
+  squadPatrol,
+  squadAggressive,
+  squadDefensive,
+  squadWall
+};
+
 class Squad : public Vehicle
 {
 public:
@@ -38,11 +46,12 @@ public:
 
     void findClosestWalls(Squad* squad);
     void formWall();
-    bool getIsWall() { return m_isWall; }
-    void setIsWall(bool _inBool) { m_isWall = _inBool; }
 
+    int checkDeaths();
 
-    void checkDeaths();
+    void setSquadState(const char* _luaState, eSquadState _enumState);
+    eSquadState getSquadState() { return m_squadState; }
+
 
 
 private:
@@ -69,11 +78,9 @@ private:
     bool m_allArrived;
     bool m_foundWall;
 
-    bool m_isWall;
-
     std::vector<Wall> m_closestWalls;
 
-
+    eSquadState m_squadState;
 };
 
 #endif // SQUAD_H

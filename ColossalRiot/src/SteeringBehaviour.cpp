@@ -35,6 +35,8 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
+
+    m_targetAgent = NULL;
 }
 
 SteeringBehaviour::~SteeringBehaviour()
@@ -129,8 +131,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
     m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
 
-    //std::cout<<" calculate"<<std::endl;
-
     ngl::Vec3 force;
     if(on(wall_avoidance))
     {
@@ -207,7 +207,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
         else
         {
-//            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {

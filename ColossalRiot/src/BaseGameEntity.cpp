@@ -37,7 +37,7 @@ BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Ve
   m_entityType = entity_type;
   m_detectionRadius = r * 3; // CHANGE TO VARIABLE
 
-  world->getCellGraph()->initializeCells(this);
+  m_world->getCellGraph()->initializeCells(this);
 
 }
 

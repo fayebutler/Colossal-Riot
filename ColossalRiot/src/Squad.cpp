@@ -35,10 +35,9 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
       m_squadPolice.push_back(newPolice);
       m_policeArrived.push_back(false);
 
-      m_isWall = false;
 
     }
-
+    setSquadState("patrol", squadPatrol);
     m_selectionColour = s_nextSelectionColour;
 
 
@@ -79,7 +78,7 @@ void Squad::update(double timeElapsed, double currentTime)
 {
 
     // individual police loop
-    if(m_isWall == true && m_path.size() == 0)
+    if(m_squadState == squadWall && m_path.size() == 0)
     {
         this->formWall();
     }
@@ -246,8 +245,10 @@ void Squad::setPath(std::vector<ngl::Vec3> _path)
     }
 }
 
-void Squad::checkDeaths()
+int Squad::checkDeaths()
 {
+    int numberOfDeaths = 0;
+
     for(int i=0; i<m_squadSize; i++)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -258,10 +259,12 @@ void Squad::checkDeaths()
             m_squadPolice.erase(m_squadPolice.begin()+i);
             m_squadSize -= 1;
             std::cout<<"REMOVING POLICE "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
+            numberOfDeaths++;
             i--;
         }
-
     }
+
+    return numberOfDeaths;
 }
 
 
@@ -473,12 +476,14 @@ void Squad::formWall()
 
 }
 
-void Squad::changeState(const char *_state)
+void Squad::setSquadState(const char *_luaState, eSquadState _enumState)
 {
+  m_squadState = _enumState;
   for(unsigned int i=0; i<m_squadSize; ++i)
   {
       Police* currentPolice = m_squadPolice[i];
-      currentPolice->getStateMachine()->changeState(_state);
+      currentPolice->getStateMachine()->changeState(_luaState);
+  }
 }
 
 
