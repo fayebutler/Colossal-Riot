@@ -473,6 +473,14 @@ void Squad::formWall()
 
 }
 
+void Squad::changeState(const char *_state)
+{
+  for(unsigned int i=0; i<m_squadSize; ++i)
+  {
+      Police* currentPolice = m_squadPolice[i];
+      currentPolice->getStateMachine()->changeState(_state);
+}
+
 
 
 
