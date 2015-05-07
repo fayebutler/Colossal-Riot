@@ -100,6 +100,7 @@ end
 patrol = {}
 patrol["enter"] = function()
 
+   print("PATROL ENTER")
    police:wander(0.5)
    police:pursuit(0.0)
    police:evade(0.0)
@@ -111,6 +112,8 @@ patrol["enter"] = function()
    police:alignment(0.3)
 
    police:squadCohesion(0.4)
+
+   police.m_rage = 5.0
 
 end
 
@@ -148,6 +151,8 @@ defensive["enter"] = function()
    police:alignment(0.3)
 
    police:squadCohesion(0.4)
+
+   police.m_rage = 20.0
 
 end
 
@@ -195,6 +200,8 @@ aggressive["enter"] = function()
 
    police:squadCohesion(0.4)
 
+   police.m_rage = 70.0
+
 end
 
 aggressive["execute"] = function()
@@ -239,6 +246,8 @@ wall["enter"] = function()
    police:alignment(0.3)
 
    police:squadCohesion(0.4)
+
+   police.m_rage = 40.0
 
 end
 

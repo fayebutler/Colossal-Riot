@@ -86,13 +86,15 @@ protest["execute"] = function()
     rioter:wander(0.5)
   end
 
+  if rioter.m_rage < 30 then
+    stateMachine:changeState("roam")
+  end
   if rioter.m_health < 30 then
     stateMachine:changeState("flee")
   end
 
   rioter.m_morale = rioter.m_morale - 0.3
-  rioter.m_health = rioter.m_health - 0.01
-  rioter.m_rage = rioter.m_rage + 0.01;
+  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.001);
 
 end
 
@@ -122,11 +124,16 @@ roam["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
 
+
+  if rioter.m_rage > 60 then
+    stateMachine:changeState("protest")
+  end
   if rioter.m_health < 30 then
     stateMachine:changeState("flee")
   end
 
-  rioter.m_rage = rioter.m_rage + 0.01;
+  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
+
 
 end
 
