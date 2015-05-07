@@ -73,10 +73,14 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     m_numberOfRioters = m_rioters.size();
+//    std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
 
     for(int i=0; i<m_numberOfRioters; i++)
     {
         Rioter* currentRioter = m_rioters[i];
+        std::vector<float> map_bounds = m_cellGraph->getMapBounds();
+//        std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
+//        std::cout<<"map bounds "<<map_bounds[0]<<" "<<map_bounds[1]<<" "<<map_bounds[2]<<" "<<map_bounds[3]<<std::endl;
         if(currentRioter->getHealth()<=0)
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
@@ -84,8 +88,19 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
-//            std::cout<<"REMOVING RIOTER "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
-
+            i--;
+        }       //check for when rioters have left the map
+        else if(currentRioter->getPos().m_z <= map_bounds[0] ||
+                currentRioter->getPos().m_z >= map_bounds[1] ||
+                currentRioter->getPos().m_x <= map_bounds[2] ||
+                currentRioter->getPos().m_x >= map_bounds[3])
+        {
+            m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
+            delete currentRioter;
+            m_rioters.erase(m_rioters.begin()+i);
+            m_numberOfRioters--;
+            m_numberOfRiotersHome++;
+            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
     }
@@ -103,6 +118,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 //            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
+
 
 
     m_cellGraph->clearCells();
