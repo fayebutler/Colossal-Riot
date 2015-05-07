@@ -38,6 +38,8 @@ public:
 
     void findClosestWalls(Squad* squad);
     void formWall();
+    bool getIsWall() { return m_isWall; }
+    void setIsWall(bool _inBool) { m_isWall = _inBool; }
 
 
     void checkDeaths();
@@ -66,6 +68,8 @@ private:
     std::vector <bool> m_policeArrived;
     bool m_allArrived;
     bool m_foundWall;
+
+    bool m_isWall;
 
     std::vector<Wall> m_closestWalls;
 

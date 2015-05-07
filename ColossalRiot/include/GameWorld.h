@@ -61,6 +61,9 @@ public:
 
     void createSquad(int size);
 
+    int getAvailablePolice() { return m_availablePolice; }
+    void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
+
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
 

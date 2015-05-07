@@ -35,6 +35,8 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r):Vehicle(wo
       m_squadPolice.push_back(newPolice);
       m_policeArrived.push_back(false);
 
+      m_isWall = false;
+
     }
 
     m_selectionColour = s_nextSelectionColour;
@@ -77,7 +79,7 @@ void Squad::update(double timeElapsed, double currentTime)
 {
 
     // individual police loop
-    if(m_path.size() == 0)
+    if(m_isWall == true && m_path.size() == 0)
     {
         this->formWall();
     }
@@ -390,7 +392,7 @@ void Squad::formWall()
                                 positions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
-                                    ngl::Vec3 position = ngl::Vec3(upperCenter.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
+                                    ngl::Vec3 position = ngl::Vec3(m_pos.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
 
                                     positions.push_back(position);
                                 }
@@ -434,7 +436,7 @@ void Squad::formWall()
                                 positions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
-                                    ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, leftCenter.m_z);
+                                    ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, m_pos.m_z);
                                     positions.push_back(position);
                                 }
                                 for(int i =0; i <m_squadSize; i++)

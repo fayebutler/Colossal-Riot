@@ -20,7 +20,6 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
    m_cellGraph->generateWalls();
 
 
-
   for (int i = 0; i < numberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this);

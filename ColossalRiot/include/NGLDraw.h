@@ -92,6 +92,7 @@ class NGLDraw
     eGameState getGameState()const{return m_gameState;}
     void setGameState(eGameState _gameState){m_gameState = _gameState;}
 
+
   private :
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform data to the shaders
@@ -167,10 +168,12 @@ class NGLDraw
     UIButton* m_buttonPause;
     UIButton* m_buttonMenu;
     UIButton* m_buttonCreateSquad;
+    UIButton* m_buttonSquadFormWall;
 
     UISlider* m_sliderSquadSize;
 
-    Text* m_text;
+    Text* m_textSmall;
+    Text* m_textMedium;
 
     Timer m_gameTimer;
 

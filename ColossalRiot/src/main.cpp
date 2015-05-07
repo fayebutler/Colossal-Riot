@@ -188,7 +188,8 @@ int main()
       timeElapsed=gameTimer.timeElapsed();
       currentTime=gameTimer.getCurrentTime();
 
-      //std::cout<<"------------- TICK -------------"<<std::endl;
+      std::cout<<"------------- TICK -------------"<<std::endl;
+      std::cout<<"currentTime "<<currentTime<<std::endl;
       ngldraw.update(timeElapsed,currentTime);
     }
 
