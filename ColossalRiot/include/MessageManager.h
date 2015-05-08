@@ -9,7 +9,8 @@
 
 enum messageType
 {
-  msgAttack
+  msgAttack,
+  msgDeath
 };
 
 class BaseGameEntity;
@@ -21,8 +22,7 @@ public:
 
   MessageManager();
 
-  void sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo);
-  void sendDelayedMessages();
+  void sendMessage(int _senderID, int _receiverID, int _message, float _extraInfo);
 
 private:
 

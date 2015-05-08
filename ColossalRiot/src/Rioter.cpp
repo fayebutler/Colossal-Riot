@@ -1,9 +1,11 @@
 #include "Rioter.h"
+#include "GameWorld.h"
 
 Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
     m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
+    //m_gameworld = world;
 
     // Set up LUA state
     luaL_dofile(L, "lua/Rioter.lua");
@@ -154,18 +156,38 @@ void Rioter::findTargetID(float _health)
 
 bool Rioter::handleMessage(const Message& _message)
 {
-  return Agent::handleMessage(_message);
+  switch(_message.m_message)
+  {
+  case msgDeath:
+    m_morale -= 10.f;
+    m_rage += 30.f;
+    return true;
+  case msgAttack:
+    return Agent::handleMessage(_message);
+  default:
+    std::cout<<"Agent: Message type not defined"<<std::endl;
+    return false;
+  }
 }
 
 
-//RIOTER STATE UTILITY FUNCTIONS
-
 void Rioter::attack()
 {
+  m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
+}
 
-  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
-
-
+void Rioter::death()
+{
+  for (int i = 0; i < m_world->getNumberOfRioters(); i++)
+  {
+    ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
+    double distSqToRioter = vecToRioter.lengthSquared();
+    double affectedRadius = 10.0;
+    if (distSqToRioter < affectedRadius * affectedRadius)
+    {
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgDeath, 0.f);
+    }
+  }
 }
 
 void Rioter::protestCohesion(double weight)

@@ -25,6 +25,7 @@ public:
     bool handleMessage(const Message &_message);
 
     void attack();
+    void death();
 
     void protestCohesion(double weight);
 
@@ -38,6 +39,8 @@ public:
 
 
 protected:
+
+    //GameWorld* m_gameworld;
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
 

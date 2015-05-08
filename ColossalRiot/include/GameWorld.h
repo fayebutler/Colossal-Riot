@@ -33,7 +33,6 @@ private:
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
-    //std::vector<Police*> m_police;
     std::vector<Squad*> m_squads;
 
     int m_initialNumberOfRioters;
@@ -99,6 +98,8 @@ public:
 
 
     void registerLua(lua_State *_L);
+
+    int getNumberOfRioters() {return m_numberOfRioters; }
 
     int getInitialNumberOfRioters() const { return m_initialNumberOfRioters; }
     void setInitialNumberOfRioters(int _number) {m_initialNumberOfRioters = _number; }
