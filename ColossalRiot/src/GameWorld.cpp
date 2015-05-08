@@ -51,7 +51,6 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
 
 
-
     m_numberOfRioters = m_rioters.size();
 
 

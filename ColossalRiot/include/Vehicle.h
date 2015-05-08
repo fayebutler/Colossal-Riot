@@ -10,7 +10,7 @@ class SteeringBehaviour;
 
 class Vehicle: public MovingEntity
 {
-private:
+protected:
 
     SteeringBehaviour* m_steering;
 

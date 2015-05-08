@@ -56,8 +56,8 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(2);
-  Vehicle::setMaxForce(2);
+//  Vehicle::setMaxSpeed(2);
+//  Vehicle::setMaxForce(2);
 
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();

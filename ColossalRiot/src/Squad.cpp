@@ -80,27 +80,18 @@ void Squad::update(double timeElapsed, double currentTime)
 {
 
     // individual police loop
-//    std::cout<<" SQUAD STATE = "<<m_squadState<<std::endl;
-    if(m_squadState == squadWall && m_squadState != squadMove)
-    {
-        this->formWall();
-    }
-
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
 
-        currentPolice->update(timeElapsed, currentTime);
-        if(currentPolice->getPath().size() == 0)
+        if ((currentPolice->getPos() - m_target).lengthSquared()<= 4)
         {
             m_policeArrived[i] = true;
-        }
-        if(m_allArrived ==true)
-        {
             currentPolice->setIsMoving(false);
         }
+
         if(m_squadState == squadWall)
         {
             currentPolice->setIsMoving(false);
@@ -110,41 +101,37 @@ void Squad::update(double timeElapsed, double currentTime)
         {
             currentPolice->setBlockadePos(NULL);
         }
+
+        currentPolice->update(timeElapsed, currentTime);
+    }
+
+    // check squad state
+    if(m_squadState == squadWall && m_squadState != squadMove)
+    {
+        this->formWall();
     }
 
     if(m_squadState == squadMove )
     {
-//        Vehicle::update(timeElapsed);
-//        this->findPath(m_target);
-//        if((m_pos - m_target).lengthSquared() <= 2)
-//        {
-//            m_pos = m_target;
-//        }
-//        else
-//        {
-//            Vehicle::update(timeElapsed);
-//        }
-//        else
-//        {
-//           m_pos = averagePolicePos();
-//        }
         m_pos = averagePolicePos();
-//        this->setCrosshair(averagePolicePos());
-//        this->Steering()->ArriveOn();
 
-    }
-
-    for(unsigned int i=0; i<m_squadSize; ++i)
-    {
-         if(m_policeArrived[i]==false)
-         {
-             m_allArrived = false;
-             return;
+        // check if all police have arrived- break if one hasn't
+        for(unsigned int i=0; i<m_squadSize; ++i)
+        {
+             if(m_policeArrived[i]==false)
+             {
+                 m_allArrived = false;
+                 return;
+             }
          }
-     }
 
-    m_allArrived = true;
-    m_squadState = m_previousState;
+        m_allArrived = true;
+
+        if(m_allArrived == true)
+        {
+            m_squadState = m_previousState;
+        }
+    }
 
 
 }

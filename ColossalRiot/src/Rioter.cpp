@@ -68,8 +68,6 @@ void Rioter::update(double timeElapsed, double currentTime)
 
 //    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
     m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
-//    m_pos.m_y =0;
-//    std::cout<< " position y "<< m_pos.m_y<<std::endl;
 
 }
 
