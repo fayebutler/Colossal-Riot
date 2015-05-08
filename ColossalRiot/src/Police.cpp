@@ -31,6 +31,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_blockadePosition = NULL;
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
+    Vehicle::Steering()->ObstacleAvoidOn();
 
     m_rioterInfluence = 0.0;
 
@@ -56,6 +57,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
   Vehicle::setMaxSpeed(2);
+  Vehicle::setMaxForce(2);
 
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
@@ -75,10 +77,7 @@ void Police::update(double timeElapsed, double currentTime)
 
 
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-  Vehicle::Steering()->WallOverlapAvoidance();
-  Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(4);
 
     if(m_blockadePosition != NULL)
     {
@@ -98,9 +97,7 @@ void Police::update(double timeElapsed, double currentTime)
         }
 
     }
-  std::cout<<"Seek weight "<<Vehicle::Steering()->getSeekWeight()<<std::endl;
 
-  std::cout<<"cohesion weight "<<Vehicle::Steering()->getCohesionWeight()<<std::endl;
 }
 
 
