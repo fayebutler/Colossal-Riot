@@ -46,9 +46,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 
     }
-//    newRioter->findPath(newRioter->findNearestExit(m_cellGraph->getExitPoints()));
     m_rioters.push_back(newRioter);
-//    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 
 
@@ -106,7 +104,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersHome++;
-            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
+//            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
 

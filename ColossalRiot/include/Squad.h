@@ -87,6 +87,7 @@ private:
     std::vector<ngl::Vec3> m_blockadePositions;
 
     eSquadState m_squadState;
+    eSquadState m_previousState;
 };
 
 #endif // SQUAD_H

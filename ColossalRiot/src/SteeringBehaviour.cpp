@@ -203,7 +203,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-          // std::cout<<"no target agent assigned for pursuit"<<std::endl;
+           std::cout<<"no target agent assigned for pursuit"<<std::endl;
         }
         else
         {
@@ -243,7 +243,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     if(on(seek))
     {
         force = Seek(m_vehicle->getCrosshair()) * m_weightSeek;
-        std::cout<<"crosshair" << m_vehicle->getCrosshair().m_x<<" "<<m_vehicle->getCrosshair().m_y<<" "<<m_vehicle->getCrosshair().m_z<<std::endl;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -268,7 +267,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(arrive))
     {
-        force = Arrive(m_vehicle->getCrosshair(), 0.5) * m_weightArrive;
+        force = Arrive(m_vehicle->getCrosshair(), 0.1) * m_weightArrive;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -400,7 +399,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 
     if(dist>0.1)
     {
-        double decelerationTweak = 0.3;
+        double decelerationTweak = 0.01;
 
         double speed = dist/(deceleration*decelerationTweak);
         //make velocity not exceed maxspeed
@@ -415,7 +414,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
     else if(dist <= 0.1 )
     {
 //        m_vehicle->setHeading(ngl::Vec3(-1,0,0));
-        ArriveOff();
+        //ArriveOff();
         return ngl::Vec3(0,0,0);
     }
 

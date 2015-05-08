@@ -76,10 +76,10 @@ move["enter"] = function()
    police:arrive(0.0)
 
    police:cohesion(0.0)
-   police:separation(0.2)
+   police:separation(0.4)
    police:alignment(0.0)
 
-   police:squadCohesion(0.0)
+   police:squadCohesion(0.2)
 
 end
 
@@ -238,13 +238,13 @@ wall["enter"] = function()
    police:pursuit(0.0)
    police:evade(0.0)
    police:seek(0.0)
-   police:arrive(0.0)
+   police:arrive(1.0)
 
-   police:cohesion(0.4)
-   police:separation(0.8)
+   police:cohesion(0.1)
+   police:separation(0.1)
    police:alignment(0.3)
 
-   police:squadCohesion(0.4)
+   police:squadCohesion(0.0)
 
    police.m_rage = 40.0
 

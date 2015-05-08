@@ -82,22 +82,19 @@ void Police::update(double timeElapsed, double currentTime)
     if(m_blockadePosition != NULL)
     {
         this->setCrosshair(m_blockadePosition);
-        if((this->getPos() - m_blockadePosition).lengthSquared() <=0.1)
+//        this->setMass(10.0);
+        if((this->getPos() - m_blockadePosition).lengthSquared() <= 0.01)
         {
             this->Steering()->ArriveOff();
-            this->setVelocity(ngl::Vec3(0,0,0));
-            this->setMaxTurnRate(0.0);
-            std::cout<< " ARRIVE OFF "<<std::endl;
+//            this->setVelocity(ngl::Vec3(0,0,0));
+//            this->setHeading(ngl::Vec3(0,0,1));
+//            this->setMaxTurnRate(0.0);
         }
         else
         {
- //           this->setCrosshair(m_blockadePosition);
             this->Steering()->ArriveOn();
-            std::cout<< " ARrIVE ON "<<std::endl;
         }
-
     }
-
 }
 
 
@@ -176,7 +173,7 @@ void Police::findTargetID(float _health)
     {
         int target = currentTarget->getID();
         setTargetID(target);
-        std::cout<<"TARGET"<<target<<std::endl;
+//        std::cout<<"TARGET"<<target<<std::endl;
 //        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }

@@ -68,6 +68,8 @@ void Rioter::update(double timeElapsed, double currentTime)
 
 //    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
     m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
+//    m_pos.m_y =0;
+//    std::cout<< " position y "<< m_pos.m_y<<std::endl;
 
 }
 
@@ -123,7 +125,7 @@ void Rioter::findTargetID(float _health)
 //    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
 
-    std::cout<<police.size()<<std::endl;
+//    std::cout<<police.size()<<std::endl;
 
     float currentHealth = -1;
     Agent* currentTarget = NULL;
@@ -147,7 +149,7 @@ void Rioter::findTargetID(float _health)
     }
     else
     {
-        std::cout<< "FOUND TARGET"<<std::endl;
+//        std::cout<< "FOUND TARGET"<<std::endl;
         int target = currentTarget->getID();
         setTargetID(target);
     }

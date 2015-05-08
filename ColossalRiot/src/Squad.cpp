@@ -11,8 +11,10 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
 
     m_allArrived = false;
     m_inBlockade = false;
+    m_generatedBlockade = false;
     m_squadSize = squadSize;
     m_foundTarget =false;
+    m_previousState = squadPatrol;
 
     m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
 
@@ -78,10 +80,12 @@ void Squad::update(double timeElapsed, double currentTime)
 {
 
     // individual police loop
-    if(m_squadState == squadWall)
+//    std::cout<<" SQUAD STATE = "<<m_squadState<<std::endl;
+    if(m_squadState == squadWall && m_squadState != squadMove)
     {
-        //this->formWall();
+        this->formWall();
     }
+
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -97,16 +101,37 @@ void Squad::update(double timeElapsed, double currentTime)
         {
             currentPolice->setIsMoving(false);
         }
-        if(m_inBlockade == true)
+        if(m_squadState == squadWall)
         {
             currentPolice->setIsMoving(false);
             currentPolice->setBlockadePos(m_blockadePositions[i]);
         }
+        else if(m_squadState != squadWall)
+        {
+            currentPolice->setBlockadePos(NULL);
+        }
     }
 
-    if(m_allArrived == false)
+    if(m_squadState == squadMove )
     {
-     m_pos = averagePolicePos();
+//        Vehicle::update(timeElapsed);
+//        this->findPath(m_target);
+//        if((m_pos - m_target).lengthSquared() <= 2)
+//        {
+//            m_pos = m_target;
+//        }
+//        else
+//        {
+//            Vehicle::update(timeElapsed);
+//        }
+//        else
+//        {
+//           m_pos = averagePolicePos();
+//        }
+        m_pos = averagePolicePos();
+//        this->setCrosshair(averagePolicePos());
+//        this->Steering()->ArriveOn();
+
     }
 
     for(unsigned int i=0; i<m_squadSize; ++i)
@@ -119,6 +144,9 @@ void Squad::update(double timeElapsed, double currentTime)
      }
 
     m_allArrived = true;
+    m_squadState = m_previousState;
+
+
 }
 
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -141,7 +169,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
         ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
         m.setSpecularExponent(5.f);
-        m.setDiffuse(ngl::Colour(m_squadColour));
+        m.setDiffuse(ngl::Colour(m_squadColour.m_r+0.3f,m_squadColour.m_g+0.3f,m_squadColour.m_b+0.3f,m_squadColour.m_a));
         m.loadToShader("material");
 
         ngl::Mat4 MV;
@@ -149,7 +177,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         ngl::Mat3 normalMatrix;
         ngl::Mat4 M;
         ngl::Transformation trans;
-        trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
+        trans.setPosition(m_target.m_x, 0.3, m_target.m_z);
         trans.setRotation(90.0,0.0,0.0);
 
 
@@ -163,7 +191,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
 
 
-        ngl::VAOPrimitives::instance()->createDisk("target",2.0,120);
+        ngl::VAOPrimitives::instance()->createDisk("target",1.0,120);
         ngl::VAOPrimitives::instance()->draw("target");
     }
 
@@ -253,7 +281,9 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Squad::setTarget(ngl::Vec3 _target)
 {
+    m_previousState = m_squadState;
     std::cout<<" SET THE TARGET "<<std::endl;
+    m_target = _target;
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -263,7 +293,10 @@ void Squad::setTarget(ngl::Vec3 _target)
         currentPolice->setIsMoving(true);
         m_policeArrived[i] = false;
     }
+//    this->findPath(_target);
     m_allArrived = false;
+    m_inBlockade = false;
+    m_squadState = squadMove;
 }
 
 
@@ -365,9 +398,9 @@ void Squad::formWall()
     m_inBlockade = false;
     int numberOfWallsToCheck =0;
     if(m_generatedBlockade == false)
-    {
-        numberOfWallsToCheck = m_closestWalls.size();
+    {        findClosestWalls(this);
         findClosestWalls(this);
+        numberOfWallsToCheck = m_closestWalls.size();
     }
 
     m_blockadePositions.clear();
@@ -409,20 +442,17 @@ void Squad::formWall()
                             {
                                 //send as many police to this
                                 float spacing = dist/(m_squadSize*2);
-//                                std::vector<ngl::Vec3> positions;
-//                                positions.clear();
                                 m_blockadePositions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
                                     ngl::Vec3 position = ngl::Vec3(m_pos.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
-
-//                                    positions.push_back(position);
                                     m_blockadePositions.push_back(position);
                                 }
 
                              }
                              m_generatedBlockade = true;
                              m_inBlockade = true;
+//                             m_squadState = squadWall;
                              break;
 
                           }
@@ -447,30 +477,39 @@ void Squad::formWall()
                             {
                                 //send as many police to this
                                 float spacing = dist/(m_squadSize*2);
-//                                std::vector<ngl::Vec3> positions;
-//                                positions.clear();
+
                                 m_blockadePositions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
                                     ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, m_pos.m_z);
                                     m_blockadePositions.push_back(position);
                                 }
-
                              }
                             m_generatedBlockade = true;
                             m_inBlockade = true;
+//                            m_squadState = squadWall;
                             break;
 
                           }
                           else
                           {
                             m_generatedBlockade = false;
-                            m_inBlockade = true;
+                            m_inBlockade = false;
+
+//                           m_squadState = m_previousState;
                             std::cout<<" CANT FORM WALL "<<std::endl;
                           }
 
 
                      }
+                    else
+                    {
+                       std::cout<<" CANT FORM WALL"<<std::endl;
+//                       if(m_previousState != squadWall)
+//                       {
+//                          m_squadState = m_previousState;
+//                       }
+                    }
 
                   }
 
@@ -482,6 +521,7 @@ void Squad::formWall()
 
       }
 
+   m_inBlockade = false;
    m_generatedBlockade = false;
 
 }
@@ -495,6 +535,7 @@ void Squad::setSquadState(const char *_luaState, eSquadState _enumState)
       currentPolice->getStateMachine()->changeState(_luaState);
   }
 }
+
 
 
 

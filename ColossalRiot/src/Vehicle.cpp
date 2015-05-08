@@ -100,7 +100,7 @@ void Vehicle::update(double time_elapsed)
     if(m_path.size() != 0)
     {
         this->followPath();
-        std::cout<<"path index "<<m_pathIndex<<std::endl;
+//        std::cout<<"path index "<<m_pathIndex<<std::endl;
         if((this->getPos() - m_path.back()).lengthSquared() <= 4)
         {
             //std::cout<<" ARRIVED WAHOO "<<std::endl;
@@ -182,9 +182,13 @@ void Vehicle::followPath()
     {
         setPathIndex(m_pathIndex += 1);
     }
-    this->setCrosshair(m_path[m_pathIndex]);
-//    this->Steering()->SeekOn();
+    if((this->getPos() - m_path.back()).lengthSquared()<= 4)
+    {
+        m_path.clear();
+        m_pathIndex =0;
+    }
 
+    this->setCrosshair(m_path[m_pathIndex]);
 
 }
 
