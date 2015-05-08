@@ -35,6 +35,8 @@ private:
 
     CellGraph* m_cellGraph;
     ngl::Obj *m_worldMesh;
+    ngl::Obj *m_policeMesh;
+    ngl::Obj *m_rioterMesh;
 
     bool m_resetID;
 
@@ -49,13 +51,15 @@ private:
 
 
 
+
+
 public:
 
     GameWorld(int numberOfRioters, int availablePolice);
 
     ~GameWorld();
 
-    ngl::Obj* m_mesh;
+
 
     void loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
@@ -69,15 +73,21 @@ public:
 
     void createSquad(int size);
 
+    int getAvailablePolice() { return m_availablePolice; }
+    void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
+
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
 
     CellGraph* getCellGraph()const{return m_cellGraph;}
 
-    void createPath(Squad *selectedSquad, ngl::Vec3 target);
+    void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
+
 
     bool hasWon()const{return m_win;}
     bool hasLost()const{return m_lose;}
+
+
 
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}

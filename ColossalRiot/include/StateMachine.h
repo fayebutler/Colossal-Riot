@@ -56,6 +56,9 @@ public:
         luaCallState(m_currentState, "execute");
       }
 
+      //check agent limits
+      luaCallState("limits", "check");
+
     }
 
     void luaCallState(const char* _state, const char* _phase)

@@ -35,6 +35,8 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
+
+    m_targetAgent = NULL;
 }
 
 SteeringBehaviour::~SteeringBehaviour()
@@ -129,8 +131,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
     m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
 
-    //std::cout<<" calculate"<<std::endl;
-
     ngl::Vec3 force;
     if(on(wall_avoidance))
     {
@@ -203,11 +203,10 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-           std::cout<<"no target agent assigned for pursuit"<<std::endl;
+          // std::cout<<"no target agent assigned for pursuit"<<std::endl;
         }
         else
         {
-//            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {
@@ -244,6 +243,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     if(on(seek))
     {
         force = Seek(m_vehicle->getCrosshair()) * m_weightSeek;
+        std::cout<<"crosshair" << m_vehicle->getCrosshair().m_x<<" "<<m_vehicle->getCrosshair().m_y<<" "<<m_vehicle->getCrosshair().m_z<<std::endl;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -269,6 +269,18 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     if(on(arrive))
     {
         force = Arrive(m_vehicle->getCrosshair(), 0.5) * m_weightArrive;
+        if(!accumulateForce(m_steeringForce, force))
+        {
+            return m_steeringForce;
+        }
+        else
+        {
+            m_steeringForce += force;
+        }
+    }
+    if(on(squad_cohesion))
+    {
+        force = SquadCohesion(m_vehicle->getSquadCrosshair()) * m_weightSquadCohesion;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -342,7 +354,6 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
-
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
 
 //    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
@@ -383,7 +394,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 {
-    std::cout<<"CALLING ARRIVE"<<std::endl;
+//    std::cout<<"CALLING ARRIVE"<<std::endl;
     ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
@@ -544,6 +555,27 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
   {
     return ngl::Vec3(0.f, 0.f, 0.f);
   }
+}
+
+ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos)
+{
+    ngl::Vec3 desiredVelocity = ngl::Vec3(SquadPos - m_vehicle->getPos());
+
+//    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
+
+    if(desiredVelocity.lengthSquared() == 0.0f)
+    {
+        std::cout<<" Desired Velocity in Squad Pos equals zero, can't normalize"<<std::endl;
+        std::cout<<"Desired Velocity "<<desiredVelocity.m_x<<" "<<desiredVelocity.m_y<<" "<<desiredVelocity.m_z<<std::endl;
+        return desiredVelocity - m_vehicle->getVelocity();
+    }
+    else
+    {
+        desiredVelocity.normalize();
+        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+        return (desiredVelocity - m_vehicle->getVelocity());
+    }
+
 }
 
 

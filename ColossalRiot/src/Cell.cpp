@@ -47,17 +47,7 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners,
 
     m_ID = _ID;
     m_neighbourCellIDs = _neighbourCellIDs;
-
-
     m_perpendicularNeighbourCellIDs = _perpendicularCellIDs;
-//    std::cout<< " Cell id:"<< m_ID<< " cell centre: "<< m_centre.m_x<<std::endl;
-
-//    std::cout<<"Cell number: "<<m_ID<<std::endl;
-//    std::cout<<"upper = "<<m_boundries.m_x<<std::endl;
-//    std::cout<<"lower = "<<m_boundries.m_y<<std::endl;
-//    std::cout<<"left = "<<m_boundries.m_z<<std::endl;
-//    std::cout<<"right = "<<m_boundries.m_w<<std::endl;
-
     }
     else
     {
@@ -75,8 +65,10 @@ std::vector <int> Cell::getNeighbourCellIDs()
 
 void Cell::printCellInfo()
 {
+
 //    std::cout<< "ID is:  "<< m_ID<<std::endl;
 //    std::cout<<"Perpen     Neighbouring IDs are ";
+
     for ( int i =0; i<m_perpendicularNeighbourCellIDs.size();i++)
     {
 //        std::cout<<m_perpendicularNeighbourCellIDs[i]<<" ";
