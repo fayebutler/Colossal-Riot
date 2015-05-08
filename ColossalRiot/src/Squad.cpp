@@ -79,6 +79,12 @@ ngl::Vec3 Squad::averagePolicePos()
 void Squad::update(double timeElapsed, double currentTime)
 {
 
+
+    if(m_squadState == squadWall && m_squadState != squadMove)
+    {
+        this->formWall();
+    }
+
     // individual police loop
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
@@ -106,10 +112,10 @@ void Squad::update(double timeElapsed, double currentTime)
     }
 
     // check squad state
-    if(m_squadState == squadWall && m_squadState != squadMove)
-    {
-        this->formWall();
-    }
+//    if(m_squadState == squadWall && m_squadState != squadMove)
+//    {
+//        this->formWall();
+//    }
 
     if(m_squadState == squadMove )
     {
@@ -352,7 +358,7 @@ void Squad::formWall()
     m_inBlockade = false;
     int numberOfWallsToCheck =0;
     if(m_generatedBlockade == false)
-    {        findClosestWalls(this);
+    {
         findClosestWalls(this);
         numberOfWallsToCheck = m_closestWalls.size();
     }
