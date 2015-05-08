@@ -27,6 +27,9 @@ Vehicle::Vehicle(GameWorld* world,
    m_smoothingOn = true;
    m_sampleSize = 25.0;
    m_pathIndex = 0;
+   m_crosshair= ngl::Vec3(0,0,0);
+   m_squadCrosshair = ngl::Vec3(0,0,0);
+
    for(int i =0; i<m_sampleSize; i++)
    {
       ngl::Vec3 zeroValue = ngl::Vec3(0,0,0);

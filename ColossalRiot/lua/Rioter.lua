@@ -71,13 +71,15 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
+   rioter:protestCohesion(1.0)
+
 end
 
 protest["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
 
-  rioter:checkValidTarget(3.0, 20.0)
+  rioter:checkValidTarget(3.0, 0.0)
 
   if rioter:getTargetID() >= 0 then
     rioter:wander(0.0)
@@ -117,6 +119,8 @@ roam["enter"] = function()
    rioter:cohesion(0.8)
    rioter:separation(0.8)
    rioter:alignment(0.5)
+
+   rioter:protestCohesion(0.0)
 
 end
 
@@ -158,6 +162,8 @@ flee["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.3)
 
+   rioter:protestCohesion(0.0)
+
 end
 
 flee["execute"] = function()
@@ -198,6 +204,8 @@ dead["enter"] = function()
    rioter:separation(0.0)
    rioter:alignment(0.0)
 
+   rioter:protestCohesion(0.0)
+
 end
 
 dead["execute"] = function()
@@ -223,6 +231,8 @@ home["enter"] = function()
    rioter:cohesion(0.0)
    rioter:separation(0.0)
    rioter:alignment(0.0)
+
+   rioter:protestCohesion(0.0)
 
 end
 

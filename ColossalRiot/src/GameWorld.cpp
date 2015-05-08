@@ -18,9 +18,13 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
    m_resetID = 1;
 
-   m_mesh = new ngl::Obj("drawMesh.obj"); //Obj to draw, must be triangulated
+   m_worldMesh = new ngl::Obj("drawMesh.obj"); //Obj to draw, must be triangulated
+   m_policeMesh = new ngl::Obj("policeMan.obj");
+   m_rioterMesh = new ngl::Obj("rioterMan.obj");
 
-   m_mesh->createVAO();
+   m_worldMesh->createVAO();
+   m_policeMesh->createVAO();
+   m_rioterMesh->createVAO();
 
    m_entityMgr = new EntityManager();
 
@@ -30,7 +34,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
   for (int i = 0; i < numberOfRioters ; ++i)
   {
-    Rioter* newRioter = new Rioter(this);
+    Rioter* newRioter = new Rioter(this, m_rioterMesh);
     newRioter->setBoudingRadius(0.5f);
     newRioter->setDetectionRadius(3.5f);
     newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
@@ -42,9 +46,7 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 
     }
-//    newRioter->findPath(newRioter->findNearestExit(m_cellGraph->getExitPoints()));
     m_rioters.push_back(newRioter);
-//    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
 
 
@@ -59,7 +61,7 @@ GameWorld::~GameWorld()
 {
    m_rioters.clear();
    m_squads.clear();
-   delete m_mesh;
+   delete m_worldMesh;
    delete m_entityMgr;
 }
 
@@ -225,7 +227,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
   loadMatricesToShader(cam, mouseGlobalTX);
-  m_mesh->draw();
+  m_worldMesh->draw();
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
@@ -247,7 +249,7 @@ void GameWorld::createSquad(int size)
     }
     else
     {
-        Squad* newSquad = new Squad(this, size, ngl::Vec3(13.0f,0.0f,5.0f), 0.5f);
+        Squad* newSquad = new Squad(this, size, ngl::Vec3(13.0f,0.0f,5.0f), 0.5f, m_policeMesh);
         m_squads.push_back(newSquad);
 
         m_activePolice += size;

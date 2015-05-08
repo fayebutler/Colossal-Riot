@@ -277,6 +277,18 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
             m_steeringForce += force;
         }
     }
+    if(on(squad_cohesion))
+    {
+        force = SquadCohesion(m_vehicle->getSquadCrosshair()) * m_weightSquadCohesion;
+        if(!accumulateForce(m_steeringForce, force))
+        {
+            return m_steeringForce;
+        }
+        else
+        {
+            m_steeringForce += force;
+        }
+    }
 
     if(on(wander))
     {
@@ -542,6 +554,27 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
   {
     return ngl::Vec3(0.f, 0.f, 0.f);
   }
+}
+
+ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos)
+{
+    ngl::Vec3 desiredVelocity = ngl::Vec3(SquadPos - m_vehicle->getPos());
+
+//    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
+
+    if(desiredVelocity.lengthSquared() == 0.0f)
+    {
+        std::cout<<" Desired Velocity in Squad Pos equals zero, can't normalize"<<std::endl;
+        std::cout<<"Desired Velocity "<<desiredVelocity.m_x<<" "<<desiredVelocity.m_y<<" "<<desiredVelocity.m_z<<std::endl;
+        return desiredVelocity - m_vehicle->getVelocity();
+    }
+    else
+    {
+        desiredVelocity.normalize();
+        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+        return (desiredVelocity - m_vehicle->getVelocity());
+    }
+
 }
 
 

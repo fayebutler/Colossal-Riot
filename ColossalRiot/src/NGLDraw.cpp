@@ -594,6 +594,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
          if(m_selected == true)
          {
+            doSelection(_event.x, _event.y);
             doMovement(_event.x, _event.y);
             m_selectedSquad = NULL;
             m_buttonSquadWall->setIsActive(false);

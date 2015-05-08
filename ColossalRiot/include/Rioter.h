@@ -8,7 +8,7 @@
 class Rioter : public Agent
 {
 public:
-    Rioter(GameWorld* world);
+    Rioter(GameWorld* world, ngl::Obj* _mesh);
     ~Rioter();
 
     lua_State* getLuaState() const { return L ; }
@@ -26,15 +26,22 @@ public:
 
     void attack();
 
+    void protestCohesion(double weight);
+
     void registerClass(lua_State* _L);
 
     float getPoliceInfluence()const{return m_policeInfluence;}
+
+    ngl::Vec3 getProtestPos()const{return m_protestPos;}
+    void setProtestPos(ngl::Vec3 newPos) {m_protestPos = newPos;}
 
 
 
 protected:
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
+
+    ngl::Vec3 m_protestPos;
 
     float m_policeInfluence;
 };

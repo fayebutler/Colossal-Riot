@@ -75,8 +75,8 @@ move["enter"] = function()
    police:seek(1.0)
    police:arrive(0.0)
 
-   police:cohesion(0.1)
-   police:separation(0.1)
+   police:cohesion(0.0)
+   police:separation(0.2)
    police:alignment(0.0)
 
    police:squadCohesion(0.0)
@@ -84,7 +84,6 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
---   police:seek(1.0)
   print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
@@ -101,16 +100,15 @@ end
 patrol = {}
 patrol["enter"] = function()
 
-   print("PATROL ENTER")
    police:wander(0.5)
    police:pursuit(0.0)
    police:evade(0.0)
    police:seek(0.0)
    police:arrive(0.0)
 
-   police:cohesion(0.4)
-   police:separation(0.8)
-   police:alignment(0.3)
+   police:cohesion(0.1)
+   police:separation(0.6)
+   police:alignment(0.0)
 
    police:squadCohesion(0.4)
 

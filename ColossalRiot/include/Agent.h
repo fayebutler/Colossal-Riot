@@ -10,6 +10,7 @@
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
+#include <ngl/Obj.h>
 
 
 extern "C" {
@@ -87,6 +88,9 @@ protected:
   float m_energy;
   float m_morale;
   float m_rage;
+
+  ngl::Obj *m_mesh;
+
 
   int m_targetID;
 

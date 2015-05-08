@@ -8,7 +8,7 @@
 class Police : public Agent
 {
 public:
-    Police(GameWorld* world);
+    Police(GameWorld* world, ngl::Obj *_mesh);
     ~Police();
 
     lua_State* getLuaState() const { return L ; }
