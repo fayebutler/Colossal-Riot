@@ -380,25 +380,12 @@ void Squad::formWall()
                             {
                                 //send as many police to this
                                 float spacing = dist/(m_squadSize*2);
-//                                std::vector<ngl::Vec3> positions;
-//                                positions.clear();
                                 m_blockadePositions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
                                     ngl::Vec3 position = ngl::Vec3(m_pos.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
-
-//                                    positions.push_back(position);
                                     m_blockadePositions.push_back(position);
                                 }
-//                                for(int i =0; i <m_squadSize; i++)
-//                                {
-//                                    Police* policeman = m_squadPolice[i];
-//                                    ngl::Vec3 position = m_blockadePositions[i];
-////                                    policeman->setPos(position);
-//                                    policeman->setCrosshair(position);
-//                                    policeman->Steering()->ArriveOn();
-////                                    policeman->Steering()->SeekOff();
-//                                }
 
                              }
                              m_generatedBlockade = true;
@@ -427,23 +414,13 @@ void Squad::formWall()
                             {
                                 //send as many police to this
                                 float spacing = dist/(m_squadSize*2);
-//                                std::vector<ngl::Vec3> positions;
-//                                positions.clear();
+
                                 m_blockadePositions.clear();
                                 for(int i =0; i< m_squadSize*2; i+=2)
                                 {
                                     ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, m_pos.m_z);
-//                                    positions.push_back(position);
                                     m_blockadePositions.push_back(position);
                                 }
-//                                for(int i =0; i <m_squadSize; i++)
-//                                {
-//                                    Police* policeman = m_squadPolice[i];
-//                                    ngl::Vec3 position = m_blockadePositions[i];
-////                                    policeman->setPos(position);
-//                                    policeman->setCrosshair(position);
-//                                    policeman->Steering()->ArriveOn();
-//                                }
                              }
                             m_generatedBlockade = true;
                             m_inBlockade = true;
@@ -474,17 +451,6 @@ void Squad::formWall()
 
 }
 
-//void setBlockadePositions()
-//{
-//    for(int i =0; i <m_squadSize; i++)
-//    {
-//        Police* policeman = m_squadPolice[i];
-//        ngl::Vec3 position = m_blockadePositions[i];
-//        policeman->setCrosshair(position);
-//        policeman->Steering()->ArriveOn();
-
-//    }
-//}
 
 
 
