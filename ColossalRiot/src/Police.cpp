@@ -7,13 +7,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 
     m_entityType = typePolice;
 
-    // Set up LUA state
-    luaL_dofile(L, "lua/Police.lua");
-    luaL_openlibs(L);
-
     registerClass(L);
-    luabridge::push(L, this);
-    lua_setglobal(L, "police");
 
     // Set up state machine
     m_stateMachine = new StateMachine<Police>(this);
@@ -179,6 +173,19 @@ void Police::findTargetID(float _health)
     }
 }
 
+void Police::checkValidPursuitRange(float _dist)
+{
+
+        ngl::Vec3 toSquad = m_pos - m_squadPos;
+        double distSqFromEachOther = toSquad.lengthSquared();
+
+        if(distSqFromEachOther > _dist)
+        {
+            m_targetID = -1;
+        }
+
+}
+
 bool Police::handleMessage(const Message& _message)
 {
   return Agent::handleMessage(_message);
@@ -200,7 +207,7 @@ void Police::squadCohesion(double weight)
     }
     else
     {
-        ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
+        ngl::Vec3 toSquad = m_pos - m_squadPos;
         double distance = fabs(toSquad.length());
 
         weight = (weight*distance*1.5f)/m_squadRadius;
@@ -214,6 +221,10 @@ void Police::squadCohesion(double weight)
 
 void Police::registerClass(lua_State* _L)
 {
+  // Set up LUA state
+  luaL_dofile(L, "lua/Police.lua");
+  luaL_openlibs(L);
+
     registerLua(_L);
     luabridge::getGlobalNamespace(_L)
         .deriveClass<Police, Agent>("Police")
@@ -222,7 +233,11 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+                .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
 
         .endClass();
+
+    luabridge::push(L, this);
+    lua_setglobal(L, "police");
 }
 
