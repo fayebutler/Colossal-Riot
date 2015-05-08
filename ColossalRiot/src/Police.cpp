@@ -1,7 +1,7 @@
 #include "Police.h"
 #include <math.h>
 
-Police::Police(GameWorld* world) : Agent(world)
+Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
   m_messageMgr = new MessageManager();
 
@@ -19,7 +19,8 @@ Police::Police(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Police>(this);
 
     // Set initial variables
-//    m_pathIndex = 0;
+    m_mesh = _mesh;
+
     m_isMoving = false;
 
     m_hopHeight = 0.0;
@@ -106,7 +107,8 @@ void Police::update(double timeElapsed, double currentTime)
 void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  ngl::VAOPrimitives::instance()->draw("cube");
+//  ngl::VAOPrimitives::instance()->draw("cube");
+  m_mesh->draw();
 }
 
 void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -136,7 +138,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     rot = 180 + rot;
   }
 
-  trans.setRotation(0,-rot,0);
+  trans.setRotation(0,-rot+90,0);
 
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
@@ -220,7 +222,7 @@ void Police::registerClass(lua_State* _L)
     registerLua(_L);
     luabridge::getGlobalNamespace(_L)
         .deriveClass<Police, Agent>("Police")
-            .addConstructor <void (*) (GameWorld*)> ()
+            .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Police::attack)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)

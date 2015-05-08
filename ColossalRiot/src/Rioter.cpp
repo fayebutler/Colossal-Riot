@@ -1,6 +1,6 @@
 #include "Rioter.h"
 
-Rioter::Rioter(GameWorld* world) : Agent(world)
+Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
     m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
@@ -17,6 +17,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
     m_stateMachine = new StateMachine<Rioter>(this);
 
     // Set initial variables
+    m_mesh = _mesh;
 
     m_hopHeight = 0.0;
     m_hopSpeed = 0.0;
@@ -73,7 +74,8 @@ void Rioter::update(double timeElapsed, double currentTime)
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  ngl::VAOPrimitives::instance()->draw("cube");
+//  ngl::VAOPrimitives::instance()->draw("cube");
+  m_mesh->draw();
 
 }
 
@@ -188,7 +190,7 @@ void Rioter::registerClass(lua_State* _L)
     registerLua(_L);
     luabridge::getGlobalNamespace(_L)
         .deriveClass<Rioter, Agent>("Rioter")
-            .addConstructor <void (*) (GameWorld*)> ()
+            .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Rioter::attack)
                 .addFunction("protestCohesion", &Rioter::protestCohesion)
                 .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)

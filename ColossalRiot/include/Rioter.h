@@ -8,7 +8,7 @@
 class Rioter : public Agent
 {
 public:
-    Rioter(GameWorld* world);
+    Rioter(GameWorld* world, ngl::Obj* _mesh);
     ~Rioter();
 
     lua_State* getLuaState() const { return L ; }

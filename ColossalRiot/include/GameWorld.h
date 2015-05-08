@@ -35,6 +35,8 @@ private:
 
     CellGraph* m_cellGraph;
     ngl::Obj *m_worldMesh;
+    ngl::Obj *m_policeMesh;
+    ngl::Obj *m_rioterMesh;
 
     bool m_resetID;
 
@@ -50,13 +52,14 @@ private:
 
 
 
+
 public:
 
     GameWorld(int numberOfRioters, int availablePolice);
 
     ~GameWorld();
 
-    ngl::Obj* m_mesh;
+
 
     void loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
