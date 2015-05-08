@@ -87,12 +87,10 @@ class NGLDraw
     void startGame(int level);
     void endGame();
 
-    float m_width;
-    float m_height;
-    float m_longestSide;
-
     eGameState getGameState()const{return m_gameState;}
     void setGameState(eGameState _gameState){m_gameState = _gameState;}
+
+    void initialiseUI();
 
 
   private :
@@ -166,6 +164,14 @@ class NGLDraw
     std::vector<UIButton*> m_buttons;
 
     UIButton* m_buttonPlay;
+    UIButton* m_buttonLevel1;
+    UIButton* m_buttonLevel2;
+    UIButton* m_buttonLevel3;
+    UIButton* m_buttonLevel4;
+    UIButton* m_buttonLevel5;
+
+    int m_selectedLevel;
+
     UIButton* m_buttonQuit;
     UIButton* m_buttonPause;
     UIButton* m_buttonMenu;
@@ -190,6 +196,9 @@ class NGLDraw
 
     EntityManager* m_entityMgr;
 
+    float m_width;
+    float m_height;
+    float m_longestSide;
 
 
 };

@@ -31,6 +31,7 @@ void Agent::setTargetID(int _val)
     }
 }
 
+
 void Agent::wander(double weight)
 {
     if(weight <= 0.0)
@@ -185,25 +186,38 @@ void Agent::checkValidTarget(float _dist, float _health)
 
 }
 
+bool Agent::targetWithinReach(float _reach)
+{
+    Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
+    if((m_pos - target->getPos()).lengthSquared() <= _reach)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 void Agent::registerLua(lua_State* _L)
 {
     luabridge::getGlobalNamespace(_L)
         .beginClass<Agent>("Agent")
-                .addFunction("getID", &Agent::getID)
-                .addProperty("m_morale", &Agent::getMorale, &Agent::setMorale)
-                .addProperty("m_health", &Agent::getHealth, &Agent::setHealth)
-                .addProperty("m_rage", &Agent::getRage, &Agent::setRage)
-                .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
-                .addFunction("getTargetID", &Agent::getTargetID)
-                .addFunction("wander", &Agent::wander)
-                .addFunction("pursuit", &Agent::pursuit)
-                .addFunction("evade", &Agent::evade)
-                .addFunction("arrive", &Agent::arrive)
-                .addFunction("seek", &Agent::seek)
-                .addFunction("cohesion", &Agent::cohesion)
-                .addFunction("separation", &Agent::separation)
-                .addFunction("alignment", &Agent::alignment)
-                .addFunction("checkValidTarget", &Agent::checkValidTarget)
+            .addFunction("getID", &Agent::getID)
+            .addProperty("m_morale", &Agent::getMorale, &Agent::setMorale)
+            .addProperty("m_health", &Agent::getHealth, &Agent::setHealth)
+            .addProperty("m_rage", &Agent::getRage, &Agent::setRage)
+            .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
+            .addFunction("getTargetID", &Agent::getTargetID)
+            .addFunction("wander", &Agent::wander)
+            .addFunction("pursuit", &Agent::pursuit)
+            .addFunction("evade", &Agent::evade)
+            .addFunction("arrive", &Agent::arrive)
+            .addFunction("seek", &Agent::seek)
+            .addFunction("cohesion", &Agent::cohesion)
+            .addFunction("separation", &Agent::separation)
+            .addFunction("alignment", &Agent::alignment)
+            .addFunction("checkValidTarget", &Agent::checkValidTarget)
+            .addFunction("targetWithinReach", &Agent::targetWithinReach)
         .endClass();
 }

@@ -16,7 +16,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
     m_foundTarget =false;
     m_previousState = squadPatrol;
 
-    m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
+    m_squadColour = ngl::Colour(0.0f,0.5f,0.5f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius;
     m_mesh = _mesh;
@@ -78,6 +78,11 @@ ngl::Vec3 Squad::averagePolicePos()
 
 void Squad::update(double timeElapsed, double currentTime)
 {
+    // check squad state
+    if(m_squadState == squadWall && m_squadState != squadMove)
+    {
+        this->formWall();
+    }
 
 
     if(m_squadState == squadWall && m_squadState != squadMove)
@@ -92,16 +97,28 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
 
+        if(m_squadState != squadMove)
+        {
+            currentPolice->clearPath();
+            currentPolice->setPathIndex(0);
+            currentPolice->setIsMoving(false);
+            if (m_generatedBlockade == false)
+            {
+                currentPolice->setCrosshair(m_pos);
+            }
+
+        }
+
         if ((currentPolice->getPos() - m_target).lengthSquared()<= 4)
         {
             m_policeArrived[i] = true;
             currentPolice->setIsMoving(false);
         }
 
-        if(m_squadState == squadWall)
+        if(m_squadState == squadWall && m_generatedBlockade == true)
         {
-            currentPolice->setIsMoving(false);
             currentPolice->setBlockadePos(m_blockadePositions[i]);
+            std::cout<<"BLOCKADE POS "<<m_blockadePositions[i].m_z<<std::endl;
         }
         else if(m_squadState != squadWall)
         {
@@ -110,12 +127,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         currentPolice->update(timeElapsed, currentTime);
     }
-
-    // check squad state
-//    if(m_squadState == squadWall && m_squadState != squadMove)
-//    {
-//        this->formWall();
-//    }
 
     if(m_squadState == squadMove )
     {
@@ -155,6 +166,39 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,120);
     ngl::VAOPrimitives::instance()->draw("squad");
 
+    if(m_squadState == squadMove)
+    {
+        ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+          (*shader)["Phong"]->use();
+
+        ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+        m.setSpecularExponent(5.f);
+        m.setDiffuse(ngl::Colour(m_squadColour.m_r+0.3f,m_squadColour.m_g+0.3f,m_squadColour.m_b+0.3f,m_squadColour.m_a));
+        m.loadToShader("material");
+
+        ngl::Mat4 MV;
+        ngl::Mat4 MVP;
+        ngl::Mat3 normalMatrix;
+        ngl::Mat4 M;
+        ngl::Transformation trans;
+        trans.setPosition(m_target.m_x, 0.3, m_target.m_z);
+        trans.setRotation(90.0,0.0,0.0);
+
+
+        M=trans.getMatrix()*mouseGlobalTX;
+        MV=  M*cam->getViewMatrix();
+        MVP= M*cam->getVPMatrix();
+        normalMatrix=MV;
+        normalMatrix.inverse();
+
+        shader->setShaderParamFromMat4("MVP",MVP);
+        shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+
+
+        ngl::VAOPrimitives::instance()->createDisk("target",1.0,120);
+        ngl::VAOPrimitives::instance()->draw("target");
+    }
+
 }
 
 void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -172,7 +216,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
+    trans.setPosition(m_pos.m_x, 0.2, m_pos.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
 
@@ -357,6 +401,7 @@ void Squad::formWall()
 
     m_inBlockade = false;
     int numberOfWallsToCheck =0;
+    m_generatedBlockade = false;
     if(m_generatedBlockade == false)
     {
         findClosestWalls(this);
@@ -464,6 +509,9 @@ void Squad::formWall()
                      }
                     else
                     {
+                        m_generatedBlockade = false;
+                        m_inBlockade = false;
+
                        std::cout<<" CANT FORM WALL"<<std::endl;
 //                       if(m_previousState != squadWall)
 //                       {
@@ -481,8 +529,6 @@ void Squad::formWall()
 
       }
 
-   m_inBlockade = false;
-   m_generatedBlockade = false;
 
 }
 

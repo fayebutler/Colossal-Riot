@@ -165,7 +165,9 @@ defensive["execute"] = function()
     police:wander(0.0)
     police:alignment(0.0)
     police:squadCohesion(0.0)
-    police:attack()
+    if(police:targetWithinReach(2.0) == true) then
+        police:attack()
+    end
   else
     police:wander(0.5)
     police:alignment(0.3)
@@ -212,7 +214,9 @@ aggressive["execute"] = function()
   if police:getTargetID() >= 0 then
     police:wander(0.0)
     police:squadCohesion(0.0)
-    police:attack()
+    if(police:targetWithinReach(2.0) == true) then
+        police:attack()
+    end
   else
     police:wander(0.5)
     police:squadCohesion(0.4)

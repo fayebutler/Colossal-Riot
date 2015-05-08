@@ -61,6 +61,7 @@ public:
 
     std::vector<ngl::Vec3> getPath(){return m_path;}
     void setPath(std::vector<ngl::Vec3> _path){m_path = _path;}
+    void clearPath(){m_path.clear();}
 
 
 };

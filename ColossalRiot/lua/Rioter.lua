@@ -83,7 +83,9 @@ protest["execute"] = function()
 
   if rioter:getTargetID() >= 0 then
     rioter:wander(0.0)
-    rioter:attack()
+    if(rioter:targetWithinReach(2.0) == true) then
+        rioter:attack()
+    end
   else
     rioter:wander(0.5)
   end
