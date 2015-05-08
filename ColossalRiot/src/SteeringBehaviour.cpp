@@ -203,7 +203,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-           std::cout<<"no target agent assigned for pursuit"<<std::endl;
+           //std::cout<<"no target agent assigned for pursuit"<<std::endl;
         }
         else
         {
@@ -224,7 +224,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     {
         if (m_targetAgent == NULL)
         {
-            std::cout<<"no target agent assigned for evade"<<std::endl;
+            //std::cout<<"no target agent assigned for evade"<<std::endl;
         }
         else
         {
@@ -669,8 +669,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       }
     }
   }
-  for (unsigned int i = 0; i < m_vehicle->getNeighbourPoliceIDs().size(); ++i)
-  {
   int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
 
   for (unsigned int i = 0; i < numberOfPolice; ++i)
@@ -777,7 +775,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
   return ngl::Vec3(0.f, 0.f, 0.f);
 
-}
 }
 
 ngl::Vec3 SteeringBehaviour::WallAvoidance()

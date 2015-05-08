@@ -460,6 +460,26 @@ void CellGraph::generateWalls()
 }
 
 
+bool CellGraph::posIsInCell(ngl::Vec3 _pos)
+{
+    for (int i=0; i<m_numberOfCells; i++)
+    {
+        float upper = m_cells[i].getBoundaries().m_x;
+        float lower = m_cells[i].getBoundaries().m_y;
+        float left  = m_cells[i].getBoundaries().m_z;
+        float right = m_cells[i].getBoundaries().m_w;
+
+        if(_pos.m_z >= upper && _pos.m_z <= lower &&
+           _pos.m_x >= left && _pos.m_x <= right)
+        {
+             return true;
+        }
+    }
+   return false;
+}
+
+
+
 std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
     std::vector<ngl::Vec3> finalPath;

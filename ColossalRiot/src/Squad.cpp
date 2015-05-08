@@ -16,7 +16,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
     m_foundTarget =false;
     m_previousState = squadPatrol;
 
-    m_squadColour = ngl::Colour(1.0f,1.0f,0.0f,1.0f);
+    m_squadColour = ngl::Colour(0.0f,0.5f,0.5f,1.0f);
 
     m_squadRadius = squadSize*m_boundingRadius;
     m_mesh = _mesh;
@@ -78,73 +78,72 @@ ngl::Vec3 Squad::averagePolicePos()
 
 void Squad::update(double timeElapsed, double currentTime)
 {
-
-    // individual police loop
-//    std::cout<<" SQUAD STATE = "<<m_squadState<<std::endl;
+    // check squad state
     if(m_squadState == squadWall && m_squadState != squadMove)
     {
         this->formWall();
     }
 
+    // individual police loop
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
 
-        currentPolice->update(timeElapsed, currentTime);
-        if(currentPolice->getPath().size() == 0)
+        if(m_squadState != squadMove)
+        {
+            currentPolice->clearPath();
+            currentPolice->setPathIndex(0);
+            currentPolice->setIsMoving(false);
+            if (m_generatedBlockade == false)
+            {
+                currentPolice->setCrosshair(m_pos);
+            }
+
+        }
+
+        if ((currentPolice->getPos() - m_target).lengthSquared()<= 4)
         {
             m_policeArrived[i] = true;
-        }
-        if(m_allArrived ==true)
-        {
             currentPolice->setIsMoving(false);
         }
-        if(m_squadState == squadWall)
+
+        if(m_squadState == squadWall && m_generatedBlockade == true)
         {
-            currentPolice->setIsMoving(false);
             currentPolice->setBlockadePos(m_blockadePositions[i]);
+            std::cout<<"BLOCKADE POS "<<m_blockadePositions[i].m_z<<std::endl;
         }
         else if(m_squadState != squadWall)
         {
             currentPolice->setBlockadePos(NULL);
         }
+
+        currentPolice->update(timeElapsed, currentTime);
     }
+
 
     if(m_squadState == squadMove )
     {
-//        Vehicle::update(timeElapsed);
-//        this->findPath(m_target);
-//        if((m_pos - m_target).lengthSquared() <= 2)
-//        {
-//            m_pos = m_target;
-//        }
-//        else
-//        {
-//            Vehicle::update(timeElapsed);
-//        }
-//        else
-//        {
-//           m_pos = averagePolicePos();
-//        }
         m_pos = averagePolicePos();
-//        this->setCrosshair(averagePolicePos());
-//        this->Steering()->ArriveOn();
 
-    }
-
-    for(unsigned int i=0; i<m_squadSize; ++i)
-    {
-         if(m_policeArrived[i]==false)
-         {
-             m_allArrived = false;
-             return;
+        // check if all police have arrived- break if one hasn't
+        for(unsigned int i=0; i<m_squadSize; ++i)
+        {
+             if(m_policeArrived[i]==false)
+             {
+                 m_allArrived = false;
+                 return;
+             }
          }
-     }
 
-    m_allArrived = true;
-    m_squadState = m_previousState;
+        m_allArrived = true;
+
+        if(m_allArrived == true)
+        {
+            m_squadState = m_previousState;
+        }
+    }
 
 
 }
@@ -397,8 +396,9 @@ void Squad::formWall()
 
     m_inBlockade = false;
     int numberOfWallsToCheck =0;
+    m_generatedBlockade = false;
     if(m_generatedBlockade == false)
-    {        findClosestWalls(this);
+    {
         findClosestWalls(this);
         numberOfWallsToCheck = m_closestWalls.size();
     }
@@ -504,6 +504,9 @@ void Squad::formWall()
                      }
                     else
                     {
+                        m_generatedBlockade = false;
+                        m_inBlockade = false;
+
                        std::cout<<" CANT FORM WALL"<<std::endl;
 //                       if(m_previousState != squadWall)
 //                       {
@@ -521,8 +524,6 @@ void Squad::formWall()
 
       }
 
-   m_inBlockade = false;
-   m_generatedBlockade = false;
 
 }
 

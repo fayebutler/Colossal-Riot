@@ -23,7 +23,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 
     m_isMoving = false;
 
-    m_hopHeight = 0.0;
+    m_hopHeight = 0.5;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
     makePolice();
@@ -32,8 +32,12 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
+    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
+
+    Vehicle::setMaxSpeed(2);
+    Vehicle::setMaxForce(2);
 
 }
 
@@ -56,9 +60,6 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
-  Vehicle::setMaxSpeed(2);
-  Vehicle::setMaxForce(2);
-
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
 
@@ -75,8 +76,8 @@ void Police::update(double timeElapsed, double currentTime)
       }
   }
 
-
-  m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
+  m_hopSpeed = m_rage/5.0;
+  m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
 
     if(m_blockadePosition != NULL)

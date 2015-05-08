@@ -51,7 +51,6 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
 
 
-
     m_numberOfRioters = m_rioters.size();
 
 
@@ -198,7 +197,7 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.1f,0.5f,0.0f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.5f,0.5f,0.5f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
   m.loadToShader("material");
 
@@ -261,6 +260,10 @@ void GameWorld::squadTarget(Squad* selectedSquad, ngl::Vec3 target)
 {
 
 //    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
-    selectedSquad->setTarget(target);
+
+    if(m_cellGraph->posIsInCell(target))
+    {
+        selectedSquad->setTarget(target);
+    }
 //      selectedSquad->findPath(target);
 }

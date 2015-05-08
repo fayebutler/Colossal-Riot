@@ -595,15 +595,23 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 
          doSelection(_event.x, _event.y);
 
-         if(m_selected == true)
-         {
-            m_buttonSquadWall->setIsActive(false);
-         }
-         else
-         {
-            m_buttonSquadWall->setIsActive(true);
-         }
       }
+    }
+    if(_event.button == SDL_BUTTON_RIGHT)
+    {
+        if (m_gameState == gamePlay)
+        {
+
+           if (m_selected)
+           {
+               m_selectedSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+
+               m_selected = false;
+               m_selectedSquad = NULL;
+               m_selectedSquadID = -1;
+           }
+
+        }
     }
 }
 
@@ -668,7 +676,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
 
         //set de-selected squad colour
-        currentSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+        currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
 
     }
 
@@ -689,7 +697,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
             //set selected squad colour
-            currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+            currentSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
 
             m_selected = true;
             m_selectedSquad = currentSquad;
