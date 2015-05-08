@@ -1,5 +1,4 @@
 #include "Agent.h"
-
 Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
 
@@ -75,12 +74,10 @@ void Agent::seek(double weight)
 {
     if(weight <= 0.0)
     {
-      std::cout<<"SEEK OFF"<<std::endl;
       Vehicle::Steering()->SeekOff();
     }
     else
     {
-        std::cout<<"SEEK WEIGHT "<<weight<<std::endl;
       Vehicle::Steering()->SeekOn();
       Vehicle::Steering()->setSeekWeight(weight);
     }
@@ -156,6 +153,10 @@ void Agent::checkValidTarget(float _dist, float _health)
 {
     if(m_targetID >= 0)
     {
+      std::map<int, BaseGameEntity*>::const_iterator entity = m_entityMgr->getEntityMap().find(m_targetID);
+
+      if(entity->first !=  m_entityMgr->getEntityMap().end()->first)
+      {
         Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
 
         ngl::Vec3 toEntity = m_pos - target->getPos();
@@ -170,12 +171,18 @@ void Agent::checkValidTarget(float _dist, float _health)
         {
 //            std::cout<<"TARGET A-OKAY"<<std::endl;
         }
+      }
+      else
+      {
+        findTargetID(_health);
+      }
     }
     else
     {
 //        std::cout<<"TARGET NOT SET"<<std::endl;
         findTargetID(_health);
     }
+
 }
 
 
@@ -188,6 +195,7 @@ void Agent::registerLua(lua_State* _L)
                 .addProperty("m_health", &Agent::getHealth, &Agent::setHealth)
                 .addProperty("m_rage", &Agent::getRage, &Agent::setRage)
                 .addProperty("m_damage", &Agent::getDamage, &Agent::setDamage)
+                .addFunction("getTargetID", &Agent::getTargetID)
                 .addFunction("wander", &Agent::wander)
                 .addFunction("pursuit", &Agent::pursuit)
                 .addFunction("evade", &Agent::evade)
@@ -197,6 +205,5 @@ void Agent::registerLua(lua_State* _L)
                 .addFunction("separation", &Agent::separation)
                 .addFunction("alignment", &Agent::alignment)
                 .addFunction("checkValidTarget", &Agent::checkValidTarget)
-
         .endClass();
 }

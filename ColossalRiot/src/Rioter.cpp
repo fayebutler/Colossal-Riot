@@ -28,6 +28,7 @@ Rioter::Rioter(GameWorld* world) : Agent(world)
 
      m_policeInfluence = 0.0;
 
+     m_protestPos = ngl::Vec3(0,0,0);
 }
 
 Rioter::~Rioter()
@@ -80,7 +81,8 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(getHealth()/100.0f, getHealth()/100.0f*0.4, getHealth()/100.0f*0.01, 1.0f));
+  m.setDiffuse(ngl::Colour(1.0f-(1-(getHealth()/100.0f)), 1.0f-(getRage()/100.0f)-(1-(getHealth()/100.0f)), 1.0f-(getRage()/100.0f)-(1-(getHealth()/100.0f)), 1.0f));
+
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -116,7 +118,7 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Rioter::findTargetID(float _health)
 {
-    std::cout<<"Trying to find target"<<std::endl;
+//    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
 
     std::cout<<police.size()<<std::endl;
@@ -138,7 +140,7 @@ void Rioter::findTargetID(float _health)
 
     if (currentTarget == NULL)
     {
-        std::cout<< "NO NEARBY TARGETS"<<std::endl;
+ //       std::cout<< "NO NEARBY TARGETS"<<std::endl;
         setTargetID(-1);
     }
     else
@@ -165,6 +167,22 @@ void Rioter::attack()
 
 }
 
+void Rioter::protestCohesion(double weight)
+{
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SquadCohesionOff();
+    }
+    else
+    {
+
+        Vehicle::setSquadCrosshair(m_protestPos);
+        Vehicle::Steering()->setSquadCohesionWeight(weight);
+
+        Vehicle::Steering()->SquadCohesionOn();
+    }
+}
+
 void Rioter::registerClass(lua_State* _L)
 {
     registerLua(_L);
@@ -172,6 +190,7 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Rioter::attack)
+                .addFunction("protestCohesion", &Rioter::protestCohesion)
                 .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)
         .endClass();
 }

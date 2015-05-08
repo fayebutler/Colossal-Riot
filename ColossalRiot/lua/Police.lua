@@ -107,10 +107,12 @@ patrol["enter"] = function()
    police:arrive(0.0)
 
    police:cohesion(0.4)
-   police:separation(0.8)
+   police:separation(0.6)
    police:alignment(0.3)
 
-   police:squadCohesion(0.4)
+   police:squadCohesion(0.5)
+
+   police.m_rage = 5.0
 
 end
 
@@ -149,6 +151,8 @@ defensive["enter"] = function()
 
    police:squadCohesion(0.4)
 
+   police.m_rage = 20.0
+
 end
 
 defensive["execute"] = function()
@@ -157,7 +161,7 @@ defensive["execute"] = function()
 
   police:checkValidTarget(1.0, 20.0)
 
-  if police.m_targetID >= 0 then
+  if police:getTargetID() >= 0 then
     police:wander(0.0)
     police:alignment(0.0)
     police:squadCohesion(0.0)
@@ -195,6 +199,8 @@ aggressive["enter"] = function()
 
    police:squadCohesion(0.4)
 
+   police.m_rage = 70.0
+
 end
 
 aggressive["execute"] = function()
@@ -203,7 +209,7 @@ aggressive["execute"] = function()
 
   police:checkValidTarget(3.0, 0.0)
 
-  if police.m_targetID >= 0 then
+  if police:getTargetID() >= 0 then
     police:wander(0.0)
     police:squadCohesion(0.0)
     police:attack()
@@ -228,7 +234,7 @@ end
 wall = {}
 wall["enter"] = function()
 
-   police:wander(0.5)
+   police:wander(0.0)
    police:pursuit(0.0)
    police:evade(0.0)
    police:seek(0.0)
@@ -240,22 +246,13 @@ wall["enter"] = function()
 
    police:squadCohesion(0.4)
 
+   police.m_rage = 40.0
+
 end
 
 wall["execute"] = function()
 
   print("LUA POLICE wall execute")
-  police:checkValidTarget(3.0, 20.0)
-
-  if police.m_targetID >= 0 then
-    police:wander(0.0)
-    police:attack()
-  else
-    police:wander(0.5)
-    police:squadCohesion(0.4)
-  end
-
-
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
   end

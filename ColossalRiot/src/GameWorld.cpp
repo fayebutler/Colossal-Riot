@@ -24,9 +24,8 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
 
    m_entityMgr = new EntityManager();
 
-   m_cellGraph = new CellGraph("navMesh.obj"); //Obj for cell graph, must be quads
+   m_cellGraph = new CellGraph("navMesh.obj", 1); //Obj for cell graph, must be quads
    m_cellGraph->generateWalls();
-
 
 
   for (int i = 0; i < numberOfRioters ; ++i)
@@ -43,9 +42,11 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
 
     }
+//    newRioter->findPath(newRioter->findNearestExit(m_cellGraph->getExitPoints()));
     m_rioters.push_back(newRioter);
 //    std::cout<<"RIOTER ID: "<<newRioter->getID()<<std::endl;
   }
+
 
 
 
@@ -73,35 +74,57 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     m_numberOfRioters = m_rioters.size();
+//    std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
 
     for(int i=0; i<m_numberOfRioters; i++)
     {
         Rioter* currentRioter = m_rioters[i];
-        if(currentRioter->getHealth()<=0.0)
+        std::vector<float> map_bounds = m_cellGraph->getMapBounds();
+//        std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
+//        std::cout<<"map bounds "<<map_bounds[0]<<" "<<map_bounds[1]<<" "<<map_bounds[2]<<" "<<map_bounds[3]<<std::endl;
+        if(currentRioter->getHealth()<=0.f)
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
-            std::cout<<"REMOVING RIOTER "<<i<<" EntityMap Size: "<<m_entityMgr->getSize()<<std::endl;
+            i--;
+        }       //check for when rioters have left the map
+        else if(currentRioter->getPos().m_z <= map_bounds[0] ||
+                currentRioter->getPos().m_z >= map_bounds[1] ||
+                currentRioter->getPos().m_x <= map_bounds[2] ||
+                currentRioter->getPos().m_x >= map_bounds[3])
+
+        {
+            m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
+            delete currentRioter;
+            m_rioters.erase(m_rioters.begin()+i);
+            m_numberOfRioters--;
+            m_numberOfRiotersHome++;
+            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
+
     }
+
 
     //check for empty squads
 
     for(int i=0; i<m_squads.size(); i++)
     {
-        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
+//        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
         if (m_squads[i]->getSquadSize() <= 0)
         {
             m_entityMgr->removeEntity(m_squads[i]);
             delete m_squads[i];
             m_squads.erase(m_squads.begin()+i);
-            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
+//            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
+//    std::vector<ngl::Vec3> path;
+//    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
+//    currentRioter->followPath(path);
 
 
 
@@ -128,11 +151,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     // call rioter and squad updates
 
     m_numberOfRioters = m_rioters.size();
-
     for(unsigned int a=0; a<m_numberOfRioters; ++a)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
+//        ngl::Vec3 target = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
+//        currentRioter->findPath(ngl::Vec3(0,0,0));
 
     }
 
@@ -143,6 +167,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
+
     }
 
 
@@ -153,6 +178,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         m_win = 1;
     }
+
     if(m_availablePolice == 0 && m_activePolice == 0)
     {
         m_lose = 1;
@@ -162,7 +188,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         m_lose = 1;
     }
 
-    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
+//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -229,11 +255,10 @@ void GameWorld::createSquad(int size)
     }
 }
 
-void GameWorld::createPath(Squad* selectedSquad, ngl::Vec3 target)
+void GameWorld::squadTarget(Squad* selectedSquad, ngl::Vec3 target)
 {
 
-    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
-    selectedSquad->setPath(path);
+//    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
+    selectedSquad->setTarget(target);
+//      selectedSquad->findPath(target);
 }
-
-

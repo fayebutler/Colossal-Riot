@@ -49,6 +49,7 @@ private:
 
 
 
+
 public:
 
     GameWorld(int numberOfRioters, int availablePolice);
@@ -69,15 +70,21 @@ public:
 
     void createSquad(int size);
 
+    int getAvailablePolice() { return m_availablePolice; }
+    void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
+
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
 
     CellGraph* getCellGraph()const{return m_cellGraph;}
 
-    void createPath(Squad *selectedSquad, ngl::Vec3 target);
+    void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
+
 
     bool hasWon()const{return m_win;}
     bool hasLost()const{return m_lose;}
+
+
 
 
     //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
