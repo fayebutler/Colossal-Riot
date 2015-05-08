@@ -75,9 +75,6 @@ bool UISlider::isClicked(int _x, int _y)
   ngl::Vec2 ndc;
   ndc.m_x = ((2.f * _x) / m_screenDimensions.m_x) - 1.f;
   ndc.m_y = 1.f - ((2.f * _y) / m_screenDimensions.m_y);
-
-//  std::cout<<"ndc "<<ndc.m_x<<" "<<ndc.m_y<<std::endl;
-
   if (ndc.m_x >= (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc.m_x <= (m_sliderPos.m_x + m_sliderDimensions.m_x/2) &&
       ndc.m_y >= (m_sliderPos.m_y - m_sliderDimensions.m_y/2) && ndc.m_y <= (m_sliderPos.m_y + m_sliderDimensions.m_y/2))
   {
@@ -95,7 +92,6 @@ int UISlider::slideBar(int _x)
   if (ndc_x > (m_sliderPos.m_x - m_sliderDimensions.m_x/2) && ndc_x < (m_sliderPos.m_x + m_sliderDimensions.m_x/2))
   {
     m_sliderBarPos.m_x = ndc_x;
-    //calculateOutput();
   }
   return calculateOutput();
 }
@@ -120,7 +116,6 @@ void UISlider::draw()
 
   if (m_hasText == true)
   {
-
     m_text->renderText(m_textPos.m_x + m_textOffset.m_x, m_textPos.m_y + m_textOffset.m_y, m_textString);
   }
 }

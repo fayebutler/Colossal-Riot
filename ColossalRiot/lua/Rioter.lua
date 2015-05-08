@@ -1,13 +1,15 @@
 -- set up initial rioter variables
 
 makeRioter = function()
-   rioter.m_health = math.random(100)
-   rioter.m_morale = 100
-   rioter.m_rage = math.random(100)-20
+
+   rioter.m_health = 80 + math.random(20)
+   rioter.m_morale = 50 + math.random(50)
+   rioter.m_rage = math.random(80)
    rioter.m_damage = 0.1
-   stateMachine.m_currentState = "protest"
+
+   stateMachine.m_currentState = "roam"
    stateMachine.m_globalState = "global"
-   rioter:wander(0.2)
+
 end
 
 
@@ -41,8 +43,11 @@ global["execute"] = function()
         stateMachine:changeState("dead")
     end
   end
-  if rioter.m_morale <= 0 then
-    stateMachine:changeState("home")
+
+  if stateMachine.m_currentState ~= "home" then
+    if rioter.m_morale <= 0 then
+        stateMachine:changeState("home")
+    end
   end
 end
 
@@ -55,30 +60,85 @@ end
 
 protest = {}
 protest["enter"] = function()
---  rioter:pursuit(1.0)
-  rioter:evade(0.0)
-  rioter:cohesion(0.8)
-  rioter:alignment(0.4)
-  rioter:wander(0.5)
-  rioter:separation(0.8)
-  rioter:alignment(0.5)
---  print("LUA RIOTER protest enter")
+
+   rioter:wander(0.0)
+   rioter:pursuit(1.0)
+   rioter:evade(0.0)
+   rioter:seek(0.0)
+   rioter:arrive(0.0)
+
+   rioter:cohesion(0.8)
+   rioter:separation(0.8)
+   rioter:alignment(0.5)
+
 end
 
 protest["execute"] = function()
---  print("LUA RIOTER protest execute")
+
   rioter:cohesion(0.02*rioter.m_rage)
+
+  rioter:checkValidTarget(3.0, 20.0)
+
+  if rioter:getTargetID() >= 0 then
+    rioter:wander(0.0)
+    rioter:attack()
+  else
+    rioter:wander(0.5)
+  end
+
+  if rioter.m_rage < 30 then
+    stateMachine:changeState("roam")
+  end
+  if rioter.m_health < 30 then
+    stateMachine:changeState("flee")
+  end
+
   rioter.m_morale = rioter.m_morale - 0.3
-  rioter.m_health = rioter.m_health - 0.01
---rioter:attack()
-  rioter.m_rage = rioter.m_rage + 0.01;
---  if rioter.m_health < 30 then
---    stateMachine:changeState("flee")
---  end
+  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.001);
+
 end
 
 protest["exit"] = function()
---  print("LUA RIOTER protest exit")
+end
+
+
+
+-- roam state
+
+roam = {}
+roam["enter"] = function()
+
+   rioter:wander(0.5)
+   rioter:pursuit(0.0)
+   rioter:evade(0.0)
+   rioter:seek(0.0)
+   rioter:arrive(0.0)
+
+   rioter:cohesion(0.8)
+   rioter:separation(0.8)
+   rioter:alignment(0.5)
+
+end
+
+roam["execute"] = function()
+
+  rioter:cohesion(0.02*rioter.m_rage)
+
+
+  if rioter.m_rage > 60 then
+    stateMachine:changeState("protest")
+  end
+  if rioter.m_health < 30 then
+    stateMachine:changeState("flee")
+  end
+
+  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
+
+
+end
+
+roam["exit"] = function()
+--  print("LUA RIOTER roam exit")
 end
 
 
@@ -87,25 +147,34 @@ end
 
 flee = {}
 flee["enter"] = function()
-  rioter:checkValidTarget(1.0, 50.0)
---  rioter:pursuit(0.0)
-  rioter:cohesion(0.0)
-  rioter:alignment(0.0)
-  rioter:evade(0.8)
-  rioter:wander(0.0)
---  print("LUA RIOTER flee enter")
+
+   rioter:wander(0.0)
+   rioter:pursuit(0.0)
+   rioter:evade(1.0)
+   rioter:seek(0.0)
+   rioter:arrive(0.0)
+
+   rioter:cohesion(0.2)
+   rioter:separation(0.8)
+   rioter:alignment(0.3)
+
 end
 
 flee["execute"] = function()
---  print("RIOTER flee execute")
-  rioter.m_morale = rioter.m_morale + 0.2
-  rioter.m_rage = rioter.m_rage - 0.1;
 
   rioter:checkValidTarget(1.0, 50.0)
 
-  if rioter.m_morale > 75 then
-  stateMachine:changeState("protest")
+  if rioter:getTargetID() < 0 then
+    stateMachine:changeState("protest")
   end
+
+  if rioter.m_morale > 75 then
+    stateMachine:changeState("protest")
+  end
+
+  rioter.m_morale = rioter.m_morale + 0.2
+  rioter.m_rage = rioter.m_rage - 0.1;
+
 end
 
 flee["exit"] = function()
@@ -118,31 +187,86 @@ end
 
 dead = {}
 dead["enter"] = function()
---  print("LUA RIOTER dead enter")
+
+   rioter:wander(0.0)
+   rioter:pursuit(0.0)
+   rioter:evade(0.0)
+   rioter:seek(0.0)
+   rioter:arrive(0.0)
+
+   rioter:cohesion(0.0)
+   rioter:separation(0.0)
+   rioter:alignment(0.0)
+
 end
 
 dead["execute"] = function()
---  print("LUA RIOTER DEAD")
   rioter.m_health = 0
 end
 
 --dead["exit"] = function()
---  print("LUA RIOTER dead exit")
 --end
+
 
 
 -- home state
 
 home = {}
 home["enter"] = function()
---  print("LUA RIOTER home enter")
+
+   rioter:wander(0.0)
+   rioter:pursuit(0.0)
+   rioter:evade(0.0)
+   rioter:seek(0.0)
+   rioter:arrive(0.0)
+
+   rioter:cohesion(0.0)
+   rioter:separation(0.0)
+   rioter:alignment(0.0)
+
 end
 
 home["execute"] = function()
---  print("LUA RIOTER home execute")
   rioter.m_morale = 0
+
 end
 
 home["exit"] = function()
---  print("LUA RIOTER home exit")
+end
+
+
+
+-- limits
+
+limits = {}
+limits["check"] = function()
+
+    if rioter.m_health > 100 then
+        rioter.m_health = 100
+    end
+    if rioter.m_health < 0 then
+        rioter.m_health = 0
+    end
+
+    if rioter.m_morale > 100 then
+        rioter.m_morale = 100
+    end
+    if rioter.m_morale < 0 then
+        rioter.m_morale = 0
+    end
+
+    if rioter.m_rage > 100 then
+        rioter.m_rage = 100
+    end
+    if rioter.m_rage < 0 then
+        rioter.m_rage = 0
+    end
+
+    if rioter.m_damage > 1 then
+        rioter.m_damage = 1
+    end
+    if rioter.m_damage < 0 then
+        rioter.m_damage = 0
+    end
+
 end

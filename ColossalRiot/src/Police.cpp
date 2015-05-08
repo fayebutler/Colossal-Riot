@@ -28,10 +28,10 @@ Police::Police(GameWorld* world) : Agent(world)
     makePolice();
 
     m_blockadePosition = NULL;
-//    m_blockadePosition = ngl::Vec3(0,0,0);
-
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
+
+    m_rioterInfluence = 0.0;
 
 }
 
@@ -51,12 +51,29 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->addAllNeighbours(getNeighbourRioterIDs());
   Vehicle::Steering()->addAllNeighbours(getNeighbourPoliceIDs());
 
+  Vehicle::Steering()->WallOverlapAvoidance();
+  Vehicle::Steering()->ObjectOverlapAvoidance();
+
+  Vehicle::setMaxSpeed(2);
+
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
 
+  // calculate influence of neighbouring rioters based on their rage
+  int nearbyRioters = m_neighbourRioterIDs.size();
+  m_rioterInfluence = 0.0;
+
+  for (int i=0; i<nearbyRioters; i++)
+  {
+      Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
+      if (rioter)
+      {
+          m_rioterInfluence += rioter->getRage();
+      }
+  }
+
+
   m_hop = (sin(currentTime*m_hopSpeed)*sin(currentTime*m_hopSpeed)*m_hopHeight);
-
-
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
@@ -65,24 +82,19 @@ void Police::update(double timeElapsed, double currentTime)
     if(m_blockadePosition != NULL)
     {
         this->setCrosshair(m_blockadePosition);
-        if((this->getPos() - m_blockadePosition).lengthSquared() <=0.1)
+//        this->setMass(10.0);
+        if((this->getPos() - m_blockadePosition).lengthSquared() <= 0.01)
         {
             this->Steering()->ArriveOff();
-            this->setVelocity(ngl::Vec3(0,0,0));
-            this->setMaxTurnRate(0.0);
-            std::cout<< " ARRIVE OFF "<<std::endl;
+//            this->setVelocity(ngl::Vec3(0,0,0));
+//            this->setHeading(ngl::Vec3(0,0,1));
+//            this->setMaxTurnRate(0.0);
         }
         else
         {
- //           this->setCrosshair(m_blockadePosition);
             this->Steering()->ArriveOn();
-            std::cout<< " ARrIVE ON "<<std::endl;
         }
-
     }
-
-
-
 }
 
 
@@ -136,7 +148,7 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void Police::findTargetID(float _health)
 {
     std::vector<int> rioters = getNeighbourRioterIDs();
-    float currentRage = -100;
+    float currentRage = -1;
     Agent* currentTarget = NULL;
     for (int i=0; i<rioters.size(); i++)
     {
@@ -160,6 +172,7 @@ void Police::findTargetID(float _health)
     {
         int target = currentTarget->getID();
         setTargetID(target);
+//        std::cout<<"TARGET"<<target<<std::endl;
 //        std::cout<< "FOUND TARGET"<<std::endl;
     }
 }
@@ -184,7 +197,7 @@ void Police::registerClass(lua_State* _L)
         .deriveClass<Police, Agent>("Police")
             .addConstructor <void (*) (GameWorld*)> ()
                 .addFunction("attack", &Police::attack)
-                .addFunction("findTargetID", &Police::findTargetID)
+                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
 
@@ -193,15 +206,17 @@ void Police::registerClass(lua_State* _L)
 
 void Police::squadCohesion(double weight)
 {
+  // MUST FIX!
+  if (weight > 0.f)
+  {
     ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
     double distance = fabs(toSquad.length());
 
     weight = (weight*distance*1.5f)/m_squadRadius;
 
-
     Vehicle::setCrosshair(m_squadPos);
     Vehicle::Steering()->setSeekWeight(weight);
 
     Vehicle::Steering()->SeekOn();
-
+  }
 }

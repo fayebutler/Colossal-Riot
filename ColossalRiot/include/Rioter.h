@@ -28,11 +28,15 @@ public:
 
     void registerClass(lua_State* _L);
 
+    float getPoliceInfluence()const{return m_policeInfluence;}
+
 
 
 protected:
     MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
+
+    float m_policeInfluence;
 };
 
 #endif // RIOTER_H

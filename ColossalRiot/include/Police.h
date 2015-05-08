@@ -45,6 +45,8 @@ public:
     ngl::Vec3 getBlockadePos()const{return m_blockadePosition;}
     void setBlockadePos(ngl::Vec3 newBlockadePos) {m_blockadePosition = newBlockadePos;}
 
+    float getRioterInfluence()const{return m_rioterInfluence;}
+
 
 protected:
     MessageManager* m_messageMgr;
@@ -57,6 +59,8 @@ protected:
 
     bool m_isMoving;
     ngl::Vec3 m_blockadePosition;
+
+    float m_rioterInfluence;
 
 };
 

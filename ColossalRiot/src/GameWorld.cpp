@@ -28,7 +28,6 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
    m_cellGraph->generateWalls();
 
 
-
   for (int i = 0; i < numberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this);
@@ -83,7 +82,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         std::vector<float> map_bounds = m_cellGraph->getMapBounds();
 //        std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
 //        std::cout<<"map bounds "<<map_bounds[0]<<" "<<map_bounds[1]<<" "<<map_bounds[2]<<" "<<map_bounds[3]<<std::endl;
-        if(currentRioter->getHealth()<=0)
+        if(currentRioter->getHealth()<=0.f)
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
@@ -103,11 +102,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersHome++;
-            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
+//            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
 
     }
+
 
     //check for empty squads
 

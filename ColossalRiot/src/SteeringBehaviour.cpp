@@ -35,6 +35,8 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 //    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
+
+    m_targetAgent = NULL;
 }
 
 SteeringBehaviour::~SteeringBehaviour()
@@ -129,8 +131,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
     m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
 
-    //std::cout<<" calculate"<<std::endl;
-
     ngl::Vec3 force;
     if(on(wall_avoidance))
     {
@@ -207,7 +207,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
         else
         {
-//            std::cout<< "ATTEMPTING TO PURSUE"<<std::endl;
             force = Pursuit(m_targetAgent) * m_weightPursuit;
             if(!accumulateForce(m_steeringForce, force))
             {
@@ -268,7 +267,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     }
     if(on(arrive))
     {
-        force = Arrive(m_vehicle->getCrosshair(), 0.5) * m_weightArrive;
+        force = Arrive(m_vehicle->getCrosshair(), 0.1) * m_weightArrive;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -342,7 +341,6 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
-
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
 
 //    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
@@ -389,7 +387,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 
     if(dist>0.1)
     {
-        double decelerationTweak = 0.3;
+        double decelerationTweak = 0.01;
 
         double speed = dist/(deceleration*decelerationTweak);
         //make velocity not exceed maxspeed
@@ -404,7 +402,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
     else if(dist <= 0.1 )
     {
 //        m_vehicle->setHeading(ngl::Vec3(-1,0,0));
-        ArriveOff();
+        //ArriveOff();
         return ngl::Vec3(0,0,0);
     }
 
