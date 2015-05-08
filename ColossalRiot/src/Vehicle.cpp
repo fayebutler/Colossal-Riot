@@ -179,6 +179,11 @@ void Vehicle::followPath()
     {
         setPathIndex(m_pathIndex += 1);
     }
+    if((this->getPos() - m_path.back()).lengthSquared()<= 4)
+    {
+        m_path.clear();
+        m_pathIndex =0;
+    }
 
     this->setCrosshair(m_path[m_pathIndex]);
 
