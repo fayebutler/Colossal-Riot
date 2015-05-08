@@ -27,6 +27,9 @@ Vehicle::Vehicle(GameWorld* world,
    m_smoothingOn = true;
    m_sampleSize = 25.0;
    m_pathIndex = 0;
+   m_crosshair= ngl::Vec3(0,0,0);
+   m_squadCrosshair = ngl::Vec3(0,0,0);
+
    for(int i =0; i<m_sampleSize; i++)
    {
       ngl::Vec3 zeroValue = ngl::Vec3(0,0,0);
@@ -97,13 +100,6 @@ void Vehicle::update(double time_elapsed)
     if(m_path.size() != 0)
     {
         this->followPath();
-        std::cout<<"path index "<<m_pathIndex<<std::endl;
-        if((this->getPos() - m_path.back()).lengthSquared() <= 4)
-        {
-            //std::cout<<" ARRIVED WAHOO "<<std::endl;
-            m_pathIndex = 0;
-            m_path.clear();
-        }
     }
 
 
@@ -167,6 +163,7 @@ void Vehicle::findPath(ngl::Vec3 _target)
     std::vector<ngl::Vec3> path;
     path = m_world->getCellGraph()->findPath(this, _target);
     m_path = path;
+    m_crosshair = m_path[m_pathIndex];
 
 }
 
@@ -174,13 +171,17 @@ void Vehicle::followPath()
 {
     //go through each vec3 and set as crosshair to follow the path
 
-
-    if ((this->getPos() - m_path[m_pathIndex]).lengthSquared()<= 4)
+    if (m_pathIndex != m_path.size()-1 && (this->getPos() - m_path[m_pathIndex]).lengthSquared()<= 9)
     {
         setPathIndex(m_pathIndex += 1);
+        m_crosshair = m_path[m_pathIndex];
     }
-    this->setCrosshair(m_path[m_pathIndex]);
-//    this->Steering()->SeekOn();
+    if(m_pathIndex == m_path.size()-1)
+    {
+        m_path.clear();
+        m_pathIndex =0;
+    }
+
 
 
 }

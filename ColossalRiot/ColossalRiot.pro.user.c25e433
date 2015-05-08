@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 3.2.0, 2015-05-08T11:01:41. -->
-<qtcreator>
- <data>
-  <variable>EnvironmentId</variable>
-  <value type="QByteArray">{96ead819-5c0c-4c18-ae2d-6070eaa2d491}</value>
-=======
-<!-- Written by QtCreator 3.2.0, 2015-05-08T17:52:31. -->
+<!-- Written by QtCreator 3.2.0, 2015-05-07T14:56:19. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{c25e433b-0bff-4b85-8745-0d83027edfe9}</value>
->>>>>>> emily
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -185,11 +177,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ColossalRiot</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-<<<<<<< HEAD
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7776126/compAnim02/colossal/ColossalRiot/ColossalRiot.pro</value>
-=======
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7702804/Programming/colossal/ColossalRiot/ColossalRiot.pro</value>
->>>>>>> emily
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ColossalRiot.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

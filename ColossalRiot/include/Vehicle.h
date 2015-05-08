@@ -10,7 +10,7 @@ class SteeringBehaviour;
 
 class Vehicle: public MovingEntity
 {
-private:
+protected:
 
     SteeringBehaviour* m_steering;
 
@@ -18,6 +18,7 @@ private:
     double m_timeElapsed;
 
     ngl::Vec3 m_crosshair;
+    ngl::Vec3 m_squadCrosshair;
 
     ngl::Vec3 m_smoothHeading;
     std::vector <ngl::Vec3> m_headingHistory;
@@ -26,7 +27,6 @@ private:
     bool m_smoothingOn;
     std::vector<ngl::Vec3> m_path;
     int m_pathIndex;
-
 
 
 
@@ -46,6 +46,9 @@ public:
     ngl::Vec3 getCrosshair()const{return m_crosshair;}
     void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
 
+    ngl::Vec3 getSquadCrosshair()const{return m_squadCrosshair;}
+    void setSquadCrosshair(ngl::Vec3 v){m_squadCrosshair=v;}
+
     ngl::Vec3 smoothingUpdate(ngl::Vec3 m_recentHeading);
 
     ngl::Vec3 findNearestExit(std::vector<ngl::Vec3> _exits);
@@ -58,6 +61,7 @@ public:
 
     std::vector<ngl::Vec3> getPath(){return m_path;}
     void setPath(std::vector<ngl::Vec3> _path){m_path = _path;}
+    void clearPath(){m_path.clear();}
 
 
 };

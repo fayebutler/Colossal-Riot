@@ -554,6 +554,10 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7776126/NGL/include/ngl/Camera.h \
 		/home/i7776126/NGL/include/ngl/RibExport.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -722,6 +726,10 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -743,10 +751,6 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/BaseGameEntity.o src/BaseGameEntity.cpp
 
@@ -1289,6 +1293,10 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1310,10 +1318,6 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
@@ -1468,6 +1472,10 @@ obj/main.o: src/main.cpp /home/i7776126/NGL/include/ngl/NGLInit.h \
 		/home/i7776126/NGL/include/ngl/Util.h \
 		/home/i7776126/NGL/include/ngl/Mat3.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1489,10 +1497,6 @@ obj/main.o: src/main.cpp /home/i7776126/NGL/include/ngl/NGLInit.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
@@ -1908,6 +1912,10 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1929,10 +1937,6 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
@@ -2087,6 +2091,10 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7776126/NGL/include/ngl/Camera.h \
 		/home/i7776126/NGL/include/ngl/RibExport.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2255,6 +2263,10 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7776126/NGL/include/ngl/Camera.h \
 		/home/i7776126/NGL/include/ngl/RibExport.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2424,6 +2436,10 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7776126/NGL/include/ngl/Camera.h \
 		/home/i7776126/NGL/include/ngl/RibExport.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2445,11 +2461,7 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		include/StateMachine.h \
 		include/GameWorld.h \
 		include/Rioter.h \
-		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h
+		include/CellGraph.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Squad.o src/Squad.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
@@ -2600,6 +2612,10 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2621,10 +2637,6 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h \
 		/home/i7776126/NGL/include/ngl/Random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
@@ -3191,6 +3203,10 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7776126/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7776126/NGL/include/ngl/VertexArrayObject.h \
 		/home/i7776126/NGL/include/ngl/Material.h \
+		/home/i7776126/NGL/include/ngl/Obj.h \
+		/home/i7776126/NGL/include/ngl/Texture.h \
+		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
+		/home/i7776126/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
 		/home/i7776126/compAnim02/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -3212,10 +3228,6 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		/home/i7776126/NGL/include/ngl/Obj.h \
-		/home/i7776126/NGL/include/ngl/Texture.h \
-		/home/i7776126/NGL/include/ngl/AbstractMesh.h \
-		/home/i7776126/NGL/include/ngl/BBox.h \
 		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Vehicle.o src/Vehicle.cpp
 

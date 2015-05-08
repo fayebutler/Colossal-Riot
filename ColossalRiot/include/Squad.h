@@ -8,13 +8,14 @@ enum eSquadState
   squadPatrol,
   squadAggressive,
   squadDefensive,
-  squadWall
+  squadWall,
+  squadMove
 };
 
 class Squad : public Vehicle
 {
 public:
-    Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r);
+    Squad(GameWorld *world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj* _mesh);
     ~Squad();
 
 //    lua_State* getLuaState() const { return L ; }
@@ -59,7 +60,7 @@ private:
     int m_squadSize;
     float m_squadRadius;
 //    ngl::Vec3 m_squadPos;
-
+    ngl::Obj* m_mesh;
     ngl::Vec3 m_selectionColour;
 
     static ngl::Vec3 s_nextSelectionColour;
@@ -86,6 +87,7 @@ private:
     std::vector<ngl::Vec3> m_blockadePositions;
 
     eSquadState m_squadState;
+    eSquadState m_previousState;
 };
 
 #endif // SQUAD_H

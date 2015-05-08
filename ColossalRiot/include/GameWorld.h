@@ -46,6 +46,8 @@ private:
     const char* m_cellGraphFile;
     ngl::Obj *m_worldMesh;
     std::string m_worldMeshFile;
+    ngl::Obj *m_policeMesh;
+    ngl::Obj *m_rioterMesh;
 
     bool m_resetID;
 
@@ -59,6 +61,7 @@ private:
     int m_numberOfRiotersHome;
 
     lua_State *L;
+
 
 
 
