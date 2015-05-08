@@ -5,7 +5,6 @@
 #include <vector>
 #include <list>
 
-//#include "GameWorld.h"
 #include "EntityManager.h"
 #include "Message.h"
 #include "MessageManager.h"

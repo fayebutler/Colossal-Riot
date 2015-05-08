@@ -30,7 +30,7 @@ private:
         follow_path        = 0x00400,
         pursuit            = 0x00800,
         evade              = 0x01000,
-        interpose          = 0x02000,
+        squad_cohesion     = 0x02000,
         hide               = 0x04000,
         flock              = 0x08000,
         offset_pursuit     = 0x10000,
@@ -77,7 +77,7 @@ private:
     double m_weightFollowPath;
     double m_weightPursuit;
     double m_weightEvade;
-    double m_weightInterpose;
+    double m_weightSquadCohesion;
     double m_weightHide;
     double m_weightFlock;
     double m_weightOffsetPursuit;
@@ -98,6 +98,8 @@ private:
     ngl::Vec3 Separation(std::vector<int> neighbours);
     ngl::Vec3 Alignment(std::vector<int> neighbours);
     ngl::Vec3 Cohesion(std::vector<int> neighbours);
+
+    ngl::Vec3 SquadCohesion(ngl::Vec3 SquadPos);
 
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
 
@@ -151,6 +153,12 @@ public:
     bool isCohesionOn(){return on(cohesion);}
     void setCohesionWeight(double m_newWeight){m_weightCohesion = m_newWeight;}
     double getCohesionWeight(){return m_weightCohesion;}
+
+    void SquadCohesionOn(){m_activeFlags |= squad_cohesion;}
+    void SquadCohesionOff(){if(on(squad_cohesion)) m_activeFlags ^= squad_cohesion;}
+    bool isSquadCohesionOn(){return on(squad_cohesion);}
+    void setSquadCohesionWeight(double m_newWeight){m_weightSquadCohesion = m_newWeight;}
+    double getSquadCohesionWeight(){return m_weightSquadCohesion;}
 
     void PursuitOn(){m_activeFlags |= pursuit;}
     void PursuitOff(){if(on(pursuit)) m_activeFlags ^= pursuit;}

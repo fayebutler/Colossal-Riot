@@ -1,6 +1,6 @@
 #include "Vehicle.h"
 #include "math.h"
-
+#include "GameWorld.h"
 
 
 Vehicle::Vehicle(GameWorld* world,
@@ -26,6 +26,10 @@ Vehicle::Vehicle(GameWorld* world,
    m_nextSlot = 0;
    m_smoothingOn = true;
    m_sampleSize = 25.0;
+   m_pathIndex = 0;
+   m_crosshair= ngl::Vec3(0,0,0);
+   m_squadCrosshair = ngl::Vec3(0,0,0);
+
    for(int i =0; i<m_sampleSize; i++)
    {
       ngl::Vec3 zeroValue = ngl::Vec3(0,0,0);
@@ -91,6 +95,21 @@ void Vehicle::update(double time_elapsed)
         m_smoothHeading = smoothingUpdate(getHeading());
         m_heading = m_smoothHeading;
     }
+
+
+    if(m_path.size() != 0)
+    {
+        this->followPath();
+//        std::cout<<"path index "<<m_pathIndex<<std::endl;
+        if((this->getPos() - m_path.back()).lengthSquared() <= 4)
+        {
+            //std::cout<<" ARRIVED WAHOO "<<std::endl;
+            m_pathIndex = 0;
+            m_path.clear();
+        }
+    }
+
+
 }
 
 bool Vehicle::handleMessage(const Message& _message)
@@ -123,6 +142,55 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 m_recentHeading)
     return sum / m_headingHistory.size();
 }
 
+ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
+{
+    //find nearest point to current positiong and set that as path thing
+
+    ngl::Vec3 bestExit;
+    float dist = 1000000000.0;
+    int exitSize = _exits.size();
+    for(int i = 0; i<exitSize; i++)
+    {
+        ngl::Vec3 currentExit = _exits[i];
+        float testDist = (currentExit- this->getPos()).length();
+        if(testDist < dist)
+        {
+            bestExit = currentExit;
+            dist = testDist;
+        }
+    }
+
+    return bestExit;
+}
+
+void Vehicle::findPath(ngl::Vec3 _target)
+{
+    m_path.clear();
+    m_pathIndex =0;
+    std::vector<ngl::Vec3> path;
+    path = m_world->getCellGraph()->findPath(this, _target);
+    m_path = path;
+
+}
+
+void Vehicle::followPath()
+{
+    //go through each vec3 and set as crosshair to follow the path
+
+
+    if ((this->getPos() - m_path[m_pathIndex]).lengthSquared()<= 4)
+    {
+        setPathIndex(m_pathIndex += 1);
+    }
+    if((this->getPos() - m_path.back()).lengthSquared()<= 4)
+    {
+        m_path.clear();
+        m_pathIndex =0;
+    }
+
+    this->setCrosshair(m_path[m_pathIndex]);
+
+}
 
 
 

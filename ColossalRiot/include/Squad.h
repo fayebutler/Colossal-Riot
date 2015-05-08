@@ -3,6 +3,15 @@
 
 #include "Police.h"
 
+enum eSquadState
+{
+  squadPatrol,
+  squadAggressive,
+  squadDefensive,
+  squadWall,
+  squadMove
+};
+
 class Squad : public Vehicle
 {
 public:
@@ -32,15 +41,18 @@ public:
 
     std::vector<Police*> getSquadPolice() const {return m_squadPolice;}
 
-    void setPath(std::vector<ngl::Vec3> _path);
-    std::vector<ngl::Vec3> getPath() const {return m_path;}
+    void setTarget(ngl::Vec3 _target);
+    ngl::Vec3 getTarget() const {return m_target;}
 
 
     void findClosestWalls(Squad* squad);
     void formWall();
 
+    int checkDeaths();
 
-    void checkDeaths();
+    void setSquadState(const char* _luaState, eSquadState _enumState);
+    eSquadState getSquadState() { return m_squadState; }
+
 
 
 private:
@@ -57,19 +69,25 @@ private:
 
     ngl::Colour m_squadColour;
 
-    std::vector<ngl::Vec3> m_path;
+    ngl::Vec3 m_target;
+
+    bool m_foundTarget;
     ngl::Vec3 averagePolicePos();
 
-    int m_pathIndex;
+//    int m_pathIndex;
     //int m_policeArrived;
 
     std::vector <bool> m_policeArrived;
     bool m_allArrived;
-    bool m_foundWall;
+    bool m_generatedBlockade;
+    bool m_inBlockade;
+
 
     std::vector<Wall> m_closestWalls;
+    std::vector<ngl::Vec3> m_blockadePositions;
 
-
+    eSquadState m_squadState;
+    eSquadState m_previousState;
 };
 
 #endif // SQUAD_H

@@ -73,7 +73,8 @@ NGLDraw::NGLDraw(int _width, int _height)
   // transformations
   ngl::Mat4 iv=m_cam->getViewMatrix();
   iv.transpose();
-  m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light->setPosition(ngl::Vec3(0,20,50));
   //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
@@ -82,6 +83,10 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_height = _height;
 
   m_gameState = gameMenu;
+
+  m_textSmall = new Text("../font/arial.ttf", 20);
+  m_textMedium = new Text("../font/arial.ttf", 40);
+
 
   m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
@@ -108,20 +113,34 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
   m_buttons.push_back(m_buttonCreateSquad);
 
+  m_buttonSquadPatrol = new UIButton(buttonSquadPatrol, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadPatrol->updateButton(ngl::Vec2(0.7f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadPatrol->updateText("Patr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadPatrol);
+
+  m_buttonSquadAggressive = new UIButton(buttonSquadAggressive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadAggressive->updateButton(ngl::Vec2(0.5f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadAggressive->updateText("Aggr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadAggressive);
+
+  m_buttonSquadDefensive = new UIButton(buttonSquadDefensive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadDefensive->updateButton(ngl::Vec2(0.6f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadDefensive->updateText("Def", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadDefensive);
+
+  m_buttonSquadWall = new UIButton(buttonSquadWall, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadWall->updateButton(ngl::Vec2(0.4f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadWall);
+
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.03f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
-  std::cout<<"m_squadSize"<<m_squadSize<<std::endl;
+
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
-  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(179.f, -27.f));
-
-//  m_gameworld = new GameWorld();
-
-//  m_selected = false;
-//  m_selectedSquad = NULL;
-
+  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
 
   m_entityMgr = new EntityManager();
 
@@ -138,7 +157,10 @@ NGLDraw::~NGLDraw()
   delete m_buttonQuit;
   delete m_buttonPause;
   delete m_buttonCreateSquad;
+  delete m_buttonSquadWall;
   delete m_sliderSquadSize;
+  delete m_textSmall;
+  delete m_textMedium;
   Init->NGLQuit();
 }
 
@@ -166,8 +188,8 @@ void NGLDraw::resize(int _w, int _h)
   }
   m_sliderSquadSize->setScreenDimensions(ngl::Vec2(m_width, m_height));
 
-
-  m_text->setScreenSize(_w, _h);
+  m_textSmall->setScreenSize(_w, _h);
+  m_textMedium->setScreenSize(_w, _h);
   // Ok so this is still a bit of a hack we need to scale our text based
   // on max screen size so first get the size of the screen
   SDL_Rect s;
@@ -179,7 +201,8 @@ void NGLDraw::resize(int _w, int _h)
   x=1.0-float(s.w-_w)/s.w;
   y=1.0-float(s.h-_h)/s.h;
   // now set the new transform element for this shader
-  m_text->setTransform(x,y);
+  m_textSmall->setTransform(x, y);
+  m_textMedium->setTransform(x, y);
 }
 
 void NGLDraw::startGame(int level)
@@ -214,6 +237,7 @@ void NGLDraw::startGame(int level)
 
 void NGLDraw::endGame()
 {
+    m_gameTimer.resetTimer();
     delete m_gameworld;
 
     // reset camera
@@ -232,10 +256,9 @@ void NGLDraw::endGame()
 void NGLDraw::draw()
 {
   // clear the screen and depth buffer
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
-
 
   switch (m_gameState)
   {
@@ -263,8 +286,47 @@ void NGLDraw::draw()
       m_buttonPause->draw();
       m_buttonMenu->draw();
       m_buttonCreateSquad->draw();
+      if (m_selectedSquad)
+      {
+        if (m_selectedSquad->getSquadState() == squadPatrol)
+        {
+          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+        }
+        else if (m_selectedSquad->getSquadState() == squadAggressive)
+        {
+          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+        }
+        else if (m_selectedSquad->getSquadState() == squadDefensive)
+        {
+          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+        }
+        else if (m_selectedSquad->getSquadState() == squadWall)
+        {
+          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+        }
+        m_buttonSquadPatrol->draw();
+        m_buttonSquadAggressive->draw();
+        m_buttonSquadDefensive->draw();
+        m_buttonSquadWall->draw();
+      }
 
       m_sliderSquadSize->draw();
+
+      m_ss.str(std::string());
+      m_ss << m_gameworld->getAvailablePolice();
+      m_textMedium->renderText(750.f, 950.f, m_ss.str());
 
       break;
     }
@@ -300,6 +362,20 @@ void NGLDraw::draw()
 
       break;
     }
+    case gameWin:
+    {
+      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      m_buttonMenu->draw();
+      m_buttonQuit->draw();
+      break;
+    }
+    case gameLose:
+    {
+      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
+      m_buttonMenu->draw();
+      m_buttonQuit->draw();
+      break;
+    }
     case gameQuit:
     {
       break;
@@ -320,6 +396,19 @@ void NGLDraw::update(double timeElapsed, double currentTime)
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
+
+
+  if(m_gameworld->hasWon()==1)
+  {
+      m_gameState = gameWin;
+      endGame();
+  }
+  else if(m_gameworld->hasLost()==1)
+  {
+      m_gameState = gameLose;
+      endGame();
+  }
+
 
 }
 
@@ -348,36 +437,16 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
 {
 
   // right mouse translate code
-if(m_translate && _event.state &SDL_BUTTON_MMASK)
+  if(m_translate && _event.state &SDL_BUTTON_MMASK)
   {
-    std::cout<<"EYE: "<<m_cam->getEye().m_x<<" "<< m_cam->getEye().m_z<<std::endl;
-
     int diffX = (int)(_event.x - m_origXPos);
     int diffZ = (int)(_event.y - m_origYPos);
     m_origXPos=_event.x;
     m_origYPos=_event.y;
 
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-
-
-
-
-  }
-  if (m_sliderSquadSize->getIsSliding() == true)
-  {
-      float cameraLimitX = (50.0);
-      //cameraLimitX += (m_modelPos.m_y/2.0);
-
-      float cameraLimitZ = (50.0);
-      //cameraLimitZ += (m_modelPos.m_y/2.0);
-
-  //    float cameraLimitX = 50;
-  //    float cameraLimitZ = 50;
-    m_squadSize = m_sliderSquadSize->slideBar(_event.x);
-    m_sliderSquadSize->setTextString(m_squadSizeString);
-
-    std::cout<<"MODELPOS "<<m_modelPos.m_x<<" "<<m_modelPos.m_y<<" "<<m_modelPos.m_z<<std::endl;
-
+    float cameraLimitX = (50.0);
+    float cameraLimitZ = (50.0);
     if(m_cam->getEye().m_x> cameraLimitX)
     {
         m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
@@ -394,10 +463,13 @@ if(m_translate && _event.state &SDL_BUTTON_MMASK)
     {
         m_cam->setEye(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,-cameraLimitZ));
     }
-
-
   }
 
+  if (m_sliderSquadSize->getIsSliding() == true)
+  {
+    m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+    m_sliderSquadSize->setTextString(m_squadSizeString);  
+  }
 }
 
 
@@ -412,94 +484,127 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       m_origYPos = _event.y;
       m_translate=true;
     }
+
     if(_event.button == SDL_BUTTON_LEFT)
     {
+      unsigned int numberOfButtons = m_buttons.size();
+      for (unsigned int i = 0; i < numberOfButtons; i++)
+      {
+        if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
+        {
+          switch (m_buttons[i]->getName())
+          {
+            case buttonPlay:
+            {
+              startGame(3);
+              m_gameState = gamePlay;
+              m_buttonQuit->setIsActive(false);
+              m_buttonPlay->setIsActive(false);
+              m_buttonPause->setIsActive(true);
+              m_buttonMenu->setIsActive(true);
+              m_sliderSquadSize->setIsActive(true);
+              m_buttonCreateSquad->setIsActive(true);
+
+              break;
+            }
+            case buttonQuit :
+            {
+              m_gameState = gameQuit;
+              break;
+            }
+            case buttonPause :
+            {
+              if (m_gameState == gamePlay)
+              {
+                m_gameState = gamePause;
+                m_gameTimer.resetTimer();
+                m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+                m_buttonPause->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-33.f, -25.f));
+                m_sliderSquadSize->setIsActive(false);
+                m_buttonCreateSquad->setIsActive(false);
+                break;
+              }
+              else if (m_gameState == gamePause)
+              {
+                m_gameState = gamePlay;
+                m_gameTimer.resetTimer();
+                m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+                m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+                m_sliderSquadSize->setIsActive(true);
+                m_buttonCreateSquad->setIsActive(true);
+                break;
+              }
+              break;
+            }
+            case buttonMenu :
+            {
+              m_gameState = gameMenu;
+              endGame();
+              m_buttonQuit->setIsActive(true);
+              m_buttonPlay->setIsActive(true);
+              m_buttonMenu->setIsActive(false);
+              m_buttonPause->setIsActive(false);
+              m_sliderSquadSize->setIsActive(false);
+              m_buttonCreateSquad->setIsActive(false);
+              break;
+
+            }
+            case buttonCreateSquad :
+            {
+              createSquad(m_squadSize);
+              break;
+            }
+            case buttonSquadPatrol :
+            {
+              m_selectedSquad->setSquadState("patrol", squadPatrol);
+              break;
+            }
+            case buttonSquadAggressive :
+            {
+              m_selectedSquad->setSquadState("aggressive", squadAggressive);
+              break;
+            }
+            case buttonSquadDefensive :
+            {
+              m_selectedSquad->setSquadState("defensive", squadDefensive);
+              break;
+            }
+            case buttonSquadWall :
+            {
+              m_selectedSquad->setSquadState("wall", squadWall);
+              break;
+            }
+            default:
+            {
+              break;
+            }
+
+          }
+          return;
+        }
+      }
+      if (m_sliderSquadSize->isClicked(_event.x, _event.y) && m_sliderSquadSize->getIsActive() == true)
+      {
+        m_sliderSquadSize->setIsSliding(true);
+        m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+        m_sliderSquadSize->setTextString(m_squadSizeString);
+        return;
+      }
+
       if (m_gameState == gamePlay)
       {
+
+         doSelection(_event.x, _event.y);
+
          if(m_selected == true)
          {
-            doMovement(_event.x, _event.y);
+            m_buttonSquadWall->setIsActive(false);
          }
          else
          {
-            doSelection(_event.x, _event.y);
+            m_buttonSquadWall->setIsActive(true);
          }
       }
-
-       unsigned int numberOfButtons = m_buttons.size();
-       for (unsigned int i = 0; i < numberOfButtons; i++)
-       {
-         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
-         {
-           switch (m_buttons[i]->getName())
-           {
-             case buttonPlay:
-             {
-               startGame(1);
-               m_gameState = gamePause;
-               m_buttonQuit->setIsActive(false);
-               m_buttonPlay->setIsActive(false);
-               m_buttonPause->setIsActive(true);
-               m_buttonMenu->setIsActive(true);
-
-               break;
-             }
-             case buttonQuit :
-             {
-               m_gameState = gameQuit;
-               break;
-             }
-             case buttonPause :
-             {
-               if (m_gameState == gamePlay)
-               {
-                 m_gameState = gamePause;
-                 m_gameTimer.resetTimer();
-                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-                 m_buttonPause->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-33.f, -25.f));
-                 break;
-               }
-               else if (m_gameState == gamePause)
-               {
-                 m_gameState = gamePlay;
-                 m_gameTimer.resetTimer();
-                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-                 m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
-                 break;
-               }
-               break;
-             }
-             case buttonMenu :
-             {
-               m_gameState = gameMenu;
-               //endGame();
-               m_buttonQuit->setIsActive(true);
-               m_buttonPlay->setIsActive(true);
-               m_buttonMenu->setIsActive(false);
-               m_buttonMenu->setIsActive(false);
-               break;
-
-             }
-             case buttonCreateSquad :
-             {
-               createSquad(m_squadSize);
-               break;
-             }
-             default:
-             {
-               break;
-             }
-
-           }
-         }
-       }
-       if (m_sliderSquadSize->isClicked(_event.x, _event.y))
-       {
-         std::cout<<"SLIDER"<<std::endl;
-         m_sliderSquadSize->setIsSliding(true);
-         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
-         m_sliderSquadSize->setTextString(m_squadSizeString);
-       }
     }
 }
 
@@ -554,6 +659,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -561,6 +667,9 @@ void NGLDraw::doSelection(const int _x, const int _y)
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
+
+        //set de-selected squad colour
+        currentSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
 
     }
 
@@ -572,19 +681,30 @@ void NGLDraw::doSelection(const int _x, const int _y)
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 
 
+    bool newSelection = false;
+
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
+            //set selected squad colour
             currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+
             m_selected = true;
             m_selectedSquad = currentSquad;
             m_selectedSquadID = currentSquad->getID();
+            newSelection = true;
             break;
         }
     }
+
+    if(newSelection == false && m_selected == true)
+    {
+        doMovement(_x, _y);
+    }
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -598,12 +718,10 @@ void NGLDraw::doMovement(const int _x, const int _y)
     {
         m_clickPosition = getWorldSpace(_x, _y);
 
-        m_gameworld->createPath(m_selectedSquad, m_clickPosition);
-
-        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+        m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
     }
 
-
+    m_selectedSquad = NULL;
     m_selected = false;
 }
 

@@ -178,9 +178,9 @@ int main()
 
     } // end of event switch
 } // end of poll events
+
     if (ngldraw.getGameState() == gameQuit)
     {
-
       quit = true;
     }
     else if(ngldraw.getGameState() == gamePlay)
@@ -188,7 +188,8 @@ int main()
       timeElapsed=gameTimer.timeElapsed();
       currentTime=gameTimer.getCurrentTime();
 
-      //std::cout<<"------------- TICK -------------"<<std::endl;
+      std::cout<<"------------- TICK -------------"<<std::endl;
+//      std::cout<<"currentTime "<<currentTime<<std::endl;
       ngldraw.update(timeElapsed,currentTime);
     }
 

@@ -23,6 +23,8 @@ enum eGameState
     gameMenu,
     gamePlay,
     gamePause,
+    gameLose,
+    gameWin,
     gameQuit
 
 };
@@ -91,6 +93,7 @@ class NGLDraw
 
     eGameState getGameState()const{return m_gameState;}
     void setGameState(eGameState _gameState){m_gameState = _gameState;}
+
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -168,9 +171,15 @@ class NGLDraw
     UIButton* m_buttonMenu;
     UIButton* m_buttonCreateSquad;
 
+    UIButton* m_buttonSquadPatrol;
+    UIButton* m_buttonSquadAggressive;
+    UIButton* m_buttonSquadDefensive;
+    UIButton* m_buttonSquadWall;
+
     UISlider* m_sliderSquadSize;
 
-    Text* m_text;
+    Text* m_textSmall;
+    Text* m_textMedium;
 
     Timer m_gameTimer;
 

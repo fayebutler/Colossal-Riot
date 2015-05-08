@@ -10,6 +10,10 @@ enum eButtonName
   buttonPause,
   buttonMenu,
   buttonCreateSquad,
+  buttonSquadWall,
+  buttonSquadAggressive,
+  buttonSquadDefensive,
+  buttonSquadPatrol,
 };
 
 class UIButton
