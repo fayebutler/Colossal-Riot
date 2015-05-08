@@ -9,6 +9,14 @@
 #include "CellGraph.h"
 #include "Squad.h"
 
+extern "C" {
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
+
+#include "LuaBridge.h"
+
 typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
 class GameWorld
@@ -33,8 +41,11 @@ private:
     int m_numberOfRioters;
     int m_numberOfSquads;
 
+
     CellGraph* m_cellGraph;
+    const char* m_cellGraphFile;
     ngl::Obj *m_worldMesh;
+    std::string m_worldMeshFile;
 
     bool m_resetID;
 
@@ -47,16 +58,15 @@ private:
     int m_numberOfRiotersDead;
     int m_numberOfRiotersHome;
 
+    lua_State *L;
 
 
 
 public:
 
-    GameWorld(int numberOfRioters, int availablePolice);
+    GameWorld(int _level);
 
     ~GameWorld();
-
-    ngl::Obj* m_mesh;
 
     void loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
@@ -70,7 +80,7 @@ public:
 
     void createSquad(int size);
 
-    int getAvailablePolice() { return m_availablePolice; }
+    int getAvailablePolice() const { return m_availablePolice; }
     void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
 
     void setResetID(bool _resetID){m_resetID = _resetID;}
@@ -85,11 +95,16 @@ public:
     bool hasLost()const{return m_lose;}
 
 
+    void registerLua(lua_State *_L);
 
+    int getInitialNumberOfRioters() const { return m_initialNumberOfRioters; }
+    void setInitialNumberOfRioters(int _number) {m_initialNumberOfRioters = _number; }
 
-    //const std::vector<Vehicle*>& Agents(){return m_vehicles;}
+    const char* getCellGraphFile() const { return m_cellGraphFile; }
+    void setCellGraphFile(const char* _file) { m_cellGraphFile = _file; }
+    std::string getWorldMeshFile() const { return m_worldMeshFile; }
+    void setWorldMeshFile(std::string _file) { m_worldMeshFile = _file; }
 
-    //std::vector<Wall2D> m_Walls;
 };
 
 #endif // GAMEWORLD_H

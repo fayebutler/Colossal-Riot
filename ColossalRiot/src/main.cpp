@@ -35,7 +35,7 @@ int main()
                                       SDL_WINDOWPOS_CENTERED,
                                       SDL_WINDOWPOS_CENTERED,
                                       1280,
-                                      1024,
+                                      720,
                                       SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
                                      );
   // check to see if that worked or exit

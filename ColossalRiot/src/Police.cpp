@@ -7,13 +7,7 @@ Police::Police(GameWorld* world) : Agent(world)
 
     m_entityType = typePolice;
 
-    // Set up LUA state
-    luaL_dofile(L, "lua/Police.lua");
-    luaL_openlibs(L);
-
     registerClass(L);
-    luabridge::push(L, this);
-    lua_setglobal(L, "police");
 
     // Set up state machine
     m_stateMachine = new StateMachine<Police>(this);
@@ -197,6 +191,10 @@ void Police::attack()
 
 void Police::registerClass(lua_State* _L)
 {
+  // Set up LUA state
+  luaL_dofile(L, "lua/Police.lua");
+  luaL_openlibs(L);
+
     registerLua(_L);
     luabridge::getGlobalNamespace(_L)
         .deriveClass<Police, Agent>("Police")
@@ -207,6 +205,9 @@ void Police::registerClass(lua_State* _L)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
 
         .endClass();
+
+    luabridge::push(L, this);
+    lua_setglobal(L, "police");
 }
 
 void Police::squadCohesion(double weight)

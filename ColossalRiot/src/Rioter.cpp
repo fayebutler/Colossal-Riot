@@ -118,8 +118,6 @@ void Rioter::findTargetID(float _health)
 //    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
 
-    std::cout<<police.size()<<std::endl;
-
     float currentHealth = -1;
     Agent* currentTarget = NULL;
     for (int i=0; i<police.size(); i++)

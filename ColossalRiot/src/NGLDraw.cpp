@@ -39,7 +39,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   shader->attachShaderToProgram("Phong","PhongVertex");
   shader->attachShaderToProgram("Phong","PhongFragment");
   // now bind the shader attributes for most NGL primitives we use the following
-  // layout attribute 0 is the vertex data (x,y,z)
+  // layout attribute 0 is the vertex data (x,y,z)1
   shader->bindAttribute("Phong",0,"inVert");
   // attribute 1 is the UV data u,v (if present)
   shader->bindAttribute("Phong",1,"inUV");
@@ -83,65 +83,10 @@ NGLDraw::NGLDraw(int _width, int _height)
 
   m_gameState = gameMenu;
 
-  m_textSmall = new Text("../font/arial.ttf", 20);
-  m_textMedium = new Text("../font/arial.ttf", 40);
-
-
-  m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonPlay->updateText("New Game", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-98.f, -25.f));
-  m_buttons.push_back(m_buttonPlay);
-
-  m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.35f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
-  m_buttons.push_back(m_buttonQuit);
-
-  m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
-  m_buttons.push_back(m_buttonPause);
-
-  m_buttonMenu = new UIButton(buttonMenu, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_buttonMenu->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonMenu->updateText("Menu", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
-  m_buttons.push_back(m_buttonMenu);
-
-  m_buttonCreateSquad = new UIButton(buttonCreateSquad, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonCreateSquad->updateButton(ngl::Vec2(0.f, -0.9f), ngl::Vec2(0.3f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
-  m_buttons.push_back(m_buttonCreateSquad);
-
-  m_buttonSquadPatrol = new UIButton(buttonSquadPatrol, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonSquadPatrol->updateButton(ngl::Vec2(0.7f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonSquadPatrol->updateText("Patr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
-  m_buttons.push_back(m_buttonSquadPatrol);
-
-  m_buttonSquadAggressive = new UIButton(buttonSquadAggressive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonSquadAggressive->updateButton(ngl::Vec2(0.5f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonSquadAggressive->updateText("Aggr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
-  m_buttons.push_back(m_buttonSquadAggressive);
-
-  m_buttonSquadDefensive = new UIButton(buttonSquadDefensive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonSquadDefensive->updateButton(ngl::Vec2(0.6f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonSquadDefensive->updateText("Def", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
-  m_buttons.push_back(m_buttonSquadDefensive);
-
-  m_buttonSquadWall = new UIButton(buttonSquadWall, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonSquadWall->updateButton(ngl::Vec2(0.4f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
-  m_buttons.push_back(m_buttonSquadWall);
-
-  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
-  m_squadSize = m_sliderSquadSize->calculateOutput();
-
-  m_ss.str(std::string());
-  m_ss << m_squadSize;
-  m_squadSizeString = m_ss.str();
-  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
-
   m_entityMgr = new EntityManager();
+
+  initialiseUI();
+  m_selectedLevel = 1;
 
 }
 
@@ -153,6 +98,11 @@ NGLDraw::~NGLDraw()
   delete m_light;
   delete m_cam;
   delete m_buttonPlay;
+  delete m_buttonLevel1;
+  delete m_buttonLevel2;
+  delete m_buttonLevel3;
+  delete m_buttonLevel4;
+  delete m_buttonLevel5;
   delete m_buttonQuit;
   delete m_buttonPause;
   delete m_buttonCreateSquad;
@@ -206,28 +156,7 @@ void NGLDraw::resize(int _w, int _h)
 
 void NGLDraw::startGame(int level)
 {
-  switch(level)
-  {
-    case 0:
-        m_gameworld = new GameWorld(0, 100);
-        break;
-    case 1:
-        m_gameworld = new GameWorld(100, 50);
-        break;
-    case 2:
-        m_gameworld = new GameWorld(200, 40);
-        break;
-    case 3:
-        m_gameworld = new GameWorld(300, 30);
-        break;
-    case 4:
-        m_gameworld = new GameWorld(400, 25);
-        break;
-  default:
-      std::cout<<"undefined level"<<std::endl;
-      break;
-  }
-
+    m_gameworld = new GameWorld(level);
     m_selected = false;
     m_selectedSquad = NULL;
     m_selectedSquadID = -1;
@@ -262,6 +191,7 @@ void NGLDraw::draw()
   {
     case gamePlay:
     {
+
       // grab an instance of the shader manager
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
@@ -286,46 +216,70 @@ void NGLDraw::draw()
       m_buttonCreateSquad->draw();
       if (m_selectedSquad)
       {
-        if (m_selectedSquad->getSquadState() == squadPatrol)
+        switch (m_selectedSquad->getSquadState())
         {
-          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
-          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          case squadPatrol :
+          {
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            break;
+          }
+          case squadAggressive :
+          {
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            break;
+          }
+          case squadDefensive :
+          {
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            break;
+          }
+          case squadWall :
+          {
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            break;
+          }
+          default :
+          {
+            std::cout<<"Error: Invalid squad state"<<std::endl;
+            break;
+          }
         }
-        else if (m_selectedSquad->getSquadState() == squadAggressive)
-        {
-          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
-          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-        }
-        else if (m_selectedSquad->getSquadState() == squadDefensive)
-        {
-          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
-          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-        }
-        else if (m_selectedSquad->getSquadState() == squadWall)
-        {
-          m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-          m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
-        }
+        m_buttonSquadPatrol->setIsActive(true);
         m_buttonSquadPatrol->draw();
+        m_buttonSquadAggressive->setIsActive(true);
         m_buttonSquadAggressive->draw();
+        m_buttonSquadDefensive->setIsActive(true);
         m_buttonSquadDefensive->draw();
+        m_buttonSquadWall->setIsActive(true);
         m_buttonSquadWall->draw();
       }
+      else
+      {
+        m_buttonSquadPatrol->setIsActive(false);
+        m_buttonSquadAggressive->setIsActive(false);
+        m_buttonSquadDefensive->setIsActive(false);
+        m_buttonSquadWall->setIsActive(false);
+      }
+
 
 
       m_sliderSquadSize->draw();
 
       m_ss.str(std::string());
       m_ss << m_gameworld->getAvailablePolice();
-      m_textMedium->renderText(750.f, 950.f, m_ss.str());
+      m_textMedium->renderText(732.f, 1118.f, m_ss.str());
 
       break;
     }
@@ -333,6 +287,61 @@ void NGLDraw::draw()
     {
       glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
       m_buttonPlay->draw();
+      switch (m_selectedLevel)
+      {
+        case 1 :
+        {
+          m_buttonLevel1->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonLevel2->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel3->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel4->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel5->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          break;
+        }
+        case 2 :
+        {
+          m_buttonLevel1->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel2->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonLevel3->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel4->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel5->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          break;
+        }
+        case 3 :
+        {
+          m_buttonLevel1->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel2->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel3->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonLevel4->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel5->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          break;
+        }
+        case 4 :
+        {
+          m_buttonLevel1->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel2->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel3->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel4->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          m_buttonLevel5->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          break;
+        }
+        case 5 :
+        {
+          m_buttonLevel1->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel2->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel3->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel4->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+          m_buttonLevel5->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+          break;
+        }
+      }
+
+
+      m_buttonLevel1->draw();
+      m_buttonLevel2->draw();
+      m_buttonLevel3->draw();
+      m_buttonLevel4->draw();
+      m_buttonLevel5->draw();
       m_buttonQuit->draw();
       break;
     }
@@ -407,10 +416,7 @@ void NGLDraw::update(double timeElapsed, double currentTime)
       m_gameState = gameLose;
       endGame();
   }
-
-
 }
-
 
 void NGLDraw::loadMatricesToShader()
 {
@@ -491,11 +497,13 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
         {
+          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;
           switch (m_buttons[i]->getName())
           {
             case buttonPlay:
             {
-              startGame(3);
+              std::cout<<m_selectedLevel<<std::endl;
+              startGame(m_selectedLevel);
               m_gameState = gamePlay;
               m_buttonQuit->setIsActive(false);
               m_buttonPlay->setIsActive(false);
@@ -503,7 +511,31 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
               m_buttonMenu->setIsActive(true);
               m_sliderSquadSize->setIsActive(true);
               m_buttonCreateSquad->setIsActive(true);
-
+              break;
+            }
+            case buttonLevel1 :
+            {
+              m_selectedLevel = 1;
+              break;
+            }
+            case buttonLevel2 :
+            {
+              m_selectedLevel = 2;
+              break;
+            }
+            case buttonLevel3 :
+            {
+              m_selectedLevel = 3;
+              break;
+            }
+            case buttonLevel4 :
+            {
+              m_selectedLevel = 4;
+              break;
+            }
+            case buttonLevel5 :
+            {
+              m_selectedLevel = 5;
               break;
             }
             case buttonQuit :
@@ -774,6 +806,89 @@ void NGLDraw::createSquad(int size)
     m_gameworld->createSquad(size);
 }
 
+void NGLDraw::initialiseUI()
+{
+  m_textSmall = new Text("../font/arial.ttf", 20);
+  m_textMedium = new Text("../font/arial.ttf", 40);
+
+  m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.1f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonPlay->updateText("New Game", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-98.f, -25.f));
+  m_buttons.push_back(m_buttonPlay);
+
+  m_buttonLevel1 = new UIButton(buttonLevel1, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel1->updateButton(ngl::Vec2(-0.2f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.4f, 1.f));
+  m_buttonLevel1->updateText("1", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonLevel1);
+
+  m_buttonLevel2 = new UIButton(buttonLevel2, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel2->updateButton(ngl::Vec2(-0.1f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonLevel2->updateText("2", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonLevel2);
+
+  m_buttonLevel3 = new UIButton(buttonLevel3, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel3->updateButton(ngl::Vec2(0.f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonLevel3->updateText("3", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonLevel3);
+
+  m_buttonLevel4 = new UIButton(buttonLevel4, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel4->updateButton(ngl::Vec2(0.1f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonLevel4->updateText("4", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonLevel4);
+
+  m_buttonLevel5 = new UIButton(buttonLevel5, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel5->updateButton(ngl::Vec2(0.2f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonLevel5->updateText("5", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonLevel5);
+
+  m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttons.push_back(m_buttonQuit);
+
+  m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+  m_buttons.push_back(m_buttonPause);
+
+  m_buttonMenu = new UIButton(buttonMenu, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonMenu->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonMenu->updateText("Menu", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+  m_buttons.push_back(m_buttonMenu);
+
+  m_buttonCreateSquad = new UIButton(buttonCreateSquad, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonCreateSquad->updateButton(ngl::Vec2(0.f, -0.9f), ngl::Vec2(0.3f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
+  m_buttons.push_back(m_buttonCreateSquad);
+
+  m_buttonSquadPatrol = new UIButton(buttonSquadPatrol, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadPatrol->updateButton(ngl::Vec2(0.7f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadPatrol->updateText("Patr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadPatrol);
+
+  m_buttonSquadAggressive = new UIButton(buttonSquadAggressive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadAggressive->updateButton(ngl::Vec2(0.5f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadAggressive->updateText("Aggr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadAggressive);
+
+  m_buttonSquadDefensive = new UIButton(buttonSquadDefensive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadDefensive->updateButton(ngl::Vec2(0.6f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadDefensive->updateText("Def", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadDefensive);
+
+  m_buttonSquadWall = new UIButton(buttonSquadWall, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadWall->updateButton(ngl::Vec2(0.4f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
+  m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
+  m_buttons.push_back(m_buttonSquadWall);
+
+  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_squadSize = m_sliderSquadSize->calculateOutput();
+  m_ss.str(std::string());
+  m_ss << m_squadSize;
+  m_squadSizeString = m_ss.str();
+  m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
+}
 
 
 
