@@ -112,9 +112,26 @@ void Squad::update(double timeElapsed, double currentTime)
         }
     }
 
-    if(m_allArrived == false && m_squadState != squadWall)
+    if(m_squadState == squadMove )
     {
-     m_pos = averagePolicePos();
+//        Vehicle::update(timeElapsed);
+//        this->findPath(m_target);
+//        if((m_pos - m_target).lengthSquared() <= 2)
+//        {
+//            m_pos = m_target;
+//        }
+//        else
+//        {
+//            Vehicle::update(timeElapsed);
+//        }
+//        else
+//        {
+//           m_pos = averagePolicePos();
+//        }
+        m_pos = averagePolicePos();
+//        this->setCrosshair(averagePolicePos());
+//        this->Steering()->ArriveOn();
+
     }
 
     for(unsigned int i=0; i<m_squadSize; ++i)
@@ -127,10 +144,8 @@ void Squad::update(double timeElapsed, double currentTime)
      }
 
     m_allArrived = true;
-    if(m_allArrived == true)
-    {
-        m_squadState = m_previousState;
-    }
+    m_squadState = m_previousState;
+
 
 }
 
@@ -235,6 +250,7 @@ void Squad::setTarget(ngl::Vec3 _target)
 {
     m_previousState = m_squadState;
     std::cout<<" SET THE TARGET "<<std::endl;
+    m_target = _target;
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -244,6 +260,7 @@ void Squad::setTarget(ngl::Vec3 _target)
         currentPolice->setIsMoving(true);
         m_policeArrived[i] = false;
     }
+//    this->findPath(_target);
     m_allArrived = false;
     m_inBlockade = false;
     m_squadState = squadMove;
