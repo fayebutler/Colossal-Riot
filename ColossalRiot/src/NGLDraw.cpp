@@ -592,16 +592,16 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 
       if (m_gameState == gamePlay)
       {
+
+         doSelection(_event.x, _event.y);
+
          if(m_selected == true)
          {
-            doMovement(_event.x, _event.y);
-            m_selectedSquad = NULL;
             m_buttonSquadWall->setIsActive(false);
          }
          else
          {
             m_buttonSquadWall->setIsActive(true);
-            doSelection(_event.x, _event.y);
          }
       }
     }
@@ -658,6 +658,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -665,6 +666,9 @@ void NGLDraw::doSelection(const int _x, const int _y)
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
+
+        //set de-selected squad colour
+        currentSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
 
     }
 
@@ -676,19 +680,30 @@ void NGLDraw::doSelection(const int _x, const int _y)
     glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 
 
+    bool newSelection = false;
+
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
+            //set selected squad colour
             currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+
             m_selected = true;
             m_selectedSquad = currentSquad;
             m_selectedSquadID = currentSquad->getID();
+            newSelection = true;
             break;
         }
     }
+
+    if(newSelection == false && m_selected == true)
+    {
+        doMovement(_x, _y);
+    }
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -703,11 +718,9 @@ void NGLDraw::doMovement(const int _x, const int _y)
         m_clickPosition = getWorldSpace(_x, _y);
 
         m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
-
-        m_selectedSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
     }
 
-
+    m_selectedSquad = NULL;
     m_selected = false;
 }
 

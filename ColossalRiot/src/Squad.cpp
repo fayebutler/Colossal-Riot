@@ -134,6 +134,39 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,120);
     ngl::VAOPrimitives::instance()->draw("squad");
 
+    if(m_squadState == squadMove)
+    {
+        ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+          (*shader)["Phong"]->use();
+
+        ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+        m.setSpecularExponent(5.f);
+        m.setDiffuse(ngl::Colour(m_squadColour));
+        m.loadToShader("material");
+
+        ngl::Mat4 MV;
+        ngl::Mat4 MVP;
+        ngl::Mat3 normalMatrix;
+        ngl::Mat4 M;
+        ngl::Transformation trans;
+        trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
+        trans.setRotation(90.0,0.0,0.0);
+
+
+        M=trans.getMatrix()*mouseGlobalTX;
+        MV=  M*cam->getViewMatrix();
+        MVP= M*cam->getVPMatrix();
+        normalMatrix=MV;
+        normalMatrix.inverse();
+
+        shader->setShaderParamFromMat4("MVP",MVP);
+        shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+
+
+        ngl::VAOPrimitives::instance()->createDisk("target",2.0,120);
+        ngl::VAOPrimitives::instance()->draw("target");
+    }
+
 }
 
 void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
@@ -151,7 +184,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
+    trans.setPosition(m_pos.m_x, 0.2, m_pos.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
 

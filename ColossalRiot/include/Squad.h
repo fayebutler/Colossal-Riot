@@ -8,7 +8,8 @@ enum eSquadState
   squadPatrol,
   squadAggressive,
   squadDefensive,
-  squadWall
+  squadWall,
+  squadMove
 };
 
 class Squad : public Vehicle
