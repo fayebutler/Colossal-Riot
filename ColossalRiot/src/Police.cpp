@@ -31,7 +31,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 
     m_rioterInfluence = 0.0;
 
-   Vehicle::setMaxSpeed(9);
+   Vehicle::setMaxSpeed(3);
 
 
 

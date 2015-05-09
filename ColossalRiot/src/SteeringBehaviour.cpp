@@ -242,9 +242,11 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
+    std::cout<<" force before seek "<<m_steeringForce.length()<<std::endl;
     if(on(seek))
     {
         force = Seek(m_vehicle->getCrosshair()) * m_weightSeek;
+        std::cout<<" seek force "<<force.length()<<std::endl;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -255,6 +257,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
+    std::cout<<"force after seek "<<m_steeringForce.length()<<std::endl;
     if(on(flee))
     {
         force = Flee(m_vehicle->getCrosshair()) * m_weightFlee;
@@ -367,9 +370,10 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
     }
     else
     {
-        desiredVelocity.normalize();
+        //desiredVelocity.normalize();
 //        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
         return (desiredVelocity - m_vehicle->getVelocity());
+        //return desiredVelocity;
     }
 
 }
@@ -386,7 +390,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
     }
     else
     {
-        desiredVelocity.normalize();
+        //desiredVelocity.normalize();
 //        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
         return(desiredVelocity - m_vehicle->getVelocity());
     }
@@ -473,14 +477,14 @@ ngl::Vec3 SteeringBehaviour::Wander()
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
 
-  if(worldTarget.lengthSquared() == 0.0f)
-  {
-      std::cout<<"World Target in wander equals zero, can't normalise"<<std::endl;
-  }
-  else
-  {
-    worldTarget.normalize();
-  }
+//  if(worldTarget.lengthSquared() == 0.0f)
+//  {
+//      std::cout<<"World Target in wander equals zero, can't normalise"<<std::endl;
+//  }
+//  else
+//  {
+//    //worldTarget.normalize();
+//  }
 
 //  worldTarget = worldTarget * m_vehicle->getMaxSpeed();
 
