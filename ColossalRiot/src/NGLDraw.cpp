@@ -472,8 +472,8 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_origYPos=_event.y;
 
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-    float cameraLimitX = (50.0);
-    float cameraLimitZ = (50.0);
+    float cameraLimitX = (m_gameworld->getCellGraph()->getMapBounds()[1]);
+    float cameraLimitZ = (m_gameworld->getCellGraph()->getMapBounds()[3]);
     if(m_cam->getEye().m_x> cameraLimitX)
     {
         m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));

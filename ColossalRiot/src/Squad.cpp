@@ -132,10 +132,12 @@ void Squad::update(double timeElapsed, double currentTime)
         }
         else
         {
+
             if (m_generatedBlockade == false)
             {
                 currentPolice->setCrosshair(m_pos);
             }
+
         }
 
         // WALL
@@ -150,7 +152,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         currentPolice->update(timeElapsed, currentTime);
     }
-
 }
 
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
