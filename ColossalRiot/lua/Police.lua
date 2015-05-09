@@ -173,7 +173,7 @@ defensive["execute"] = function()
     end
   else
     police:wander(0.5)
-    police:squadCohesion(0.6)
+    police:squadCohesion(0.2)
   end
 
   if police.m_morale < 20 then

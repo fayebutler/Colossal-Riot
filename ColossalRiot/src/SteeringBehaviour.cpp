@@ -551,49 +551,48 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     }
   }
 
-//  int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
 
-//  for (unsigned int i = 0; i < numberOfPolice; ++i)
-//  {
-//    Police* currentPolice = dynamic_cast<Police*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]));
-//    if (currentPolice)
-//    {
-//      if (currentPolice->getID() != m_vehicle->getID())
-//      {
-//        ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
+  int numberOfObstacles = m_vehicle->getNeighbourObstacleIDs().size();
 
-//        if (vectorToObstacle.length() < detectionLength)
-//        {
+  for (unsigned int i = 0; i < numberOfObstacles; ++i)
+  {
+    StaticEntity* currentObstacle = dynamic_cast<StaticEntity*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourObstacleIDs()[i]));
+    if (currentObstacle)
+    {
+        ngl::Vec3 vectorToObstacle = currentObstacle->getPos() - m_vehicle->getPos();
 
-//          ngl::Vec3 localPos = worldToLocalSpace(currentPolice->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+        if (vectorToObstacle.length() < detectionLength)
+        {
+
+          ngl::Vec3 localPos = worldToLocalSpace(currentObstacle->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
 
-//          // if obstacle is behind vehicle in local space, discard
-//          if (localPos.m_x >= 0.f)
-//          {
-//            double addedRadius = currentPolice->getBoundingRadius() + m_vehicle->getBoundingRadius();
-//            if (fabs(localPos.m_z) < addedRadius)
-//            {
-//              // intersection of radius and line z = 0
-//              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
-//              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
-//              double intersectX = localPos.m_x - sqrtPart;
-//              if (intersectX <= 0)
-//              {
-//                intersectX = localPos.m_x + sqrtPart;
-//              }
-//              if (intersectX < distanceToCIO)
-//              {
-//                distanceToCIO = intersectX;
-//                closestIntersectingObstacle = currentPolice;
-//                localPosOfCIO = localPos;
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
+          // if obstacle is behind vehicle in local space, discard
+          if (localPos.m_x >= 0.f)
+          {
+            double addedRadius = currentObstacle->getBoundingRadius() + m_vehicle->getBoundingRadius();
+            if (fabs(localPos.m_z) < addedRadius)
+            {
+              // intersection of radius and line z = 0
+              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+              double intersectX = localPos.m_x - sqrtPart;
+              if (intersectX <= 0)
+              {
+                intersectX = localPos.m_x + sqrtPart;
+              }
+              if (intersectX < distanceToCIO)
+              {
+                distanceToCIO = intersectX;
+                closestIntersectingObstacle = currentObstacle;
+                localPosOfCIO = localPos;
+              }
+            }
+        }
+      }
+    }
+  }
+
 
 
 
@@ -824,6 +823,24 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
             if (curEntity == entity) continue;
 
 
+            ngl::Vec3 vecToEntity = m_vehicle->getPos() - curEntity->getPos();
+            double distFromEachOther = vecToEntity.length();
+
+            double amountOfOverLap = (m_vehicle->getBoundingRadius() + curEntity->getBoundingRadius()) - distFromEachOther;
+
+            if (amountOfOverLap >= 0)
+            {
+            m_vehicle->setPos(m_vehicle->getPos() + (vecToEntity/distFromEachOther) * amountOfOverLap);
+            }
+         }
+    }
+
+    for (unsigned int i = 0; i < m_vehicle->getNeighbourObstacleIDs().size(); i++)
+
+    {
+        StaticEntity* curEntity = dynamic_cast<StaticEntity*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourObstacleIDs()[i]));
+        if (curEntity)
+        {
             ngl::Vec3 vecToEntity = m_vehicle->getPos() - curEntity->getPos();
             double distFromEachOther = vecToEntity.length();
 

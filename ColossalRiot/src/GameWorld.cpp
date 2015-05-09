@@ -70,9 +70,17 @@ GameWorld::GameWorld(int _level)
 
    m_policeMesh = new ngl::Obj("policeMan.obj");
    m_rioterMesh = new ngl::Obj("rioterMan.obj");
+   m_treeMesh = new ngl::Obj("tree.obj");
+   m_streetLightMesh = new ngl::Obj("streetLight.obj");
+
+   std::vector<ngl::Vec3> wallCentres = m_cellGraph->getWallCentres();
+   std::vector<ngl::Vec3> wallNormals = m_cellGraph->getWallNormals();
+   std::vector<int> wallRotations = m_cellGraph->getWallRotations();
 
    m_policeMesh->createVAO();
    m_rioterMesh->createVAO();
+   m_treeMesh->createVAO();
+   m_streetLightMesh->createVAO();
 
   for (int i = 0; i < m_initialNumberOfRioters ; ++i)
   {
@@ -86,15 +94,61 @@ GameWorld::GameWorld(int _level)
     {
       newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
-      while (newRioter->getCurrentCellID() < 0)
-      {
-        newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
-        m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
-      }
     }
     m_rioters.push_back(newRioter);
   }
   m_numberOfRioters = m_rioters.size();
+
+  for (int i = 0; i < m_numberOfTrees ; ++i)
+  {
+    StaticEntity* newTree = new StaticEntity(this, ngl::Vec3(0,0,0),ngl::Vec3(0.0f,360*((float)rand()/RAND_MAX),0.0f),1.0,obstacleTree,m_treeMesh);
+    newTree->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+    m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newTree->getID()));
+    while (newTree->getCurrentCellID() < 0)
+    {
+      newTree->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+      m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newTree->getID()));
+    }
+    m_obstacles.push_back(newTree);
+  }
+
+  int numberOfWalls = wallCentres.size();
+
+  //pick random streetlight positions
+  int sample[m_numberOfStreetLights];
+  std::vector<int> choices;
+  int choice;
+
+  for (int i=0; i<numberOfWalls; i++)
+    {
+      choices.push_back(i);
+    }
+
+  srand (time(NULL));
+
+  assert (m_numberOfStreetLights<=numberOfWalls && "too many streetlights for the map size!");
+
+  for(int i=0;i<m_numberOfStreetLights;i++)
+  {
+    do
+    {
+      choice = rand() % numberOfWalls;
+    }
+    while((choices[choice]==-1));
+
+    choices[choice]=-1; // prevents duplicate choices
+    sample[i] = choice;
+
+  }
+
+  for (int i = 0; i < m_numberOfStreetLights ; i++)
+  {
+    StaticEntity* newStreetLight = new StaticEntity(this, wallCentres[sample[i]]+(0.3*wallNormals[sample[i]]), ngl::Vec3(0.0f,wallRotations[sample[i]],0.0f), 0.2, obstacleStreetLight, m_streetLightMesh);
+    m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newStreetLight->getID()));
+    m_obstacles.push_back(newStreetLight);
+  }
+
+  m_numberOfObstacles = m_obstacles.size();
 }
 
 void GameWorld::setPoliceStation(float _x, float _y, float _z)
@@ -108,6 +162,7 @@ GameWorld::~GameWorld()
    lua_close(L);
    m_rioters.clear();
    m_squads.clear();
+   m_obstacles.clear();
    delete m_streetMesh;
    delete m_buildingMesh;
    delete m_entityMgr;
@@ -273,8 +328,13 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
   b.setSpecularExponent(20.f);
   b.loadToShader("material");
   loadMatricesToShader(cam, mouseGlobalTX);
-
   m_buildingMesh->draw();
+
+  for(unsigned int a=0; a<m_numberOfObstacles; ++a)
+  {
+      StaticEntity* currentObstacle = m_obstacles[a];
+      currentObstacle->draw(cam, mouseGlobalTX);
+  }
 
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
@@ -329,6 +389,8 @@ void GameWorld::registerLua(lua_State* _L)
         .beginClass<GameWorld>("GameWorld")
             .addProperty("m_initialNumberOfRioters", &GameWorld::getInitialNumberOfRioters, &GameWorld::setInitialNumberOfRioters)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
+            .addProperty("m_numberOfTrees", &GameWorld::getNumberOfTrees, &GameWorld::setNumberOfTrees)
+            .addProperty("m_numberOfStreetLights", &GameWorld::getNumberOfStreetLights, &GameWorld::setNumberOfStreetLights)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_numberOfRiotersDeadToLose", &GameWorld::getNumberOfRiotersDeadToLose, &GameWorld::setNumberOfRiotersDeadToLose)
             .addProperty("m_numberOfRiotersHomeToWin", &GameWorld::getNumberOfRiotersHomeToWin, &GameWorld::setNumberOfRiotersHomeToWin)

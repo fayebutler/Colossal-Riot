@@ -2,7 +2,6 @@
 #define ENTITYMANAGER_H
 
 #include <map>
-#include <cassert>
 #include "BaseGameEntity.h"
 #include <iostream>
 
