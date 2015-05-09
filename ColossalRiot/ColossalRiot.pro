@@ -41,7 +41,8 @@ OTHER_FILES+= shaders/*.glsl \
               lua/Police.lua \
               lua/Rioter.lua \
               shaders/TextureFrag.glsl \
-              shaders/TextureVert.glsl
+              shaders/TextureVert.glsl \
+    lua/GameWorld.lua
 
 # were are going to default to a console app
 CONFIG += console

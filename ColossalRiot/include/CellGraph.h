@@ -30,6 +30,7 @@ public:
     void printCellGraph();
     //call once at the start to put each agent into a cell
     bool entityIsInCell(int _cellID, BaseGameEntity *_entity);
+    bool posIsInCell(ngl::Vec3 _pos);
 
     void initializeCells(BaseGameEntity *_entity);
 

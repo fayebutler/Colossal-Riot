@@ -19,7 +19,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     // Set initial variables
     m_mesh = _mesh;
 
-    m_hopHeight = 0.0;
+    m_hopHeight = 0.5;
     m_hopSpeed = 0.0;
     luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
     makeRioter();
@@ -27,7 +27,8 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-    Vehicle::Steering()->setObstacleAvoidWeight(0.4);
+    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+
 
      m_policeInfluence = 0.0;
 
@@ -68,10 +69,8 @@ void Rioter::update(double timeElapsed, double currentTime)
         }
     }
 
-//    m_hopSpeed += (m_rage/50.0) - (m_health/50.0);
+    m_hopSpeed = m_rage/5.0;
     m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
-//    m_pos.m_y =0;
-//    std::cout<< " position y "<< m_pos.m_y<<std::endl;
 
 }
 
@@ -126,9 +125,6 @@ void Rioter::findTargetID(float _health)
 {
 //    std::cout<<"Trying to find target"<<std::endl;
     std::vector<int> police = getNeighbourPoliceIDs();
-
-//    std::cout<<police.size()<<std::endl;
-
     float currentHealth = -1;
     Agent* currentTarget = NULL;
     for (int i=0; i<police.size(); i++)

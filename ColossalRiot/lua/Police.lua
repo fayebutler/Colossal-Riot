@@ -76,10 +76,10 @@ move["enter"] = function()
    police:arrive(0.0)
 
    police:cohesion(0.0)
-   police:separation(0.4)
+   police:separation(0.0)
    police:alignment(0.0)
 
-   police:squadCohesion(0.2)
+   police:squadCohesion(0.0)
 
 end
 

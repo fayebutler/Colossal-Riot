@@ -6,6 +6,11 @@
 enum eButtonName
 {
   buttonPlay,
+  buttonLevel1,
+  buttonLevel2,
+  buttonLevel3,
+  buttonLevel4,
+  buttonLevel5,
   buttonQuit,
   buttonPause,
   buttonMenu,

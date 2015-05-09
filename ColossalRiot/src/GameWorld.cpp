@@ -3,36 +3,77 @@
 #include <iostream>
 
 
-GameWorld::GameWorld(int numberOfRioters, int availablePolice)
+GameWorld::GameWorld(int _level)
 {
+   L = luaL_newstate();
+   registerLua(L);
+
+   m_entityMgr = new EntityManager();
+
    m_win = 0;
    m_lose = 0;
 
    m_numberOfRiotersDead = 0;
+
    m_numberOfRiotersHome = 0;
 
-   m_initialNumberOfRioters = numberOfRioters;
-
-   m_availablePolice = availablePolice;
    m_activePolice = 0;
 
    m_resetID = 1;
 
-   m_worldMesh = new ngl::Obj("drawMesh.obj"); //Obj to draw, must be triangulated
+   switch (_level)
+   {
+     case 1 :
+     {
+       luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level1");
+       startLevel();
+
+       break;
+     }
+     case 2 :
+     {
+       luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level2");
+       startLevel();
+       break;
+     }
+     case 3 :
+     {
+       luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level3");
+       startLevel();
+       break;
+     }
+     case 4 :
+     {
+       luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level4");
+       startLevel();
+       break;
+     }
+     case 5 :
+     {
+       luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level5");
+       startLevel();
+       break;
+     }
+     default :
+     {
+       std::cout<<"Error: Invalid level"<<std::endl;
+       break;
+     }
+   }
+
+   m_worldMesh = new ngl::Obj(m_worldMeshFile); //Obj to draw, must be triangulated
+   m_worldMesh->createVAO();
+
+   m_cellGraph = new CellGraph(m_cellGraphFile, 1); //Obj for cell graph, must be quads
+   m_cellGraph->generateWalls();
+
    m_policeMesh = new ngl::Obj("policeMan.obj");
    m_rioterMesh = new ngl::Obj("rioterMan.obj");
 
-   m_worldMesh->createVAO();
    m_policeMesh->createVAO();
    m_rioterMesh->createVAO();
 
-   m_entityMgr = new EntityManager();
-
-   m_cellGraph = new CellGraph("navMesh.obj", 1); //Obj for cell graph, must be quads
-   m_cellGraph->generateWalls();
-
-
-  for (int i = 0; i < numberOfRioters ; ++i)
+  for (int i = 0; i < m_initialNumberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this, m_rioterMesh);
     newRioter->setBoudingRadius(0.5f);
@@ -44,21 +85,20 @@ GameWorld::GameWorld(int numberOfRioters, int availablePolice)
     {
       newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
-
+      while (newRioter->getCurrentCellID() < 0)
+      {
+        newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+        m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+      }
     }
     m_rioters.push_back(newRioter);
   }
-
-
-
-
-    m_numberOfRioters = m_rioters.size();
-
-
+  m_numberOfRioters = m_rioters.size();
 }
 
 GameWorld::~GameWorld()
 {
+   lua_close(L);
    m_rioters.clear();
    m_squads.clear();
    delete m_worldMesh;
@@ -69,6 +109,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 {
     //check for deaths
     m_numberOfSquads = m_squads.size();
+
 
     for(int i=0; i<m_numberOfSquads; i++)
     {
@@ -107,7 +148,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 //            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
-
     }
 
 
@@ -239,6 +279,8 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
   }
+
+
 }
 
 void GameWorld::createSquad(int size)
@@ -261,6 +303,28 @@ void GameWorld::squadTarget(Squad* selectedSquad, ngl::Vec3 target)
 {
 
 //    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
-    selectedSquad->setTarget(target);
+
+    if(m_cellGraph->posIsInCell(target))
+    {
+        selectedSquad->setTarget(target);
+    }
 //      selectedSquad->findPath(target);
+}
+
+void GameWorld::registerLua(lua_State* _L)
+{
+  // Set up LUA state
+  luaL_dofile(_L, "lua/GameWorld.lua");
+  luaL_openlibs(_L);
+
+    luabridge::getGlobalNamespace(_L)
+        .beginClass<GameWorld>("GameWorld")
+            .addProperty("m_initialNumberOfRioters", &GameWorld::getInitialNumberOfRioters, &GameWorld::setInitialNumberOfRioters)
+            .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
+            .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
+            .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+        .endClass();
+
+    luabridge::push(L, this);
+    lua_setglobal(L, "gameWorld");
 }

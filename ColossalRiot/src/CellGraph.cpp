@@ -460,6 +460,26 @@ void CellGraph::generateWalls()
 }
 
 
+bool CellGraph::posIsInCell(ngl::Vec3 _pos)
+{
+    for (int i=0; i<m_numberOfCells; i++)
+    {
+        float upper = m_cells[i].getBoundaries().m_x;
+        float lower = m_cells[i].getBoundaries().m_y;
+        float left  = m_cells[i].getBoundaries().m_z;
+        float right = m_cells[i].getBoundaries().m_w;
+
+        if(_pos.m_z >= upper && _pos.m_z <= lower &&
+           _pos.m_x >= left && _pos.m_x <= right)
+        {
+             return true;
+        }
+    }
+   return false;
+}
+
+
+
 std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
     std::vector<ngl::Vec3> finalPath;
@@ -500,6 +520,7 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
    std::vector<int> frontierMemory; // list of all cell IDs that have ever been held in frontierCells.
 
    std::vector<int> priorityQueue;
+   int priorityCell;
 
    std::vector<std::vector<int> > SPTs; // vector of search paths (of cell IDs), new ones are added when cells cannot be added sequentially.
                                         // This happens when a new frontier is tested that is not perpendicular to the previous SPT element.
@@ -562,35 +583,53 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 
 //////2-Update priorityQueue:
     //Order frontier cells:
-    std::vector<int>frontierCopy = frontierCells;
     int frontierSize = frontierCells.size();
 
-    while (priorityQueue.size() < frontierSize)
+    float shortestDist = 10000000000.0f;
+    int shortestID;
+
+    // Find the frontier cell that is closest to the destination
+    for (int i=0; i<frontierSize;i++ )
     {
-        float shortestDist = 10000000000.0f;
-        int shortestID;
+        ngl::Vec3 distance = (m_cells[frontierCells[i]].getCentre() - endCell->getCentre());
 
-        for (int i=0; i<frontierCopy.size();i++ )
+        if(distance.lengthSquared() <shortestDist)
         {
-            ngl::Vec3 distance = (m_cells[frontierCopy[i]].getCentre() - endCell->getCentre());
-
-            if(distance.lengthSquared() <shortestDist)
-            {
-                shortestDist = distance.lengthSquared();
-                shortestID = frontierCopy[i];
-            }
+            shortestDist = distance.lengthSquared();
+            shortestID = frontierCells[i];
         }
-
-        for (std::vector<int>::iterator iter = frontierCopy.begin(); iter != frontierCopy.end(); ++iter)
-        {
-            if( *iter == shortestID)
-            {
-                frontierCopy.erase(iter);
-                break;
-            }
-        }
-        priorityQueue.push_back(shortestID);
     }
+    priorityCell=shortestID;
+
+//    while (priorityQueue.size() < frontierSize)
+//    {
+//        float shortestDist = 10000000000.0f;
+//        int shortestID;
+
+//        for (int i=0; i<frontierCopy.size();i++ )
+//        {
+//            ngl::Vec3 distance = (m_cells[frontierCopy[i]].getCentre() - endCell->getCentre());
+
+//            if(distance.lengthSquared() <shortestDist)
+//            {
+//                shortestDist = distance.lengthSquared();
+//                shortestID = frontierCopy[i];
+//            }
+//        }
+
+//        for (std::vector<int>::iterator iter = frontierCopy.begin(); iter != frontierCopy.end(); ++iter)
+//        {
+//            if( *iter == shortestID)
+//            {
+//                frontierCopy.erase(iter);
+//                break;
+//            }
+//        }
+//        priorityCell=shortestID;
+//        break;
+//        priorityQueue.push_back(shortestID);
+//    }
+
 
 //    std::cout<<"Frontier Cells"<< std::endl;
     for (int i = 0;i<frontierCells.size();i++)
@@ -690,7 +729,7 @@ if (currentCellID != startCellID)
     ///5- If currentCell == _to (destination). while loop
 
 
-    currentCellID = priorityQueue[0];
+    currentCellID = priorityCell;
     currentCell = &m_cells[currentCellID];
 
     }
