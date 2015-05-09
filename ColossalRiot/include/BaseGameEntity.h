@@ -16,6 +16,7 @@ class GameWorld;
 enum entityType
 {
   typeMovingEntity,
+  typeStaticEntity,
   typePolice,
   typeRioter,
   typeWall,
@@ -51,6 +52,7 @@ protected:
 
   std::vector<int> m_neighbourPoliceIDs;
   std::vector<int> m_neighbourRioterIDs;
+  std::vector<int> m_neighbourObstacleIDs;
 
 
 public:
@@ -76,6 +78,7 @@ public:
 
     void addPoliceID(int _ID);
     void addRioterID(int _ID);
+    void addObstacleID(int _ID);
     void clearAgentIDs();
 
 
@@ -89,6 +92,7 @@ public:
 
     std::vector<int> getNeighbourPoliceIDs() { return m_neighbourPoliceIDs; }
     std::vector<int> getNeighbourRioterIDs() { return m_neighbourRioterIDs; }
+    std::vector<int> getNeighbourObstacleIDs() { return m_neighbourObstacleIDs; }
 
     virtual bool handleMessage(const Message& _message) = 0;
 

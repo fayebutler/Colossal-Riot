@@ -183,6 +183,7 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
     }
 }
 
+
 CellGraph::CellGraph()
 {
   //m_entityMgr = new EntityManager();
@@ -322,9 +323,13 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
           _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
       }
       //std::cout<<"called by addEntities 3"<<std::endl;
-      if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
+      else if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
       {
           _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
+      }
+      else if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeStaticEntity)
+      {
+          _entity->addObstacleID(_entity->getDetectedEntityIDs()[i]);
       }
   }
 }
@@ -387,6 +392,11 @@ void CellGraph::generateWalls()
             newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
             m_cells[i].addWallInCell(newWall);
 
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(0.0f,0.0f,1.0f));
+            m_wallRotations.push_back(-90);
+
         }
         if(lowerWall == true)
         {
@@ -397,6 +407,11 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
             m_cells[i].addWallInCell(newWall);
+
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(0.0f,0.0f,-1.0f));
+            m_wallRotations.push_back(90);
 
         }
         if(leftWall == true)
@@ -409,6 +424,11 @@ void CellGraph::generateWalls()
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
             m_cells[i].addWallInCell(newWall);
 
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(1.0f,0.0f,0.0f));
+            m_wallRotations.push_back(0);
+
         }
         if(rightWall == true)
         {
@@ -419,6 +439,11 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
             m_cells[i].addWallInCell(newWall);
+
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(-1.0f,0.0f,0.0f));
+            m_wallRotations.push_back(180);
         }
 
 
