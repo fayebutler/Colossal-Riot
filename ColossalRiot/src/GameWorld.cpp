@@ -72,7 +72,7 @@ GameWorld::GameWorld(int _level)
    m_policeMesh->createVAO();
    m_rioterMesh->createVAO();
 
-  for (int i = 0; i < 0 ; ++i)
+  for (int i = 0; i < m_initialNumberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this, m_rioterMesh);
     newRioter->setBoudingRadius(0.5f);

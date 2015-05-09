@@ -26,12 +26,12 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
 
     Vehicle::setMaxSpeed(2);
-    Vehicle::setMaxForce(2);
+//    Vehicle::setMaxForce(4);
 
 }
 
@@ -61,6 +61,7 @@ void Police::update(double timeElapsed, double currentTime)
   int nearbyRioters = m_neighbourRioterIDs.size();
   m_rioterInfluence = 0.0;
 
+  std::cout<<" MAX SPEED "<<getMaxSpeed()<<std::endl;
   for (int i=0; i<nearbyRioters; i++)
   {
       Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
@@ -184,6 +185,7 @@ void Police::checkValidPursuitRange(float _dist)
             m_targetID = -1;
         }
 
+
 }
 
 bool Police::handleMessage(const Message& _message)
@@ -203,6 +205,7 @@ void Police::squadCohesion(double weight)
 {
     if(weight <= 0.0)
     {
+      std::cout<<" squad cohesion off "<<std::endl;
       Vehicle::Steering()->SquadCohesionOff();
     }
     else
@@ -211,12 +214,14 @@ void Police::squadCohesion(double weight)
         double distance = fabs(toSquad.length());
 
         weight = (weight*distance*1.5f)/m_squadRadius;
+        std::cout<<" squad cohesion weight "<<weight<<std::endl;
 
         Vehicle::setSquadCrosshair(m_squadPos);
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
     }
+    std::cout<<" police squad cohesion called "<<std::endl;
 }
 
 void Police::registerClass(lua_State* _L)
@@ -234,6 +239,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
                 .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
+//                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)
 
         .endClass();
 
