@@ -27,12 +27,13 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
 
-    Vehicle::setMaxSpeed(2.5);
-    Vehicle::setMaxForce(2);
+    Vehicle::setMaxSpeed(2);
+
+
 
 }
 
@@ -185,6 +186,7 @@ void Police::checkValidPursuitRange(float _dist)
             m_targetID = -1;
         }
 
+
 }
 
 void Police::findPathHome()
@@ -243,6 +245,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("findPathHome", &Police::findPathHome)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
                 .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
+//                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)
 
         .endClass();
 

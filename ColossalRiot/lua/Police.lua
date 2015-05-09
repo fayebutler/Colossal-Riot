@@ -40,9 +40,9 @@ end
 global["execute"] = function()
 
   if stateMachine.m_currentState ~= "dead" then
-    if police.m_health <= 0 then
-        stateMachine:changeState("dead")
-    end
+--    if police.m_health <= 0 then
+--        stateMachine:changeState("dead")
+--    end
   end
 
   if stateMachine.m_currentState ~= "home" then
@@ -84,7 +84,7 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
-  print("LUA POLICE move execute")
+--  print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
   end
@@ -100,17 +100,17 @@ end
 patrol = {}
 patrol["enter"] = function()
 
-   police:wander(0.1)
+   police:wander(0.5)
    police:pursuit(0.0)
    police:evade(0.0)
    police:seek(0.0)
    police:arrive(0.0)
 
-   police:cohesion(0.1)
-   police:separation(0.4)
+   police:cohesion(0.2)
+   police:separation(0.5)
    police:alignment(0.0)
 
-   police:squadCohesion(0.2)
+   police:squadCohesion(0.6)
 
    police.m_rage = 5.0
 
@@ -118,7 +118,8 @@ end
 
 patrol["execute"] = function()
 
-  print("LUA POLICE patrol execute")
+--  print("LUA POLICE patrol execute")
+  police:squadCohesion(0.6)
 
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
@@ -145,11 +146,11 @@ defensive["enter"] = function()
    police:seek(0.0)
    police:arrive(0.0)
 
-   police:cohesion(0.4)
-   police:separation(0.8)
-   police:alignment(0.3)
+   police:cohesion(0.0)
+   police:separation(0.5)
+   police:alignment(0.0)
 
-   police:squadCohesion(0.4)
+   police:squadCohesion(0.6)
 
    police.m_rage = 20.0
 
@@ -157,22 +158,20 @@ end
 
 defensive["execute"] = function()
 
-  print("LUA POLICE defensive execute")
+--  print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 20.0)
-  police:checkValidPursuitRange(1.0)
+  police:checkValidPursuitRange(32.0)
 
   if police:getTargetID() >= 0 then
     police:wander(0.0)
-    police:alignment(0.0)
     police:squadCohesion(0.0)
     if(police:targetWithinReach(2.0) == true) then
         police:attack()
     end
   else
-    police:wander(0.1)
-    police:alignment(0.3)
-    police:squadCohesion(0.4)
+    police:wander(0.5)
+    police:squadCohesion(0.6)
   end
 
   if police.m_morale < 20 then
@@ -197,10 +196,10 @@ aggressive["enter"] = function()
    police:arrive(0.0)
 
    police:cohesion(0.0)
-   police:separation(0.2)
+   police:separation(0.5)
    police:alignment(0.0)
 
-   police:squadCohesion(0.2)
+   police:squadCohesion(0.6)
 
    police.m_rage = 70.0
 
@@ -208,20 +207,24 @@ end
 
 aggressive["execute"] = function()
 
-  print("LUA POLICE aggressive execute")
+--  print("LUA POLICE aggressive execute")
 
   police:checkValidTarget(3.0, 0.0)
-  police:checkValidPursuitRange(4.0)
+  police:checkValidPursuitRange(64.0)
 
   if police:getTargetID() >= 0 then
     police:wander(0.0)
     police:squadCohesion(0.0)
+    police:separation(0.0)
+    print("pursuing")
     if(police:targetWithinReach(2.0) == true) then
+        print("attacking")
         police:attack()
     end
   else
-    police:wander(0.1)
-    police:squadCohesion(0.5)
+    print("no target")
+    police:wander(0.5)
+    police:squadCohesion(0.6)
   end
 
 
@@ -258,7 +261,7 @@ end
 
 wall["execute"] = function()
 
-  print("LUA POLICE wall execute")
+--  print("LUA POLICE wall execute")
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
   end
@@ -296,7 +299,7 @@ flee["execute"] = function()
 end
 
 flee["exit"] = function()
-  print("LUA POLICE flee exit")
+--  print("LUA POLICE flee exit")
 end
 
 
@@ -321,7 +324,7 @@ dead["enter"] = function()
 end
 
 dead["execute"] = function()
-  print("LUA POLICE dead execute")
+--  print("LUA POLICE dead execute")
   police.m_health = 0
 end
 

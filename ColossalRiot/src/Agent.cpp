@@ -198,6 +198,7 @@ bool Agent::targetWithinReach(float _reach)
     }
     else
     {
+
         return false;
     }
 }
@@ -222,5 +223,6 @@ void Agent::registerLua(lua_State* _L)
             .addFunction("alignment", &Agent::alignment)
             .addFunction("checkValidTarget", &Agent::checkValidTarget)
             .addFunction("targetWithinReach", &Agent::targetWithinReach)
+            .addProperty("m_maxSpeed", &Agent::getMaxSpeed, &Agent::setMaxSpeed)
         .endClass();
 }

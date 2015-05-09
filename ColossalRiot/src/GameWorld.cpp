@@ -117,6 +117,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_numberOfSquads; i++)
     {
+
         m_activePolice -= m_squads[i]->checkDeaths();
     }
 
@@ -229,12 +230,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         m_lose = 1;
     }
+    //need to change this with level number
     if(m_numberOfRiotersDead == m_initialNumberOfRioters)
     {
         m_lose = 1;
     }
 
-//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -328,6 +329,7 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
             .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
+
         .endClass();
 
     luabridge::push(L, this);

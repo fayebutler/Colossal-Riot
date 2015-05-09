@@ -99,7 +99,7 @@ private:
     ngl::Vec3 Alignment(std::vector<int> neighbours);
     ngl::Vec3 Cohesion(std::vector<int> neighbours);
 
-    ngl::Vec3 SquadCohesion(ngl::Vec3 SquadPos);
+    ngl::Vec3 SquadCohesion(ngl::Vec3 SquadPos, int deceleration);
 
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
 

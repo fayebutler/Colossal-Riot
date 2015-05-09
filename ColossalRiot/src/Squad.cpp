@@ -118,7 +118,6 @@ void Squad::update(double timeElapsed, double currentTime)
         if(m_squadState == squadWall && m_generatedBlockade == true)
         {
             currentPolice->setBlockadePos(m_blockadePositions[i]);
-            std::cout<<"BLOCKADE POS "<<m_blockadePositions[i].m_z<<std::endl;
         }
         else if(m_squadState != squadWall)
         {
@@ -258,7 +257,7 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     shader->setShaderParam4f("Colour", m_selectionColour.m_x, m_selectionColour.m_y,m_selectionColour.m_z, 1);
 
     ngl::Transformation t;
-    t.setPosition(m_pos);
+    t.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
     t.setRotation(90.0,0.0,0.0);
 
     ngl::Mat4 M;
@@ -286,7 +285,7 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void Squad::setTarget(ngl::Vec3 _target)
 {
     m_previousState = m_squadState;
-    std::cout<<" SET THE TARGET "<<std::endl;
+
     m_target = _target;
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
