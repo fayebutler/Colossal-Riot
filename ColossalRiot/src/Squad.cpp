@@ -309,6 +309,7 @@ int Squad::checkDeaths()
         Police* currentPolice = m_squadPolice[i];
         if(currentPolice->getHealth()<=0)
         {
+            currentPolice->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentPolice));
             delete currentPolice;
             m_squadPolice.erase(m_squadPolice.begin()+i);

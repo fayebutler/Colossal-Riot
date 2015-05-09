@@ -158,10 +158,12 @@ bool Rioter::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgDeath:
-    m_morale -= 10.f;
+  case msgRioterDeath:
+    m_morale -= 5.f;
     m_rage += 30.f;
     return true;
+  case msgPoliceDeath:
+    m_morale -= 15.f;
   case msgAttack:
     return Agent::handleMessage(_message);
   default:
@@ -182,10 +184,10 @@ void Rioter::death()
   {
     ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
     double distSqToRioter = vecToRioter.lengthSquared();
-    double affectedRadius = 10.0;
+    double affectedRadius = 8.0;
     if (distSqToRioter < affectedRadius * affectedRadius)
     {
-      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgDeath, 0.f);
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgRioterDeath, 0.f);
     }
   }
 }

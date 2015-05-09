@@ -112,11 +112,10 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_numberOfSquads; i++)
     {
-        m_activePolice -= m_squads[i]->checkDeaths();
+
     }
 
     m_numberOfRioters = m_rioters.size();
-//    std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
 
     for(int i=0; i<m_numberOfRioters; i++)
     {
@@ -147,25 +146,38 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         }
     }
 
-
-    //check for empty squads
-
-    for(int i=0; i<m_squads.size(); i++)
+    int m_numberOfSquads = m_squads.size();
+    for(int i = 0; i < m_numberOfSquads; i++)
     {
-//        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
-        if (m_squads[i]->getSquadSize() <= 0)
-        {
-            m_entityMgr->removeEntity(m_squads[i]);
-            delete m_squads[i];
-            m_squads.erase(m_squads.begin()+i);
-//            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
-        }
+      Squad* currentSquad = m_squads[i];
+      currentSquad->update(timeElapsed, currentTime);
+      if (currentSquad->getSquadSize() <= 0)
+      {
+          m_entityMgr->removeEntity(m_squads[i]);
+          delete m_squads[i];
+          m_squads.erase(m_squads.begin()+i);
+      }
+      else
+      {
+        m_activePolice -= m_squads[i]->checkDeaths();
+//        int numberOfPolice = currentSquad->getSquadPolice().size();
+//        for (int j = 0; j < numberOfPolice; j++)
+//        {
+//          Police* currentPoliceman = currentSquad->getSquadPolice()[i];
+//          if (currentPoliceman->getHealth <= 0.f)
+//          {
+//            currentPoliceman->death();
+//            m_entityMgr(dynamic_cast<BaseGameEntity*>(currentPoliceman));
+//            delete currentPoliceman;
+//            currentSquad->getSquadPolice().erase(currentSquad->getSquadPolice().begin + 1);
+//            m_numberOfPoliceDead ++;
+//            currentSquad->setSquadSize(currentSquad->getSquadSize() - 1);
+//            j--;
+//          }
+//        }
+      }
+
     }
-//    std::vector<ngl::Vec3> path;
-//    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
-//    currentRioter->followPath(path);
-
-
 
     m_cellGraph->clearCells();
     std::map<int,BaseGameEntity*> myMap = m_entityMgr->getEntityMap();
@@ -199,35 +211,24 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     }
 
-
-    m_numberOfSquads = m_squads.size();
-
-    for(unsigned int a=0; a<m_squads.size(); ++a)
-    {
-        Squad* currentSquad = m_squads[a];
-        currentSquad->update(timeElapsed, currentTime);
-
-    }
-
-
     // check for win/lose states
 
 
-    if(m_numberOfRiotersHome == m_initialNumberOfRioters)
+    if(m_numberOfRiotersHome >= m_numberOfRiotersHomeToWin)
     {
         m_win = 1;
+        std::cout<<"WIN"<<std::endl;
     }
-
-    if(m_availablePolice == 0 && m_activePolice == 0)
+    if(m_numberOfRiotersDead >= m_numberOfRiotersDeadToLose)
     {
+      std::cout<<"LOSEA"<<std::endl;
         m_lose = 1;
     }
-    if(m_numberOfRiotersDead == m_initialNumberOfRioters)
+    if(m_availablePolice <= 0 && m_activePolice <= 0)
     {
+      std::cout<<"LOSEB"<<std::endl;
         m_lose = 1;
     }
-
-//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -318,6 +319,8 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+            .addProperty("m_numberOfRiotersDeadToLose", &GameWorld::getNumberOfRiotersDeadToLose, &GameWorld::setNumberOfRiotersDeadToLose)
+            .addProperty("m_numberOfRiotersHomeToWin", &GameWorld::getNumberOfRiotersHomeToWin, &GameWorld::setNumberOfRiotersHomeToWin)
         .endClass();
 
     luabridge::push(L, this);

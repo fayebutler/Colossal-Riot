@@ -275,11 +275,35 @@ void NGLDraw::draw()
 
 
 
+      float deadPercent = ((float)m_gameworld->getNumberOfRiotersDead() / (float)m_gameworld->getNumberOfRiotersDeadToLose());
+      m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * deadPercent)));
+      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f) * deadPercent);
+      m_buttonRioterDeadBar->draw();
+      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
+      m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
+      m_buttonRioterDeadBar->draw();
+      float homePercent = ((float)m_gameworld->getNumberOfRiotersHome() / (float)m_gameworld->getNumberOfRiotersHomeToWin());
+      m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * homePercent)));
+      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f) * homePercent);
+      m_buttonRioterHomeBar->draw();
+      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
+      m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
+      m_buttonRioterHomeBar->draw();
+      if (m_gameworld->getHasWon() == true)
+      {
+        m_textLarge->renderText(50.f, 50.f, "You Win!");
+      }
+      else if (m_gameworld->getHasLost() == true)
+      {
+        m_textLarge->renderText(50.f, 50.f, "You Lose!");
+      }
       m_sliderSquadSize->draw();
 
       m_ss.str(std::string());
       m_ss << m_gameworld->getAvailablePolice();
-      m_textMedium->renderText(732.f, 1118.f, m_ss.str());
+      m_textMedium->renderText(740.f, 950.f, m_ss.str());
+
+
 
       break;
     }
@@ -370,20 +394,6 @@ void NGLDraw::draw()
 
       break;
     }
-    case gameWin:
-    {
-      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-      m_buttonMenu->draw();
-      m_buttonQuit->draw();
-      break;
-    }
-    case gameLose:
-    {
-      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-      m_buttonMenu->draw();
-      m_buttonQuit->draw();
-      break;
-    }
     case gameQuit:
     {
       break;
@@ -404,18 +414,6 @@ void NGLDraw::update(double timeElapsed, double currentTime)
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
-
-
-  if(m_gameworld->hasWon()==1)
-  {
-      m_gameState = gameWin;
-      endGame();
-  }
-  else if(m_gameworld->hasLost()==1)
-  {
-      m_gameState = gameLose;
-      endGame();
-  }
 }
 
 void NGLDraw::loadMatricesToShader()
@@ -570,6 +568,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
             case buttonMenu :
             {
               m_gameState = gameMenu;
+
               endGame();
               m_buttonQuit->setIsActive(true);
               m_buttonPlay->setIsActive(true);
@@ -616,9 +615,11 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
       if (m_sliderSquadSize->isClicked(_event.x, _event.y) && m_sliderSquadSize->getIsActive() == true)
       {
+        std::cout<<"tesssssssssssssssssssssssst"<<std::endl;
         m_sliderSquadSize->setIsSliding(true);
         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
         m_sliderSquadSize->setTextString(m_squadSizeString);
+        std::cout<<m_sliderSquadSize<<std::endl;
         return;
       }
 
@@ -831,6 +832,7 @@ void NGLDraw::initialiseUI()
 {
   m_textSmall = new Text("../font/arial.ttf", 20);
   m_textMedium = new Text("../font/arial.ttf", 40);
+  m_textLarge = new Text("../font/arial.ttf", 60);
 
   m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.1f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
@@ -902,6 +904,16 @@ void NGLDraw::initialiseUI()
   m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadWall);
 
+  m_buttonRioterDeadBar = new UIButton(buttonRioterDeadBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterDeadBar->updateButton(ngl::Vec2(-0.95f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f));
+  m_buttonRioterDeadBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
+  m_buttons.push_back(m_buttonRioterDeadBar);
+
+  m_buttonRioterHomeBar = new UIButton(buttonRioterHomeBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterHomeBar->updateButton(ngl::Vec2(-0.88f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f));
+  m_buttonRioterHomeBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
+  m_buttons.push_back(m_buttonRioterHomeBar);
+
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
@@ -909,6 +921,8 @@ void NGLDraw::initialiseUI()
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
+
+
 }
 
 

@@ -182,10 +182,14 @@ class NGLDraw
     UIButton* m_buttonSquadDefensive;
     UIButton* m_buttonSquadWall;
 
+    UIButton* m_buttonRioterDeadBar;
+    UIButton* m_buttonRioterHomeBar;
+
     UISlider* m_sliderSquadSize;
 
     Text* m_textSmall;
     Text* m_textMedium;
+    Text* m_textLarge;
 
     Timer m_gameTimer;
 

@@ -1,5 +1,6 @@
 #include "Police.h"
 #include <math.h>
+#include "GameWorld.h"
 
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
@@ -184,6 +185,20 @@ bool Police::handleMessage(const Message& _message)
 void Police::attack()
 {
   m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
+}
+
+void Police::death()
+{
+  for (int i = 0; i < m_world->getNumberOfRioters(); i++)
+  {
+    ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
+    double distSqToRioter = vecToRioter.lengthSquared();
+    double affectedRadius = 8.0;
+    if (distSqToRioter < affectedRadius * affectedRadius)
+    {
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgPoliceDeath, 0.f);
+    }
+  }
 }
 
 void Police::squadCohesion(double weight)
