@@ -132,6 +132,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
 
     ngl::Vec3 force;
+
     if(on(wall_avoidance))
     {
       force = WallAvoidance() * m_weightWallAvoidance;

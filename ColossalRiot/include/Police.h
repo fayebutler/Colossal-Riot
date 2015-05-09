@@ -47,6 +47,8 @@ public:
 
     float getRioterInfluence()const{return m_rioterInfluence;}
 
+    void checkValidPursuitRange(float _dist);
+
 
 protected:
     MessageManager* m_messageMgr;

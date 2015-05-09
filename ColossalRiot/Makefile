@@ -2285,7 +2285,11 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7715430/Colossal/colossal/LuaBridge/detail/Namespace.h \
-		include/StateMachine.h
+		include/StateMachine.h \
+		include/GameWorld.h \
+		include/Police.h \
+		include/CellGraph.h \
+		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Rioter.o src/Rioter.cpp
 
 obj/Squad.o: src/Squad.cpp include/Squad.h \

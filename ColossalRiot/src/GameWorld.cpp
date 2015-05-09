@@ -109,19 +109,19 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     //check for deaths
     m_numberOfSquads = m_squads.size();
 
-
     for(int i=0; i<m_numberOfSquads; i++)
     {
         m_activePolice -= m_squads[i]->checkDeaths();
     }
 
     m_numberOfRioters = m_rioters.size();
-//    std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
 
     for(int i=0; i<m_numberOfRioters; i++)
     {
         Rioter* currentRioter = m_rioters[i];
         std::vector<float> map_bounds = m_cellGraph->getMapBounds();
+
+        //check for rioter deaths
         if(currentRioter->getHealth()<=0.f)
         {
             currentRioter->death();
@@ -131,7 +131,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
             i--;
-        }       //check for when rioters have left the map
+        }
+        //check for when rioters have left the map
         else if(currentRioter->getPos().m_z <= map_bounds[0] ||
                 currentRioter->getPos().m_z >= map_bounds[1] ||
                 currentRioter->getPos().m_x <= map_bounds[2] ||

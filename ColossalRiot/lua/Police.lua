@@ -100,17 +100,17 @@ end
 patrol = {}
 patrol["enter"] = function()
 
-   police:wander(0.5)
+   police:wander(0.1)
    police:pursuit(0.0)
    police:evade(0.0)
    police:seek(0.0)
    police:arrive(0.0)
 
    police:cohesion(0.1)
-   police:separation(0.6)
+   police:separation(0.4)
    police:alignment(0.0)
 
-   police:squadCohesion(0.4)
+   police:squadCohesion(0.2)
 
    police.m_rage = 5.0
 
@@ -160,6 +160,7 @@ defensive["execute"] = function()
   print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 20.0)
+  police:checkValidPursuitRange(1.0)
 
   if police:getTargetID() >= 0 then
     police:wander(0.0)
@@ -169,7 +170,7 @@ defensive["execute"] = function()
         police:attack()
     end
   else
-    police:wander(0.5)
+    police:wander(0.1)
     police:alignment(0.3)
     police:squadCohesion(0.4)
   end
@@ -196,10 +197,10 @@ aggressive["enter"] = function()
    police:arrive(0.0)
 
    police:cohesion(0.0)
-   police:separation(0.8)
+   police:separation(0.2)
    police:alignment(0.0)
 
-   police:squadCohesion(0.4)
+   police:squadCohesion(0.2)
 
    police.m_rage = 70.0
 
@@ -210,6 +211,7 @@ aggressive["execute"] = function()
   print("LUA POLICE aggressive execute")
 
   police:checkValidTarget(3.0, 0.0)
+  police:checkValidPursuitRange(4.0)
 
   if police:getTargetID() >= 0 then
     police:wander(0.0)
@@ -218,8 +220,8 @@ aggressive["execute"] = function()
         police:attack()
     end
   else
-    police:wander(0.5)
-    police:squadCohesion(0.4)
+    police:wander(0.1)
+    police:squadCohesion(0.5)
   end
 
 
