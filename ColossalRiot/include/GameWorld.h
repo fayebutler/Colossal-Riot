@@ -8,6 +8,7 @@
 #include "Police.h"
 #include "CellGraph.h"
 #include "Squad.h"
+#include "StaticEntity.h"
 
 extern "C" {
 #include <lua.h>
@@ -29,15 +30,20 @@ private:
 
     std::vector<int> m_dynamicEntities;
 
-    std::vector<BaseGameEntity*> m_obstacles;
+    //std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
     std::vector<Squad*> m_squads;
+
+    std::vector<StaticEntity*> m_obstacles;
 
     int m_initialNumberOfRioters;
 
     int m_numberOfRioters;
     int m_numberOfSquads;
+    int m_numberOfObstacles;
+    int m_numberOfTrees;
+    int m_numberOfStreetLights;
 
 
     CellGraph* m_cellGraph;
@@ -46,6 +52,9 @@ private:
     std::string m_worldMeshFile;
     ngl::Obj *m_policeMesh;
     ngl::Obj *m_rioterMesh;
+    ngl::Obj *m_treeMesh;
+    ngl::Obj *m_streetLightMesh;
+
 
     ngl::Vec3 m_policeStation;
 
@@ -78,8 +87,6 @@ public:
     void draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX);
 
     std::vector<Rioter*> getRioters() { return m_rioters; }
-    //std::vector<Police*> getPolice() { return m_police; }
-
     std::vector<Squad*> getSquads() {return m_squads;}
 
     void setPoliceStation(float _x, float _y, float _z);
@@ -99,7 +106,6 @@ public:
 
     void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
 
-
     bool hasWon()const{return m_win;}
     bool hasLost()const{return m_lose;}
 
@@ -110,6 +116,12 @@ public:
 
     int getInitialNumberOfRioters() const { return m_initialNumberOfRioters; }
     void setInitialNumberOfRioters(int _number) {m_initialNumberOfRioters = _number; }
+
+    int getNumberOfTrees() const { return m_numberOfTrees; }
+    void setNumberOfTrees(int _number) {m_numberOfTrees = _number; }
+
+    int getNumberOfStreetLights() const { return m_numberOfStreetLights; }
+    void setNumberOfStreetLights(int _number) {m_numberOfStreetLights = _number; }
 
     const char* getCellGraphFile() const { return m_cellGraphFile; }
     void setCellGraphFile(const char* _file) { m_cellGraphFile = _file; }

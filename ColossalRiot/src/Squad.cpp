@@ -132,6 +132,8 @@ void Squad::update(double timeElapsed, double currentTime)
         }
         else
         {
+            currentPolice->setIsMoving(false);
+
             if (m_generatedBlockade == false)
             {
                 currentPolice->setCrosshair(m_pos);
