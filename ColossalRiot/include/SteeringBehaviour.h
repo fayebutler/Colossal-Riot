@@ -27,14 +27,9 @@ private:
         alignment          = 0x00080,
         obstacle_avoidance = 0x00100,
         wall_avoidance     = 0x00200,
-        follow_path        = 0x00400,
         pursuit            = 0x00800,
         evade              = 0x01000,
         squad_cohesion     = 0x02000,
-        hide               = 0x04000,
-        flock              = 0x08000,
-        offset_pursuit     = 0x10000,
-
     };
 private:
 
@@ -60,7 +55,6 @@ private:
     std::vector<int> m_allNeighbours;
 
 
-
     bool on(behaviour_type bt){return (m_activeFlags & bt) == bt;}
 
     //multipliers to adjust strength of behaviour
@@ -84,7 +78,6 @@ private:
 
 
 //  behaviour type functions
-    //need to add the rest
     ngl::Vec3 Seek(ngl::Vec3 TargetPos);
     ngl::Vec3 Flee(ngl::Vec3 TargetPos);
     ngl::Vec3 Arrive(ngl::Vec3 TargetPos, int deceleration);
@@ -102,9 +95,6 @@ private:
     ngl::Vec3 SquadCohesion(ngl::Vec3 SquadPos, int deceleration);
 
     ngl::Vec3 worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide);
-
-// add in group steering behaviours
-// add in collision avoidance
 
 
 public:
@@ -197,16 +187,10 @@ public:
 
     bool lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &distToIntersect, ngl::Vec3 &intersectPoint);
 
-    ngl::Vec3 calculate();
-
-    ngl::Vec3 calculateWeightedSum(); //simplest addition method, should update to prioritized
 
     ngl::Vec3 calculatePrioritizedSum();
 
     bool accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force);
-
-    double forwardComponent();
-    double sideComponent();
 
     void ObjectOverlapAvoidance();
     void WallOverlapAvoidance();

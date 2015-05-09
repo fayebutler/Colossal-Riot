@@ -22,17 +22,11 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
     m_weightAlignment(1.0),
     m_weightObstacleAvoidance(1.0),
     m_weightWallAvoidance(1.0),
-//    m_weightFollowPath(1.0),
     m_weightPursuit(1.0),
     m_weightEvade(1.0)
-//    m_weightInterpose(1.0),
-//    m_weightHide(1.0),
-//    m_weightFlock(1.0),
-//    m_weightOffsetPursuit(1.0)
 {
-  m_entityMgr = new EntityManager();
+    m_entityMgr = new EntityManager();
 
-//    double theta = (rand()/(RAND_MAX+1.0)) * (M_PI * 2);
     double theta = (float)rand()/RAND_MAX * (M_PI * 2);
     m_wanderTarget = ngl::Vec3(m_wanderRadius * cos(theta), 0, m_wanderRadius * sin(theta));
 
@@ -42,89 +36,6 @@ SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
 SteeringBehaviour::~SteeringBehaviour()
 {
     //delete m_entityMgr;
-}
-
-
-
-ngl::Vec3 SteeringBehaviour::calculate()
-{
-    //simple weight truncated sum
-
- //   force += Seek(ngl::Vec3(0,0,0)) * m_weightSeek;
-    m_steeringForce += Wander() * m_weightWander;
-    //force += Flee(ngl::Vec3(10,10,10)) *m_weightFlee;
-
-    //use weight truncated running sum prioritisation
-    //truncate force to maxforce
-    if(m_steeringForce.lengthSquared() >= (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
-    {
-        if(m_steeringForce.lengthSquared() == 0.0f)
-        {
-            std::cout<<"Steering Force in calculate equals zero, can't normalise"<<std::endl;
-        }
-        else
-        {
-            m_steeringForce.normalize();
-        }
-        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
-    }
-    return m_steeringForce;
-}
-
-
-ngl::Vec3 SteeringBehaviour::calculateWeightedSum()
-{
-    m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
-    if(on(seek)) //need to create crosshair in gameworld
-    {
-        m_steeringForce += Seek(m_vehicle->getCrosshair()) * m_weightSeek;
-    }
-    if(on(flee))
-    {
-        m_steeringForce += Flee(ngl::Vec3(0,0,0)) * m_weightFlee;
-    }
-    if(on(arrive))
-    {
-        m_steeringForce += Arrive(m_vehicle->getCrosshair(), m_deceleration) * m_weightArrive;
-    }
-    if(on(pursuit))
-    {
-        assert(m_targetAgent && "pursuit target not assigned");
-        m_steeringForce += Pursuit(m_targetAgent) * m_weightPursuit;
-    }
-    if(on(wander))
-    {
-        m_steeringForce += Wander() * m_weightWander;
-    }
-    if(on(evade))
-    {
-        assert(m_targetAgent && "evade target not assigned");
-        m_steeringForce += Evade(m_targetAgent) * m_weightEvade;
-    }
-
-    if(on(obstacle_avoidance))
-    {
-        m_steeringForce += ObstacleAvoidance() * m_weightObstacleAvoidance;
-
-    }
-
-
-   //truncate steering force to max force
-    if(m_steeringForce.lengthSquared() > (m_vehicle->getMaxForce() * m_vehicle->getMaxForce()))
-    {
-        if(m_steeringForce.lengthSquared() == 0.0f)
-        {
-            std::cout<<"Steering Force in calculateWeightedSum equals zero, can't normalise"<<std::endl;
-        }
-        else
-        {
-            m_steeringForce.normalize();
-        }
-        m_steeringForce = m_steeringForce * m_vehicle->getMaxForce();
-    }
-
-    return m_steeringForce;
-
 }
 
 
@@ -343,17 +254,6 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force
     }
 }
 
-
-double SteeringBehaviour::forwardComponent()
-{
-    return m_vehicle->getHeading().dot(m_steeringForce);
-}
-
-double SteeringBehaviour::sideComponent()
-{
-    return m_vehicle->getSide().dot(m_steeringForce);
-}
-
 //behaviour type functions
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
@@ -361,21 +261,7 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
 
-//    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
-
-    if(desiredVelocity.lengthSquared() == 0.0f)
-    {
-        std::cout<<" Desired Velocity in Seek equals zero, can't normalize"<<std::endl;
-        std::cout<<"Desired Velocity "<<desiredVelocity.m_x<<" "<<desiredVelocity.m_y<<" "<<desiredVelocity.m_z<<std::endl;
-        return (desiredVelocity - m_vehicle->getVelocity());
-    }
-    else
-    {
-        //desiredVelocity.normalize();
-//        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
-        return (desiredVelocity - m_vehicle->getVelocity());
-        //return desiredVelocity;
-    }
+    return (desiredVelocity - m_vehicle->getVelocity());
 
 }
 
@@ -384,17 +270,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
     ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
 
-    if(desiredVelocity.lengthSquared() == 0.0f)
-    {
-        std::cout<<"Desired Velocity in Flee equals zero, can't normalise"<<std::endl;
-        return desiredVelocity - m_vehicle->getVelocity();
-    }
-    else
-    {
-        //desiredVelocity.normalize();
-//        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
-        return(desiredVelocity - m_vehicle->getVelocity());
-    }
+    return desiredVelocity - m_vehicle->getVelocity();
 
 }
 
@@ -409,6 +285,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
         double decelerationTweak = 0.01;
 
         double speed = dist/(deceleration*decelerationTweak);
+
         //make velocity not exceed maxspeed
         if( speed > m_vehicle->getMaxSpeed())
         {
@@ -420,8 +297,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
     }
     else if(dist <= 0.1 )
     {
-//        m_vehicle->setHeading(ngl::Vec3(-1,0,0));
-        //ArriveOff();
+
         return ngl::Vec3(0,0,0);
     }
 
@@ -474,22 +350,10 @@ ngl::Vec3 SteeringBehaviour::Wander()
     angle = 2*M_PI - angle;
   }
 
-
   ngl::Transformation trans;
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
-
-//  if(worldTarget.lengthSquared() == 0.0f)
-//  {
-//      std::cout<<"World Target in wander equals zero, can't normalise"<<std::endl;
-//  }
-//  else
-//  {
-//    //worldTarget.normalize();
-//  }
-
-//  worldTarget = worldTarget * m_vehicle->getMaxSpeed();
 
   return worldTarget;
 
@@ -567,23 +431,6 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos, int deceleration)
 {
-
-//    ngl::Vec3 desiredVelocity = ngl::Vec3(SquadPos - m_vehicle->getPos());
-
-//    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
-
-//    if(desiredVelocity.lengthSquared() == 0.0f)
-//    {
-//        std::cout<<" Desired Velocity in Squad Pos equals zero, can't normalize"<<std::endl;
-//        std::cout<<"Desired Velocity "<<desiredVelocity.m_x<<" "<<desiredVelocity.m_y<<" "<<desiredVelocity.m_z<<std::endl;
-//        return desiredVelocity - m_vehicle->getVelocity();
-//    }
-//    else
-//    {
-//        desiredVelocity.normalize();
-//        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
-//        return (desiredVelocity - m_vehicle->getVelocity());
-//    }
     //arrive
     ngl::Vec3 toTarget = SquadPos - m_vehicle->getPos();
     double dist = toTarget.length();
@@ -604,8 +451,6 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos, int deceleration)
     }
     else if(dist <= 0.1 )
     {
-//        m_vehicle->setHeading(ngl::Vec3(-1,0,0));
-        //ArriveOff();
         return ngl::Vec3(0,0,0);
     }
 
@@ -664,25 +509,25 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
   ngl::Vec3 localPosOfCIO;
 
 
-  int numberOfRioters = m_vehicle->getNeighbourRioterIDs().size();
-  for (unsigned int i = 0; i < numberOfRioters; i++)
+  int numberOfAgents = m_allNeighbours.size();
+  for (unsigned int i = 0; i < numberOfAgents; i++)
   {
-    Rioter* currentRioter = dynamic_cast<Rioter*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourRioterIDs()[i]));
-    if (currentRioter)
+    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
+    if (currentAgent)
     {
-      if (currentRioter->getID() != m_vehicle->getID())
+      if (currentAgent->getID() != m_vehicle->getID())
       {
-        ngl::Vec3 vectorToObstacle = currentRioter->getPos() - m_vehicle->getPos();
+        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
 
         if (vectorToObstacle.length() < detectionLength)
         {
 
-        ngl::Vec3 localPos = worldToLocalSpace(currentRioter->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+        ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
           // if obstacle is behind vehicle in local space, discard
           if (localPos.m_x >= 0.f)
           {
-            double addedRadius = currentRioter->getBoundingRadius() + m_vehicle->getBoundingRadius();
+            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
             if (fabs(localPos.m_z) < addedRadius)
             {
               // intersection of radius and line z = 0
@@ -696,7 +541,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
               if (intersectX < distanceToCIO)
               {
                 distanceToCIO = intersectX;
-                closestIntersectingObstacle = currentRioter;
+                closestIntersectingObstacle = currentAgent;
                 localPosOfCIO = localPos;
               }
             }
@@ -706,49 +551,49 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     }
   }
 
-  int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
+//  int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
 
-  for (unsigned int i = 0; i < numberOfPolice; ++i)
-  {
-    Police* currentPolice = dynamic_cast<Police*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]));
-    if (currentPolice)
-    {
-      if (currentPolice->getID() != m_vehicle->getID())
-      {
-        ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
+//  for (unsigned int i = 0; i < numberOfPolice; ++i)
+//  {
+//    Police* currentPolice = dynamic_cast<Police*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourPoliceIDs()[i]));
+//    if (currentPolice)
+//    {
+//      if (currentPolice->getID() != m_vehicle->getID())
+//      {
+//        ngl::Vec3 vectorToObstacle = currentPolice->getPos() - m_vehicle->getPos();
 
-        if (vectorToObstacle.length() < detectionLength)
-        {
+//        if (vectorToObstacle.length() < detectionLength)
+//        {
 
-          ngl::Vec3 localPos = worldToLocalSpace(currentPolice->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+//          ngl::Vec3 localPos = worldToLocalSpace(currentPolice->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
 
-          // if obstacle is behind vehicle in local space, discard
-          if (localPos.m_x >= 0.f)
-          {
-            double addedRadius = currentPolice->getBoundingRadius() + m_vehicle->getBoundingRadius();
-            if (fabs(localPos.m_z) < addedRadius)
-            {
-              // intersection of radius and line z = 0
-              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
-              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
-              double intersectX = localPos.m_x - sqrtPart;
-              if (intersectX <= 0)
-              {
-                intersectX = localPos.m_x + sqrtPart;
-              }
-              if (intersectX < distanceToCIO)
-              {
-                distanceToCIO = intersectX;
-                closestIntersectingObstacle = currentPolice;
-                localPosOfCIO = localPos;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+//          // if obstacle is behind vehicle in local space, discard
+//          if (localPos.m_x >= 0.f)
+//          {
+//            double addedRadius = currentPolice->getBoundingRadius() + m_vehicle->getBoundingRadius();
+//            if (fabs(localPos.m_z) < addedRadius)
+//            {
+//              // intersection of radius and line z = 0
+//              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+//              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+//              double intersectX = localPos.m_x - sqrtPart;
+//              if (intersectX <= 0)
+//              {
+//                intersectX = localPos.m_x + sqrtPart;
+//              }
+//              if (intersectX < distanceToCIO)
+//              {
+//                distanceToCIO = intersectX;
+//                closestIntersectingObstacle = currentPolice;
+//                localPosOfCIO = localPos;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
 
 
 
