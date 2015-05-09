@@ -279,7 +279,7 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
   loadMatricesToShader(cam, mouseGlobalTX);
   m_streetMesh->draw();
 
-  ngl::Material b(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.4f,0.4f,0.4f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  ngl::Material b(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.45f,0.45f,0.45f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   b.setSpecularExponent(20.f);
   b.loadToShader("material");
   loadMatricesToShader(cam, mouseGlobalTX);
