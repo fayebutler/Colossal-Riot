@@ -84,6 +84,12 @@ void Squad::update(double timeElapsed, double currentTime)
         this->formWall();
     }
 
+
+    if(m_squadState == squadWall && m_squadState != squadMove)
+    {
+        this->formWall();
+    }
+
     // individual police loop
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
@@ -121,7 +127,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         currentPolice->update(timeElapsed, currentTime);
     }
-
 
     if(m_squadState == squadMove )
     {
@@ -176,7 +181,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         ngl::Mat3 normalMatrix;
         ngl::Mat4 M;
         ngl::Transformation trans;
-        trans.setPosition(m_target.m_x, 0.3, m_target.m_z);
+        trans.setPosition(m_target.m_x, 0.1, m_target.m_z);
         trans.setRotation(90.0,0.0,0.0);
 
 

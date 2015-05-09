@@ -148,7 +148,6 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
         {
             m_cellSize = m_cells[0].getSize();
         }
-
     }
 
     //Give each cell a list of its perpendicular nieghbours
@@ -164,7 +163,6 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
             }
         }
     }
-
 
     //now we offset the boundries to define playable area
     m_mapBounds.push_back(upperBoundry+m_cellSize*_borderSize);
@@ -183,7 +181,6 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
             m_exitPoints.push_back(m_cells[i].getCentre());
         }
     }
-
 }
 
 CellGraph::CellGraph()
@@ -198,7 +195,6 @@ CellGraph::~CellGraph()
 
 void CellGraph::printCellGraph()
 {
-
     for (unsigned int j =0; j< m_numberOfCells;j++)
     {
         m_cells[j].printCellInfo();
@@ -214,8 +210,8 @@ bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
   float left  = m_cells[_cellID].getBoundaries().m_z;
   float right = m_cells[_cellID].getBoundaries().m_w;
 
-  if(_entity->getPos().m_z > upper && _entity->getPos().m_z < lower &&
-     _entity->getPos().m_x > left && _entity->getPos().m_x < right)
+  if(_entity->getPos().m_z >= upper && _entity->getPos().m_z <= lower &&
+     _entity->getPos().m_x >= left && _entity->getPos().m_x <= right)
   {
     return true;
   }
@@ -345,7 +341,7 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
 
 void CellGraph::generateWalls()
 {
-    for (unsigned int i=0; i< m_numberOfCells; i++)
+    for (unsigned int i=0; i < m_numberOfCells; i++)
     {
         bool upperWall = true, lowerWall = true, leftWall =  true,  rightWall= true;
 
@@ -437,6 +433,8 @@ void CellGraph::generateWalls()
 
 
     }
+
+    //Now append all neighbours walls to each cell
     for (int i =0; i < m_numberOfCells; i++)
         {
           for (int j = 0; j < m_cells[i].getWallsInCell().size(); j++)

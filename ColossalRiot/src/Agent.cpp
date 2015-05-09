@@ -31,6 +31,7 @@ void Agent::setTargetID(int _val)
     }
 }
 
+
 void Agent::wander(double weight)
 {
     if(weight <= 0.0)
@@ -185,6 +186,18 @@ void Agent::checkValidTarget(float _dist, float _health)
 
 }
 
+bool Agent::targetWithinReach(float _reach)
+{
+    Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
+    if((m_pos - target->getPos()).lengthSquared() <= _reach)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 void Agent::registerLua(lua_State* _L)
 {
@@ -205,5 +218,6 @@ void Agent::registerLua(lua_State* _L)
             .addFunction("separation", &Agent::separation)
             .addFunction("alignment", &Agent::alignment)
             .addFunction("checkValidTarget", &Agent::checkValidTarget)
+            .addFunction("targetWithinReach", &Agent::targetWithinReach)
         .endClass();
 }

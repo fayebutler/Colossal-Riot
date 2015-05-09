@@ -1,9 +1,11 @@
 #include "Rioter.h"
+#include "GameWorld.h"
 
 Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
     m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
+    //m_gameworld = world;
 
     // Set up LUA state
     luaL_dofile(L, "lua/Rioter.lua");
@@ -108,7 +110,17 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   {
     rot = 180 + rot;
   }
-  trans.setRotation(0,-rot+90,0);
+
+  if(m_health <= 20.f)
+  {
+      trans.addPosition(0,0.3,0);
+      trans.setRotation(90,-rot+90,0);
+  }
+  else
+  {
+        trans.setRotation(0,-rot+90,0);
+  }
+
 
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();
@@ -155,18 +167,38 @@ void Rioter::findTargetID(float _health)
 
 bool Rioter::handleMessage(const Message& _message)
 {
-  return Agent::handleMessage(_message);
+  switch(_message.m_message)
+  {
+  case msgDeath:
+    m_morale -= 10.f;
+    m_rage += 30.f;
+    return true;
+  case msgAttack:
+    return Agent::handleMessage(_message);
+  default:
+    std::cout<<"Agent: Message type not defined"<<std::endl;
+    return false;
+  }
 }
 
 
-//RIOTER STATE UTILITY FUNCTIONS
-
 void Rioter::attack()
 {
+  m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
+}
 
-  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
-
-
+void Rioter::death()
+{
+  for (int i = 0; i < m_world->getNumberOfRioters(); i++)
+  {
+    ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
+    double distSqToRioter = vecToRioter.lengthSquared();
+    double affectedRadius = 10.0;
+    if (distSqToRioter < affectedRadius * affectedRadius)
+    {
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgDeath, 0.f);
+    }
+  }
 }
 
 void Rioter::protestCohesion(double weight)
@@ -192,6 +224,7 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Rioter::attack)
+                .addFunction("death", &Rioter::death)
                 .addFunction("protestCohesion", &Rioter::protestCohesion)
                 .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)
         .endClass();

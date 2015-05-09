@@ -27,13 +27,11 @@ private:
 
     EntityManager* m_entityMgr;
 
-
     std::vector<int> m_dynamicEntities;
 
     std::vector<BaseGameEntity*> m_obstacles;
 
     std::vector<Rioter*> m_rioters;
-    //std::vector<Police*> m_police;
     std::vector<Squad*> m_squads;
 
     int m_initialNumberOfRioters;
@@ -49,6 +47,8 @@ private:
     ngl::Obj *m_policeMesh;
     ngl::Obj *m_rioterMesh;
 
+    ngl::Vec3 m_policeStation;
+
     bool m_resetID;
 
     int m_availablePolice;
@@ -59,6 +59,8 @@ private:
 
     int m_numberOfRiotersDead;
     int m_numberOfRiotersHome;
+
+
 
     lua_State *L;
 
@@ -81,6 +83,8 @@ public:
 
     std::vector<Squad*> getSquads() {return m_squads;}
 
+    void setPoliceStation(float _x, float _y, float _z);
+
     void createSquad(int size);
 
     int getAvailablePolice() const { return m_availablePolice; }
@@ -99,6 +103,8 @@ public:
 
 
     void registerLua(lua_State *_L);
+
+    int getNumberOfRioters() {return m_numberOfRioters; }
 
     int getInitialNumberOfRioters() const { return m_initialNumberOfRioters; }
     void setInitialNumberOfRioters(int _number) {m_initialNumberOfRioters = _number; }
