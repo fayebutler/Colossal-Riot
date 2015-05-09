@@ -431,9 +431,9 @@ void NGLDraw::draw()
 //  m_spot.loadToShader("spotLight");
 }
 
-void NGLDraw::update(double timeElapsed, double currentTime)
+void NGLDraw::update(double _timeElapsed, double _currentTime)
 {
-  m_gameworld->Update(timeElapsed, currentTime);
+  m_gameworld->Update(_timeElapsed, _currentTime);
 
   m_ss.str(std::string());
   m_ss << m_squadSize;
@@ -743,8 +743,6 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
-
-    std::cout<<" MOUSE CLICK = "<<_x<<" "<<_y<<std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
