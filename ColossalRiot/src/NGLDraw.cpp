@@ -275,6 +275,10 @@ void NGLDraw::draw()
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
             break;
           }
+          case squadMove :
+          {
+            break;
+          }
           default :
           {
             std::cout<<"Error: Invalid squad state"<<std::endl;
@@ -527,7 +531,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
         {
-          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;
+          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;          
           switch (m_buttons[i]->getName())
           {
             case buttonPlay:
@@ -536,6 +540,11 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
               startGame(m_selectedLevel);
               m_gameState = gamePlay;
               m_buttonQuit->setIsActive(false);
+              m_buttonLevel1->setIsActive(false);
+              m_buttonLevel2->setIsActive(false);
+              m_buttonLevel3->setIsActive(false);
+              m_buttonLevel4->setIsActive(false);
+              m_buttonLevel5->setIsActive(false);
               m_buttonPlay->setIsActive(false);
               m_buttonPause->setIsActive(true);
               m_buttonMenu->setIsActive(true);
@@ -734,6 +743,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 void NGLDraw::doSelection(const int _x, const int _y)
 {
 
+    std::cout<<" MOUSE CLICK = "<<_x<<" "<<_y<<std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -769,6 +779,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
             m_selected = true;
             m_selectedSquad = currentSquad;
             m_selectedSquadID = currentSquad->getID();
+            std::cout<<" SELECTED SQUAD ID = "<<currentSquad->getID()<<std::endl;
             newSelection = true;
             break;
         }
