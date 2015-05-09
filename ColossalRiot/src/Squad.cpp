@@ -136,6 +136,7 @@ void Squad::update(double timeElapsed, double currentTime)
             {
                 currentPolice->setCrosshair(m_pos);
             }
+            currentPolice->setIsMoving(false);
         }
 
         // WALL
