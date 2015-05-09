@@ -13,6 +13,8 @@
 #include "UISlider.h"
 #include "Text.h"
 #include "Timer.h"
+#include <ngl/SpotLight.h>
+
 
 #include "EntityManager.h"
 
@@ -147,6 +149,8 @@ class NGLDraw
     /// @brief a simple light use to illuminate the screen
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
+
+    ngl::SpotLight m_spot;
 
     ngl::Transformation m_trans;
 
