@@ -122,10 +122,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[i];
         std::vector<float> map_bounds = m_cellGraph->getMapBounds();
-//        std::cout<<"number of rioters "<<m_numberOfRioters<<std::endl;
-//        std::cout<<"map bounds "<<map_bounds[0]<<" "<<map_bounds[1]<<" "<<map_bounds[2]<<" "<<map_bounds[3]<<std::endl;
         if(currentRioter->getHealth()<=0.f)
         {
+            currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
             delete currentRioter;
             m_rioters.erase(m_rioters.begin()+i);
@@ -144,7 +143,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersHome++;
-//            std::cout<<" number of rioters gone home "<<m_numberOfRiotersHome<<std::endl;
             i--;
         }
     }

@@ -8,10 +8,8 @@ MessageManager::MessageManager()
 
 }
 
-void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, double _delay, float _extraInfo)
+void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, float _extraInfo)
 {
-  //EntityManager* entityMgr = new EntityManager();
-  //std::cout<<"called by message manager"<<std::endl;
   BaseGameEntity* sender = (BaseGameEntity*)m_entityMgr->getEntityFromID(_senderID);
   BaseGameEntity* receiver = (BaseGameEntity*)m_entityMgr->getEntityFromID(_receiverID);
 
@@ -21,20 +19,9 @@ void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, d
     return;
   }
 
-  Message message(_senderID, _receiverID, _message, 0, _extraInfo); //SHOULD THE 0 BE CURRENT TIME?
+  Message message(_senderID, _receiverID, _message, _extraInfo);
 
-  if (_delay<=0.0f)
-  {
-    send(receiver, message);
-  }
-  else
-  {
-  }
-}
-
-void MessageManager::sendDelayedMessages()
-{
-  // WE NEED CLOCK FUNCTIONALITY
+  send(receiver, message);
 }
 
 void MessageManager::send(BaseGameEntity *_receiver, const Message &_message)
