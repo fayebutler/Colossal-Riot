@@ -4,7 +4,7 @@ level1 = function()
   gameWorld.m_worldMeshFile = "drawMesh.obj"
   gameWorld.m_cellGraphFile = "navMesh.obj"
   gameWorld:setPoliceStation(2.0,0,-38)
-  gameWorld.m_initialNumberOfRioters = 100
+  gameWorld.m_initialNumberOfRioters = 10
   gameWorld.m_availablePolice = 125
 end
 

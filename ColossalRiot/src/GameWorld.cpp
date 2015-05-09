@@ -133,7 +133,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
 
-//            delete currentRioter;
+            delete currentRioter;
 
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
@@ -158,7 +158,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
 
     //check for empty squads
-
     for(int i=0; i<m_squads.size(); i++)
     {
         if (m_squads[i]->getSquadSize() <= 0)
@@ -168,6 +167,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_squads.erase(m_squads.begin()+i);
         }
     }
+    //std::cout<<"END CHECKING SQUAD DEATHS"<<std::endl;
 //    std::vector<ngl::Vec3> path;
 //    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
 //    currentRioter->followPath(path);
@@ -229,12 +229,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         m_lose = 1;
     }
+    //need to change this with level number
     if(m_numberOfRiotersDead == m_initialNumberOfRioters)
     {
         m_lose = 1;
     }
 
-//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -328,6 +328,7 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
             .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
+
         .endClass();
 
     luabridge::push(L, this);

@@ -64,6 +64,9 @@ public:
   float getHopSpeed() const { return m_hopSpeed; }
   void setHopSpeed(float _val) { m_hopSpeed = _val; }
 
+  float getMaxSpeed()const{return m_maxSpeed;}
+  void setMaxSpeed(float max_speed){m_maxSpeed = max_speed;}
+
   void registerLua(lua_State *_L);
 
   virtual bool handleMessage(const Message& _message);

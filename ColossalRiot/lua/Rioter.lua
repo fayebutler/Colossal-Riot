@@ -71,7 +71,7 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(1.0)
+   rioter:protestCohesion(0.5)
 
 end
 
@@ -83,11 +83,13 @@ protest["execute"] = function()
 
   if rioter:getTargetID() >= 0 then
     rioter:wander(0.0)
+    rioter:separation(0.2)
     if(rioter:targetWithinReach(2.0) == true) then
         rioter:attack()
     end
   else
     rioter:wander(0.5)
+    rioter:separation(0.8)
   end
 
   if rioter.m_rage < 30 then
@@ -97,7 +99,6 @@ protest["execute"] = function()
     stateMachine:changeState("flee")
   end
 
-  rioter.m_morale = rioter.m_morale - 0.3
   rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.001);
 
 end
@@ -130,7 +131,6 @@ roam["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
 
-
   if rioter.m_rage > 60 then
     stateMachine:changeState("protest")
   end
@@ -139,7 +139,6 @@ roam["execute"] = function()
   end
 
   rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
-
 
 end
 
@@ -211,6 +210,8 @@ dead["enter"] = function()
 end
 
 dead["execute"] = function()
+
+  print("I'M DEAD")
   rioter.m_health = 0
 end
 
