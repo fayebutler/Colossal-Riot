@@ -45,6 +45,7 @@ SteeringBehaviour::~SteeringBehaviour()
 }
 
 
+
 ngl::Vec3 SteeringBehaviour::calculate()
 {
     //simple weight truncated sum

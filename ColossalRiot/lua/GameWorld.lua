@@ -1,8 +1,10 @@
 -- percentage to win, percentage to lose
 
 level1 = function()
-  gameWorld.m_worldMeshFile = "drawMesh.obj"
   gameWorld.m_cellGraphFile = "navMesh.obj"
+  gameWorld.m_streetMeshFile = "streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+
   gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 100
   gameWorld.m_availablePolice = 125
@@ -11,8 +13,11 @@ level1 = function()
 end
 
 level2 = function()
-  gameWorld.m_worldMeshFile = "drawMesh.obj"
-  gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_streetMeshFile = "streetMesh1.obj"
+gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+
+gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 200
   gameWorld.m_availablePolice = 100
   gameWorld.m_numberOfRiotersHomeToWin = 75
@@ -20,8 +25,11 @@ level2 = function()
 end
 
 level3 = function()
-  gameWorld.m_worldMeshFile = "drawMesh.obj"
-  gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_streetMeshFile = "streetMesh1.obj"
+gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+
+gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 300
   gameWorld.m_availablePolice = 75
   gameWorld.m_numberOfRiotersHomeToWin = 175
@@ -29,8 +37,11 @@ level3 = function()
 end
 
 level4 = function()
-  gameWorld.m_worldMeshFile = "drawMesh.obj"
-  gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_streetMeshFile = "streetMesh1.obj"
+gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+
+gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 400
   gameWorld.m_availablePolice = 50
   gameWorld.m_numberOfRiotersHomeToWin = 325
@@ -38,8 +49,11 @@ level4 = function()
 end
 
 level5 = function()
-  gameWorld.m_worldMeshFile = "drawMesh.obj"
-  gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_cellGraphFile = "navMesh.obj"
+gameWorld.m_streetMeshFile = "streetMesh1.obj"
+gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+
+gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 500
   gameWorld.m_availablePolice = 25
   gameWorld.m_numberOfRiotersHomeToWin = 475

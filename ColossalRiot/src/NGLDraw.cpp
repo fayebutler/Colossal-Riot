@@ -3,6 +3,7 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
+
 #include "GameWorld.h"
 
 const static float INCREMENT=-0.02;
@@ -71,13 +72,33 @@ NGLDraw::NGLDraw(int _width, int _height)
   // now create our light this is done after the camera so we can pass the
   // transpose of the projection matrix to the light to do correct eye space
   // transformations
-  ngl::Mat4 iv=m_cam->getViewMatrix();
+  ngl::Mat4 iv=m_cam->getVPMatrix();
   iv.transpose();
-  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.3,0.3,0.4,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
   m_light->setPosition(ngl::Vec3(0,20,50));
   //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
+
+
+  //SPOT LIGHT:
+
+  m_spot = ngl::SpotLight(ngl::Vec3(0,0,0),
+                                         ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
+  m_spot.aim(ngl::Vec4(0,10,0));
+
+
+  m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
+  m_spot.setCutoff(15);
+  m_spot.setInnerCutoff(10);
+  m_spot.setExponent(2+1);
+  m_spot.setAttenuation(1.0,0.0,0.0);
+  m_spot.enable();
+  m_spot.setTransform(iv);
+
+  m_spot.loadToShader("spotLight");
+
+
 
   m_width = _width;
   m_height = _height;
@@ -160,7 +181,7 @@ void NGLDraw::startGame(int level)
     m_gameworld = new GameWorld(level);
     m_selected = false;
     m_selectedSquad = NULL;
-    m_selectedSquadID = -1;
+    m_selectedSquadID = -1;  m_spot.setPosition(ngl::Vec3(0,10,10));
 
 }
 
@@ -188,6 +209,8 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+  m_spot.setPosition(ngl::Vec3(100000,0,0));
+  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
@@ -404,7 +427,8 @@ void NGLDraw::draw()
       break;
     }
   }
-
+//m_spot.aim(ngl::Vec4(0.0,10,0.0,0.0)*m_cam->getVPMatrix().inverse());
+//  m_spot.loadToShader("spotLight");
 }
 
 void NGLDraw::update(double timeElapsed, double currentTime)
@@ -473,6 +497,11 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
     m_sliderSquadSize->setTextString(m_squadSizeString);  
   }
+
+//  m_spot.setPosition(ngl::Vec3(0,10,0));
+//  m_spot.loadToShader("spotLight");
+//  m_spot.setPosition(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z));
+
 }
 
 
@@ -677,6 +706,10 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 {
 
@@ -685,7 +718,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
   {
       m_modelPos.m_y+=(ZOOM*(cameraHeight-m_modelPos.m_y)*0.05);
 
-      float nearest = 3.0;
+      float nearest = 15.0;
 
       if(cameraHeight-m_modelPos.m_y < nearest)
       {
@@ -703,9 +736,10 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
         m_modelPos.m_y= cameraHeight - furthest;
       }
   }
+//  m_spot.setPosition(ngl::Vec3(100,0,0));
+
 
 }
-//----------------------------------------------------------------------------------------------------------------------
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {

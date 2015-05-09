@@ -145,11 +145,6 @@ bool Agent::handleMessage(const Message& _message)
   {
   case msgAttack:
     m_health -= (_message.m_extraInfo * m_timeElapsed);
-    std::cout<<"Attack = "<<_message.m_extraInfo<<std::endl;
-    std::cout<<"time e = "<<m_timeElapsed<<std::endl;
-    std::cout<<"DAMAGE = "<<_message.m_extraInfo * m_timeElapsed<<std::endl;
-
-
     return true;
 
   default:
