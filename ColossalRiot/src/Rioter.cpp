@@ -213,6 +213,7 @@ void Rioter::registerClass(lua_State* _L)
         .deriveClass<Rioter, Agent>("Rioter")
             .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Rioter::attack)
+                .addFunction("death", &Rioter::death)
                 .addFunction("protestCohesion", &Rioter::protestCohesion)
                 .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)
         .endClass();
