@@ -31,6 +31,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->ObstacleAvoidOn();
     Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
+
      m_policeInfluence = 0.0;
 
      m_protestPos = ngl::Vec3(0,0,0);
@@ -109,7 +110,17 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   {
     rot = 180 + rot;
   }
-  trans.setRotation(0,-rot+90,0);
+
+  if(m_health <= 20.f)
+  {
+      trans.addPosition(0,0.3,0);
+      trans.setRotation(90,-rot+90,0);
+  }
+  else
+  {
+        trans.setRotation(0,-rot+90,0);
+  }
+
 
   M=trans.getMatrix()*mouseGlobalTX;
   MV=  M*cam->getViewMatrix();

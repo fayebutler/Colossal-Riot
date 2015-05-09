@@ -2113,7 +2113,11 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
 		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
 		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
-		include/StateMachine.h
+		include/StateMachine.h \
+		include/GameWorld.h \
+		include/Rioter.h \
+		include/CellGraph.h \
+		include/Squad.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Police.o src/Police.cpp
 
 obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
