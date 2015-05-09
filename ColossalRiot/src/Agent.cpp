@@ -144,7 +144,7 @@ bool Agent::handleMessage(const Message& _message)
   switch(_message.m_message)
   {
   case msgAttack:
-    m_health -= _message.m_extraInfo;
+    m_health -= (_message.m_extraInfo * m_timeElapsed);
     return true;
 
   default:

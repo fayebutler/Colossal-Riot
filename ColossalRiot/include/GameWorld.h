@@ -65,6 +65,8 @@ private:
     int m_numberOfRiotersDead;
     int m_numberOfRiotersHome;
 
+    int m_numberOfRiotersDeadToLose;
+    int m_numberOfRiotersHomeToWin;
 
     lua_State *L;
 
@@ -94,6 +96,15 @@ public:
     int getAvailablePolice() const { return m_availablePolice; }
     void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
 
+    int getNumberOfRiotersDead() const { return m_numberOfRiotersDead; }
+    void setNumberOfRiotersDead(int _number) { m_numberOfRiotersDead = _number; }
+    int getNumberOfRiotersHome() const { return m_numberOfRiotersHome; }
+    void setNumberOfRiotersHome(int _number) { m_numberOfRiotersHome = _number; }
+    int getNumberOfRiotersDeadToLose() const { return m_numberOfRiotersDeadToLose; }
+    void setNumberOfRiotersDeadToLose(int _number) { m_numberOfRiotersDeadToLose = _number; }
+    int getNumberOfRiotersHomeToWin() const { return m_numberOfRiotersHomeToWin; }
+    void setNumberOfRiotersHomeToWin(int _number) { m_numberOfRiotersHomeToWin = _number; }
+
     ngl::Vec3 getPoliceStation() const { return m_policeStation; }
    // void setPoliceStation(ngl::Vec3 _policeStation) { m_policeStation = _policeStation; }
 
@@ -105,8 +116,10 @@ public:
     void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
 
 
-    bool hasWon()const{return m_win;}
-    bool hasLost()const{return m_lose;}
+    bool getHasWon()const{return m_win;}
+    void setHasWon(bool _inBool) { m_win = _inBool; }
+    bool getHasLost()const{return m_lose;}
+    void setHasLost(bool _inBool) { m_lose = _inBool; }
 
 
     void registerLua(lua_State *_L);

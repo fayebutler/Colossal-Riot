@@ -301,14 +301,33 @@ void NGLDraw::draw()
         m_buttonSquadDefensive->setIsActive(false);
         m_buttonSquadWall->setIsActive(false);
       }
-
-
+      float deadPercent = ((float)m_gameworld->getNumberOfRiotersDead() / (float)m_gameworld->getNumberOfRiotersDeadToLose());
+      m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * deadPercent)));
+      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f) * deadPercent);
+      m_buttonRioterDeadBar->draw();
+      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
+      m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
+      m_buttonRioterDeadBar->draw();
+      float homePercent = ((float)m_gameworld->getNumberOfRiotersHome() / (float)m_gameworld->getNumberOfRiotersHomeToWin());
+      m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * homePercent)));
+      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f) * homePercent);
+      m_buttonRioterHomeBar->draw();
+      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
+      m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
+      m_buttonRioterHomeBar->draw();
+      if (m_gameworld->getHasWon() == true)
+      {
+        m_textLarge->renderText(50.f, 50.f, "You Win!");
+      }
+      else if (m_gameworld->getHasLost() == true)
+      {
+        m_textLarge->renderText(50.f, 50.f, "You Lose!");
+      }
       m_sliderSquadSize->draw();
 
       m_ss.str(std::string());
       m_ss << m_gameworld->getAvailablePolice();
       m_textMedium->renderText(740.f, 950.f, m_ss.str());
-
       break;
     }
     case gameMenu:
@@ -398,20 +417,6 @@ void NGLDraw::draw()
 
       break;
     }
-    case gameWin:
-    {
-      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-      m_buttonMenu->draw();
-      m_buttonQuit->draw();
-      break;
-    }
-    case gameLose:
-    {
-      glClearColor(0.0f, 0.3f, 0.3f, 1.0f);
-      m_buttonMenu->draw();
-      m_buttonQuit->draw();
-      break;
-    }
     case gameQuit:
     {
       break;
@@ -426,25 +431,13 @@ void NGLDraw::draw()
 //  m_spot.loadToShader("spotLight");
 }
 
-void NGLDraw::update(double timeElapsed, double currentTime)
+void NGLDraw::update(double _timeElapsed, double _currentTime)
 {
-  m_gameworld->Update(timeElapsed, currentTime);
+  m_gameworld->Update(_timeElapsed, _currentTime);
 
   m_ss.str(std::string());
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
-
-
-  if(m_gameworld->hasWon()==1)
-  {
-      m_gameState = gameWin;
-      endGame();
-  }
-  else if(m_gameworld->hasLost()==1)
-  {
-      m_gameState = gameLose;
-      endGame();
-  }
 }
 
 void NGLDraw::loadMatricesToShader()
@@ -479,8 +472,8 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_origYPos=_event.y;
 
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-    float cameraLimitX = (50.0);
-    float cameraLimitZ = (50.0);
+    float cameraLimitX = (m_gameworld->getCellGraph()->getMapBounds()[1]);
+    float cameraLimitZ = (m_gameworld->getCellGraph()->getMapBounds()[3]);
     if(m_cam->getEye().m_x> cameraLimitX)
     {
         m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
@@ -589,7 +582,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
                 m_gameState = gamePause;
                 m_gameTimer.resetTimer();
                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-                m_buttonPause->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-33.f, -25.f));
+                m_buttonPause->updateText("Play", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-32.f, -17.f));
                 m_sliderSquadSize->setIsActive(false);
                 m_buttonCreateSquad->setIsActive(false);
                 break;
@@ -599,7 +592,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
                 m_gameState = gamePlay;
                 m_gameTimer.resetTimer();
                 m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-                m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
+                m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -17.f));
                 m_sliderSquadSize->setIsActive(true);
                 m_buttonCreateSquad->setIsActive(true);
                 break;
@@ -609,6 +602,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
             case buttonMenu :
             {
               m_gameState = gameMenu;
+
               endGame();
               m_buttonQuit->setIsActive(true);
               m_buttonPlay->setIsActive(true);
@@ -616,12 +610,17 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
               m_buttonPause->setIsActive(false);
               m_sliderSquadSize->setIsActive(false);
               m_buttonCreateSquad->setIsActive(false);
+              m_buttonLevel1->setIsActive(true);
+              m_buttonLevel2->setIsActive(true);
+              m_buttonLevel3->setIsActive(true);
+              m_buttonLevel4->setIsActive(true);
+              m_buttonLevel5->setIsActive(true);
               break;
 
             }
             case buttonCreateSquad :
             {
-              createSquad(m_squadSize);
+              m_gameworld->createSquad(m_squadSize);
               break;
             }
             case buttonSquadPatrol :
@@ -655,9 +654,11 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
       if (m_sliderSquadSize->isClicked(_event.x, _event.y) && m_sliderSquadSize->getIsActive() == true)
       {
+        std::cout<<"tesssssssssssssssssssssssst"<<std::endl;
         m_sliderSquadSize->setIsSliding(true);
         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
         m_sliderSquadSize->setTextString(m_squadSizeString);
+        std::cout<<m_sliderSquadSize<<std::endl;
         return;
       }
 
@@ -742,8 +743,6 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
-
-    std::cout<<" MOUSE CLICK = "<<_x<<" "<<_y<<std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -866,15 +865,11 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     return obj;
 }
 
-void NGLDraw::createSquad(int size)
-{
-    m_gameworld->createSquad(size);
-}
-
 void NGLDraw::initialiseUI()
 {
   m_textSmall = new Text("../font/arial.ttf", 20);
   m_textMedium = new Text("../font/arial.ttf", 40);
+  m_textLarge = new Text("../font/arial.ttf", 60);
 
   m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.1f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
@@ -946,6 +941,16 @@ void NGLDraw::initialiseUI()
   m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadWall);
 
+  m_buttonRioterDeadBar = new UIButton(buttonRioterDeadBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterDeadBar->updateButton(ngl::Vec2(-0.95f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f));
+  m_buttonRioterDeadBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
+  m_buttons.push_back(m_buttonRioterDeadBar);
+
+  m_buttonRioterHomeBar = new UIButton(buttonRioterHomeBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterHomeBar->updateButton(ngl::Vec2(-0.88f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f));
+  m_buttonRioterHomeBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
+  m_buttons.push_back(m_buttonRioterHomeBar);
+
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
@@ -953,6 +958,8 @@ void NGLDraw::initialiseUI()
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
+
+
 }
 
 

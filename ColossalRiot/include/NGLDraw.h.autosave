@@ -21,14 +21,12 @@
 
 enum eGameState
 {
-
     gameMenu,
     gamePlay,
     gamePause,
     gameLose,
     gameWin,
     gameQuit
-
 };
 
 class NGLDraw
@@ -53,10 +51,12 @@ class NGLDraw
     /// @brief draw the scene
     //----------------------------------------------------------------------------------------------------------------------
     void draw();
-
-    void update(double timeElapsed, double currentTime);
-
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief update the scene
+    /// @param _timeElapsed the time elapsed between each frame
+    /// @param _currentTime the current time of the current level
+    //----------------------------------------------------------------------------------------------------------------------
+    void update(double _timeElapsed, double _currentTime);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief this method is called every time a mouse is moved
     /// @param _event the SDL mouse event structure containing all mouse info

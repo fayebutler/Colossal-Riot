@@ -79,7 +79,7 @@ void Rioter::update(double timeElapsed, double currentTime)
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-//  ngl::VAOPrimitives::instance()->draw("cube");
+ // ngl::VAOPrimitives::instance()->draw("cube");
   m_mesh->draw();
 
 }
@@ -169,10 +169,12 @@ bool Rioter::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgDeath:
-    m_morale -= 10.f;
+  case msgRioterDeath:
+    m_morale -= 5.f;
     m_rage += 30.f;
     return true;
+  case msgPoliceDeath:
+    m_morale -= 15.f;
   case msgAttack:
     return Agent::handleMessage(_message);
   default:
@@ -193,10 +195,10 @@ void Rioter::death()
   {
     ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
     double distSqToRioter = vecToRioter.lengthSquared();
-    double affectedRadius = 10.0;
+    double affectedRadius = 8.0;
     if (distSqToRioter < affectedRadius * affectedRadius)
     {
-      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgDeath, 0.f);
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgRioterDeath, 0.f);
     }
   }
 }

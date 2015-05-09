@@ -72,8 +72,6 @@ int main()
   // resize the ngl to set the screen size and camera stuff
   ngldraw.resize(rect.w,rect.h);
 
-  ngldraw.setGameState(gameMenu);
-
   Timer gameTimer;
   double timeElapsed = 0.0;
   double currentTime = 0.0;
@@ -130,14 +128,6 @@ int main()
                 case SDLK_p : ngldraw.setGameState(gamePause); gameTimer.resetTimer(); break;
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
-
-                case SDLK_5 : ngldraw.createSquad(5); break;
-                case SDLK_6 : ngldraw.createSquad(6); break;
-                case SDLK_7 : ngldraw.createSquad(7); break;
-                case SDLK_8 : ngldraw.createSquad(8); break;
-                case SDLK_9 : ngldraw.createSquad(9); break;
-                case SDLK_0 : ngldraw.createSquad(10); break;
-
                 default : break;
               }
           }
@@ -189,7 +179,8 @@ int main()
       currentTime=gameTimer.getCurrentTime();
 
 //      std::cout<<"------------- TICK -------------"<<std::endl;
-//      std::cout<<"currentTime "<<currentTime<<std::endl;
+      std::cout<<"currentTime "<<currentTime<<std::endl;
+
       ngldraw.update(timeElapsed,currentTime);
     }
 
