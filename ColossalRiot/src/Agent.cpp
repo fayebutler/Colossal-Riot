@@ -6,6 +6,8 @@ Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0
 
   m_targetID = -1;
 
+  m_hasPathHome = false;
+
 }
 
 Agent::~Agent()
@@ -30,6 +32,7 @@ void Agent::setTargetID(int _val)
       Vehicle::Steering()->setTargetAgent((Vehicle*)m_entityMgr->getEntityFromID(m_targetID));
     }
 }
+
 
 void Agent::wander(double weight)
 {
@@ -135,12 +138,18 @@ void Agent::alignment(double weight)
     }
 }
 
+
 bool Agent::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
   case msgAttack:
-    m_health -= _message.m_extraInfo;
+    m_health -= (_message.m_extraInfo * m_timeElapsed);
+    std::cout<<"Attack = "<<_message.m_extraInfo<<std::endl;
+    std::cout<<"time e = "<<m_timeElapsed<<std::endl;
+    std::cout<<"DAMAGE = "<<_message.m_extraInfo * m_timeElapsed<<std::endl;
+
+
     return true;
 
   default:
@@ -185,6 +194,19 @@ void Agent::checkValidTarget(float _dist, float _health)
 
 }
 
+bool Agent::targetWithinReach(float _reach)
+{
+    Agent* target = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_targetID));
+    if((m_pos - target->getPos()).lengthSquared() <= _reach)
+    {
+        return true;
+    }
+    else
+    {
+
+        return false;
+    }
+}
 
 void Agent::registerLua(lua_State* _L)
 {
@@ -205,5 +227,7 @@ void Agent::registerLua(lua_State* _L)
             .addFunction("separation", &Agent::separation)
             .addFunction("alignment", &Agent::alignment)
             .addFunction("checkValidTarget", &Agent::checkValidTarget)
+            .addFunction("targetWithinReach", &Agent::targetWithinReach)
+            .addProperty("m_maxSpeed", &Agent::getMaxSpeed, &Agent::setMaxSpeed)
         .endClass();
 }

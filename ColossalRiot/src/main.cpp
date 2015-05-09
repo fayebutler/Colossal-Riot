@@ -128,14 +128,6 @@ int main()
                 case SDLK_p : ngldraw.setGameState(gamePause); gameTimer.resetTimer(); break;
                 case SDLK_t : std::cout<<gameTimer.getCurrentTime()<<std::endl; break;
                 case SDLK_r : std::cout<<"reset"<<std::endl; gameTimer.resetTimer(); break;
-
-                case SDLK_5 : ngldraw.createSquad(5); break;
-                case SDLK_6 : ngldraw.createSquad(6); break;
-                case SDLK_7 : ngldraw.createSquad(7); break;
-                case SDLK_8 : ngldraw.createSquad(8); break;
-                case SDLK_9 : ngldraw.createSquad(9); break;
-                case SDLK_0 : ngldraw.createSquad(10); break;
-
                 default : break;
               }
           }
@@ -186,8 +178,9 @@ int main()
       timeElapsed=gameTimer.timeElapsed();
       currentTime=gameTimer.getCurrentTime();
 
-      std::cout<<"------------- TICK -------------"<<std::endl;
-//      std::cout<<"currentTime "<<currentTime<<std::endl;
+//      std::cout<<"------------- TICK -------------"<<std::endl;
+      std::cout<<"currentTime "<<currentTime<<std::endl;
+
       ngldraw.update(timeElapsed,currentTime);
     }
 

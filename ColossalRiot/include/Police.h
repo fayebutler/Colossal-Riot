@@ -48,6 +48,10 @@ public:
 
     float getRioterInfluence()const{return m_rioterInfluence;}
 
+    void checkValidPursuitRange(float _dist);
+
+    void findPathHome();
+
 
 protected:
     MessageManager* m_messageMgr;
@@ -59,6 +63,8 @@ protected:
     int m_squadID;
 
     bool m_isMoving;
+    bool m_validPursuit;
+
     ngl::Vec3 m_blockadePosition;
 
     float m_rioterInfluence;

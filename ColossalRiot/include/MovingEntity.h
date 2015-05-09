@@ -36,7 +36,6 @@ public:
     {}
 
 
-
     ngl::Vec3 getVelocity()const{return m_velocity;}
     void setVelocity(ngl::Vec3 newVel){m_velocity = newVel;}
 
@@ -60,6 +59,9 @@ public:
     float getSpeed()const{return m_velocity.length();}
 
     virtual bool handleMessage(const Message& _message);
+
+
+
 };
 
 #endif // MOVINGENTITY_H

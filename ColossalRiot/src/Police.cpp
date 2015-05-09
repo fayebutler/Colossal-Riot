@@ -1,4 +1,5 @@
 #include "Police.h"
+#include "GameWorld.h"
 #include <math.h>
 #include "GameWorld.h"
 
@@ -17,6 +18,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_mesh = _mesh;
 
     m_isMoving = false;
+    m_validPursuit = true;
 
     m_hopHeight = 0.5;
     m_hopSpeed = 0.0;
@@ -32,7 +34,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_rioterInfluence = 0.0;
 
     Vehicle::setMaxSpeed(2);
-    Vehicle::setMaxForce(2);
+
 
 }
 
@@ -61,6 +63,7 @@ void Police::update(double timeElapsed, double currentTime)
   // calculate influence of neighbouring rioters based on their rage
   int nearbyRioters = m_neighbourRioterIDs.size();
   m_rioterInfluence = 0.0;
+
 
   for (int i=0; i<nearbyRioters; i++)
   {
@@ -174,6 +177,40 @@ void Police::findTargetID(float _health)
     }
 }
 
+void Police::checkValidPursuitRange(float _dist)
+{
+    ngl::Vec3 toSquad = m_pos - m_squadPos;
+    double distSqFromEachOther = toSquad.lengthSquared();
+
+    if (m_validPursuit)
+    {
+        if(distSqFromEachOther > _dist)
+        {
+            m_targetID = -1;
+            m_validPursuit = false;
+        }
+    }
+
+    else
+    {
+        m_validPursuit = true;
+        if(distSqFromEachOther > _dist- (_dist/4.0))
+        {
+            m_targetID = -1;
+            m_validPursuit = false;
+        }
+    }
+
+
+}
+
+void Police::findPathHome()
+{
+    m_homePos = m_world->getPoliceStation();
+    findPath(m_homePos);
+    m_hasPathHome = true;
+}
+
 bool Police::handleMessage(const Message& _message)
 {
   return Agent::handleMessage(_message);
@@ -205,20 +242,23 @@ void Police::squadCohesion(double weight)
 {
     if(weight <= 0.0)
     {
+
       Vehicle::Steering()->SquadCohesionOff();
     }
     else
     {
-        ngl::Vec3 toSquad = Vehicle::getPos() - m_squadPos;
+        ngl::Vec3 toSquad = m_pos - m_squadPos;
         double distance = fabs(toSquad.length());
 
         weight = (weight*distance*1.5f)/m_squadRadius;
+
 
         Vehicle::setSquadCrosshair(m_squadPos);
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
     }
+
 }
 
 void Police::registerClass(lua_State* _L)
@@ -234,7 +274,10 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("attack", &Police::attack)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
+                .addFunction("findPathHome", &Police::findPathHome)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+                .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
+//                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)
 
         .endClass();
 

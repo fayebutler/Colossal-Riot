@@ -80,8 +80,6 @@ class NGLDraw
 
     void doMovement(const int _x, const int _y);
 
-    void createSquad(int size);
-
     ngl::Vec3 getWorldSpace(int _x, int _y);
 
     void startGame(int level);

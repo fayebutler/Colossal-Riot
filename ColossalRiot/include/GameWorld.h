@@ -27,7 +27,6 @@ private:
 
     EntityManager* m_entityMgr;
 
-
     std::vector<int> m_dynamicEntities;
 
     std::vector<BaseGameEntity*> m_obstacles;
@@ -47,6 +46,8 @@ private:
     std::string m_worldMeshFile;
     ngl::Obj *m_policeMesh;
     ngl::Obj *m_rioterMesh;
+
+    ngl::Vec3 m_policeStation;
 
     bool m_resetID;
 
@@ -83,6 +84,8 @@ public:
 
     std::vector<Squad*> getSquads() {return m_squads;}
 
+    void setPoliceStation(float _x, float _y, float _z);
+
     void createSquad(int size);
 
     int getAvailablePolice() const { return m_availablePolice; }
@@ -97,6 +100,8 @@ public:
     int getNumberOfRiotersHomeToWin() const { return m_numberOfRiotersHomeToWin; }
     void setNumberOfRiotersHomeToWin(int _number) { m_numberOfRiotersHomeToWin = _number; }
 
+    ngl::Vec3 getPoliceStation() const { return m_policeStation; }
+   // void setPoliceStation(ngl::Vec3 _policeStation) { m_policeStation = _policeStation; }
 
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}

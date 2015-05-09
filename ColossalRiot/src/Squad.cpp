@@ -78,11 +78,41 @@ ngl::Vec3 Squad::averagePolicePos()
 
 void Squad::update(double timeElapsed, double currentTime)
 {
-    // check squad state
-    if(m_squadState == squadWall && m_squadState != squadMove)
+    // squad checks
+
+    // SQUAD MOVE
+    if(m_squadState == squadMove )
+    {
+        m_pos = averagePolicePos();
+
+        // check if all police have arrived- break if one hasn't
+
+        m_allArrived = true;
+
+        for(unsigned int i=0; i<m_squadSize; ++i)
+        {
+             Police* currentPolice = m_squadPolice[i];
+             currentPolice->setIsMoving(false);
+             if(m_policeArrived[i]==false)
+             {
+                 m_allArrived = false;
+                 currentPolice->setIsMoving(true);
+                 break;
+             }
+         }
+
+        if(m_allArrived == true)
+        {
+            m_squadState = m_previousState;
+        }
+    }
+
+    // SQUAD WALL
+    else if(m_squadState == squadWall)
     {
         this->formWall();
     }
+
 
     // individual police loop
     for(unsigned int i=0; i<m_squadSize; ++i)
@@ -91,28 +121,27 @@ void Squad::update(double timeElapsed, double currentTime)
         currentPolice->setSquadPos(m_pos);
         currentPolice->setSquadRadius(m_squadRadius);
 
-        if(m_squadState != squadMove)
+        // MOVE
+        if(m_squadState == squadMove)
         {
-            currentPolice->clearPath();
-            currentPolice->setPathIndex(0);
-            currentPolice->setIsMoving(false);
+            if ((currentPolice->getPos() - m_target).lengthSquared()<= 4)
+            {
+                m_policeArrived[i] = true;
+                currentPolice->setIsMoving(false);
+            }
+        }
+        else
+        {
             if (m_generatedBlockade == false)
             {
                 currentPolice->setCrosshair(m_pos);
             }
-
         }
 
-        if ((currentPolice->getPos() - m_target).lengthSquared()<= 4)
-        {
-            m_policeArrived[i] = true;
-            currentPolice->setIsMoving(false);
-        }
-
+        // WALL
         if(m_squadState == squadWall && m_generatedBlockade == true)
         {
             currentPolice->setBlockadePos(m_blockadePositions[i]);
-            std::cout<<"BLOCKADE POS "<<m_blockadePositions[i].m_z<<std::endl;
         }
         else if(m_squadState != squadWall)
         {
@@ -121,30 +150,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         currentPolice->update(timeElapsed, currentTime);
     }
-
-
-    if(m_squadState == squadMove )
-    {
-        m_pos = averagePolicePos();
-
-        // check if all police have arrived- break if one hasn't
-        for(unsigned int i=0; i<m_squadSize; ++i)
-        {
-             if(m_policeArrived[i]==false)
-             {
-                 m_allArrived = false;
-                 return;
-             }
-         }
-
-        m_allArrived = true;
-
-        if(m_allArrived == true)
-        {
-            m_squadState = m_previousState;
-        }
-    }
-
 
 }
 
@@ -176,7 +181,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         ngl::Mat3 normalMatrix;
         ngl::Mat4 M;
         ngl::Transformation trans;
-        trans.setPosition(m_target.m_x, 0.3, m_target.m_z);
+        trans.setPosition(m_target.m_x, 0.1, m_target.m_z);
         trans.setRotation(90.0,0.0,0.0);
 
 
@@ -253,7 +258,7 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     shader->setShaderParam4f("Colour", m_selectionColour.m_x, m_selectionColour.m_y,m_selectionColour.m_z, 1);
 
     ngl::Transformation t;
-    t.setPosition(m_pos);
+    t.setPosition(m_pos.m_x, 0.3, m_pos.m_z);
     t.setRotation(90.0,0.0,0.0);
 
     ngl::Mat4 M;
@@ -280,8 +285,13 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 void Squad::setTarget(ngl::Vec3 _target)
 {
-    m_previousState = m_squadState;
-    std::cout<<" SET THE TARGET "<<std::endl;
+
+    if(m_squadState != squadMove)
+    {
+        m_previousState = m_squadState;
+    }
+
+
     m_target = _target;
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
@@ -303,7 +313,7 @@ void Squad::setTarget(ngl::Vec3 _target)
 int Squad::checkDeaths()
 {
     int numberOfDeaths = 0;
-
+    //std::cout<<"CHECKING DEATHS"<<std::endl;
     for(int i=0; i<m_squadSize; i++)
     {
         Police* currentPolice = m_squadPolice[i];
@@ -320,6 +330,7 @@ int Squad::checkDeaths()
         }
     }
 
+    //std::cout<<"END CHECKING DEATHS"<<std::endl;
     return numberOfDeaths;
 }
 

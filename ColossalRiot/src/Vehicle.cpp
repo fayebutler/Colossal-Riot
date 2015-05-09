@@ -182,8 +182,6 @@ void Vehicle::followPath()
         m_pathIndex =0;
     }
 
-
-
 }
 
 
