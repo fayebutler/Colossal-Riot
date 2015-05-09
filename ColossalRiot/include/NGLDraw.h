@@ -1,34 +1,27 @@
 #ifndef NGLDRAW_H__
 #define NGLDRAW_H__
 
+#include <SDL.h>
 #include <ngl/Camera.h>
 #include <ngl/Light.h>
-#include <SDL.h>
+#include <ngl/SpotLight.h>
 #include "GameWorld.h"
-#include "Vehicle.h"
 #include "Police.h"
 #include "Rioter.h"
-
 #include "UIButton.h"
 #include "UISlider.h"
 #include "Text.h"
 #include "Timer.h"
-#include <ngl/SpotLight.h>
-
-
 #include "EntityManager.h"
-
 
 enum eGameState
 {
-
     gameMenu,
     gamePlay,
     gamePause,
     gameLose,
     gameWin,
     gameQuit
-
 };
 
 class NGLDraw
@@ -53,10 +46,12 @@ class NGLDraw
     /// @brief draw the scene
     //----------------------------------------------------------------------------------------------------------------------
     void draw();
-
-    void update(double timeElapsed, double currentTime);
-
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief update the scene
+    /// @param _timeElapsed the time elapsed between each frame
+    /// @param _currentTime the current time of the current level
+    //----------------------------------------------------------------------------------------------------------------------
+    void update(double _timeElapsed, double _currentTime);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief this method is called every time a mouse is moved
     /// @param _event the SDL mouse event structure containing all mouse info
@@ -87,11 +82,19 @@ class NGLDraw
     void startGame(int level);
     void endGame();
 
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief this method returns the current state of the game, such as gamePlay, gameMenu, gamePause
+    /// @return returns the game state as a eGameState enum
+    //----------------------------------------------------------------------------------------------------------------------
     eGameState getGameState()const{return m_gameState;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief this method sets the current state of the game to an enum of type eGameState
+    //----------------------------------------------------------------------------------------------------------------------
     void setGameState(eGameState _gameState){m_gameState = _gameState;}
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief this method is used to initialise all the buttons and sliders that make up the UI
+    //----------------------------------------------------------------------------------------------------------------------
     void initialiseUI();
-
 
   private :
     //----------------------------------------------------------------------------------------------------------------------
@@ -147,20 +150,37 @@ class NGLDraw
     /// @brief a simple light use to illuminate the screen
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a spotlight that points from the camera to the floor
+    //----------------------------------------------------------------------------------------------------------------------
     ngl::SpotLight m_spot;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @ brief a NGL transformation member
+    //----------------------------------------------------------------------------------------------------------------------
     ngl::Transformation m_trans;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a pointer to the game world created when a new level starts
+    //----------------------------------------------------------------------------------------------------------------------
     GameWorld* m_gameworld;
-    ngl::Obj *m_mesh;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief the currently selected squad
+    //----------------------------------------------------------------------------------------------------------------------
     Squad* m_selectedSquad;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief the currently selected squad ID
+    //----------------------------------------------------------------------------------------------------------------------
     int m_selectedSquadID;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief the position of the mouse when it is clicked
+    //----------------------------------------------------------------------------------------------------------------------
     ngl::Vec3 m_clickPosition;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a boolean determining if something is selected
+    //----------------------------------------------------------------------------------------------------------------------
     bool m_selected;
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief the current game state
+    //----------------------------------------------------------------------------------------------------------------------
     eGameState m_gameState;
 
     std::vector<UIButton*> m_buttons;

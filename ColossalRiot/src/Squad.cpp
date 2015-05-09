@@ -138,7 +138,6 @@ void Squad::update(double timeElapsed, double currentTime)
                 currentPolice->setCrosshair(m_pos);
             }
             currentPolice->setIsMoving(false);
-
         }
 
         // WALL
@@ -165,7 +164,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
     loadMatricesToShader(cam, mouseGlobalTX);
 
-    ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,120);
+    ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,12);
     ngl::VAOPrimitives::instance()->draw("squad");
 
     if(m_squadState == squadMove)
@@ -183,7 +182,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         ngl::Mat3 normalMatrix;
         ngl::Mat4 M;
         ngl::Transformation trans;
-        trans.setPosition(m_target.m_x, 0.1, m_target.m_z);
+        trans.setPosition(m_target.m_x, 0.002f, m_target.m_z);
         trans.setRotation(90.0,0.0,0.0);
 
 
@@ -197,7 +196,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
         shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
 
 
-        ngl::VAOPrimitives::instance()->createDisk("target",1.0,120);
+        ngl::VAOPrimitives::instance()->createDisk("target",1.0,12);
         ngl::VAOPrimitives::instance()->draw("target");
     }
 
@@ -218,8 +217,8 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     ngl::Mat3 normalMatrix;
     ngl::Mat4 M;
     ngl::Transformation trans;
-    trans.setPosition(m_pos.m_x, 0.2, m_pos.m_z);
-    trans.setRotation(90.0,0.0,0.0);
+    trans.setPosition(m_pos.m_x, 0.001, m_pos.m_z);
+    trans.setRotation(90.0,15.0,0.0);
 
 
     M=trans.getMatrix()*mouseGlobalTX;
