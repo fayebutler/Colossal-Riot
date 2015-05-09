@@ -5,7 +5,7 @@ makePolice = function()
    police.m_health = 150
    police.m_morale = 100
    police.m_rage = 20
-   police.m_damage = 0.1
+   police.m_damage = 1.5
 
    stateMachine.m_currentState = "patrol"
    stateMachine.m_globalState = "global"

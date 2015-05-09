@@ -1500,7 +1500,8 @@ obj/main.o: src/main.cpp /home/i7758474/NGL/include/ngl/NGLInit.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h
+		include/UISlider.h \
+		/home/i7758474/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
@@ -1941,7 +1942,8 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/UIButton.h \
 		include/Text.h \
 		include/UISlider.h \
-		include/Timer.h
+		include/Timer.h \
+		/home/i7758474/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
