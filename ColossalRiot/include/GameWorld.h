@@ -42,8 +42,13 @@ private:
 
     CellGraph* m_cellGraph;
     const char* m_cellGraphFile;
-    ngl::Obj *m_worldMesh;
-    std::string m_worldMeshFile;
+
+    ngl::Obj *m_streetMesh;
+    std::string m_streetMeshFile;
+
+    ngl::Obj *m_buildingMesh;
+    std::string m_buildingMeshFile;
+
     ngl::Obj *m_policeMesh;
     ngl::Obj *m_rioterMesh;
 
@@ -112,9 +117,13 @@ public:
     void setInitialNumberOfRioters(int _number) {m_initialNumberOfRioters = _number; }
 
     const char* getCellGraphFile() const { return m_cellGraphFile; }
-    void setCellGraphFile(const char* _file) { m_cellGraphFile = _file; }
-    std::string getWorldMeshFile() const { return m_worldMeshFile; }
-    void setWorldMeshFile(std::string _file) { m_worldMeshFile = _file; }
+    void setCellGraphFile(const char* _file) { m_cellGraphFile = _file;}
+
+    std::string getStreetMeshFile() const { return m_streetMeshFile; }
+    std::string getBuildingMeshFile() const { return m_buildingMeshFile; }
+
+    void setStreetMeshFile(std::string _file) { m_streetMeshFile = _file; }
+    void setBuildingMeshFile(std::string file) { m_buildingMeshFile = file; }
 
 };
 

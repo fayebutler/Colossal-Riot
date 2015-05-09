@@ -60,8 +60,10 @@ GameWorld::GameWorld(int _level)
      }
    }
 
-   m_worldMesh = new ngl::Obj(m_worldMeshFile); //Obj to draw, must be triangulated
-   m_worldMesh->createVAO();
+   m_streetMesh = new ngl::Obj(m_streetMeshFile); //Obj for roads, should be tris
+   m_buildingMesh = new ngl::Obj(m_buildingMeshFile); //Obj for buildings, should be tris
+   m_streetMesh->createVAO();
+   m_buildingMesh->createVAO();
 
    m_cellGraph = new CellGraph(m_cellGraphFile, 1); //Obj for cell graph, must be quads
    m_cellGraph->generateWalls();
@@ -106,7 +108,8 @@ GameWorld::~GameWorld()
    lua_close(L);
    m_rioters.clear();
    m_squads.clear();
-   delete m_worldMesh;
+   delete m_streetMesh;
+   delete m_buildingMesh;
    delete m_entityMgr;
 }
 
@@ -242,9 +245,9 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
-  m.setSpecularExponent(20.f);
-  m.loadToShader("material");
+//  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.f), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+//  m.setSpecularExponent(20.f);
+//  m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
@@ -270,8 +273,19 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
+  ngl::Material a(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  a.setSpecularExponent(20.f);
+  a.loadToShader("material");
   loadMatricesToShader(cam, mouseGlobalTX);
-  m_worldMesh->draw();
+  m_streetMesh->draw();
+
+  ngl::Material b(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.4f,0.4f,0.4f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  b.setSpecularExponent(20.f);
+  b.loadToShader("material");
+  loadMatricesToShader(cam, mouseGlobalTX);
+
+  m_buildingMesh->draw();
+
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
@@ -326,7 +340,10 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_initialNumberOfRioters", &GameWorld::getInitialNumberOfRioters, &GameWorld::setInitialNumberOfRioters)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
-            .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+
+            .addProperty("m_streetMeshFile", &GameWorld::getStreetMeshFile, &GameWorld::setStreetMeshFile)
+            .addProperty("m_buildingMeshFile", &GameWorld::getBuildingMeshFile, &GameWorld::setBuildingMeshFile)
+
             .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
         .endClass();
 
