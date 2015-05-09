@@ -32,9 +32,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 
     m_rioterInfluence = 0.0;
 
-
     Vehicle::setMaxSpeed(2);
-//    Vehicle::setMaxForce(4);
 
 
 }
@@ -65,7 +63,7 @@ void Police::update(double timeElapsed, double currentTime)
   int nearbyRioters = m_neighbourRioterIDs.size();
   m_rioterInfluence = 0.0;
 
-  //std::cout<<" MAX SPEED "<<getMaxSpeed()<<std::endl;
+
   for (int i=0; i<nearbyRioters; i++)
   {
       Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
@@ -229,7 +227,7 @@ void Police::squadCohesion(double weight)
 {
     if(weight <= 0.0)
     {
-      //std::cout<<" squad cohesion off "<<std::endl;
+
       Vehicle::Steering()->SquadCohesionOff();
     }
     else
@@ -238,14 +236,14 @@ void Police::squadCohesion(double weight)
         double distance = fabs(toSquad.length());
 
         weight = (weight*distance*1.5f)/m_squadRadius;
-        //std::cout<<" squad cohesion weight "<<weight<<std::endl;
+
 
         Vehicle::setSquadCrosshair(m_squadPos);
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
     }
-    //std::cout<<" police squad cohesion called "<<std::endl;
+
 }
 
 void Police::registerClass(lua_State* _L)

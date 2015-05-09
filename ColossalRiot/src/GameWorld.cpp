@@ -117,6 +117,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_numberOfSquads; i++)
     {
+
         m_activePolice -= m_squads[i]->checkDeaths();
     }
 

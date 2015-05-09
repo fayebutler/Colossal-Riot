@@ -282,8 +282,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
     if(on(squad_cohesion))
     {
         force = SquadCohesion(m_vehicle->getSquadCrosshair(), 0.5) * m_weightSquadCohesion;
-        //std::cout<<" squadcohesion force = "<<force.m_x<<" "<<force.m_y<<" "<<force.m_z<<std::endl;
-        //std::cout<<" squadcohesion weight = "<<m_weightSquadCohesion<<std::endl;
+
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -308,8 +307,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
-    //std::cout<<" max force = "<<m_vehicle->getMaxForce()<<std::endl;
-    //std::cout<<"finish calculate"<<std::endl;
+
     return m_steeringForce;
 
 
@@ -359,7 +357,7 @@ double SteeringBehaviour::sideComponent()
 
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
 {
-    //std::cout<<" SEEK "<<std::endl;
+
     ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
 
 //    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
@@ -400,7 +398,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
 
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 {
-     //std::cout<<" ARRIVE "<<std::endl;
+
     ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
@@ -431,7 +429,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
 
 ngl::Vec3 SteeringBehaviour::Wander()
 {
-  //std::cout<<" WANDER "<<std::endl;
+
   double jitterTimeSlice = m_wanderJitter * m_vehicle->TimeElapsed() ;
 
   float randomClampedX = -1+2*((float)rand())/RAND_MAX;
@@ -497,7 +495,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
-    //std::cout<<" SEPARATION "<<std::endl;
+
   ngl::Vec3 separationForce;
   for (unsigned int i = 0; i < neighbours.size(); i++)
   {
@@ -520,7 +518,7 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
-    //std::cout<<" ALIGNEMENT "<<std::endl;
+
   if (neighbours.size() > 0)
   {
     ngl::Vec3 averageHeading;
@@ -545,7 +543,7 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
-    //std::cout<<" COHESION "<<std::endl;
+
   if (neighbours.size() > 0)
   {
       ngl::Vec3 averagePosition;
@@ -567,7 +565,7 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 
 ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos, int deceleration)
 {
-    //std::cout<<" SQUADCOHESION "<<std::endl;
+
 //    ngl::Vec3 desiredVelocity = ngl::Vec3(SquadPos - m_vehicle->getPos());
 
 //    assert(desiredVelocity.length() != 0 && "desiredVel in seek EQUALS ZERO ");
@@ -616,7 +614,7 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos, int deceleration)
 
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
-//std::cout<<" PURSUIT "<<std::endl;
+
     ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
     double relativeHeading = m_vehicle->getHeading().dot(agent->getHeading());
 
