@@ -89,7 +89,7 @@ NGLDraw::NGLDraw(int _width, int _height)
 
 
   m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
-  m_spot.setCutoff(15);
+  m_spot.setCutoff(17);
   m_spot.setInnerCutoff(10);
   m_spot.setExponent(2+1);
   m_spot.setAttenuation(1.0,0.0,0.0);
@@ -434,10 +434,6 @@ void NGLDraw::draw()
 void NGLDraw::update(double _timeElapsed, double _currentTime)
 {
   m_gameworld->Update(_timeElapsed, _currentTime);
-
-  m_ss.str(std::string());
-  m_ss << m_squadSize;
-  m_squadSizeString = m_ss.str();
 }
 
 void NGLDraw::loadMatricesToShader()
@@ -495,6 +491,9 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
   if (m_sliderSquadSize->getIsSliding() == true)
   {
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+    m_ss.str(std::string());
+    m_ss << m_squadSize;
+    m_squadSizeString = m_ss.str();
     m_sliderSquadSize->setTextString(m_squadSizeString);  
   }
 
@@ -657,6 +656,9 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
         std::cout<<"tesssssssssssssssssssssssst"<<std::endl;
         m_sliderSquadSize->setIsSliding(true);
         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+        m_ss.str(std::string());
+        m_ss << m_squadSize;
+        m_squadSizeString = m_ss.str();
         m_sliderSquadSize->setTextString(m_squadSizeString);
         std::cout<<m_sliderSquadSize<<std::endl;
         return;
@@ -805,8 +807,8 @@ void NGLDraw::doMovement(const int _x, const int _y)
         m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
     }
 
-    m_selectedSquad = NULL;
-    m_selected = false;
+//    m_selectedSquad = NULL;
+//    m_selected = false;
 }
 
 ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
