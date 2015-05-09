@@ -739,6 +739,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
   }
 
 
+
   if (closestIntersectingObstacle)
   {
     double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
