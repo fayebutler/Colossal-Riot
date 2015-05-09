@@ -39,11 +39,12 @@ end
 
 global["execute"] = function()
 
-  if stateMachine.m_currentState ~= "dead" then
+
+--  if stateMachine.m_currentState ~= "dead" then
 --    if police.m_health <= 0 then
 --        stateMachine:changeState("dead")
 --    end
-  end
+--  end
 
   if stateMachine.m_currentState ~= "home" then
     if police.m_morale <= 0 then
@@ -199,7 +200,7 @@ aggressive["enter"] = function()
    police:separation(0.5)
    police:alignment(0.0)
 
-   police:squadCohesion(0.6)
+   police:squadCohesion(0.5)
 
    police.m_rage = 70.0
 
@@ -224,7 +225,7 @@ aggressive["execute"] = function()
   else
     print("no target")
     police:wander(0.5)
-    police:squadCohesion(0.6)
+    police:squadCohesion(0.5)
   end
 
 

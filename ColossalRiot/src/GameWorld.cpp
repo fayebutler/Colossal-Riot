@@ -134,7 +134,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
 
-//            delete currentRioter;
+            delete currentRioter;
 
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
@@ -159,7 +159,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
 
     //check for empty squads
-
     for(int i=0; i<m_squads.size(); i++)
     {
         if (m_squads[i]->getSquadSize() <= 0)
@@ -169,6 +168,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_squads.erase(m_squads.begin()+i);
         }
     }
+    //std::cout<<"END CHECKING SQUAD DEATHS"<<std::endl;
 //    std::vector<ngl::Vec3> path;
 //    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
 //    currentRioter->followPath(path);

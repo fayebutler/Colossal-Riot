@@ -17,6 +17,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_mesh = _mesh;
 
     m_isMoving = false;
+    m_validPursuit = true;
 
     m_hopHeight = 0.5;
     m_hopSpeed = 0.0;
@@ -27,12 +28,11 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
 
     Vehicle::setMaxSpeed(2);
-
 
 
 }
@@ -62,6 +62,7 @@ void Police::update(double timeElapsed, double currentTime)
   // calculate influence of neighbouring rioters based on their rage
   int nearbyRioters = m_neighbourRioterIDs.size();
   m_rioterInfluence = 0.0;
+
 
   for (int i=0; i<nearbyRioters; i++)
   {
@@ -177,14 +178,27 @@ void Police::findTargetID(float _health)
 
 void Police::checkValidPursuitRange(float _dist)
 {
+    ngl::Vec3 toSquad = m_pos - m_squadPos;
+    double distSqFromEachOther = toSquad.lengthSquared();
 
-        ngl::Vec3 toSquad = m_pos - m_squadPos;
-        double distSqFromEachOther = toSquad.lengthSquared();
-
+    if (m_validPursuit)
+    {
         if(distSqFromEachOther > _dist)
         {
             m_targetID = -1;
+            m_validPursuit = false;
         }
+    }
+
+    else
+    {
+        m_validPursuit = true;
+        if(distSqFromEachOther > _dist- (_dist/4.0))
+        {
+            m_targetID = -1;
+            m_validPursuit = false;
+        }
+    }
 
 
 }
@@ -213,6 +227,7 @@ void Police::squadCohesion(double weight)
 {
     if(weight <= 0.0)
     {
+
       Vehicle::Steering()->SquadCohesionOff();
     }
     else
@@ -222,11 +237,13 @@ void Police::squadCohesion(double weight)
 
         weight = (weight*distance*1.5f)/m_squadRadius;
 
+
         Vehicle::setSquadCrosshair(m_squadPos);
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
     }
+
 }
 
 void Police::registerClass(lua_State* _L)
