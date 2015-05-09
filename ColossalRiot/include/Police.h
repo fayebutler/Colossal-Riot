@@ -49,6 +49,8 @@ public:
 
     void checkValidPursuitRange(float _dist);
 
+    void findPathHome();
+
 
 protected:
     MessageManager* m_messageMgr;

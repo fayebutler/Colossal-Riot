@@ -224,10 +224,12 @@ end
 home = {}
 home["enter"] = function()
 
+   rioter:findPathHome()
+
    rioter:wander(0.0)
    rioter:pursuit(0.0)
    rioter:evade(0.0)
-   rioter:seek(0.0)
+   rioter:seek(1.0)
    rioter:arrive(0.0)
 
    rioter:cohesion(0.0)
@@ -239,6 +241,8 @@ home["enter"] = function()
 end
 
 home["execute"] = function()
+
+  print("going home")
   rioter.m_morale = 0
 
 end
