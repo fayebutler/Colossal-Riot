@@ -53,7 +53,6 @@ void Vehicle::update(double time_elapsed)
    ngl::Vec3 acceleration = SteeringForce / m_mass;
    m_velocity += acceleration * time_elapsed;
 
-   std::cout<<" forceee "<<SteeringForce.length()<<std::endl;
     //velocity truncate by maxspeed
 
     if(m_velocity.length() > m_maxSpeed)

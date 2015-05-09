@@ -243,11 +243,9 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
-    std::cout<<" force before seek "<<m_steeringForce.length()<<std::endl;
     if(on(seek))
     {
         force = Seek(m_vehicle->getCrosshair()) * m_weightSeek;
-        std::cout<<" seek force "<<force.length()<<std::endl;
         if(!accumulateForce(m_steeringForce, force))
         {
             return m_steeringForce;
@@ -258,7 +256,6 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
         }
     }
 
-    std::cout<<"force after seek "<<m_steeringForce.length()<<std::endl;
     if(on(flee))
     {
         force = Flee(m_vehicle->getCrosshair()) * m_weightFlee;

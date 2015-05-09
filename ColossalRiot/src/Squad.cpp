@@ -292,7 +292,6 @@ void Squad::setTarget(ngl::Vec3 _target)
         m_previousState = m_squadState;
     }
 
-
     m_target = _target;
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
