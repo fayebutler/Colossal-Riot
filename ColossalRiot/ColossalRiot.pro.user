@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<!-- Written by QtCreator 3.2.0, 2015-05-09T20:20:43. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{7dda2a78-7be0-46c9-ac8b-fff38b2c0061}</value>
+=======
+<!-- Written by QtCreator 3.2.0, 2015-05-09T20:21:21. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{1c9f8cfe-56ae-4c31-b47f-aaf392462828}</value>
+>>>>>>> faye
+=======
 <!-- Written by QtCreator 3.2.0, 2015-05-09T19:17:53. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{145bd3bf-7e24-4c4f-9a2f-06b210bcb402}</value>
+>>>>>>> b07dfee37b02b85387ceae0f4e31cf88c96ba2c2
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -176,8 +192,18 @@
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ColossalRiot</value>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7758474/colossal/ColossalRiot/ColossalRiot.pro</value>
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ColossalRiot2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7715430/Colossal/colossal/ColossalRiot/ColossalRiot.pro</value>
+>>>>>>> faye
+=======
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7702155/Documents/colossal/ColossalRiot/ColossalRiot.pro</value>
+>>>>>>> b07dfee37b02b85387ceae0f4e31cf88c96ba2c2
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ColossalRiot.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>

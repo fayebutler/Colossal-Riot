@@ -193,14 +193,6 @@ CellGraph::~CellGraph()
   delete m_entityMgr;
 }
 
-void CellGraph::printCellGraph()
-{
-    for (unsigned int j =0; j< m_numberOfCells;j++)
-    {
-        m_cells[j].printCellInfo();
-    }
-}
-
 bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
 {
   //check up down left right

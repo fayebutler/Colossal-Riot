@@ -79,7 +79,7 @@ void Rioter::update(double timeElapsed, double currentTime)
 void Rioter::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-//  ngl::VAOPrimitives::instance()->draw("cube");
+ // ngl::VAOPrimitives::instance()->draw("cube");
   m_mesh->draw();
 
 }

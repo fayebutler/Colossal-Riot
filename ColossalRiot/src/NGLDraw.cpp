@@ -811,9 +811,6 @@ void NGLDraw::doMovement(const int _x, const int _y)
 
         m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
     }
-
-    m_selectedSquad = NULL;
-    m_selected = false;
 }
 
 ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
