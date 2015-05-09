@@ -59,6 +59,7 @@ private:
     int m_numberOfRiotersDead;
     int m_numberOfRiotersHome;
 
+
     lua_State *L;
 
 

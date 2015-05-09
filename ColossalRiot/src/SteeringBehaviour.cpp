@@ -366,7 +366,7 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
     else
     {
         desiredVelocity.normalize();
-        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+//        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
         return (desiredVelocity - m_vehicle->getVelocity());
     }
 
@@ -385,7 +385,7 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
     else
     {
         desiredVelocity.normalize();
-        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
+//        desiredVelocity = desiredVelocity * m_vehicle->getMaxSpeed();
         return(desiredVelocity - m_vehicle->getVelocity());
     }
 
@@ -767,7 +767,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     {
       worldAvoidanceForce.normalize();
     }
-    worldAvoidanceForce *= m_vehicle->getMaxSpeed();
+//    worldAvoidanceForce *= m_vehicle->getMaxSpeed();
 
     return worldAvoidanceForce;
    // worldAvoidanceForce.normalize();

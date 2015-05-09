@@ -72,7 +72,7 @@ GameWorld::GameWorld(int _level)
    m_policeMesh->createVAO();
    m_rioterMesh->createVAO();
 
-  for (int i = 0; i < m_initialNumberOfRioters ; ++i)
+  for (int i = 0; i < 0 ; ++i)
   {
     Rioter* newRioter = new Rioter(this, m_rioterMesh);
     newRioter->setBoudingRadius(0.5f);
@@ -222,12 +222,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         m_lose = 1;
     }
+    //need to change this with level number
     if(m_numberOfRiotersDead == m_initialNumberOfRioters)
     {
         m_lose = 1;
     }
 
-//    std::cout<<"active: "<<m_activePolice<<" available: "<<m_availablePolice<<std::endl;
 
 }
 
@@ -318,6 +318,7 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+
         .endClass();
 
     luabridge::push(L, this);
