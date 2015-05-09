@@ -73,7 +73,8 @@ NGLDraw::NGLDraw(int _width, int _height)
   // transformations
   ngl::Mat4 iv=m_cam->getViewMatrix();
   iv.transpose();
-  m_light = new ngl::Light(ngl::Vec3(-2,5,2),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.8,0.8,0.8,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+  m_light->setPosition(ngl::Vec3(0,20,50));
   //m_light->setTransform(iv);
   // load these values to the shader as well
   m_light->loadToShader("light");
@@ -184,6 +185,7 @@ void NGLDraw::endGame()
 void NGLDraw::draw()
 {
   // clear the screen and depth buffer
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
@@ -278,12 +280,11 @@ void NGLDraw::draw()
       }
 
 
-
       m_sliderSquadSize->draw();
 
       m_ss.str(std::string());
       m_ss << m_gameworld->getAvailablePolice();
-      m_textMedium->renderText(732.f, 1118.f, m_ss.str());
+      m_textMedium->renderText(740.f, 950.f, m_ss.str());
 
       break;
     }
@@ -825,8 +826,6 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
     //set world space coordinate where y = 0
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
-
-
 
     obj.m_y = 0.0;
 

@@ -339,10 +339,12 @@ end
 home = {}
 home["enter"] = function()
 
+   police:findPathHome()
+
    police:wander(0.0)
    police:pursuit(0.0)
    police:evade(0.0)
-   police:seek(0.0)
+   police:seek(1.0)
    police:arrive(0.0)
 
    police:cohesion(0.0)
@@ -354,13 +356,13 @@ home["enter"] = function()
 end
 
 home["execute"] = function()
---  print("LUA RIOTER home execute")
-  rioter.m_morale = 0
+  print("LUA RIOTER home execute")
+  --rioter.m_morale = 0
 end
 
---home["exit"] = function()
---  print("LUA RIOTER home exit")
---end
+home["exit"] = function()
+  print("LUA RIOTER home exit")
+end
 
 
 

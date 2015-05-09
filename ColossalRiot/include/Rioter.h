@@ -36,7 +36,7 @@ public:
     ngl::Vec3 getProtestPos()const{return m_protestPos;}
     void setProtestPos(ngl::Vec3 newPos) {m_protestPos = newPos;}
 
-
+    void findPathHome();
 
 protected:
 
@@ -47,6 +47,7 @@ protected:
     ngl::Vec3 m_protestPos;
 
     float m_policeInfluence;
+
 };
 
 #endif // RIOTER_H

@@ -1,4 +1,5 @@
 #include "Police.h"
+#include "GameWorld.h"
 #include <math.h>
 
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
@@ -31,7 +32,8 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_rioterInfluence = 0.0;
 
     Vehicle::setMaxSpeed(2);
-//    Vehicle::setMaxForce(4);
+
+
 
 }
 
@@ -187,6 +189,13 @@ void Police::checkValidPursuitRange(float _dist)
 
 }
 
+void Police::findPathHome()
+{
+    m_homePos = m_world->getPoliceStation();
+    findPath(m_homePos);
+    m_hasPathHome = true;
+}
+
 bool Police::handleMessage(const Message& _message)
 {
   return Agent::handleMessage(_message);
@@ -233,6 +242,7 @@ void Police::registerClass(lua_State* _L)
                 .addFunction("attack", &Police::attack)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
+                .addFunction("findPathHome", &Police::findPathHome)
                 .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
                 .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
 //                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)

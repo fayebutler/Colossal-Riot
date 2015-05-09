@@ -14,6 +14,7 @@ GameWorld::GameWorld(int _level)
    m_lose = 0;
 
    m_numberOfRiotersDead = 0;
+
    m_numberOfRiotersHome = 0;
 
    m_activePolice = 0;
@@ -26,7 +27,6 @@ GameWorld::GameWorld(int _level)
      {
        luabridge::LuaRef startLevel = luabridge::getGlobal(L, "level1");
        startLevel();
-
        break;
      }
      case 2 :
@@ -95,6 +95,12 @@ GameWorld::GameWorld(int _level)
   m_numberOfRioters = m_rioters.size();
 }
 
+void GameWorld::setPoliceStation(float _x, float _y, float _z)
+{
+    ngl::Vec3 pos = ngl::Vec3(_x,_y,_z);
+    m_policeStation = pos;
+}
+
 GameWorld::~GameWorld()
 {
    lua_close(L);
@@ -127,7 +133,9 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         {
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
-            delete currentRioter;
+
+//            delete currentRioter;
+
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
@@ -154,13 +162,11 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_squads.size(); i++)
     {
-//        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
         if (m_squads[i]->getSquadSize() <= 0)
         {
             m_entityMgr->removeEntity(m_squads[i]);
             delete m_squads[i];
             m_squads.erase(m_squads.begin()+i);
-//            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
 //    std::vector<ngl::Vec3> path;
@@ -237,8 +243,8 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.5f,0.5f,0.5f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
-  m.setSpecularExponent(5.f);
+  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  m.setSpecularExponent(20.f);
   m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -278,6 +284,8 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
   }
+
+
 }
 
 void GameWorld::createSquad(int size)
@@ -288,7 +296,7 @@ void GameWorld::createSquad(int size)
     }
     else
     {
-        Squad* newSquad = new Squad(this, size, ngl::Vec3(13.0f,0.0f,5.0f), 0.5f, m_policeMesh);
+        Squad* newSquad = new Squad(this, size, m_policeStation, 0.5f, m_policeMesh);
         m_squads.push_back(newSquad);
 
         m_activePolice += size;
@@ -320,6 +328,7 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
             .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+            .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
 
         .endClass();
 

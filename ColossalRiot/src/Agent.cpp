@@ -6,6 +6,8 @@ Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0
 
   m_targetID = -1;
 
+  m_hasPathHome = false;
+
 }
 
 Agent::~Agent()
@@ -135,6 +137,7 @@ void Agent::alignment(double weight)
       Vehicle::Steering()->setAlignmentWeight(weight);
     }
 }
+
 
 bool Agent::handleMessage(const Message& _message)
 {
