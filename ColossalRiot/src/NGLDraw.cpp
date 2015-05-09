@@ -436,17 +436,11 @@ void NGLDraw::draw()
       break;
     }
   }
-//m_spot.aim(ngl::Vec4(0.0,10,0.0,0.0)*m_cam->getVPMatrix().inverse());
-//  m_spot.loadToShader("spotLight");
 }
 
-void NGLDraw::update(double timeElapsed, double currentTime)
+void NGLDraw::update(double _timeElapsed, double _currentTime)
 {
-  m_gameworld->Update(timeElapsed, currentTime);
-
-  m_ss.str(std::string());
-  m_ss << m_squadSize;
-  m_squadSizeString = m_ss.str();
+  m_gameworld->Update(_timeElapsed, _currentTime);
 }
 
 void NGLDraw::loadMatricesToShader()
@@ -481,8 +475,8 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_origYPos=_event.y;
 
     m_cam->move(INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffX,0,INCREMENT * (abs(m_modelPos.m_y-cameraHeight+1)*0.05) * diffZ);
-    float cameraLimitX = (50.0);
-    float cameraLimitZ = (50.0);
+    float cameraLimitX = (m_gameworld->getCellGraph()->getMapBounds()[1]);
+    float cameraLimitZ = (m_gameworld->getCellGraph()->getMapBounds()[3]);
     if(m_cam->getEye().m_x> cameraLimitX)
     {
         m_cam->setEye(ngl::Vec3(cameraLimitX,m_cam->getEye().m_y,m_cam->getEye().m_z));
@@ -504,6 +498,9 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
   if (m_sliderSquadSize->getIsSliding() == true)
   {
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+    m_ss.str(std::string());
+    m_ss << m_squadSize;
+    m_squadSizeString = m_ss.str();
     m_sliderSquadSize->setTextString(m_squadSizeString);  
   }
 
@@ -665,8 +662,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         m_sliderSquadSize->setIsSliding(true);
         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
+        m_ss.str(std::string());
+        m_ss << m_squadSize;
+        m_squadSizeString = m_ss.str();
         m_sliderSquadSize->setTextString(m_squadSizeString);
-        std::cout<<m_sliderSquadSize<<std::endl;
         return;
       }
 
@@ -751,8 +750,6 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
-
-    std::cout<<" MOUSE CLICK = "<<_x<<" "<<_y<<std::endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -841,7 +838,6 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
     ngl::Vec4 near(tmp.m_x,tmp.m_y,-1.0f,1.0f);
     ngl::Vec4 far(tmp.m_x,tmp.m_y,1.0f,1.0f);
-
     //get world point on near and far clipping planes
     ngl::Vec4 obj_near=inverse*near;
     ngl::Vec4 obj_far=inverse*far;
@@ -913,7 +909,7 @@ void NGLDraw::initialiseUI()
 
   m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
   m_buttons.push_back(m_buttonQuit);
 
   m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));

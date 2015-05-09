@@ -29,11 +29,11 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
 
-    Vehicle::setMaxSpeed(2);
+   Vehicle::setMaxSpeed(2);
 
 
 }

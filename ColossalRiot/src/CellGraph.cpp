@@ -240,8 +240,6 @@ void CellGraph::initializeCells(BaseGameEntity *_entity)
 }
 
 
-
-
 void CellGraph::updateCells(BaseGameEntity *_entity)
 {
   if (entityIsInCell(_entity->getCurrentCellID(), _entity) == true)
@@ -497,10 +495,9 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
         {
              endCellID = i;
              break;
-
         }
-
     }
+
     if(endCellID == -1)
     {
         std::cout<<"You have not chosen a valid position"<<std::endl;
@@ -536,8 +533,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     while (currentCellID != endCellID)
     {
 
-///////1-Update frontier:
-
     //Clear priority Q:
     priorityQueue.clear();
 
@@ -550,7 +545,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
             break;
         }
     }
-
 
     //Add perpendicular neighbours to frontierCells:
     int numberOfPerpendicularNeighbours = currentCell->getPerpendicularNeighbourCellIDs().size();
@@ -565,28 +559,19 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
                 isInMemory = true;
                 break;
             }
-
-
         }
 
         if ( isInMemory ==false)
         {
-
             frontierCells.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
             frontierMemory.push_back(currentCell->getPerpendicularNeighbourCellIDs()[i]);
         }
-
     }
 
-
-//////2-Update priorityQueue:
-    //Order frontier cells:
-    int frontierSize = frontierCells.size();
-
+    // Find the frontier cell that is closest to the destination
     float shortestDist = 10000000000.0f;
     int shortestID;
-
-    // Find the frontier cell that is closest to the destination
+    int frontierSize = frontierCells.size();
     for (int i=0; i<frontierSize;i++ )
     {
         ngl::Vec3 distance = (m_cells[frontierCells[i]].getCentre() - endCell->getCentre());
@@ -599,110 +584,58 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
     }
     priorityCell=shortestID;
 
-//    while (priorityQueue.size() < frontierSize)
-//    {
-//        float shortestDist = 10000000000.0f;
-//        int shortestID;
-
-//        for (int i=0; i<frontierCopy.size();i++ )
-//        {
-//            ngl::Vec3 distance = (m_cells[frontierCopy[i]].getCentre() - endCell->getCentre());
-
-//            if(distance.lengthSquared() <shortestDist)
-//            {
-//                shortestDist = distance.lengthSquared();
-//                shortestID = frontierCopy[i];
-//            }
-//        }
-
-//        for (std::vector<int>::iterator iter = frontierCopy.begin(); iter != frontierCopy.end(); ++iter)
-//        {
-//            if( *iter == shortestID)
-//            {
-//                frontierCopy.erase(iter);
-//                break;
-//            }
-//        }
-//        priorityCell=shortestID;
-//        break;
-//        priorityQueue.push_back(shortestID);
-//    }
-
-
-//    std::cout<<"Frontier Cells"<< std::endl;
-    for (int i = 0;i<frontierCells.size();i++)
-    {
-//        std::cout<<frontierCells[i]<<std::endl;
-
-    }
-
-//    std::cout<< "PRIORITY QUEUEUE:   "<<std::endl;
-    for (int i =0; i< priorityQueue.size();i++)
-    {
-//        std::cout<< priorityQueue[i]<<std::endl;
-    }
-
-//    std::cout<<"Frontier Memory: "<< std::endl;
-    for (int i = 0;i<frontierMemory.size();i++)
-    {
-//        std::cout<<frontierMemory[i]<<std::endl;
-
-    }
-
-
 //3-Add currentCell to SPT
   //Check the latest value of the latest SPT, if the currentCell is perpendicular then add to that SPT.
 
-bool flag = false;
+    bool flag = false;
 
-if (currentCellID != startCellID)
-{
-
-
-    for (int i = SPTs.size()-1; i >= 0; i--)
+    if (currentCellID != startCellID)
     {
-        newSPT.clear();
 
-        for ( int j = 0; j < SPTs[i].size(); j++)
+        for (int i = SPTs.size()-1; i >= 0; i--)
         {
-            Cell *SPTCell = &m_cells[SPTs[i][j]];
+            newSPT.clear();
 
-            newSPT.push_back(SPTs[i][j]);
-
-            for ( int k=0; k<SPTCell->getPerpendicularNeighbourCellIDs().size();k++)
+            for ( int j = 0; j < SPTs[i].size(); j++)
             {
-                if(flag == false)
-                {
-                    if(currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
-                    {
-                        if(j+1==SPTs[i].size())
-                        {
-                            newSPT.push_back(currentCellID);
+                Cell *SPTCell = &m_cells[SPTs[i][j]];
 
-                            if(i == SPTs.size())
+                newSPT.push_back(SPTs[i][j]);
+
+                for ( int k=0; k<SPTCell->getPerpendicularNeighbourCellIDs().size();k++)
+                {
+                    if(flag == false)
+                    {
+                        if(currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
+                        {
+                            if(j+1==SPTs[i].size())
                             {
-                                SPTs.back() = newSPT;
+                                newSPT.push_back(currentCellID);
+
+                                if(i == SPTs.size())
+                                {
+                                    SPTs.back() = newSPT;
+                                }
+                                else
+                                {
+                                    SPTs.push_back(newSPT);
+                                }
+                                flag = true;
+
+
                             }
                             else
                             {
+                                newSPT.push_back(currentCellID);
                                 SPTs.push_back(newSPT);
+                                flag = true;
                             }
-                            flag = true;
-
-
-                        }
-                        else
-                        {
-                            newSPT.push_back(currentCellID);
-                            SPTs.push_back(newSPT);
-                            flag = true;
                         }
                     }
                 }
             }
         }
     }
-}
 
 
     //Now actual search:

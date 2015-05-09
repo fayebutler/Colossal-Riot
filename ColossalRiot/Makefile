@@ -1458,6 +1458,7 @@ obj/main.o: src/main.cpp /home/i7776126/NGL/include/ngl/NGLInit.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
 		/home/i7776126/NGL/include/ngl/Light.h \
 		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		include/Rioter.h \
 		include/Agent.h \
@@ -1503,8 +1504,7 @@ obj/main.o: src/main.cpp /home/i7776126/NGL/include/ngl/NGLInit.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h \
-		/home/i7776126/NGL/include/ngl/SpotLight.h
+		include/UISlider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
@@ -1892,6 +1892,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7776126/NGL/include/ngl/Plane.h \
 		/home/i7776126/NGL/include/ngl/Light.h \
 		/home/i7776126/NGL/include/ngl/Colour.h \
+		/home/i7776126/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		/home/i7776126/NGL/include/ngl/Transformation.h \
 		/home/i7776126/NGL/include/ngl/NGLassert.h \
@@ -1945,8 +1946,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h \
-		/home/i7776126/NGL/include/ngl/SpotLight.h
+		include/UISlider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
