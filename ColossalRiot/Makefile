@@ -561,6 +561,7 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -733,6 +734,7 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -754,7 +756,8 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Squad.h
+		include/Squad.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/BaseGameEntity.o src/BaseGameEntity.cpp
 
 obj/Cell.o: src/Cell.cpp include/Cell.h \
@@ -1300,6 +1303,7 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1321,7 +1325,8 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Squad.h
+		include/Squad.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/GameWorld.o src/GameWorld.cpp
 
 obj/main.o: src/main.cpp /home/i7702804/NGL/include/ngl/NGLInit.h \
@@ -1458,6 +1463,7 @@ obj/main.o: src/main.cpp /home/i7702804/NGL/include/ngl/NGLInit.h \
 		/home/i7702804/NGL/include/ngl/Plane.h \
 		/home/i7702804/NGL/include/ngl/Light.h \
 		/home/i7702804/NGL/include/ngl/Colour.h \
+		/home/i7702804/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		include/Rioter.h \
 		include/Agent.h \
@@ -1501,6 +1507,7 @@ obj/main.o: src/main.cpp /home/i7702804/NGL/include/ngl/NGLInit.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Squad.h \
+		include/StaticEntity.h \
 		include/UIButton.h \
 		include/Text.h \
 		include/UISlider.h
@@ -1891,6 +1898,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7702804/NGL/include/ngl/Plane.h \
 		/home/i7702804/NGL/include/ngl/Light.h \
 		/home/i7702804/NGL/include/ngl/Colour.h \
+		/home/i7702804/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		/home/i7702804/NGL/include/ngl/Transformation.h \
 		/home/i7702804/NGL/include/ngl/NGLassert.h \
@@ -1919,6 +1927,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1941,10 +1950,10 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Squad.h \
+		include/StaticEntity.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h \
-		include/Timer.h
+		include/UISlider.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
@@ -2098,6 +2107,7 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2120,7 +2130,8 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		include/GameWorld.h \
 		include/Rioter.h \
 		include/CellGraph.h \
-		include/Squad.h
+		include/Squad.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Police.o src/Police.cpp
 
 obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
@@ -2274,6 +2285,7 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2296,7 +2308,8 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		include/GameWorld.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Squad.h
+		include/Squad.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Rioter.o src/Rioter.cpp
 
 obj/Squad.o: src/Squad.cpp include/Squad.h \
@@ -2451,6 +2464,7 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2472,10 +2486,157 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		include/StateMachine.h \
 		include/GameWorld.h \
 		include/Rioter.h \
-		include/CellGraph.h
+		include/CellGraph.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Squad.o src/Squad.cpp
 
-obj/StaticEntity.o: src/StaticEntity.cpp 
+obj/StaticEntity.o: src/StaticEntity.cpp include/StaticEntity.h \
+		include/BaseGameEntity.h \
+		/home/i7702804/NGL/include/ngl/Transformation.h \
+		/home/i7702804/NGL/include/ngl/Mat4.h \
+		/home/i7702804/NGL/include/ngl/Types.h \
+		/home/i7702804/NGL/include/ngl/glew.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/QGLContext \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qgl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qt_windows.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopengles2ext.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qopenglext.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qwidget.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmargins.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpalette.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcolor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qbrush.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpixmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfont.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontmetrics.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qfontinfo.h \
+		/opt/Qt/5.3/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qcursor.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qkeysequence.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qevent.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qset.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurl.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qurlquery.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qvector2d.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtouchdevice.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpaintengine.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpainter.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qtextoption.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qpen.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qglcolormap.h \
+		/opt/Qt/5.3/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		/opt/Qt/5.3/gcc_64/include/QtGui/QSurfaceFormat \
+		/opt/Qt/5.3/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7702804/NGL/include/ngl/rapidxml/rapidxml.hpp \
+		/home/i7702804/NGL/include/ngl/NGLassert.h \
+		/home/i7702804/NGL/include/ngl/Vec4.h \
+		/home/i7702804/NGL/include/ngl/Vec2.h \
+		/home/i7702804/NGL/include/ngl/Vec3.h \
+		include/EntityManager.h \
+		include/Message.h \
+		include/MessageManager.h \
+		include/Cell.h \
+		/home/i7702804/NGL/include/ngl/ShaderLib.h \
+		/home/i7702804/NGL/include/ngl/Colour.h \
+		/home/i7702804/NGL/include/ngl/Shader.h \
+		/home/i7702804/NGL/include/ngl/ShaderProgram.h \
+		/home/i7702804/NGL/include/ngl/Util.h \
+		/home/i7702804/NGL/include/ngl/Singleton.h \
+		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
+		/home/i7702804/NGL/include/ngl/Mat3.h \
+		/home/i7702804/NGL/include/ngl/NGLInit.h \
+		/home/i7702804/NGL/include/ngl/VAOPrimitives.h \
+		/home/i7702804/NGL/include/ngl/VertexArrayObject.h \
+		/home/i7702804/NGL/include/ngl/Material.h \
+		/home/i7702804/NGL/include/ngl/Camera.h \
+		/home/i7702804/NGL/include/ngl/RibExport.h \
+		/home/i7702804/NGL/include/ngl/Plane.h \
+		/home/i7702804/NGL/include/ngl/Obj.h \
+		/home/i7702804/NGL/include/ngl/Texture.h \
+		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
+		/home/i7702804/NGL/include/ngl/BBox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/StaticEntity.o src/StaticEntity.cpp
 
 obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
@@ -2630,6 +2791,7 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2652,6 +2814,7 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Squad.h \
+		include/StaticEntity.h \
 		/home/i7702804/NGL/include/ngl/Random.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 
@@ -3221,6 +3384,7 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7702804/NGL/include/ngl/Texture.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -3242,7 +3406,8 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
-		include/Squad.h
+		include/Squad.h \
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Vehicle.o src/Vehicle.cpp
 
 ####### Install

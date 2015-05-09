@@ -1,6 +1,7 @@
 #include "Police.h"
 #include "GameWorld.h"
 #include <math.h>
+#include "GameWorld.h"
 
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
@@ -28,11 +29,11 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->WallAvoidOn();
     Vehicle::Steering()->setWallAvoidWeight(0.4);
     Vehicle::Steering()->ObstacleAvoidOn();
-    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
     m_rioterInfluence = 0.0;
 
-    Vehicle::setMaxSpeed(2);
+   Vehicle::setMaxSpeed(3);
 
 
 }
@@ -73,7 +74,7 @@ void Police::update(double timeElapsed, double currentTime)
       }
   }
 
-  m_hopSpeed = m_rage/5.0;
+  m_hopSpeed = 10.f;
   m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
 
@@ -99,7 +100,7 @@ void Police::update(double timeElapsed, double currentTime)
 void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-//  ngl::VAOPrimitives::instance()->draw("cube");
+  //ngl::VAOPrimitives::instance()->draw("cube");
   m_mesh->draw();
 }
 
@@ -221,6 +222,20 @@ bool Police::handleMessage(const Message& _message)
 void Police::attack()
 {
   m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
+}
+
+void Police::death()
+{
+  for (int i = 0; i < m_world->getNumberOfRioters(); i++)
+  {
+    ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
+    double distSqToRioter = vecToRioter.lengthSquared();
+    double affectedRadius = 8.0;
+    if (distSqToRioter < affectedRadius * affectedRadius)
+    {
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgPoliceDeath, 0.f);
+    }
+  }
 }
 
 void Police::squadCohesion(double weight)

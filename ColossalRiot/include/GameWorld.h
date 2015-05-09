@@ -48,8 +48,13 @@ private:
 
     CellGraph* m_cellGraph;
     const char* m_cellGraphFile;
-    ngl::Obj *m_worldMesh;
-    std::string m_worldMeshFile;
+
+    ngl::Obj *m_streetMesh;
+    std::string m_streetMeshFile;
+
+    ngl::Obj *m_buildingMesh;
+    std::string m_buildingMeshFile;
+
     ngl::Obj *m_policeMesh;
     ngl::Obj *m_rioterMesh;
     ngl::Obj *m_treeMesh;
@@ -69,6 +74,8 @@ private:
     int m_numberOfRiotersDead;
     int m_numberOfRiotersHome;
 
+    int m_numberOfRiotersDeadToLose;
+    int m_numberOfRiotersHomeToWin;
 
     lua_State *L;
 
@@ -96,6 +103,15 @@ public:
     int getAvailablePolice() const { return m_availablePolice; }
     void setAvailablePolice(int _availablePolice) { m_availablePolice = _availablePolice; }
 
+    int getNumberOfRiotersDead() const { return m_numberOfRiotersDead; }
+    void setNumberOfRiotersDead(int _number) { m_numberOfRiotersDead = _number; }
+    int getNumberOfRiotersHome() const { return m_numberOfRiotersHome; }
+    void setNumberOfRiotersHome(int _number) { m_numberOfRiotersHome = _number; }
+    int getNumberOfRiotersDeadToLose() const { return m_numberOfRiotersDeadToLose; }
+    void setNumberOfRiotersDeadToLose(int _number) { m_numberOfRiotersDeadToLose = _number; }
+    int getNumberOfRiotersHomeToWin() const { return m_numberOfRiotersHomeToWin; }
+    void setNumberOfRiotersHomeToWin(int _number) { m_numberOfRiotersHomeToWin = _number; }
+
     ngl::Vec3 getPoliceStation() const { return m_policeStation; }
    // void setPoliceStation(ngl::Vec3 _policeStation) { m_policeStation = _policeStation; }
 
@@ -106,9 +122,11 @@ public:
 
     void squadTarget(Squad *selectedSquad, ngl::Vec3 target);
 
-    bool hasWon()const{return m_win;}
-    bool hasLost()const{return m_lose;}
 
+    bool getHasWon()const{return m_win;}
+    void setHasWon(bool _inBool) { m_win = _inBool; }
+    bool getHasLost()const{return m_lose;}
+    void setHasLost(bool _inBool) { m_lose = _inBool; }
 
     void registerLua(lua_State *_L);
 
@@ -124,9 +142,13 @@ public:
     void setNumberOfStreetLights(int _number) {m_numberOfStreetLights = _number; }
 
     const char* getCellGraphFile() const { return m_cellGraphFile; }
-    void setCellGraphFile(const char* _file) { m_cellGraphFile = _file; }
-    std::string getWorldMeshFile() const { return m_worldMeshFile; }
-    void setWorldMeshFile(std::string _file) { m_worldMeshFile = _file; }
+    void setCellGraphFile(const char* _file) { m_cellGraphFile = _file;}
+
+    std::string getStreetMeshFile() const { return m_streetMeshFile; }
+    std::string getBuildingMeshFile() const { return m_buildingMeshFile; }
+
+    void setStreetMeshFile(std::string _file) { m_streetMeshFile = _file; }
+    void setBuildingMeshFile(std::string file) { m_buildingMeshFile = file; }
 
 };
 

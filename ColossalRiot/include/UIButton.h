@@ -19,6 +19,8 @@ enum eButtonName
   buttonSquadAggressive,
   buttonSquadDefensive,
   buttonSquadPatrol,
+  buttonRioterDeadBar,
+  buttonRioterHomeBar
 };
 
 class UIButton

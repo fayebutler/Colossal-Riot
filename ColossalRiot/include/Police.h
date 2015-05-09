@@ -25,6 +25,7 @@ public:
     bool handleMessage(const Message &_message);
 
     void attack();
+    void death();
 
     void registerClass(lua_State* _L);
 

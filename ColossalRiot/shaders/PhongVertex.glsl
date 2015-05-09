@@ -33,10 +33,28 @@ struct Lights
   float quadraticAttenuation;
   float linearAttenuation;
 };
+
+struct SpotLight{
+    vec4 position;
+    vec3 direction;
+    vec4 ambient;
+    vec4 diffuse;
+    vec4 specular;
+    float spotCosCutoff;
+    float spotCosInnerCutoff;
+    float spotExponent;
+    float constantAttenuation;
+    float linearAttenuation;
+    float quadraticAttenuation;
+
+};
+
 // our material
 uniform Materials material;
 // array of lights
 uniform Lights light;
+uniform SpotLight spotLight;
+
 // direction of the lights used for shading
 out vec3 lightDir;
 // out the blinn half vector
