@@ -62,6 +62,8 @@ public:
 
   virtual bool handleMessage(const Message& _message);
 
+  bool targetWithinReach(float _reach);
+
   //STEERING FUNCTIONS
 
   void wander(double weight);

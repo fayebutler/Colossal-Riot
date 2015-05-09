@@ -84,6 +84,12 @@ void Squad::update(double timeElapsed, double currentTime)
         this->formWall();
     }
 
+
+    if(m_squadState == squadWall && m_squadState != squadMove)
+    {
+        this->formWall();
+    }
+
     // individual police loop
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
@@ -121,7 +127,6 @@ void Squad::update(double timeElapsed, double currentTime)
 
         currentPolice->update(timeElapsed, currentTime);
     }
-
 
     if(m_squadState == squadMove )
     {

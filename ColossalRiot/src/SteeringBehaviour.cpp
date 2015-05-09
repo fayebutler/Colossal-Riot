@@ -670,6 +670,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       }
     }
   }
+
   int numberOfPolice = m_vehicle->getNeighbourPoliceIDs().size();
 
   for (unsigned int i = 0; i < numberOfPolice; ++i)

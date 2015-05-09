@@ -196,7 +196,7 @@ bool Police::handleMessage(const Message& _message)
 
 void Police::attack()
 {
-  m_messageMgr->sendMessage(this->getID(),this->getTargetID(),msgAttack,0,m_damage);
+  m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
 }
 
 void Police::squadCohesion(double weight)
