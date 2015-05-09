@@ -11,6 +11,7 @@
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 #include <ngl/Obj.h>
+#include <Timer.h>
 
 
 extern "C" {
@@ -101,6 +102,7 @@ protected:
   float m_rage;
 
   ngl::Obj *m_mesh;
+  Timer* m_gameTimer;
 
 
   int m_targetID;

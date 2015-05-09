@@ -25,6 +25,7 @@ public:
     bool handleMessage(const Message &_message);
 
     void attack();
+    void death();
 
     void registerClass(lua_State* _L);
 
@@ -62,6 +63,8 @@ protected:
     int m_squadID;
 
     bool m_isMoving;
+    bool m_validPursuit;
+
     ngl::Vec3 m_blockadePosition;
 
     float m_rioterInfluence;

@@ -1,6 +1,7 @@
 #include "Police.h"
 #include "GameWorld.h"
 #include <math.h>
+#include "GameWorld.h"
 
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
@@ -17,6 +18,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_mesh = _mesh;
 
     m_isMoving = false;
+    m_validPursuit = true;
 
     m_hopHeight = 0.5;
     m_hopSpeed = 0.0;
@@ -32,7 +34,6 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     m_rioterInfluence = 0.0;
 
    Vehicle::setMaxSpeed(3);
-
 
 
 }
@@ -62,6 +63,7 @@ void Police::update(double timeElapsed, double currentTime)
   // calculate influence of neighbouring rioters based on their rage
   int nearbyRioters = m_neighbourRioterIDs.size();
   m_rioterInfluence = 0.0;
+
 
   for (int i=0; i<nearbyRioters; i++)
   {
@@ -98,7 +100,7 @@ void Police::update(double timeElapsed, double currentTime)
 void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-//  ngl::VAOPrimitives::instance()->draw("cube");
+  //ngl::VAOPrimitives::instance()->draw("cube");
   m_mesh->draw();
 }
 
@@ -177,14 +179,27 @@ void Police::findTargetID(float _health)
 
 void Police::checkValidPursuitRange(float _dist)
 {
+    ngl::Vec3 toSquad = m_pos - m_squadPos;
+    double distSqFromEachOther = toSquad.lengthSquared();
 
-        ngl::Vec3 toSquad = m_pos - m_squadPos;
-        double distSqFromEachOther = toSquad.lengthSquared();
-
+    if (m_validPursuit)
+    {
         if(distSqFromEachOther > _dist)
         {
             m_targetID = -1;
+            m_validPursuit = false;
         }
+    }
+
+    else
+    {
+        m_validPursuit = true;
+        if(distSqFromEachOther > _dist- (_dist/4.0))
+        {
+            m_targetID = -1;
+            m_validPursuit = false;
+        }
+    }
 
 
 }
@@ -209,10 +224,25 @@ void Police::attack()
   m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
 }
 
+void Police::death()
+{
+  for (int i = 0; i < m_world->getNumberOfRioters(); i++)
+  {
+    ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
+    double distSqToRioter = vecToRioter.lengthSquared();
+    double affectedRadius = 8.0;
+    if (distSqToRioter < affectedRadius * affectedRadius)
+    {
+      m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgPoliceDeath, 0.f);
+    }
+  }
+}
+
 void Police::squadCohesion(double weight)
 {
     if(weight <= 0.0)
     {
+
       Vehicle::Steering()->SquadCohesionOff();
     }
     else
@@ -222,11 +252,13 @@ void Police::squadCohesion(double weight)
 
         weight = (weight*distance*1.5f)/m_squadRadius;
 
+
         Vehicle::setSquadCrosshair(m_squadPos);
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
     }
+
 }
 
 void Police::registerClass(lua_State* _L)

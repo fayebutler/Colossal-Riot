@@ -5,7 +5,7 @@ makePolice = function()
    police.m_health = 150
    police.m_morale = 100
    police.m_rage = 20
-   police.m_damage = 0.1
+   police.m_damage = 10.0
 
    stateMachine.m_currentState = "patrol"
    stateMachine.m_globalState = "global"
@@ -39,11 +39,12 @@ end
 
 global["execute"] = function()
 
-  if stateMachine.m_currentState ~= "dead" then
+
+--  if stateMachine.m_currentState ~= "dead" then
 --    if police.m_health <= 0 then
 --        stateMachine:changeState("dead")
 --    end
-  end
+--  end
 
   if stateMachine.m_currentState ~= "home" then
     if police.m_morale <= 0 then
@@ -84,7 +85,7 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
---  print("LUA POLICE move execute")
+  print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
   end
@@ -99,6 +100,7 @@ end
 
 patrol = {}
 patrol["enter"] = function()
+
 
    police:wander(0.5)
    police:pursuit(0.0)
@@ -118,7 +120,7 @@ end
 
 patrol["execute"] = function()
 
---  print("LUA POLICE patrol execute")
+  print("LUA POLICE patrol execute")
   police:squadCohesion(0.6)
 
   if police.m_morale < 20 then
@@ -158,7 +160,7 @@ end
 
 defensive["execute"] = function()
 
---  print("LUA POLICE defensive execute")
+  print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 20.0)
   police:checkValidPursuitRange(32.0)
@@ -199,7 +201,7 @@ aggressive["enter"] = function()
    police:separation(0.5)
    police:alignment(0.0)
 
-   police:squadCohesion(0.6)
+   police:squadCohesion(0.5)
 
    police.m_rage = 70.0
 
@@ -207,7 +209,7 @@ end
 
 aggressive["execute"] = function()
 
---  print("LUA POLICE aggressive execute")
+  print("LUA POLICE aggressive execute")
 
   police:checkValidTarget(3.0, 0.0)
   police:checkValidPursuitRange(64.0)
@@ -216,7 +218,6 @@ aggressive["execute"] = function()
     police:wander(0.0)
     police:squadCohesion(0.0)
     police:separation(0.0)
-    print("pursuing")
     if(police:targetWithinReach(2.0) == true) then
         print("attacking")
         police:attack()
@@ -224,7 +225,7 @@ aggressive["execute"] = function()
   else
     print("no target")
     police:wander(0.5)
-    police:squadCohesion(0.6)
+    police:squadCohesion(0.5)
   end
 
 
@@ -261,7 +262,7 @@ end
 
 wall["execute"] = function()
 
---  print("LUA POLICE wall execute")
+  print("LUA POLICE wall execute")
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
   end
@@ -392,11 +393,11 @@ limits["check"] = function()
         police.m_rage = 0
     end
 
-    if police.m_damage > 1 then
-        police.m_damage = 1
-    end
-    if police.m_damage < 0 then
-        police.m_damage = 0
-    end
+--    if police.m_damage > 1 then
+--        police.m_damage = 1
+--    end
+--    if police.m_damage < 0 then
+--        police.m_damage = 0
+--    end
 
 end

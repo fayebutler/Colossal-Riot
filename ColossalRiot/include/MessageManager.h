@@ -10,7 +10,8 @@
 enum messageType
 {
   msgAttack,
-  msgDeath
+  msgRioterDeath,
+  msgPoliceDeath
 };
 
 class BaseGameEntity;

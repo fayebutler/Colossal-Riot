@@ -60,8 +60,10 @@ GameWorld::GameWorld(int _level)
      }
    }
 
-   m_worldMesh = new ngl::Obj(m_worldMeshFile); //Obj to draw, must be triangulated
-   m_worldMesh->createVAO();
+   m_streetMesh = new ngl::Obj(m_streetMeshFile); //Obj for roads, should be tris
+   m_buildingMesh = new ngl::Obj(m_buildingMeshFile); //Obj for buildings, should be tris
+   m_streetMesh->createVAO();
+   m_buildingMesh->createVAO();
 
    m_cellGraph = new CellGraph(m_cellGraphFile, 1); //Obj for cell graph, must be quads
    m_cellGraph->generateWalls();
@@ -72,7 +74,7 @@ GameWorld::GameWorld(int _level)
    m_policeMesh->createVAO();
    m_rioterMesh->createVAO();
 
-  for (int i = 0; i < 0 ; ++i)
+  for (int i = 0; i < m_initialNumberOfRioters ; ++i)
   {
     Rioter* newRioter = new Rioter(this, m_rioterMesh);
     newRioter->setBoudingRadius(0.5f);
@@ -106,21 +108,15 @@ GameWorld::~GameWorld()
    lua_close(L);
    m_rioters.clear();
    m_squads.clear();
-   delete m_worldMesh;
+   delete m_streetMesh;
+   delete m_buildingMesh;
    delete m_entityMgr;
 }
 
 void GameWorld::Update(double timeElapsed, double currentTime)
 {
-    //check for deaths
+    //check for deaths/homes
     m_numberOfSquads = m_squads.size();
-
-    for(int i=0; i<m_numberOfSquads; i++)
-    {
-
-        m_activePolice -= m_squads[i]->checkDeaths();
-    }
-
     m_numberOfRioters = m_rioters.size();
 
     for(int i=0; i<m_numberOfRioters; i++)
@@ -134,13 +130,14 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
 
-//            delete currentRioter;
+            delete currentRioter;
 
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
             i--;
         }
+
         //check for when rioters have left the map
         else if(currentRioter->getPos().m_z <= map_bounds[0] ||
                 currentRioter->getPos().m_z >= map_bounds[1] ||
@@ -157,23 +154,27 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         }
     }
 
-
-    //check for empty squads
-
-    for(int i=0; i<m_squads.size(); i++)
+    //check for squad deaths
+    int m_numberOfSquads = m_squads.size();
+    for(int i = 0; i < m_numberOfSquads; i++)
     {
-        if (m_squads[i]->getSquadSize() <= 0)
-        {
-            m_entityMgr->removeEntity(m_squads[i]);
-            delete m_squads[i];
-            m_squads.erase(m_squads.begin()+i);
-        }
+      Squad* currentSquad = m_squads[i];
+
+      if (currentSquad->getSquadSize() <= 0)
+      {
+          m_entityMgr->removeEntity(currentSquad);
+          delete m_squads[i];
+          m_squads.erase(m_squads.begin()+i);
+          m_numberOfSquads--;
+          i--;
+      }
+      else
+      {
+        m_activePolice -= m_squads[i]->checkDeaths();
+      }
     }
-//    std::vector<ngl::Vec3> path;
-//    path  = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
-//    currentRioter->followPath(path);
 
-
+    // update cells
 
     m_cellGraph->clearCells();
     std::map<int,BaseGameEntity*> myMap = m_entityMgr->getEntityMap();
@@ -202,11 +203,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Rioter* currentRioter = m_rioters[a];
         currentRioter->update(timeElapsed, currentTime);
-//        ngl::Vec3 target = currentRioter->findNearestExit(m_cellGraph->getExitPoints());
-//        currentRioter->findPath(ngl::Vec3(0,0,0));
-
     }
-
 
     m_numberOfSquads = m_squads.size();
 
@@ -214,38 +211,33 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     {
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
-
     }
+
 
 
     // check for win/lose states
 
-
-    if(m_numberOfRiotersHome == m_initialNumberOfRioters)
+    if(m_numberOfRiotersHome >= m_numberOfRiotersHomeToWin)
     {
         m_win = 1;
     }
-
-    if(m_availablePolice == 0 && m_activePolice == 0)
+    if(m_numberOfRiotersDead >= m_numberOfRiotersDeadToLose)
     {
         m_lose = 1;
     }
-    //need to change this with level number
-    if(m_numberOfRiotersDead == m_initialNumberOfRioters)
+    if(m_availablePolice <= 0 && m_activePolice <= 0)
     {
         m_lose = 1;
     }
-
-
 }
 
 void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
-  m.setSpecularExponent(20.f);
-  m.loadToShader("material");
+//  ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.f), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+//  m.setSpecularExponent(20.f);
+//  m.loadToShader("material");
 
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
 
@@ -271,8 +263,19 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
 
+  ngl::Material a(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  a.setSpecularExponent(20.f);
+  a.loadToShader("material");
   loadMatricesToShader(cam, mouseGlobalTX);
-  m_worldMesh->draw();
+  m_streetMesh->draw();
+
+  ngl::Material b(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.45f,0.45f,0.45f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
+  b.setSpecularExponent(20.f);
+  b.loadToShader("material");
+  loadMatricesToShader(cam, mouseGlobalTX);
+
+  m_buildingMesh->draw();
+
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
@@ -327,9 +330,11 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_initialNumberOfRioters", &GameWorld::getInitialNumberOfRioters, &GameWorld::setInitialNumberOfRioters)
             .addProperty("m_availablePolice", &GameWorld::getAvailablePolice, &GameWorld::setAvailablePolice)
             .addProperty("m_cellGraphFile", &GameWorld::getCellGraphFile, &GameWorld::setCellGraphFile)
-            .addProperty("m_worldMeshFile", &GameWorld::getWorldMeshFile, &GameWorld::setWorldMeshFile)
+            .addProperty("m_numberOfRiotersDeadToLose", &GameWorld::getNumberOfRiotersDeadToLose, &GameWorld::setNumberOfRiotersDeadToLose)
+            .addProperty("m_numberOfRiotersHomeToWin", &GameWorld::getNumberOfRiotersHomeToWin, &GameWorld::setNumberOfRiotersHomeToWin)
+            .addProperty("m_streetMeshFile", &GameWorld::getStreetMeshFile, &GameWorld::setStreetMeshFile)
+            .addProperty("m_buildingMeshFile", &GameWorld::getBuildingMeshFile, &GameWorld::setBuildingMeshFile)
             .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
-
         .endClass();
 
     luabridge::push(L, this);

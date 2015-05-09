@@ -558,6 +558,7 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -730,6 +731,7 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1297,6 +1299,7 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1500,7 +1503,8 @@ obj/main.o: src/main.cpp /home/i7715430/NGL/include/ngl/NGLInit.h \
 		include/Squad.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h
+		include/UISlider.h \
+		/home/i7715430/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
@@ -1916,6 +1920,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -1941,7 +1946,7 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/UIButton.h \
 		include/Text.h \
 		include/UISlider.h \
-		include/Timer.h
+		/home/i7715430/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
@@ -2095,6 +2100,7 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2271,6 +2277,7 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2448,6 +2455,7 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -2624,6 +2632,7 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
@@ -3215,6 +3224,7 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7715430/NGL/include/ngl/Texture.h \
 		/home/i7715430/NGL/include/ngl/AbstractMesh.h \
 		/home/i7715430/NGL/include/ngl/BBox.h \
+		include/Timer.h \
 		../lua/include/lua.h \
 		/home/i7715430/Colossal/colossal/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
