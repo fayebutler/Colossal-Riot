@@ -5,7 +5,7 @@ makeRioter = function()
    rioter.m_health = 80 + math.random(20)
    rioter.m_morale = 50 + math.random(50)
    rioter.m_rage = math.random(80)
-   rioter.m_damage = 0.1
+   rioter.m_damage = 0.5
 
    stateMachine.m_currentState = "roam"
    stateMachine.m_globalState = "global"
@@ -97,7 +97,6 @@ protest["execute"] = function()
     stateMachine:changeState("flee")
   end
 
-  rioter.m_morale = rioter.m_morale - 0.3
   rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.001);
 
 end

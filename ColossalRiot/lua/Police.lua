@@ -40,9 +40,9 @@ end
 global["execute"] = function()
 
   if stateMachine.m_currentState ~= "dead" then
-    if police.m_health <= 0 then
-        stateMachine:changeState("dead")
-    end
+--    if police.m_health <= 0 then
+--        stateMachine:changeState("dead")
+--    end
   end
 
   if stateMachine.m_currentState ~= "home" then
@@ -84,7 +84,7 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
-  print("LUA POLICE move execute")
+--  print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
   end
@@ -118,7 +118,7 @@ end
 
 patrol["execute"] = function()
 
-  print("LUA POLICE patrol execute")
+--  print("LUA POLICE patrol execute")
   police:squadCohesion(0.6)
 
   if police.m_morale < 20 then
@@ -158,7 +158,7 @@ end
 
 defensive["execute"] = function()
 
-  print("LUA POLICE defensive execute")
+--  print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 20.0)
   police:checkValidPursuitRange(32.0)
@@ -207,7 +207,7 @@ end
 
 aggressive["execute"] = function()
 
-  print("LUA POLICE aggressive execute")
+--  print("LUA POLICE aggressive execute")
 
   police:checkValidTarget(3.0, 0.0)
   police:checkValidPursuitRange(64.0)
@@ -216,7 +216,6 @@ aggressive["execute"] = function()
     police:wander(0.0)
     police:squadCohesion(0.0)
     police:separation(0.0)
---    police.m_maxSpeed = 5
     print("pursuing")
     if(police:targetWithinReach(2.0) == true) then
         print("attacking")
@@ -262,7 +261,7 @@ end
 
 wall["execute"] = function()
 
-  print("LUA POLICE wall execute")
+--  print("LUA POLICE wall execute")
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
   end
@@ -300,7 +299,7 @@ flee["execute"] = function()
 end
 
 flee["exit"] = function()
-  print("LUA POLICE flee exit")
+--  print("LUA POLICE flee exit")
 end
 
 
@@ -325,7 +324,7 @@ dead["enter"] = function()
 end
 
 dead["execute"] = function()
-  print("LUA POLICE dead execute")
+--  print("LUA POLICE dead execute")
   police.m_health = 0
 end
 
