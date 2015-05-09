@@ -153,13 +153,11 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     for(int i=0; i<m_squads.size(); i++)
     {
-//        std::cout<<"SQUAD SIZE "<<m_squads[i]->getSquadSize()<<std::endl;
         if (m_squads[i]->getSquadSize() <= 0)
         {
             m_entityMgr->removeEntity(m_squads[i]);
             delete m_squads[i];
             m_squads.erase(m_squads.begin()+i);
-//            std::cout<<"deleted squad, m_squad size: "<<m_squads.size()<<std::endl;
         }
     }
 //    std::vector<ngl::Vec3> path;

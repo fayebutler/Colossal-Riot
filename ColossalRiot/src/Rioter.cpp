@@ -206,6 +206,14 @@ void Rioter::protestCohesion(double weight)
     }
 }
 
+void Rioter::findPathHome()
+{
+    m_homePos = findNearestExit(m_world->getCellGraph()->getExitPoints());
+    findPath(m_homePos);
+    m_hasPathHome = true;
+}
+
+
 void Rioter::registerClass(lua_State* _L)
 {
     registerLua(_L);
@@ -216,5 +224,6 @@ void Rioter::registerClass(lua_State* _L)
                 .addFunction("death", &Rioter::death)
                 .addFunction("protestCohesion", &Rioter::protestCohesion)
                 .addFunction("getPoliceInfluence", &Rioter::getPoliceInfluence)
+                .addFunction("findPathHome", &Rioter::findPathHome)
         .endClass();
 }

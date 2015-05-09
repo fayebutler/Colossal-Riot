@@ -815,8 +815,6 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     //set world space coordinate where y = 0
     ngl::Vec3 obj(nearPoint.m_x + (dist*rayDir.m_x),nearPoint.m_y + (dist*rayDir.m_y),nearPoint.m_z + (dist*rayDir.m_z));
 
-
-
     obj.m_y = 0.0;
 
     return obj;

@@ -52,6 +52,12 @@ public:
 
   void checkValidTarget(float _dist, float _health);
 
+  ngl::Vec3 getHomePos() const { return m_homePos; }
+  void setHomePos(ngl::Vec3 _val) { m_homePos = _val; }
+
+  bool getHasPathHome() const { return m_hasPathHome; }
+  void setHasPathHome(bool _val) { m_hasPathHome = _val; }
+
   float getHopHeight() const { return m_hopHeight; }
   void setHopHeight(float _val) { m_hopHeight = _val; }
 
@@ -101,6 +107,9 @@ protected:
   double m_hop;
   float m_hopHeight;
   float m_hopSpeed;
+
+  ngl::Vec3 m_homePos;
+  bool m_hasPathHome;
 
   lua_State *L;
 
