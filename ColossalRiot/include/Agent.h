@@ -118,7 +118,7 @@ public:
   ngl::Vec3 getHomePos() const { return m_homePos; }
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the position of the agent's home
-  /// @param[in] _val input to set the agent's home position
+  /// @param [in] _val input to set the agent's home position
   //----------------------------------------------------------------------------------------------------------------------
   void setHomePos(const ngl::Vec3 _val) { m_homePos = _val; }
   //----------------------------------------------------------------------------------------------------------------------
