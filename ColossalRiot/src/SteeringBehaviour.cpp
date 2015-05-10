@@ -496,10 +496,15 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
-  //const std::vector<BaseGameEntity *> &obstacles
-
-  float minDetectionLength = m_vehicle->getBoundingRadius() * 1.5;
+  float minDetectionLength = m_vehicle->getDetectionRadius();
   float detectionLength = minDetectionLength + ((m_vehicle->getSpeed() / m_vehicle->getMaxSpeed()) * minDetectionLength);
+  std::cout<<"min length     "<<minDetectionLength<<std::endl;
+  std::cout<<"speed     "<<m_vehicle->getSpeed()<<std::endl;
+  std::cout<<"max speed "<<m_vehicle->getMaxSpeed()<<std::endl;
+  std::cout<<"detectionLength = "<<detectionLength<<std::endl;
+
+
+  //detectionLength = 5.f;
 
   BaseGameEntity* closestIntersectingObstacle = NULL;
   double distanceToCIO = 99999.9;
@@ -587,7 +592,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
   if (closestIntersectingObstacle)
   {
-    double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
+    double mult = 2.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
     ngl::Vec3 avoidanceForce;
 
     if (localPosOfCIO.m_z >= 0)
@@ -635,9 +640,13 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     }
     else
     {
-      worldAvoidanceForce.normalize();
+      //worldAvoidanceForce.normalize();
     }
+    std::cout<<"world = "<<worldAvoidanceForce.m_x<<" "<<worldAvoidanceForce.m_y<<" "<<worldAvoidanceForce.m_z<<" "<<std::endl;
+
+   // return avoidanceForce;
     return worldAvoidanceForce;
+
   }
   return ngl::Vec3(0.f, 0.f, 0.f);
 }
@@ -702,7 +711,6 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
       ngl::Vec3 overShoot = feelers[i] - closestIntersectPoint;
       ngl::Vec3 reverseOverShoot = currentClosestWallNormal * overShoot.length();
       wallAvoidanceForce = reverseOverShoot;
-
     }
   }
   return wallAvoidanceForce;

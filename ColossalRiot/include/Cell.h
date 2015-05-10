@@ -34,7 +34,7 @@ private:
 public:
 
     Cell();
-    Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs,std::vector<int> _perpendicularCellIDs);
+    Cell(int _ID, std::vector <ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs);
     void printCellInfo();
 
     std::vector<int> getNeighbourCellIDs();

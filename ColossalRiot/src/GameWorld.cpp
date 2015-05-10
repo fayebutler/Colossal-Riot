@@ -104,11 +104,11 @@ GameWorld::GameWorld(int _level)
   for (int i = 0; i < m_numberOfTrees ; ++i)
   {
     StaticEntity* newTree = new StaticEntity(this, ngl::Vec3(0,0,0),ngl::Vec3(0.0f,360*((float)rand()/RAND_MAX),0.0f),1.0,obstacleTree,m_treeMesh);
-    newTree->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+    newTree->setPos(ngl::Vec3((-25+50*((float)rand())/RAND_MAX)*3.0, 0.f, (-25+50*((float)rand())/RAND_MAX)*3.0));
     m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newTree->getID()));
     while (newTree->getCurrentCellID() < 0)
     {
-      newTree->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
+      newTree->setPos(ngl::Vec3((-25+50*((float)rand())/RAND_MAX)*3.0, 0.f, (-25+50*((float)rand())/RAND_MAX)*3.0));
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newTree->getID()));
     }
     m_obstacles.push_back(newTree);
@@ -424,8 +424,14 @@ void GameWorld::registerLua(lua_State* _L)
             .addProperty("m_streetMeshFile", &GameWorld::getStreetMeshFile, &GameWorld::setStreetMeshFile)
             .addProperty("m_buildingMeshFile", &GameWorld::getBuildingMeshFile, &GameWorld::setBuildingMeshFile)
             .addFunction("setPoliceStation", &GameWorld::setPoliceStation)
+            .addFunction("addProtestPosition", &GameWorld::addProtestPosition)
         .endClass();
 
     luabridge::push(L, this);
     lua_setglobal(L, "gameWorld");
+}
+
+void GameWorld::addProtestPosition(float _x, float _y, float _z)
+{
+  m_protestPositions.push_back(ngl::Vec3(_x,_y,_z));
 }

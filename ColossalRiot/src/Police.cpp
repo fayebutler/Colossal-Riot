@@ -31,6 +31,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
+  Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
   m_rioterInfluence = 0.0;
 
@@ -236,7 +237,7 @@ void Police::death()
   {
     ngl::Vec3 vecToRioter = m_world->getRioters()[i]->getPos() - m_pos;
     double distSqToRioter = vecToRioter.lengthSquared();
-    double affectedRadius = 8.0;
+    double affectedRadius = 3.0;
     if (distSqToRioter < affectedRadius * affectedRadius)
     {
       m_messageMgr->sendMessage(this->getID(), m_world->getRioters()[i]->getID(), msgPoliceDeath, 0.f);

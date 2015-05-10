@@ -35,13 +35,16 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   luabridge::LuaRef makeRioter = luabridge::getGlobal(L, "makeRioter");
   makeRioter();
 
+  m_policeInfluence = 0.0;
+
+  m_protestPositions = m_world->getProtestPositions();
+
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
+  Vehicle::Steering()->setObstacleAvoidWeight(0.6);
 
-  m_policeInfluence = 0.0;
 
-  m_protestPos = ngl::Vec3(0,0,0);
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -217,16 +220,25 @@ void Rioter::death()
 //----------------------------------------------------------------------------------------------------------------------------
 void Rioter::protestCohesion(double weight)
 {
-  if(weight <= 0.0)
-  {
-    Vehicle::Steering()->SquadCohesionOff();
-  }
-  else
-  {
-    Vehicle::setSquadCrosshair(m_protestPos);
-    Vehicle::Steering()->setSquadCohesionWeight(weight);
-    Vehicle::Steering()->SquadCohesionOn();
-  }
+    if(weight <= 0.0)
+    {
+      Vehicle::Steering()->SquadCohesionOff();
+    }
+    else
+    {
+      if(m_protestPositions.size()>0)
+      {
+        ngl::Vec3 protestPos = Vehicle::findNearestExit(m_protestPositions);
+        Vehicle::setSquadCrosshair(protestPos);
+      }
+      else
+      {
+        Vehicle::setSquadCrosshair(ngl::Vec3(0.0,0.0,0.0));
+      }
+        Vehicle::Steering()->setSquadCohesionWeight(weight);
+
+        Vehicle::Steering()->SquadCohesionOn();
+    }
 }
 
 //----------------------------------------------------------------------------------------------------------------------------

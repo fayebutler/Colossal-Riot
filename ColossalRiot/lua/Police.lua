@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- file: Police.lua "lua/Police.lua"
 -- brief: a Lua file used to edit police states and behaviour
--- author: Will Herbert
+-- author: Will Herbert & Emily Holt
 -- version: 1.0
 -- last revision: 10/05/2015 updated to add documentation and instructions
 ------------------------------------------------------------------------------------------------------------------------
@@ -96,10 +96,10 @@ end
 move = {}
 move["enter"] = function()
 
-   police:wander(0.3)
+   police:wander(0.0)
    police:pursuit(0.0)
    police:evade(0.0)
-   police:seek(10.0)
+   police:seek(1.0)
    police:arrive(0.0)
 
    police:cohesion(0.0)
@@ -189,7 +189,7 @@ defensive["execute"] = function()
 
 --  print("LUA POLICE defensive execute")
 
-  police:checkValidTarget(1.0, 20.0)
+  police:checkValidTarget(1.0, 30.0, 40.0)
   police:checkValidPursuitRange(32.0)
 
   if police:getTargetID() >= 0 then
@@ -239,7 +239,7 @@ aggressive["execute"] = function()
 
 --  print("LUA POLICE aggressive execute")
 
-  police:checkValidTarget(3.0, 0.0)
+  police:checkValidTarget(3.0, 0.0, 20.0)
   police:checkValidPursuitRange(64.0)
 
   if police:getTargetID() >= 0 then

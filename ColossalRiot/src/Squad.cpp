@@ -200,7 +200,7 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
       ngl::Mat3 normalMatrix;
       ngl::Mat4 M;
       ngl::Transformation trans;
-      trans.setPosition(m_target.m_x, 0.005f, m_target.m_z);
+      trans.setPosition(m_target.m_x, 0.011f, m_target.m_z);
       trans.setRotation(90.0,0.0,0.0);
 
 
@@ -236,7 +236,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(m_pos.m_x, 0.004, m_pos.m_z);
+  trans.setPosition(m_pos.m_x, 0.01, m_pos.m_z);
   trans.setRotation(90.0,15.0,0.0);
 
 

@@ -94,8 +94,8 @@ NGLDraw::NGLDraw(int _width, int _height)
 
 
   m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
-  m_spot.setCutoff(15);
-  m_spot.setInnerCutoff(10);
+  m_spot.setCutoff(5);
+  m_spot.setInnerCutoff(4.5);
   m_spot.setExponent(2+1);
   m_spot.setAttenuation(1.0,0.0,0.0);
   m_spot.enable();
@@ -190,16 +190,9 @@ void NGLDraw::startGame(int level)
     m_selectedSquadID = -1;
     m_spot.setPosition(ngl::Vec3(0,10,10));
 
-}
-
-void NGLDraw::endGame()
-{
-    m_gameTimer.resetTimer();
-    delete m_gameworld;
-
     // reset camera
-    ngl::Vec3 from(0,cameraHeight,0);
-    ngl::Vec3 to(0,0,0);
+    ngl::Vec3 from(ngl::Vec3(m_gameworld->getPoliceStation().m_x,cameraHeight,m_gameworld->getPoliceStation().m_z));
+    ngl::Vec3 to(m_gameworld->getPoliceStation());
     ngl::Vec3 up(0,0,-1);
 
     m_cam = new ngl::Camera(from,to,up);
@@ -207,6 +200,13 @@ void NGLDraw::endGame()
 
     m_mouseGlobalTX = ngl::Mat4();
     m_modelPos = ngl::Vec3(0,0,0);
+
+}
+
+void NGLDraw::endGame()
+{
+    m_gameTimer.resetTimer();
+    delete m_gameworld;
 
 }
 
@@ -1021,7 +1021,7 @@ void NGLDraw::initialiseUI()
   m_buttons.push_back(m_buttonRioterHomeBar);
 
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 1, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
   m_ss.str(std::string());
   m_ss << m_squadSize;
