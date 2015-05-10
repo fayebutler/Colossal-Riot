@@ -230,6 +230,7 @@ class NGLDraw
     ngl::Colour m_squadSelectedColour;
 
 
+
 };
 
 
