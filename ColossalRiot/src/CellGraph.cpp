@@ -538,7 +538,7 @@ bool CellGraph::posIsInCell(ngl::Vec3 _pos)
 
 std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
-  //we use a method based on DIGSTAHGGHHGJS for path planning
+  //we use a method based on DIGSTAHGGHHGJS algoritmey for path planning
 
   //as we are using cell centres as nodes in paths, we only check perpendicular cells to avoid clipping through corners
 
@@ -652,7 +652,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
       }
     }
 
-
     // Find the frontier cell that is closest to the destination
     float shortestDist = 10000000000.0f;
     int shortestID;
@@ -700,11 +699,10 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
             {
               if(currentCellID == SPTCell->getPerpendicularNeighbourCellIDs()[k])
               {
+                newSPT.push_back(currentCellID);
                 //if currentCell is perpendicular element in the last SPT
                 if(j+1==SPTs[i].size())
                 {
-                  newSPT.push_back(currentCellID);
-
                   //if it is the last SPT, overwrite the last SPT
                   if(i == SPTs.size())
                   {
@@ -720,7 +718,6 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
                 // if currentCell is perpendicular to element in any other SPT, append newSPT
                 else
                 {
-                  newSPT.push_back(currentCellID);
                   SPTs.push_back(newSPT);
                   foundShortestTree = true;
                 }
