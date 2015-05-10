@@ -108,6 +108,11 @@ void BaseGameEntity::addPoliceID(int _ID)
     m_neighbourPoliceIDs.push_back(_ID);
 }
 
+void BaseGameEntity::addObstacleID(int _ID)
+{
+    m_neighbourObstacleIDs.push_back(_ID);
+}
+
 void BaseGameEntity::addRioterID(int _ID)
 {
     m_neighbourRioterIDs.push_back(_ID);
@@ -117,5 +122,6 @@ void BaseGameEntity::clearAgentIDs()
 {
     m_neighbourPoliceIDs.clear();
     m_neighbourRioterIDs.clear();
+    m_neighbourObstacleIDs.clear();
 }
 
