@@ -1,7 +1,52 @@
--- set up initial police variables
+------------------------------------------------------------------------------------------------------------------------
+-- file: Police.lua "lua/Police.lua"
+-- brief: a Lua file used to edit police states and behaviour
+-- author: Will Herbert
+-- version: 1.0
+-- last revision: 10/05/2015 updated to add documentation and instructions
+------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------
+-- police properties exposed from C++
+-- m_isMoving                   = gets and sets if the police are moving
+--
+-- police functions exposed from C++
+-- attack()                     = attacks the current target
+-- death()                      = calls the death message of the entity
+-- getRioterInfluence()         = gets the influence from nearby rioters
+-- squadCohesion(float)         = sets the weight of how much squad members group together
+-- findPathHome                 = gives the police a path home
+-- checkValidPursuitRage(float) = checks if the policeman is within a range to the squad
+--
+-- state machine properties exposed from C++
+-- m_currentState               = the current state of the policeman's state machine
+-- m_previousState              = the previous state of the policeman's state machine
+-- m_globalState                = the global state of the policeman's state machine
+--
+-- state machine functions exposed from C++
+-- changeState("")              = changes the state machine of the policeman to a new state
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+-- template state
+------------------------------------------------------------------------------------------------------------------------
+--STATE = {}
+--STATE["enter"] = function()
+--
+--end
+--
+--STATE["execute"] = function()
+--
+--end
+--
+--STATE["exit"] = function()
+--
+--end
+
+------------------------------------------------------------------------------------------------------------------------
+-- set up initial policeman variables
+------------------------------------------------------------------------------------------------------------------------
 makePolice = function()
-
    police.m_health = 80 + math.random(20)
    police.m_morale = 100
    police.m_rage = 20
@@ -9,36 +54,17 @@ makePolice = function()
 
    stateMachine.m_currentState = "patrol"
    stateMachine.m_globalState = "global"
-
 end
 
 
-
--- TEMPLATE STATE
-
-STATE = {}
-STATE["enter"] = function()
-end
-
-STATE["execute"] = function()
-  if CONDITION then
-    stateMachine:changeState(NEWSTATE)
-  end
-end
-
-STATE["exit"] = function()
-end
-
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- global state
-
+------------------------------------------------------------------------------------------------------------------------
 global = {}
 global["enter"] = function()
 end
 
 global["execute"] = function()
-
 
 --  if stateMachine.m_currentState ~= "dead" then
 --    if police.m_health <= 0 then
@@ -64,9 +90,9 @@ global["exit"] = function()
 end
 
 
-
+------------------------------------------------------------------------------------------------------------------------
 -- move state
-
+------------------------------------------------------------------------------------------------------------------------
 move = {}
 move["enter"] = function()
 
@@ -96,8 +122,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- patrol state
-
+------------------------------------------------------------------------------------------------------------------------
 patrol = {}
 patrol["enter"] = function()
 
@@ -136,8 +163,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- defensive state
-
+------------------------------------------------------------------------------------------------------------------------
 defensive = {}
 defensive["enter"] = function()
 
@@ -185,8 +213,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- aggressive state
-
+------------------------------------------------------------------------------------------------------------------------
 aggressive = {}
 aggressive["enter"] = function()
 
@@ -238,8 +267,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- wall state
-
+------------------------------------------------------------------------------------------------------------------------
 wall = {}
 wall["enter"] = function()
 
@@ -272,8 +302,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- flee state
-
+------------------------------------------------------------------------------------------------------------------------
 flee = {}
 flee["enter"] = function()
 
@@ -304,8 +335,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- dead state
-
+------------------------------------------------------------------------------------------------------------------------
 dead = {}
 dead["enter"] = function()
 
@@ -334,8 +366,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- home state
-
+------------------------------------------------------------------------------------------------------------------------
 home = {}
 home["enter"] = function()
 
@@ -366,8 +399,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- limits
-
+------------------------------------------------------------------------------------------------------------------------
 limits = {}
 limits["check"] = function()
 
@@ -392,11 +426,10 @@ limits["check"] = function()
         police.m_rage = 0
     end
 
---    if police.m_damage > 1 then
---        police.m_damage = 1
---    end
---    if police.m_damage < 0 then
---        police.m_damage = 0
---    end
-
+    if police.m_damage > 1 then
+        police.m_damage = 10.0
+    end
+    if police.m_damage < 0 then
+        police.m_damage = 0
+    end
 end

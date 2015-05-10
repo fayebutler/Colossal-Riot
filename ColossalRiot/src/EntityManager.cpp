@@ -1,51 +1,43 @@
+//----------------------------------------------------------------------------------------------------------------------
+/// @file EntityManager.cpp
+/// @brief A manager monostate class that stores all base game entities with a corresponding ID number
+//----------------------------------------------------------------------------------------------------------------------
+
 #include "EntityManager.h"
 
-typedef std::map<int, BaseGameEntity*> EntityMap;
-EntityMap EntityManager::m_entityMap;
+EntityMap EntityManager::s_entityMap;
 
+//----------------------------------------------------------------------------------------------------------------------
 EntityManager::EntityManager()
 {
-
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 EntityManager::~EntityManager()
 {
-//    m_entityMap.clear();
-//    std::cout<<"DELETING MAP: SIZE- "<<getSize()<<std::endl;
 }
 
-//template <typename Type>
+//----------------------------------------------------------------------------------------------------------------------
 void EntityManager::registerEntity(BaseGameEntity* _newEntity)
 {
-  EntityManager::m_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
+  EntityManager::s_entityMap.insert(std::make_pair(_newEntity->getID(), _newEntity));
 }
 
-EntityManager::EntityMap EntityManager::getEntityMap()
-{
-  return m_entityMap;
-}
-
+//----------------------------------------------------------------------------------------------------------------------
 BaseGameEntity* EntityManager::getEntityFromID(int _ID)const
 {
-  EntityMap::const_iterator entity = m_entityMap.find(_ID);
-
-  assert ( (entity !=  m_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID ");
-
+  EntityMap::const_iterator entity = s_entityMap.find(_ID);
+  assert ( (entity !=  s_entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID ");
   return (BaseGameEntity*)entity->second;
 }
 
-//template <typename Type>
+//----------------------------------------------------------------------------------------------------------------------
 void EntityManager::removeEntity(BaseGameEntity* _entity)
 {
-  m_entityMap.erase(m_entityMap.find(_entity->getID()));
-}
-
-int EntityManager::getSize()
-{
-    return m_entityMap.size();
+  s_entityMap.erase(s_entityMap.find(_entity->getID()));
 }
 
 void EntityManager::clearMap()
 {
-    m_entityMap.clear();
+    s_entityMap.clear();
 }

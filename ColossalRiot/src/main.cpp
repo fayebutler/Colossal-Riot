@@ -175,10 +175,9 @@ int main()
     }
     else if(ngldraw.getGameState() == gamePlay)
     {
-      timeElapsed=gameTimer.timeElapsed();
+      gameTimer.calculateTimeElapsed();
+      timeElapsed = gameTimer.getTimeElapsed();
       currentTime=gameTimer.getCurrentTime();
-
-//      std::cout<<"------------- TICK -------------"<<std::endl;
       std::cout<<"currentTime "<<currentTime<<std::endl;
 
       ngldraw.update(timeElapsed,currentTime);
