@@ -201,7 +201,7 @@ void Agent::setTargetID(int _val)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void Agent::checkValidTarget(float _dist, float _health)
+void Agent::checkValidTarget(float _dist, float _health, float _rage)
 {
   if(m_targetID >= 0)
   {
@@ -213,7 +213,7 @@ void Agent::checkValidTarget(float _dist, float _health)
       ngl::Vec3 toEntity = m_pos - target->getPos();
       double distSqFromEachOther = toEntity.lengthSquared();
       // change target
-      if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health)
+      if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health || target->getRage() < _rage)
       {
         findTargetID(_health);
       }

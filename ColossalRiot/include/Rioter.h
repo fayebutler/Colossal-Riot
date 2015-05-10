@@ -112,15 +112,11 @@ public:
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Get the protest position
-  /// @return Vec3: the vector of the protest position
+  /// @return std::vector<Vec3>: a vector of possible protest positions
   //----------------------------------------------------------------------------------------------------------------------------
-  ngl::Vec3 getProtestPos()const{return m_protestPos;}
+  std::vector<ngl::Vec3> getProtestPositions()const{return m_protestPositions;}
 
-  //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief Set the protest position
-  /// @param[in] newPos: vector of the new protest position
-  //----------------------------------------------------------------------------------------------------------------------------
-  void setProtestPos(ngl::Vec3 newPos) {m_protestPos = newPos;}
+
 
 protected:
   //----------------------------------------------------------------------------------------------------------------------------
@@ -134,9 +130,9 @@ protected:
   StateMachine<Rioter>* m_stateMachine;
 
   //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief Vector to contain the protest position
+  /// @brief Vector to contain the potential protest positions
   //----------------------------------------------------------------------------------------------------------------------------
-  ngl::Vec3 m_protestPos;
+  std::vector<ngl::Vec3> m_protestPositions;
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Float to hold the amount of police influence

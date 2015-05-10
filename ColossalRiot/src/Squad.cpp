@@ -22,7 +22,9 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
 
   m_previousState = squadPatrol;
 
-  m_squadColour = ngl::Colour(0.0f,0.5f,0.5f,1.0f);
+  m_squadDrawColour = ngl::Colour(0.0f, 0.25f, 0.6f);
+  m_squadColour = ngl::Colour(0.0f, 0.25f, 0.6f);
+  m_squadSelectedColour = m_squadColour*2.0;
 
   m_squadRadius = squadSize*m_boundingRadius;
   m_mesh = _mesh;
@@ -188,10 +190,9 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
     (*shader)["Phong"]->use();
-
     ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
     m.setSpecularExponent(5.f);
-    m.setDiffuse(ngl::Colour(m_squadColour.m_r+0.3f,m_squadColour.m_g+0.3f,m_squadColour.m_b+0.3f,m_squadColour.m_a));
+    m.setDiffuse(ngl::Colour(m_squadDrawColour.m_r+0.3f,m_squadDrawColour.m_g+0.3f,m_squadDrawColour.m_b+0.3f,m_squadDrawColour.m_a));
     m.loadToShader("material");
 
     ngl::Mat4 MV;
@@ -226,7 +227,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(m_squadColour));
+  m.setDiffuse(ngl::Colour(m_squadDrawColour));
   m.loadToShader("material");
 
   ngl::Mat4 MV;
