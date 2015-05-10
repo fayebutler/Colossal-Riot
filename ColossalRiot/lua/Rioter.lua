@@ -40,7 +40,7 @@
 --end
 
 ------------------------------------------------------------------------------------------------------------------------
--- set up initial policeman variables
+-- set up initial rioter variables
 ------------------------------------------------------------------------------------------------------------------------
 makeRioter = function()
    rioter.m_health = 80 + math.random(20)
@@ -50,6 +50,7 @@ makeRioter = function()
 
    stateMachine.m_currentState = "roam"
    stateMachine.m_globalState = "global"
+
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -95,15 +96,15 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.5)
+   rioter:protestCohesion(0.3)
 
 end
 
 protest["execute"] = function()
 
-  rioter:cohesion(0.02*rioter.m_rage)
+  rioter:cohesion(0.01*rioter.m_rage)
 
-  rioter:checkValidTarget(3.0, 0.0)
+  rioter:checkValidTarget(3.0, 0.0, 0.0)
 
   if rioter:getTargetID() >= 0 then
     rioter:wander(0.0)
@@ -146,7 +147,7 @@ roam["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.0)
+   rioter:protestCohesion(0.1)
 
 end
 
@@ -192,7 +193,7 @@ end
 
 flee["execute"] = function()
 
-  rioter:checkValidTarget(1.0, 50.0)
+  rioter:checkValidTarget(1.0, 50.0, 0.0)
 
   if rioter:getTargetID() < 0 then
     stateMachine:changeState("protest")

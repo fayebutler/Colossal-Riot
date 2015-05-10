@@ -67,7 +67,7 @@ public:
 
   virtual void findTargetID(float _health) = 0;
 
-  void checkValidTarget(float _dist, float _health);
+  void checkValidTarget(float _dist, float _health, float _rage);
 
   ngl::Vec3 getHomePos() const { return m_homePos; }
   void setHomePos(ngl::Vec3 _val) { m_homePos = _val; }

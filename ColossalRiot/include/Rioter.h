@@ -33,8 +33,8 @@ public:
 
     float getPoliceInfluence()const{return m_policeInfluence;}
 
-    ngl::Vec3 getProtestPos()const{return m_protestPos;}
-    void setProtestPos(ngl::Vec3 newPos) {m_protestPos = newPos;}
+    //ngl::Vec3 getProtestPos()const{return m_protestPos;}
+    //void setProtestPos(ngl::Vec3 newPos) {m_protestPos = newPos;}
 
     void findPathHome();
 
@@ -44,7 +44,7 @@ protected:
 //    MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
 
-    ngl::Vec3 m_protestPos;
+    std::vector<ngl::Vec3> m_protestPositions;
 
     float m_policeInfluence;
 

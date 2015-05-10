@@ -30,10 +30,10 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
     Vehicle::Steering()->ObstacleAvoidOn();
     Vehicle::Steering()->setObstacleAvoidWeight(1.0);
 
-
      m_policeInfluence = 0.0;
 
-     m_protestPos = ngl::Vec3(0,0,0);
+     m_protestPositions = m_world->getProtestPositions();
+
 }
 
 Rioter::~Rioter()
@@ -212,8 +212,15 @@ void Rioter::protestCohesion(double weight)
     }
     else
     {
-
-        Vehicle::setSquadCrosshair(m_protestPos);
+      if(m_protestPositions.size()>0)
+      {
+        ngl::Vec3 protestPos = Vehicle::findNearestExit(m_protestPositions);
+        Vehicle::setSquadCrosshair(protestPos);
+      }
+      else
+      {
+        Vehicle::setSquadCrosshair(ngl::Vec3(0.0,0.0,0.0));
+      }
         Vehicle::Steering()->setSquadCohesionWeight(weight);
 
         Vehicle::Steering()->SquadCohesionOn();
