@@ -213,7 +213,16 @@ void Police::findPathHome()
 
 bool Police::handleMessage(const Message& _message)
 {
-  return Agent::handleMessage(_message);
+    switch(_message.m_message)
+    {
+    case msgAttack:
+      m_health -= (_message.m_extraInfo * m_timeElapsed);
+      return true;
+
+    default:
+      std::cout<<"Police: Message type not defined"<<std::endl;
+      return false;
+    }
 }
 
 

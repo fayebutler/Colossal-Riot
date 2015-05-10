@@ -173,12 +173,15 @@ bool Rioter::handleMessage(const Message& _message)
     m_morale -= 5.f;
     m_rage += 30.f;
     return true;
+    break;
   case msgPoliceDeath:
     m_morale -= 15.f;
+    break;
   case msgAttack:
     return Agent::handleMessage(_message);
+    break;
   default:
-    std::cout<<"Agent: Message type not defined"<<std::endl;
+    std::cout<<"Rioter: Message type not defined"<<std::endl;
     return false;
   }
 }

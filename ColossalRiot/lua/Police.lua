@@ -2,7 +2,7 @@
 
 makePolice = function()
 
-   police.m_health = 150
+   police.m_health = 80 + math.random(20)
    police.m_morale = 100
    police.m_rage = 20
    police.m_damage = 10.0
@@ -46,11 +46,11 @@ global["execute"] = function()
 --    end
 --  end
 
-  if stateMachine.m_currentState ~= "home" then
-    if police.m_morale <= 0 then
-        stateMachine:changeState("home")
-    end
-  end
+--  if stateMachine.m_currentState ~= "home" then
+--    if police.m_morale <= 0 then
+--        stateMachine:changeState("home")
+--    end
+--  end
 
   if stateMachine.m_currentState ~= "move" then
     if police.m_isMoving == true then
@@ -100,7 +100,6 @@ end
 
 patrol = {}
 patrol["enter"] = function()
-
 
    police:wander(0.5)
    police:pursuit(0.0)

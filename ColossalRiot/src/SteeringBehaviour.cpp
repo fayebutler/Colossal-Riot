@@ -978,8 +978,10 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
 
             ngl::Vec3 vecToEntity = m_vehicle->getPos() - curEntity->getPos();
             double distFromEachOther = vecToEntity.length();
+            //std::cout<<"DISTANCE: "<<distFromEachOther<<std::endl;
 
             double amountOfOverLap = (m_vehicle->getBoundingRadius() + curEntity->getBoundingRadius()) - distFromEachOther;
+            //std::cout<<"OVERLAP: "<<amountOfOverLap<<std::endl;
 
             if (amountOfOverLap >= 0)
             {

@@ -39,17 +39,18 @@ end
 
 global["execute"] = function()
   if stateMachine.m_currentState ~= "dead" then
-    if rioter.m_health <= 0 then
-        stateMachine:changeState("dead")
-    end
+--    if rioter.m_health <= 0 then
+--        stateMachine:changeState("dead")
+--    end
   end
 
   if stateMachine.m_currentState ~= "home" then
-    if rioter.m_morale <= 0 then
-        stateMachine:changeState("home")
-    end
+--    if rioter.m_morale <= 0 then
+--        stateMachine:changeState("home")
+--    end
   end
 end
+
 
 global["exit"] = function()
 end
@@ -71,7 +72,7 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.5)
+   rioter:protestCohesion(1.0)
 
 end
 
@@ -89,7 +90,7 @@ protest["execute"] = function()
     end
   else
     rioter:wander(0.5)
-    rioter:separation(0.8)
+    rioter:separation(0.2)
   end
 
   if rioter.m_rage < 30 then
@@ -130,15 +131,16 @@ end
 roam["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
+    rioter.m_health = rioter.m_health - 0.1
 
   if rioter.m_rage > 60 then
     stateMachine:changeState("protest")
   end
   if rioter.m_health < 30 then
-    stateMachine:changeState("flee")
+--    stateMachine:changeState("flee")
   end
 
-  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
+--  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
 
 end
 

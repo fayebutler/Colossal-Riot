@@ -341,10 +341,12 @@ bool Squad::handleMessage(const Message& _message)
   case msgAttack:
 
     return true;
+    break;
 
   default:
-    std::cout<<"Agent: Message type not defined"<<std::endl;
+    std::cout<<"Squad: Message type not defined"<<std::endl;
     return false;
+    break;
   }
 }
 

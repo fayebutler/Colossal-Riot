@@ -182,7 +182,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         //check for rioter deaths
         if(currentRioter->getHealth()<=0.f)
         {
-            currentRioter->death();
+            //currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
 
             delete currentRioter;
@@ -210,7 +210,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     //check for squad deaths
-    int m_numberOfSquads = m_squads.size();
+
     for(int i = 0; i < m_numberOfSquads; i++)
     {
       Squad* currentSquad = m_squads[i];

@@ -47,7 +47,7 @@ gameWorld.m_cellGraphFile = "navMesh.obj"
 gameWorld.m_streetMeshFile = "streetMesh1.obj"
 gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
 
-gameWorld:setPoliceStation(2.0,0,-38)
+gameWorld:setPoliceStation(0.0,0,0.0)
   gameWorld.m_initialNumberOfRioters = 400
   gameWorld.m_availablePolice = 50
   gameWorld.m_numberOfTrees = 20
