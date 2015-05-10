@@ -3,7 +3,9 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
+#include <ngl/Random.h>
 #include "GameWorld.h"
+#include <boost/lexical_cast.hpp>
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
@@ -73,30 +75,28 @@ NGLDraw::NGLDraw(int _width, int _height)
   // transformations
   ngl::Mat4 iv=m_cam->getVPMatrix();
   iv.transpose();
-  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.3,0.3,0.4,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
-  m_light->setPosition(ngl::Vec3(0,20,50));
-  //m_light->setTransform(iv);
-  // load these values to the shader as well
-  m_light->loadToShader("light");
+//  m_light = new ngl::Light(ngl::Vec3(-20,0,0),ngl::Colour(0.3,0.3,0.4,1),ngl::Colour(1,1,1,1),ngl::POINTLIGHT );
+//  m_light->setPosition(ngl::Vec3(0,20,50));
+//  //m_light->setTransform(iv);
+//  // load these values to the shader as well
+//  m_light->loadToShader("light");
 
-
+  createLights();
   //SPOT LIGHT:
 
-  m_spot = ngl::SpotLight(ngl::Vec3(0,0,0),
-                                         ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
-  m_spot.aim(ngl::Vec4(0,10,0));
+//  m_spot = ngl::SpotLight(ngl::Vec3(0,0,0),ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
+//  m_spot.aim(ngl::Vec4(0,10,0));
 
 
-  m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
-  m_spot.setCutoff(15);
-  m_spot.setInnerCutoff(10);
-  m_spot.setExponent(2+1);
-  m_spot.setAttenuation(1.0,0.0,0.0);
-  m_spot.enable();
-  m_spot.setTransform(iv);
+//  m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
+//  m_spot.setCutoff(15);
+//  m_spot.setInnerCutoff(10);
+//  m_spot.setExponent(2+1);
+//  m_spot.setAttenuation(1.0,0.0,0.0);
+//  m_spot.enable();
+//  m_spot.setTransform(iv);
 
-  m_spot.loadToShader("spotLight");
-
+  //m_spot.loadToShader("spotLight");
 
 
   m_width = _width;
@@ -177,12 +177,59 @@ void NGLDraw::resize(int _w, int _h)
   m_textMedium->setTransform(x, y);
 }
 
+void NGLDraw::createLights()
+{
+  // light position
+  ngl::Vec3 pos;
+  // light colour
+  ngl::Colour col,speccol;
+  ngl::Random *rand=ngl::Random::instance();
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  shader->use("Phong");
+  // we need to load the inverse view matrix to the light transform
+  // this will give us the correct light positions in eye space
+  ngl::Mat4 iv=m_cam->getViewMatrix();
+  iv.transpose();
+  // loop for the NumLights lights and set the position and colour
+  for(int i=0; i<NumLights; ++i)
+  {
+    // get a random light position
+      pos=rand->getRandomPoint(20,20,20);
+      // create random colour
+      col=rand->getRandomColour();
+      col.clamp(0.05,0.3);
+      speccol=rand->getRandomColour();
+      speccol.clamp(0.1,0.2);
+      // create an instance of the light and put it in the array
+      m_lightArray[i] = new ngl::Light(pos,col,speccol,ngl::POINTLIGHT);
+      std::string lightName=std::string("light[");
+      lightName += boost::lexical_cast<std::string>(i);
+      lightName += "]";
+      m_lightArray[i]->setTransform(iv);
+      m_lightArray[i]->loadToShader(lightName);
+  }
+}
+
 void NGLDraw::startGame(int level)
 {
     m_gameworld = new GameWorld(level);
     m_selected = false;
     m_selectedSquad = NULL;
-    m_selectedSquadID = -1;  m_spot.setPosition(ngl::Vec3(0,10,10));
+    m_selectedSquadID = -1;
+    m_spot.setPosition(ngl::Vec3(0,10,10));
+
+      for(int i=0; i<NumLights; ++i)
+      {
+        // enable the light (this will set the values)
+        m_lightArray[i]->enable();
+        m_lightArray[i]->setPosition(ngl::Vec3(0,0,0));
+        std::string lightName=std::string("light[");
+        lightName += boost::lexical_cast<std::string>(i);
+        lightName += "]";
+        //m_lightArray[i]->setTransform(iv);
+        m_lightArray[i]->loadToShader(lightName);
+
+      }
 
 }
 
@@ -208,10 +255,10 @@ void NGLDraw::draw()
 {
   // clear the screen and depth buffer
 
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-  m_spot.setPosition(ngl::Vec3(100000,0,0));
-  m_spot.loadToShader("spotLight");
+
 
   switch (m_gameState)
   {
@@ -221,6 +268,52 @@ void NGLDraw::draw()
       // grab an instance of the shader manager
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
+
+       ngl::VAOPrimitives *prim=ngl::VAOPrimitives::instance();
+      for(int i=0; i<NumLights; ++i)
+      {
+          ngl::Mat4 MV;
+          ngl::Mat4 MVP;
+          ngl::Mat3 normalMatrix;
+          ngl::Mat4 M;
+          ngl::Transformation trans;
+
+          M = M*m_mouseGlobalTX;
+
+
+        // enable the light (this will set the values)
+        m_lightArray[i]->enable();
+        ngl::Mat4 iv=M*m_cam->getViewMatrix();
+        iv.transpose();
+        std::string lightName=std::string("light[");
+        lightName += boost::lexical_cast<std::string>(i);
+        lightName += "]";
+        //pos=rand->getRandomPoint(20,20,20);
+
+        m_lightArray[i]->setTransform(iv);
+        m_lightArray[i]->setPosition(ngl::Vec3(m_gameworld->getLightPositions()[i])+ngl::Vec3(0.0,5.0,0.0));
+
+        trans.setPosition(m_lightArray[i]->getPos());     
+
+        M=trans.getMatrix()*m_mouseGlobalTX;
+        MV=  M*m_cam->getViewMatrix();
+        MVP= M*m_cam->getVPMatrix();
+        normalMatrix=MV;
+        normalMatrix.inverse();
+
+        shader->setShaderParamFromMat4("MV",MV);
+        shader->setShaderParamFromMat4("MVP",MVP);
+        shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+        shader->setShaderParamFromMat4("M",M);
+
+        m_lightArray[i]->loadToShader(lightName);
+
+        prim->draw("cube");
+
+      }
+
+      m_spot.setPosition(ngl::Vec3(100000,0,0));
+      //m_spot.loadToShader("spotLight");
 
       // Rotation based on the mouse position for our global transform
       ngl::Mat4 rotX;

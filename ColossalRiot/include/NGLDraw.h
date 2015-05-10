@@ -79,6 +79,8 @@ class NGLDraw
 
     ngl::Vec3 getWorldSpace(int _x, int _y);
 
+    void createLights();
+
     void startGame(int level);
     void endGame();
 
@@ -150,6 +152,9 @@ class NGLDraw
     /// @brief a simple light use to illuminate the screen
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Light *m_light;
+        const static int NumLights=100;
+
+    ngl::Light *m_lightArray[NumLights];
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief a spotlight that points from the camera to the floor
     //----------------------------------------------------------------------------------------------------------------------

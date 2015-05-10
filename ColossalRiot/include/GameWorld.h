@@ -36,7 +36,7 @@ private:
     std::vector<Squad*> m_squads;
 
     std::vector<StaticEntity*> m_obstacles;
-
+    std::vector<ngl::Vec3> m_lightPositions;
     int m_initialNumberOfRioters;
 
     int m_numberOfRioters;
@@ -95,6 +95,7 @@ public:
 
     std::vector<Rioter*> getRioters() { return m_rioters; }
     std::vector<Squad*> getSquads() {return m_squads;}
+    std::vector<ngl::Vec3> getLightPositions() { return m_lightPositions; }
 
     void setPoliceStation(float _x, float _y, float _z);
 

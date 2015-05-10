@@ -146,6 +146,7 @@ GameWorld::GameWorld(int _level)
     StaticEntity* newStreetLight = new StaticEntity(this, wallCentres[sample[i]]+(0.3*wallNormals[sample[i]]), ngl::Vec3(0.0f,wallRotations[sample[i]],0.0f), 0.2, obstacleStreetLight, m_streetLightMesh);
     m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newStreetLight->getID()));
     m_obstacles.push_back(newStreetLight);
+    m_lightPositions.push_back(ngl::Vec3(wallCentres[sample[i]]+(0.3*wallNormals[sample[i]])));
   }
 
   m_numberOfObstacles = m_obstacles.size();
