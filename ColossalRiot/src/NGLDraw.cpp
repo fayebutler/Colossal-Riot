@@ -310,7 +310,7 @@ void NGLDraw::draw()
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(m_squadCurrentColour.m_r, m_squadCurrentColour.m_g, m_squadCurrentColour.m_b));
-            m_squadCurrentColour = ngl::Colour(0.0f, 0.6f, 0.4f);
+            m_squadCurrentColour = ngl::Colour(0.0f, 0.6f, 0.8f);
             if(m_selected == false)
             {
                m_selectedSquad->setSquadColour(m_squadCurrentColour);
@@ -324,6 +324,9 @@ void NGLDraw::draw()
           }
           case squadMove :
           {
+              std::cout<<" prev state "<<m_selectedSquad->getPreviousState()<<std::endl;
+              if(m_selectedSquad->getPreviousState() == )
+
 //            m_squadCurrentColour = m_squadCurrentColour;
 //            m_selectedSquad->setSquadColour(m_squadCurrentColour);
             break;
@@ -723,19 +726,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       if (m_gameState == gamePlay)
       {
          doSelection(_event.x, _event.y);
-         if(m_selected == false)
+         if(m_selected == false && m_selectedSquad != NULL)
          {
            m_selectedSquad->setSquadColour(m_squadCurrentColour);
          }
-//         if(m_selected == true &&
-//            m_selectedSquad->getSquadColour().m_r == m_squadSelectedColour.m_r &&
-//            m_selectedSquad->getSquadColour().m_g == m_squadSelectedColour.m_g &&
-//            m_selectedSquad->getSquadColour().m_b == m_squadSelectedColour.m_b)
-//         {
-//           m_selected = false;
-//           std::cout<<" de select "<<std::endl;
-//           m_selectedSquad->setSquadColour(m_squadCurrentColour);
-//         }
 
       }
     }
@@ -874,6 +868,8 @@ void NGLDraw::doSelection(const int _x, const int _y)
     if(newSelection == false && m_selected == true)
     {
         doMovement(_x, _y);
+        m_selected = false;
+        m_selectedSquad= NULL;
     }
 
 
