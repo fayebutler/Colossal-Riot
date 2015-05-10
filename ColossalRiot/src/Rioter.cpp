@@ -9,9 +9,12 @@
 //----------------------------------------------------------------------------------------------------------------------------
 Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-  m_messageMgr = new MessageManager();
-  m_entityType = typeRioter;
-  //m_gameworld = world;
+    m_entityType = typeRioter;
+    //m_gameworld = world;
+
+    // Set up LUA state
+    luaL_dofile(L, "lua/Rioter.lua");
+    luaL_openlibs(L);
 
   // Set up LUA state
   luaL_dofile(L, "lua/Rioter.lua");
@@ -46,7 +49,6 @@ Rioter::~Rioter()
 {
   lua_close(L);
   delete m_stateMachine;
-  delete m_messageMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------

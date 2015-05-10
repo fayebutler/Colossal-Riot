@@ -1,4 +1,6 @@
 #include "GameWorld.h"
+#include <boost/foreach.hpp>
+
 
 #include <iostream>
 
@@ -160,11 +162,36 @@ void GameWorld::setPoliceStation(float _x, float _y, float _z)
 GameWorld::~GameWorld()
 {
    lua_close(L);
+   BOOST_FOREACH(Rioter *r, m_rioters)
+   {
+       delete r;
+   }
    m_rioters.clear();
+   BOOST_FOREACH(Squad *s, m_squads)
+   {
+       delete s;
+   }
    m_squads.clear();
+   BOOST_FOREACH(StaticEntity *o, m_obstacles)
+   {
+       delete o;
+   }
    m_obstacles.clear();
+   BOOST_FOREACH(Rioter *r, m_deadRioters)
+   {
+       delete r;
+   }
+   m_deadRioters.clear();
+   BOOST_FOREACH(Squad *s, m_deadSquads)
+   {
+       delete s;
+   }
+   m_deadSquads.clear();
+
    delete m_streetMesh;
    delete m_buildingMesh;
+
+   m_entityMgr->clearMap();
    delete m_entityMgr;
 }
 
@@ -184,8 +211,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
         {
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
-
-            delete currentRioter;
+            m_deadRioters.push_back(currentRioter);
 
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
@@ -202,7 +228,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
-            delete currentRioter;
+            m_deadRioters.push_back(currentRioter);
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersHome++;
@@ -211,15 +237,15 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     //check for squad deaths
-    int m_numberOfSquads = m_squads.size();
+
     for(int i = 0; i < m_numberOfSquads; i++)
     {
       Squad* currentSquad = m_squads[i];
 
       if (currentSquad->getSquadSize() <= 0)
       {
+          m_deadSquads.push_back(currentSquad);
           m_entityMgr->removeEntity(currentSquad);
-          delete m_squads[i];
           m_squads.erase(m_squads.begin()+i);
           m_numberOfSquads--;
           i--;

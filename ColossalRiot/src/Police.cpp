@@ -9,8 +9,6 @@
 //----------------------------------------------------------------------------------------------------------------------------
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-  m_messageMgr = new MessageManager();
-
   m_entityType = typePolice;
 
   registerClass(L);
@@ -44,7 +42,7 @@ Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
-  delete m_messageMgr;
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------------

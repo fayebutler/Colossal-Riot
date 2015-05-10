@@ -1,8 +1,10 @@
+
 //----------------------------------------------------------------------------------------------------------------------------
 /// @file Squad.cpp
 /// @brief defines a squad
 //----------------------------------------------------------------------------------------------------------------------------
 
+#include <boost/foreach.hpp>
 #include "Squad.h"
 #include "GameWorld.h"
 
@@ -64,8 +66,16 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
 //----------------------------------------------------------------------------------------------------------------------------
 Squad::~Squad()
 {
+  BOOST_FOREACH(Police *p, m_squadPolice)
+  {
+      delete p;
+  }
   m_squadPolice.clear();
-//delete m_messageMgr;
+  BOOST_FOREACH(Police *p, m_deadSquadPolice)
+  {
+      delete p;
+  }
+  m_deadSquadPolice.clear();
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -310,14 +320,13 @@ int Squad::checkDeaths()
     Police* currentPolice = m_squadPolice[i];
     if(currentPolice->getHealth()<=0)
     {
-      currentPolice->death();
-      m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentPolice));
-      delete currentPolice;
-      m_squadPolice.erase(m_squadPolice.begin()+i);
-      m_squadSize -= 1;
-      numberOfDeaths++;
-
-      i--;
+        currentPolice->death();
+        m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentPolice));
+        m_deadSquadPolice.push_back(currentPolice);
+        m_squadPolice.erase(m_squadPolice.begin()+i);
+        m_squadSize -= 1;
+        numberOfDeaths++;
+        i--;
     }
   }
   return numberOfDeaths;

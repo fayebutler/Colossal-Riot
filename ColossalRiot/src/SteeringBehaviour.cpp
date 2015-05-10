@@ -261,6 +261,7 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 targetPos)
 {
   ngl::Vec3 desiredVelocity = ngl::Vec3(targetPos - m_vehicle->getPos());
 
+
   return (desiredVelocity - m_vehicle->getVelocity());
 }
 
@@ -345,10 +346,22 @@ ngl::Vec3 SteeringBehaviour::Wander()
     angle = 2*M_PI - angle;
   }
 
+
   ngl::Transformation trans;
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
+
+//  if(worldTarget.lengthSquared() == 0.0f)
+//  {
+//      std::cout<<"World Target in wander equals zero, can't normalise"<<std::endl;
+//  }
+//  else
+//  {
+//    //worldTarget.normalize();
+//  }
+
+//  worldTarget = worldTarget * m_vehicle->getMaxSpeed();
 
   return worldTarget;
 }
@@ -448,6 +461,7 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
     return ngl::Vec3(0.f, 0.f, 0.f);
   }
 }
+
 
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
@@ -726,6 +740,7 @@ ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec
   return ngl::Vec3(tempX, 0, tempZ);
 }
 
+
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::addAllNeighbours(std::vector<int> _neighbours)
 {
@@ -736,6 +751,7 @@ void SteeringBehaviour::addAllNeighbours(std::vector<int> _neighbours)
 
 }
 
+
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> _neighbours)
 {
@@ -744,6 +760,7 @@ void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> _neighbours)
     m_friendlyNeighbours.push_back(_neighbours[i]);
   }
 }
+
 
 //----------------------------------------------------------------------------------------------------------------------------
 bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &o_distToIntersect, ngl::Vec3 &o_intersectPoint)
