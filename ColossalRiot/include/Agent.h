@@ -1,11 +1,6 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-//----------------------------------------------------------------------------------------------------------------------
-/// @file Agent.h
-/// @brief The base class for all agents, that can be rioters or police
-//----------------------------------------------------------------------------------------------------------------------
-
 #include <iostream>
 #include "Vehicle.h"
 #include <ngl/ShaderLib.h>
@@ -24,6 +19,7 @@ extern "C"
 #include "LuaBridge.h"
 
 //----------------------------------------------------------------------------------------------------------------------
+/// @file Agent.h
 /// @class Agent "include/Agent.h"
 /// @brief The base class for all agents, that can be rioters or police
 /// @author Will Herbert
@@ -36,8 +32,9 @@ class Agent: public Vehicle
 public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief ctor this will create a valid Lua state and initialise into a valid world
+  /// @param[in] _world input world to create the agent in
   //----------------------------------------------------------------------------------------------------------------------
-  Agent(GameWorld *world);
+  Agent(GameWorld *_world);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief dtor used to remove agent and close Lua state
   //----------------------------------------------------------------------------------------------------------------------

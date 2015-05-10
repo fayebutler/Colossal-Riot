@@ -156,9 +156,9 @@ void NGLDraw::resize(int _w, int _h)
   unsigned int numberOfButtons = m_buttons.size();
   for (unsigned int i = 0; i < numberOfButtons; i++)
   {
-    m_buttons[i]->setScreenDimensions(ngl::Vec2(m_width, m_height));
+    m_buttons[i]->setWindowDimensions(ngl::Vec2(m_width, m_height));
   }
-  m_sliderSquadSize->setScreenDimensions(ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize->setWindowDimensions(ngl::Vec2(m_width, m_height));
 
   m_textSmall->setScreenSize(_w, _h);
   m_textMedium->setScreenSize(_w, _h);
