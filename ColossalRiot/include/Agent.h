@@ -4,8 +4,8 @@
 #include <iostream>
 #include "Vehicle.h"
 #include <ngl/ShaderLib.h>
-#include <ngl/NGLInit.h>
 #include <ngl/Material.h>
+#include <ngl/NGLInit.h>
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 #include <ngl/Obj.h>
