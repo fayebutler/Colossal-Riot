@@ -831,7 +831,7 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
 
             double amountOfOverLap = (m_vehicle->getBoundingRadius() + curEntity->getBoundingRadius()) - distFromEachOther;
 
-            std::cout<<"amount of overlap VEHICLE = "<<amountOfOverLap<<std::endl;
+            //std::cout<<"amount of overlap VEHICLE = "<<amountOfOverLap<<std::endl;
 
             if (amountOfOverLap >= 0.0)
             {

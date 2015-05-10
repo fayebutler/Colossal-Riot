@@ -6,7 +6,7 @@ level1 = function()
   gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(2.0,0,-38)
-  gameWorld.m_initialNumberOfRioters = 100
+  gameWorld.m_initialNumberOfRioters = 10
   gameWorld.m_availablePolice = 125
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
@@ -15,11 +15,10 @@ level1 = function()
 end
 
 level2 = function()
-gameWorld.m_cellGraphFile = "navMesh.obj"
-gameWorld.m_streetMeshFile = "streetMesh1.obj"
-gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
-
-gameWorld:setPoliceStation(2.0,0,-38)
+  gameWorld.m_cellGraphFile = "navMesh.obj"
+  gameWorld.m_streetMeshFile = "streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 200
   gameWorld.m_availablePolice = 100
   gameWorld.m_numberOfTrees = 20

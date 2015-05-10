@@ -1,5 +1,6 @@
 #ifndef CELLGRAPH_H
 #define CELLGRAPH_H
+
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -9,15 +10,17 @@
 #include <ngl/Obj.h>
 
 //----------------------------------------------------------------------------------------------------------------------
-/// @file
-/// @brief
+/// @file CellGraph.h
+/// @brief This class constructs a graph from an .obj file that is used for spatial partitioning and path planning.
+/// @author Ben Knowles, Stuart Batchelor
+/// @version 1.0
+/// @date Last revision
 //----------------------------------------------------------------------------------------------------------------------
 
 class CellGraph
 {
 public:
 
-  CellGraph();
   CellGraph(const char *_fileName, int _borderSize);
   ~CellGraph();
 

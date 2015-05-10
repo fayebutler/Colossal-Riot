@@ -201,12 +201,12 @@ void GameWorld::Update(double timeElapsed, double currentTime)
                 currentRioter->getPos().m_x >= map_bounds[3])
 
         {
-//            m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
-//            delete currentRioter;
-//            m_rioters.erase(m_rioters.begin()+i);
-//            m_numberOfRioters--;
-//            m_numberOfRiotersHome++;
-//            i--;
+            m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
+            delete currentRioter;
+            m_rioters.erase(m_rioters.begin()+i);
+            m_numberOfRioters--;
+            m_numberOfRiotersHome++;
+            i--;
         }
     }
 
@@ -254,6 +254,11 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 //    for (int i =0; i < m_numberOfRioters; i++)
 //    {
 //      Rioter* currentRioter = m_rioters[i];
+
+
+//      if(currentRioter->getID() != m_entityMgr->getEntityFromID(currentRioter->getID())->getID())
+//      std::cout<<"alkdsjflkagfjdsalkgjdsakgjlkdsajgJHGKJHGKJHGKJHG"<<std::endl;
+
 //      m_cellGraph->updateCells(m_entityMgr->getEntityFromID(currentRioter->getID()));
 //    }
 //    for (int i=0; i < m_numberOfSquads; i++)

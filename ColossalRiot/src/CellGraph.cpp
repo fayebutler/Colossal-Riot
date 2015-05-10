@@ -184,10 +184,10 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
 }
 
 
-CellGraph::CellGraph()
-{
-  //m_entityMgr = new EntityManager();
-}
+//CellGraph::CellGraph()
+//{
+//  //m_entityMgr = new EntityManager();
+//}
 
 CellGraph::~CellGraph()
 {
@@ -203,8 +203,8 @@ bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
   float left  = m_cells[_cellID].getBoundaries().m_z;
   float right = m_cells[_cellID].getBoundaries().m_w;
 
-  if(_entity->getPos().m_z >= upper && _entity->getPos().m_z <= lower &&
-     _entity->getPos().m_x >= left && _entity->getPos().m_x <= right)
+  if(_entity->getPos().m_z > upper && _entity->getPos().m_z < lower &&
+     _entity->getPos().m_x > left && _entity->getPos().m_x < right)
   {
     return true;
   }
@@ -283,8 +283,6 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
    {
        if (_entity->getID() != m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i])
        {
-
-
           _entity->addDetectedDynamicEntityID(m_cells[_entity->getCurrentCellID()].getDynamicEntityIDs()[i]);
        }
 
@@ -313,6 +311,10 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
         }
     }
 
+  }
+  else
+  {
+    std::cout<<"entity is less than 0---------------------------------------------------------------------------------"<<std::endl;
   }
   //Now the entity has a vector of detected entities, append them to the appropriate vector ie Police, Rioters etc
   for (unsigned int i =0; i< _entity->getDetectedEntityIDs().size(); i++)

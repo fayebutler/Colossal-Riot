@@ -39,7 +39,7 @@ end
 
 global["execute"] = function()
 
-
+--    police.m_rage = 80
 --    police.m_health = 100
 --    police.m_morale = 100
 --  if stateMachine.m_currentState ~= "dead" then
