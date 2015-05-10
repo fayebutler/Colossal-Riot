@@ -5,8 +5,6 @@
 
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-  m_messageMgr = new MessageManager();
-
     m_entityType = typePolice;
 
     registerClass(L);
@@ -42,7 +40,7 @@ Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
-  delete m_messageMgr;
+
 }
 
 void Police::update(double timeElapsed, double currentTime)
@@ -213,7 +211,16 @@ void Police::findPathHome()
 
 bool Police::handleMessage(const Message& _message)
 {
-  return Agent::handleMessage(_message);
+    switch(_message.m_message)
+    {
+    case msgAttack:
+      m_health -= (_message.m_extraInfo * m_timeElapsed);
+      return true;
+
+    default:
+      std::cout<<"Police: Message type not defined"<<std::endl;
+      return false;
+    }
 }
 
 
@@ -272,7 +279,6 @@ void Police::registerClass(lua_State* _L)
         .deriveClass<Police, Agent>("Police")
             .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Police::attack)
-                .addFunction("death", &Police::death)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addFunction("findPathHome", &Police::findPathHome)

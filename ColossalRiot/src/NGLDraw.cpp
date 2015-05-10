@@ -156,9 +156,9 @@ void NGLDraw::resize(int _w, int _h)
   unsigned int numberOfButtons = m_buttons.size();
   for (unsigned int i = 0; i < numberOfButtons; i++)
   {
-    m_buttons[i]->setScreenDimensions(ngl::Vec2(m_width, m_height));
+    m_buttons[i]->setWindowDimensions(ngl::Vec2(m_width, m_height));
   }
-  m_sliderSquadSize->setScreenDimensions(ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize->setWindowDimensions(ngl::Vec2(m_width, m_height));
 
   m_textSmall->setScreenSize(_w, _h);
   m_textMedium->setScreenSize(_w, _h);
@@ -210,11 +210,6 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-  (*shader)["Phong"]->use();
-
-  m_spot.setPosition(ngl::Vec3(100000,0,0));
-//  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
@@ -224,6 +219,9 @@ void NGLDraw::draw()
       // grab an instance of the shader manager
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
+
+      m_spot.setPosition(ngl::Vec3(100000,0,0));
+      m_spot.loadToShader("spotLight");
 
       // Rotation based on the mouse position for our global transform
       ngl::Mat4 rotX;

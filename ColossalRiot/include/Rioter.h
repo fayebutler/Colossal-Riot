@@ -41,7 +41,7 @@ public:
 protected:
 
     //GameWorld* m_gameworld;
-    MessageManager* m_messageMgr;
+//    MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
 
     ngl::Vec3 m_protestPos;

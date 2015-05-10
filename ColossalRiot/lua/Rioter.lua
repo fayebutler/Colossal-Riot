@@ -1,7 +1,48 @@
--- set up initial rioter variables
+------------------------------------------------------------------------------------------------------------------------
+-- file: Rioter.lua "lua/Rioter.lua"
+-- brief: a Lua file used to edit rioter states and behaviour
+-- author: Will Herbert
+-- version: 1.0
+-- last revision: 10/05/2015 updated to add documentation and instructions
+------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------
+-- rioter functions exposed from C++
+-- attack()             = attacks the current target
+-- death()              = calls the death message of the entity
+-- getPoliceInfluence() = gets the influence from nearby police
+-- squadCohesion(float) = sets the weight of how much ritoers members group to the centre of the map
+-- findPathHome         = gives the rioter a path home
+--
+-- state machine properties exposed from C++
+-- m_currentState       = the current state of the rioter's state machine
+-- m_previousState      = the previous state of the rioter's state machine
+-- m_globalState        = the global state of the rioter's state machine
+--
+-- state machine functions exposed from C++
+-- changeState("")      = changes the state machine of the rioter to a new state
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+-- template state
+------------------------------------------------------------------------------------------------------------------------
+--STATE = {}
+--STATE["enter"] = function()
+--
+--end
+--
+--STATE["execute"] = function()
+--
+--end
+--
+--STATE["exit"] = function()
+--
+--end
+
+------------------------------------------------------------------------------------------------------------------------
+-- set up initial policeman variables
+------------------------------------------------------------------------------------------------------------------------
 makeRioter = function()
-
    rioter.m_health = 80 + math.random(20)
    rioter.m_morale = 50 + math.random(50)
    rioter.m_rage = math.random(80)
@@ -9,39 +50,20 @@ makeRioter = function()
 
    stateMachine.m_currentState = "roam"
    stateMachine.m_globalState = "global"
-
 end
 
-
-
--- TEMPLATE STATE
-
-STATE = {}
-STATE["enter"] = function()
-end
-
-STATE["execute"] = function()
-  if CONDITION then
-    stateMachine:changeState(NEWSTATE)
-  end
-end
-
-STATE["exit"] = function()
-end
-
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- global state
-
+------------------------------------------------------------------------------------------------------------------------
 global = {}
 global["enter"] = function()
 end
 
 global["execute"] = function()
   if stateMachine.m_currentState ~= "dead" then
-    if rioter.m_health <= 0 then
-        stateMachine:changeState("dead")
-    end
+--    if rioter.m_health <= 0 then
+--        stateMachine:changeState("dead")
+--    end
   end
 
   if stateMachine.m_currentState ~= "home" then
@@ -51,13 +73,15 @@ global["execute"] = function()
   end
 end
 
+
 global["exit"] = function()
 end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- protest state
-
+------------------------------------------------------------------------------------------------------------------------
 protest = {}
 protest["enter"] = function()
 
@@ -71,7 +95,7 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.8)
+   rioter:protestCohesion(0.5)
 
 end
 
@@ -89,7 +113,7 @@ protest["execute"] = function()
     end
   else
     rioter:wander(0.5)
-    rioter:separation(0.8)
+    rioter:separation(0.2)
   end
 
   if rioter.m_rage < 30 then
@@ -106,10 +130,9 @@ end
 protest["exit"] = function()
 end
 
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- roam state
-
+------------------------------------------------------------------------------------------------------------------------
 roam = {}
 roam["enter"] = function()
 
@@ -131,14 +154,15 @@ roam["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
 
+
   if rioter.m_rage > 60 then
     stateMachine:changeState("protest")
   end
   if rioter.m_health < 30 then
-    stateMachine:changeState("flee")
+--    stateMachine:changeState("flee")
   end
 
-  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
+--  rioter.m_rage = rioter.m_rage + (rioter:getPoliceInfluence() * 0.0005);
 
 end
 
@@ -146,10 +170,9 @@ roam["exit"] = function()
 --  print("LUA RIOTER roam exit")
 end
 
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- flee state
-
+------------------------------------------------------------------------------------------------------------------------
 flee = {}
 flee["enter"] = function()
 
@@ -188,10 +211,9 @@ flee["exit"] = function()
 --  print("LUA RIOTER flee exit")
 end
 
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- dead state
-
+------------------------------------------------------------------------------------------------------------------------
 dead = {}
 dead["enter"] = function()
 
@@ -219,9 +241,9 @@ end
 --end
 
 
-
+------------------------------------------------------------------------------------------------------------------------
 -- home state
-
+------------------------------------------------------------------------------------------------------------------------
 home = {}
 home["enter"] = function()
 
@@ -252,9 +274,9 @@ home["exit"] = function()
 end
 
 
-
+------------------------------------------------------------------------------------------------------------------------
 -- limits
-
+------------------------------------------------------------------------------------------------------------------------
 limits = {}
 limits["check"] = function()
 
@@ -279,11 +301,10 @@ limits["check"] = function()
         rioter.m_rage = 0
     end
 
---    if rioter.m_damage > 1 then
---        rioter.m_damage = 1
---    end
---    if rioter.m_damage < 0 then
---        rioter.m_damage = 0
---    end
-
+    if rioter.m_damage > 1 then
+        rioter.m_damage = 1
+    end
+    if rioter.m_damage < 0 then
+        rioter.m_damage = 0
+    end
 end

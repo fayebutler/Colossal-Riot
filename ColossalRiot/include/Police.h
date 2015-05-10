@@ -54,7 +54,7 @@ public:
 
 
 protected:
-    MessageManager* m_messageMgr;
+//    MessageManager* m_messageMgr;
 
     StateMachine<Police>* m_stateMachine;
 
