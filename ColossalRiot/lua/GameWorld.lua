@@ -31,7 +31,7 @@ level1 = function()
   gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(0,0,0)
-  gameWorld.m_initialNumberOfRioters = 0
+  gameWorld.m_initialNumberOfRioters = 100
   gameWorld.m_availablePolice = 125
   gameWorld.m_numberOfRiotersHomeToWin = 25
   gameWorld.m_numberOfRiotersDeadToLose = 75
