@@ -288,7 +288,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     m_numberOfSquads = m_squads.size();
-
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];

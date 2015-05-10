@@ -812,7 +812,8 @@ void NGLDraw::doSelection(const int _x, const int _y)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+    int numberOfSquads = m_gameworld->getSquads().size();
+    for(int i=0; i < numberOfSquads; i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
@@ -833,7 +834,8 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
     bool newSelection = false;
 
-    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+
+    for(int i=0; i < numberOfSquads; i++)
     {
         Squad* currentSquad = m_gameworld->getSquads()[i];
 

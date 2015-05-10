@@ -38,7 +38,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
-  Vehicle::Steering()->setObstacleAvoidWeight(0.6);
+  Vehicle::Steering()->setObstacleAvoidWeight(0.4);
 
   m_policeInfluence = 0.0;
 
@@ -147,7 +147,8 @@ void Rioter::findTargetID(float _health)
   std::vector<int> police = getNeighbourPoliceIDs();
   float currentHealth = -1;
   Agent* currentTarget = NULL;
-  for (int i=0; i<police.size(); i++)
+  int numberOfPolice = police.size();
+  for (int i=0; i<numberOfPolice; i++)
   {
     Agent* policeman = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(police[i]));
     if (policeman)
@@ -176,21 +177,30 @@ bool Rioter::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgRioterDeath:
-    m_morale -= 5.f;
-    m_rage += 30.f;
-    return true;
-    break;
-  case msgPoliceDeath:
-    m_morale -= 15.f;
-    break;
-  case msgAttack:
-    return Agent::handleMessage(_message);
-    break;
-  default:
-    std::cout<<"Rioter: Message type not defined"<<std::endl;
-    return false;
-    break;
+    case msgRioterDeath:
+    {
+      m_morale -= 5.f;
+      m_rage += 30.f;
+      return true;
+      break;
+    }
+    case msgPoliceDeath:
+    {
+      m_morale -= 15.f;
+      return true;
+      break;
+    }
+    case msgAttack:
+    {
+      return Agent::handleMessage(_message);
+      break;
+    }
+    default:
+    {
+      std::cout<<"Rioter: Message type not defined"<<std::endl;
+      return false;
+      break;
+    }
   }
 }
 
