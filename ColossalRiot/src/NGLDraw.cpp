@@ -265,8 +265,18 @@ void NGLDraw::draw()
         {
            m_selectedSquad->setSquadDrawColour(m_selectedSquad->getSquadSelectedColour());
         }
+        eSquadState buttonState;
+        if(m_selectedSquad->getSquadState() == squadMove)
+        {
+          buttonState = m_selectedSquad->getPreviousState();
 
-        switch (m_selectedSquad->getSquadState())
+
+        }
+        else
+        {
+          buttonState = m_selectedSquad->getSquadState();
+        }
+        switch (buttonState)
         {
           case squadPatrol :
           {
@@ -304,6 +314,7 @@ void NGLDraw::draw()
           }
           case squadMove :
           {
+
             break;
           }
           default :
