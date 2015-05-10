@@ -60,6 +60,11 @@ global["enter"] = function()
 end
 
 global["execute"] = function()
+
+  if rioter.m_health <= 20 then
+    rioter.m_morale = 0
+  end
+
   if stateMachine.m_currentState ~= "dead" then
 --    if rioter.m_health <= 0 then
 --        stateMachine:changeState("dead")
