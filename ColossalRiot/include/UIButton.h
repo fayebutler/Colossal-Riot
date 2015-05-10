@@ -1,9 +1,6 @@
 #ifndef UIBUTTON_H
 #define UIBUTTON_H
 
-#include <ngl/Transformation.h>
-#include "Text.h"
-
 //----------------------------------------------------------------------------------------------------------------------
 /// @file UIButton.h
 /// @class UIButton "include/UIButton.h"
@@ -12,6 +9,9 @@
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
+
+#include <ngl/Transformation.h>
+#include "Text.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief enum to describe the name of an individual button

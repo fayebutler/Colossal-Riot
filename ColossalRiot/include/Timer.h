@@ -1,8 +1,6 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <SDL.h>
-
 //----------------------------------------------------------------------------------------------------------------------
 /// @file Timer.h
 /// @class Timer "include/Timer.h"
@@ -11,6 +9,8 @@
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
+
+#include <SDL.h>
 
 class Timer
 {

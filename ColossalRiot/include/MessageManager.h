@@ -1,13 +1,6 @@
 #ifndef MESSAGEMANAGER_H
 #define MESSAGEMANAGER_H
 
-#include <set>
-#include "Message.h"
-#include "EntityManager.h"
-
-class BaseGameEntity;
-class EntityManager;
-
 //----------------------------------------------------------------------------------------------------------------------
 /// @file MessageManager.h
 /// @class MessageManager "include/MessageManager.h"
@@ -16,6 +9,13 @@ class EntityManager;
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
+
+#include <set>
+#include "Message.h"
+#include "EntityManager.h"
+
+class BaseGameEntity;
+class EntityManager;
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief enum to describe the type of message that was sent
