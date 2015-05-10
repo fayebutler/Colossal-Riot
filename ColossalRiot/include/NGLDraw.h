@@ -207,7 +207,11 @@ class NGLDraw
     float m_longestSide;
 
     ngl::Colour m_squadCurrentColour;
-    ngl::Colour m_squadSelectedColour;
+
+    ngl::Colour m_patrolColour;
+    ngl::Colour m_defensiveColour;
+    ngl::Colour m_aggressiveColour;
+    ngl::Colour m_wallColour;
 
 
 };
