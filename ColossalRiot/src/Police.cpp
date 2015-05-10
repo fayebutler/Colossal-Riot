@@ -274,21 +274,20 @@ void Police::registerClass(lua_State* _L)
   luaL_dofile(L, "lua/Police.lua");
   luaL_openlibs(L);
 
-    registerLua(_L);
-    luabridge::getGlobalNamespace(_L)
-        .deriveClass<Police, Agent>("Police")
-            .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
-                .addFunction("attack", &Police::attack)
-                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
-                .addFunction("squadCohesion", &Police::squadCohesion)
-                .addFunction("findPathHome", &Police::findPathHome)
-                .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
-                .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
-//                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)
+  registerLua(_L);
+  luabridge::getGlobalNamespace(_L)
+    .deriveClass<Police, Agent>("Police")
+      .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
+        .addFunction("attack", &Police::attack)
+        .addFunction("getRioterInfluence", &Police::getRioterInfluence)
+        .addFunction("squadCohesion", &Police::squadCohesion)
+        .addFunction("findPathHome", &Police::findPathHome)
+        .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+        .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
 
-        .endClass();
+    .endClass();
 
-    luabridge::push(L, this);
-    lua_setglobal(L, "police");
+  luabridge::push(L, this);
+  lua_setglobal(L, "police");
 }
 
