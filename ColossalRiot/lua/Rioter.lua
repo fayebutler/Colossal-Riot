@@ -38,17 +38,20 @@ global["enter"] = function()
 end
 
 global["execute"] = function()
-  if stateMachine.m_currentState ~= "dead" then
-    if rioter.m_health <= 0 then
-        stateMachine:changeState("dead")
-    end
-  end
 
-  if stateMachine.m_currentState ~= "home" then
-    if rioter.m_morale <= 0 then
-        stateMachine:changeState("home")
-    end
-  end
+--  rioter.m_health = 100
+--  rioter.m_morale = 100
+--  if stateMachine.m_currentState ~= "dead" then
+--    if rioter.m_health <= 0 then
+--        stateMachine:changeState("dead")
+--    end
+--  end
+
+--  if stateMachine.m_currentState ~= "home" then
+--    if rioter.m_morale <= 0 then
+--        stateMachine:changeState("home")
+--    end
+--  end
 end
 
 global["exit"] = function()

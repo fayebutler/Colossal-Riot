@@ -59,7 +59,6 @@ void Police::update(double timeElapsed, double currentTime)
 
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
-  std::cout<<"speeed "<<Vehicle::getSpeed()<<std::endl;
 
   // calculate influence of neighbouring rioters based on their rage
   int nearbyRioters = m_neighbourRioterIDs.size();
@@ -75,7 +74,7 @@ void Police::update(double timeElapsed, double currentTime)
       }
   }
 
-  m_hopSpeed = m_rage/5.0;
+  m_hopSpeed = 10.f;
   m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
 

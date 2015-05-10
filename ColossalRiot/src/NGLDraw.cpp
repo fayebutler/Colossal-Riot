@@ -3,12 +3,11 @@
 #include <ngl/NGLInit.h>
 #include <ngl/Material.h>
 #include <ngl/Transformation.h>
-
 #include "GameWorld.h"
 
 const static float INCREMENT=-0.02;
 const static float ZOOM=5;
-float cameraHeight =125 ;
+float cameraHeight =125;
 
 NGLDraw::NGLDraw(int _width, int _height)
 {
@@ -110,6 +109,8 @@ NGLDraw::NGLDraw(int _width, int _height)
   initialiseUI();
   m_selectedLevel = 1;
 
+  m_previousColour =ngl::Colour(0.0f,0.5f,0.5f,1.0f);
+
 }
 
 NGLDraw::~NGLDraw()
@@ -209,6 +210,8 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  (*shader)["Phong"]->use();
   m_spot.setPosition(ngl::Vec3(100000,0,0));
   m_spot.loadToShader("spotLight");
 
@@ -245,26 +248,55 @@ void NGLDraw::draw()
         {
           case squadPatrol :
           {
-            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_previousColour.m_r, m_previousColour.m_g, m_previousColour.m_b));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_previousColour = ngl::Colour(0.0f, 0.5f, 0.5f, 1.0f);
+           // m_previousColour =ngl::Colour(m_buttonSquadPatrol->getButtonColour().m_x,m_buttonSquadPatrol->getButtonColour().m_y,m_buttonSquadPatrol->getButtonColour().m_z,m_buttonSquadPatrol->getButtonColour().m_w );
+            if(m_selected == false)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour);
+            }
+            else if(m_selected == true)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+            }
             break;
           }
           case squadAggressive :
           {
-            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_previousColour.m_r, m_previousColour.m_g, m_previousColour.m_b));
+            m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.6f, 0.0f, 0.3f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_previousColour = ngl::Colour(0.2f, 0.2f, 0.9f);
+            //m_previousColour = ngl::Colour(m_buttonSquadAggressive->getButtonColour().m_x,m_buttonSquadAggressive->getButtonColour().m_y,m_buttonSquadAggressive->getButtonColour().m_z,m_buttonSquadAggressive->getButtonColour().m_w );
+            if(m_selected == false)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour);
+            }
+            else if(m_selected == true)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+            }
             break;
           }
           case squadDefensive :
           {
             m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.4f, 0.0f, 0.4f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
+            m_previousColour = ngl::Colour(m_buttonSquadDefensive->getButtonColour().m_x,m_buttonSquadDefensive->getButtonColour().m_y,m_buttonSquadDefensive->getButtonColour().m_z,m_buttonSquadDefensive->getButtonColour().m_w );
+            if(m_selected == false)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour);
+            }
+            else if(m_selected == true)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+            }
             break;
           }
           case squadWall :
@@ -272,11 +304,26 @@ void NGLDraw::draw()
             m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.4f));
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.0f, 0.0f, 0.4f));
+            m_previousColour = ngl::Colour(m_buttonSquadWall->getButtonColour().m_x,m_buttonSquadWall->getButtonColour().m_y,m_buttonSquadWall->getButtonColour().m_z,m_buttonSquadWall->getButtonColour().m_w );
+            if(m_selected == false)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour);
+            }
+            else if(m_selected == true)
+            {
+               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+            }
             break;
           }
+//          if(m_selected == true)
+//          {
+//              m_selectedSquad->setSquadColour(m_selectedSquad->getSquadColour() *2.0);
+//          }
           case squadMove :
           {
+//            m_previousColour = ngl::Colour(0.3f,0.0f,0.3f,1.0f);
+//            m_selectedSquad->setSquadColour(m_previousColour);
             break;
           }
           default :
@@ -302,26 +349,36 @@ void NGLDraw::draw()
         m_buttonSquadWall->setIsActive(false);
       }
       float deadPercent = ((float)m_gameworld->getNumberOfRiotersDead() / (float)m_gameworld->getNumberOfRiotersDeadToLose());
+      if (deadPercent > 1.f)
+      {
+        deadPercent = 1.f;
+      }
+      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.7f, 0.2f, 0.2, 1.f));
       m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * deadPercent)));
-      m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f) * deadPercent);
       m_buttonRioterDeadBar->draw();
       m_buttonRioterDeadBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
       m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
       m_buttonRioterDeadBar->draw();
       float homePercent = ((float)m_gameworld->getNumberOfRiotersHome() / (float)m_gameworld->getNumberOfRiotersHomeToWin());
+      std::cout<<homePercent<<std::endl;
+      if (homePercent > 1.f)
+      {
+        homePercent = 1.f;
+      }
+      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.2f, 0.7f, 0.2, 1.f));
       m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, (1.5f * homePercent)));
-      m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f) * homePercent);
       m_buttonRioterHomeBar->draw();
+      m_buttonRioterHomeBar->setButtonPosition(ngl::Vec2(-0.85f, 0.f));
       m_buttonRioterHomeBar->setButtonColour(ngl::Vec4(0.9f, 0.9f, 0.9, 1.f));
       m_buttonRioterHomeBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
       m_buttonRioterHomeBar->draw();
       if (m_gameworld->getHasWon() == true)
       {
-        m_textLarge->renderText(50.f, 50.f, "You Win!");
+        m_textLarge->renderText(50.f, 40.f, "You Win!");
       }
       else if (m_gameworld->getHasLost() == true)
       {
-        m_textLarge->renderText(50.f, 50.f, "You Lose!");
+        m_textLarge->renderText(50.f, 40.f, "You Lose!");
       }
       m_sliderSquadSize->draw();
 
@@ -427,8 +484,6 @@ void NGLDraw::draw()
       break;
     }
   }
-//m_spot.aim(ngl::Vec4(0.0,10,0.0,0.0)*m_cam->getVPMatrix().inverse());
-//  m_spot.loadToShader("spotLight");
 }
 
 void NGLDraw::update(double _timeElapsed, double _currentTime)
@@ -625,6 +680,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
             case buttonSquadPatrol :
             {
               m_selectedSquad->setSquadState("patrol", squadPatrol);
+             // m_selectedSquad->setSquadColour(ngl::Colour(m_buttonSquadPatrol->getButtonColour().m_x,m_buttonSquadPatrol->getButtonColour().m_y,m_buttonSquadPatrol->getButtonColour().m_z,m_buttonSquadPatrol->getButtonColour().m_w ));
               break;
             }
             case buttonSquadAggressive :
@@ -653,14 +709,12 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       }
       if (m_sliderSquadSize->isClicked(_event.x, _event.y) && m_sliderSquadSize->getIsActive() == true)
       {
-        std::cout<<"tesssssssssssssssssssssssst"<<std::endl;
         m_sliderSquadSize->setIsSliding(true);
         m_squadSize = m_sliderSquadSize->slideBar(_event.x);
         m_ss.str(std::string());
         m_ss << m_squadSize;
         m_squadSizeString = m_ss.str();
         m_sliderSquadSize->setTextString(m_squadSizeString);
-        std::cout<<m_sliderSquadSize<<std::endl;
         return;
       }
 
@@ -678,7 +732,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 
            if (m_selected)
            {
-               m_selectedSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+               m_selectedSquad->setSquadColour(m_previousColour);
 
                m_selected = false;
                m_selectedSquad = NULL;
@@ -754,7 +808,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
 
         //set de-selected squad colour
-        currentSquad->setSquadColour(ngl::Colour(0.0f,0.5f,0.5f,1.0f));
+        currentSquad->setSquadColour(m_previousColour);
 
     }
 
@@ -775,12 +829,11 @@ void NGLDraw::doSelection(const int _x, const int _y)
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
             //set selected squad colour
-            currentSquad->setSquadColour(ngl::Colour(1.0f,1.0f,0.0f,1.0f));
+            currentSquad->setSquadColour(m_previousColour * 2.0f);
 
             m_selected = true;
             m_selectedSquad = currentSquad;
             m_selectedSquadID = currentSquad->getID();
-            std::cout<<" SELECTED SQUAD ID = "<<currentSquad->getID()<<std::endl;
             newSelection = true;
             break;
         }
@@ -807,8 +860,6 @@ void NGLDraw::doMovement(const int _x, const int _y)
         m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
     }
 
-//    m_selectedSquad = NULL;
-//    m_selected = false;
 }
 
 ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
@@ -833,7 +884,6 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
 
     ngl::Vec4 near(tmp.m_x,tmp.m_y,-1.0f,1.0f);
     ngl::Vec4 far(tmp.m_x,tmp.m_y,1.0f,1.0f);
-
     //get world point on near and far clipping planes
     ngl::Vec4 obj_near=inverse*near;
     ngl::Vec4 obj_far=inverse*far;
@@ -905,7 +955,7 @@ void NGLDraw::initialiseUI()
 
   m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
-  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
+  m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
   m_buttons.push_back(m_buttonQuit);
 
   m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
@@ -944,12 +994,12 @@ void NGLDraw::initialiseUI()
   m_buttons.push_back(m_buttonSquadWall);
 
   m_buttonRioterDeadBar = new UIButton(buttonRioterDeadBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonRioterDeadBar->updateButton(ngl::Vec2(-0.95f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.9f, 0.2f, 0.2f, 1.f));
+  m_buttonRioterDeadBar->updateButton(ngl::Vec2(-0.95f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.7f, 0.2f, 0.2f, 1.f));
   m_buttonRioterDeadBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
   m_buttons.push_back(m_buttonRioterDeadBar);
 
   m_buttonRioterHomeBar = new UIButton(buttonRioterHomeBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
-  m_buttonRioterHomeBar->updateButton(ngl::Vec2(-0.88f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.2f, 0.9f, 0.2f, 1.f));
+  m_buttonRioterHomeBar->updateButton(ngl::Vec2(-0.88f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.2f, 0.7f, 0.2f, 1.f));
   m_buttonRioterHomeBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
   m_buttons.push_back(m_buttonRioterHomeBar);
 

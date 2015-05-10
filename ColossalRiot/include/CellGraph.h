@@ -15,12 +15,16 @@ private:
 
   EntityManager* m_entityMgr;
 
-  std::vector <Cell> m_cells;
-  std::vector <ngl::Vec3> m_exitPoints;
-  std::vector<float> m_mapBounds;
-  int m_numberOfCells;
-  float m_cellSize;
-  float m_maxDist; //Maximum distance from the centre of the cell within the cell.
+    std::vector <Cell> m_cells;
+    std::vector <ngl::Vec3> m_exitPoints;
+    std::vector<float> m_mapBounds;
+    int m_numberOfCells;
+    float m_cellSize;
+    float m_maxDist; //Maximum distance from the centre of the cell within the cell.
+    std::vector<ngl::Vec3> m_wallCentres;
+    std::vector<ngl::Vec3> m_wallNormals;
+    std::vector<int> m_wallRotations;
+
 
 public:
   CellGraph();
@@ -34,10 +38,15 @@ public:
 
   void initializeCells(BaseGameEntity *_entity);
 
-  void updateCells(BaseGameEntity *_entity);
-  void clearCells();
-  void addEntities(BaseGameEntity *_entity);
-  void generateWalls();
+
+    void updateCells(BaseGameEntity *_entity);
+    void clearCells();
+    void addEntities(BaseGameEntity *_entity);
+    void generateWalls();
+
+    std::vector<ngl::Vec3> getWallCentres(){return m_wallCentres;}
+    std::vector<ngl::Vec3> getWallNormals(){return m_wallNormals;}
+    std::vector<int> getWallRotations(){return m_wallRotations;}
 
   std::vector<float> getMapBounds(){return m_mapBounds;}
   std::vector<ngl::Vec3> getExitPoints(){return m_exitPoints;}

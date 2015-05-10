@@ -183,6 +183,7 @@ CellGraph::CellGraph(const char *_fileName, int _borderSize)
     }
 }
 
+
 CellGraph::CellGraph()
 {
   //m_entityMgr = new EntityManager();
@@ -190,7 +191,7 @@ CellGraph::CellGraph()
 
 CellGraph::~CellGraph()
 {
-  delete m_entityMgr;
+ // delete m_entityMgr;
 }
 
 bool CellGraph::entityIsInCell(int _cellID, BaseGameEntity *_entity)
@@ -242,12 +243,12 @@ void CellGraph::updateCells(BaseGameEntity *_entity)
   {
     for (int i = 0; i < _entity->getCurrentCell().getNeighbourCellIDs().size(); i++)
     {
-      int currentNeighbourID = _entity->getCurrentCell().getNeighbourCellIDs()[i];
-      if (entityIsInCell(currentNeighbourID, _entity) == true)
+      int currentNeighbourCellID = _entity->getCurrentCell().getNeighbourCellIDs()[i];
+      if (entityIsInCell(currentNeighbourCellID, _entity) == true)
       {
-        m_cells[currentNeighbourID].addDynamicEntityID(_entity->getID());
-        _entity->setCurrentCellID(currentNeighbourID);
-        _entity->setCurrentCell(m_cells[currentNeighbourID]);
+        m_cells[currentNeighbourCellID].addDynamicEntityID(_entity->getID());
+        _entity->setCurrentCellID(currentNeighbourCellID);
+        _entity->setCurrentCell(m_cells[currentNeighbourCellID]);
       }
     }
   }
@@ -322,9 +323,13 @@ void CellGraph::addEntities(BaseGameEntity *_entity)
           _entity->addPoliceID(_entity->getDetectedEntityIDs()[i]);
       }
       //std::cout<<"called by addEntities 3"<<std::endl;
-      if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
+      else if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeRioter)
       {
           _entity->addRioterID(_entity->getDetectedEntityIDs()[i]);
+      }
+      else if ( m_entityMgr->getEntityFromID(_entity->getDetectedEntityIDs()[i])->getEntityType() == typeStaticEntity)
+      {
+          _entity->addObstacleID(_entity->getDetectedEntityIDs()[i]);
       }
   }
 }
@@ -387,6 +392,11 @@ void CellGraph::generateWalls()
             newWall.normal = ngl::Vec3(0.0f,0.0f,1.0f);
             m_cells[i].addWallInCell(newWall);
 
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(0.0f,0.0f,1.0f));
+            m_wallRotations.push_back(-90);
+
         }
         if(lowerWall == true)
         {
@@ -397,6 +407,11 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(0.0f,0.0f,-1.0f);
             m_cells[i].addWallInCell(newWall);
+
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(0.0f,0.0f,-1.0f));
+            m_wallRotations.push_back(90);
 
         }
         if(leftWall == true)
@@ -409,6 +424,11 @@ void CellGraph::generateWalls()
             newWall.normal = ngl::Vec3(1.0f,0.0f,0.0f);
             m_cells[i].addWallInCell(newWall);
 
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(1.0f,0.0f,0.0f));
+            m_wallRotations.push_back(0);
+
         }
         if(rightWall == true)
         {
@@ -419,6 +439,11 @@ void CellGraph::generateWalls()
             newWall.end = end;
             newWall.normal = ngl::Vec3(-1.0f,0.0f,0.0f);
             m_cells[i].addWallInCell(newWall);
+
+            ngl::Vec3 centre = (start+end)/2.0;
+            m_wallCentres.push_back(centre);
+            m_wallNormals.push_back(ngl::Vec3(-1.0f,0.0f,0.0f));
+            m_wallRotations.push_back(180);
         }
 
 
