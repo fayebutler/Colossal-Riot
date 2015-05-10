@@ -45,9 +45,9 @@ global["execute"] = function()
   end
 
   if stateMachine.m_currentState ~= "home" then
---    if rioter.m_morale <= 0 then
---        stateMachine:changeState("home")
---    end
+    if rioter.m_morale <= 0 then
+        stateMachine:changeState("home")
+    end
   end
 end
 
@@ -72,7 +72,7 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.8)
+   rioter:protestCohesion(0.5)
 
 end
 

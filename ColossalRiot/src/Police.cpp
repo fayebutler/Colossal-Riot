@@ -40,6 +40,7 @@ Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
+
 }
 
 void Police::update(double timeElapsed, double currentTime)
@@ -278,7 +279,6 @@ void Police::registerClass(lua_State* _L)
         .deriveClass<Police, Agent>("Police")
             .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
                 .addFunction("attack", &Police::attack)
-                .addFunction("death", &Police::death)
                 .addFunction("getRioterInfluence", &Police::getRioterInfluence)
                 .addFunction("squadCohesion", &Police::squadCohesion)
                 .addFunction("findPathHome", &Police::findPathHome)

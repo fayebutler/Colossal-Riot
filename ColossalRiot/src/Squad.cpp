@@ -1,3 +1,5 @@
+#include <boost/foreach.hpp>
+
 #include "Squad.h"
 #include "GameWorld.h"
 
@@ -61,18 +63,16 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
 
 Squad::~Squad()
 {
-    for (int i = 0; i<m_squadPolice.size(); i++)
-    {
-        delete m_squadPolice[i];
-    }
-    m_squadPolice.clear();
-
-    for (int i = 0; i<m_deadSquadPolice.size(); i++)
-    {
-        delete m_deadSquadPolice[i];
-    }
-    m_deadSquadPolice.clear();
-
+  BOOST_FOREACH(Police *p, m_squadPolice)
+  {
+      delete p;
+  }
+  m_squadPolice.clear();
+  BOOST_FOREACH(Police *p, m_deadSquadPolice)
+  {
+      delete p;
+  }
+  m_deadSquadPolice.clear();
 }
 
 ngl::Vec3 Squad::averagePolicePos()
@@ -331,12 +331,10 @@ int Squad::checkDeaths()
         {
             currentPolice->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentPolice));
-            //delete currentPolice;
             m_deadSquadPolice.push_back(currentPolice);
             m_squadPolice.erase(m_squadPolice.begin()+i);
             m_squadSize -= 1;
             numberOfDeaths++;
-
             i--;
         }
     }

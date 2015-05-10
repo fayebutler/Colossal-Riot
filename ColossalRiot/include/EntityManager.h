@@ -30,6 +30,7 @@ public:
   void removeEntity(BaseGameEntity* _entity);
 
   int getSize();
+  void clearMap();
 };
 
 #endif // ENTITYMANAGER_H

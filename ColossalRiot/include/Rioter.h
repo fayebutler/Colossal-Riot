@@ -4,6 +4,7 @@
 #include "Agent.h"
 #include "StateMachine.h"
 
+
 class Rioter : public Agent
 {
 public:
@@ -39,6 +40,8 @@ public:
 
 protected:
 
+    //GameWorld* m_gameworld;
+//    MessageManager* m_messageMgr;
     StateMachine<Rioter>* m_stateMachine;
 
     ngl::Vec3 m_protestPos;

@@ -11,7 +11,7 @@ level1 = function()
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
   gameWorld.m_numberOfRiotersHomeToWin = 25
-  gameWorld.m_numberOfRiotersDeadToLose = 75
+  gameWorld.m_numberOfRiotersDeadToLose = 50
 end
 
 level2 = function()

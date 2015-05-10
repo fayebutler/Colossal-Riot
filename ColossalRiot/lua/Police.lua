@@ -46,11 +46,11 @@ global["execute"] = function()
 --    end
 --  end
 
---  if stateMachine.m_currentState ~= "home" then
---    if police.m_morale <= 0 then
---        stateMachine:changeState("home")
---    end
---  end
+  if stateMachine.m_currentState ~= "home" then
+    if police.m_morale <= 0 then
+        stateMachine:changeState("home")
+    end
+  end
 
   if stateMachine.m_currentState ~= "move" then
     if police.m_isMoving == true then

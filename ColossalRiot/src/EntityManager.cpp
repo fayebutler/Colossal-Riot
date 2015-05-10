@@ -10,7 +10,8 @@ EntityManager::EntityManager()
 
 EntityManager::~EntityManager()
 {
-
+//    m_entityMap.clear();
+//    std::cout<<"DELETING MAP: SIZE- "<<getSize()<<std::endl;
 }
 
 //template <typename Type>
@@ -42,4 +43,9 @@ void EntityManager::removeEntity(BaseGameEntity* _entity)
 int EntityManager::getSize()
 {
     return m_entityMap.size();
+}
+
+void EntityManager::clearMap()
+{
+    m_entityMap.clear();
 }

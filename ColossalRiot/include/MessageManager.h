@@ -22,6 +22,7 @@ class MessageManager
 public:
 
   MessageManager();
+  ~MessageManager();
 
   void sendMessage(int _senderID, int _receiverID, int _message, float _extraInfo);
 

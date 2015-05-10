@@ -4,14 +4,19 @@ EntityManager* MessageManager::m_entityMgr;
 
 MessageManager::MessageManager()
 {
-    m_entityMgr = new EntityManager();
-
+  m_entityMgr = new EntityManager();
+}
+MessageManager::~MessageManager()
+{
+    //delete m_entityMgr;
 }
 
 void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, float _extraInfo)
 {
-  BaseGameEntity* sender = (BaseGameEntity*)m_entityMgr->getEntityFromID(_senderID);
+  //EntityManager* entityMgr;
+  //entityMgr = new EntityManager();
   BaseGameEntity* receiver = (BaseGameEntity*)m_entityMgr->getEntityFromID(_receiverID);
+
 
   if (receiver == NULL)
   {
@@ -22,6 +27,7 @@ void MessageManager::sendMessage(int _senderID, int _receiverID, int _message, f
   Message message(_senderID, _receiverID, _message, _extraInfo);
 
   send(receiver, message);
+  //delete entityMgr;
 }
 
 void MessageManager::send(BaseGameEntity *_receiver, const Message &_message)

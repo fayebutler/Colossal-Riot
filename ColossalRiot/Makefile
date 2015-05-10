@@ -563,23 +563,23 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Agent.o src/Agent.cpp
 
 obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
@@ -736,23 +736,23 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
@@ -1305,23 +1305,23 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
@@ -1486,23 +1486,23 @@ obj/main.o: src/main.cpp /home/i7702804/NGL/include/ngl/NGLInit.h \
 		/home/i7702804/NGL/include/ngl/AbstractMesh.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
@@ -1929,23 +1929,23 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
@@ -2109,23 +2109,23 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/GameWorld.h \
 		include/Rioter.h \
@@ -2287,23 +2287,23 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/GameWorld.h \
 		include/Police.h \
@@ -2466,23 +2466,23 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/GameWorld.h \
 		include/Rioter.h \
@@ -2793,23 +2793,23 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \
@@ -2947,8 +2947,7 @@ obj/Text.o: src/Text.cpp include/Text.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7702804/NGL/include/ngl/Mat3.h \
 		/home/i7702804/NGL/include/ngl/rapidxml/rapidxml.hpp \
-		/home/i7702804/NGL/include/ngl/Mat4.h \
-		../SDL2_ttf/include/SDL2/SDL_ttf.h
+		/home/i7702804/NGL/include/ngl/Mat4.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Text.o src/Text.cpp
 
 obj/Timer.o: src/Timer.cpp include/Timer.h
@@ -3386,23 +3385,23 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7702804/NGL/include/ngl/BBox.h \
 		include/Timer.h \
 		../lua/include/lua.h \
-		/home/i7702804/Programming/colossal/lua/include/luaconf.h \
+		/home/i7702804/Desktop/untitled\ folder/lua/include/luaconf.h \
 		../lua/include/lauxlib.h \
 		../lua/include/lualib.h \
 		../LuaBridge/LuaBridge.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaHelpers.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/TypeList.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/FuncTraits.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Constructor.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Stack.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/ClassInfo.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaException.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/LuaRef.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Iterator.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Userdata.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/CFunctions.h \
-		/home/i7702804/Programming/colossal/LuaBridge/detail/Namespace.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaHelpers.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/TypeList.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/FuncTraits.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Constructor.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Stack.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/ClassInfo.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaException.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/LuaRef.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Iterator.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Userdata.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/CFunctions.h \
+		/home/i7702804/Desktop/untitled\ folder/LuaBridge/detail/Namespace.h \
 		include/StateMachine.h \
 		include/Police.h \
 		include/CellGraph.h \

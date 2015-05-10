@@ -191,9 +191,6 @@ CellGraph::CellGraph()
 
 CellGraph::~CellGraph()
 {
-
-  clearCells();
-  m_cells.clear();
   delete m_entityMgr;
 }
 
@@ -223,6 +220,7 @@ void CellGraph::initializeCells(BaseGameEntity *_entity)
 {
       for (unsigned int i=0; i < m_numberOfCells; i++)
       {
+
           if (entityIsInCell(i, _entity) == true)
           {
               m_cells[i].addDynamicEntityID(_entity->getID());

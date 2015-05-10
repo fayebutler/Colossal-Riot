@@ -28,11 +28,10 @@ BaseGameEntity::BaseGameEntity(GameWorld* world, entityType entity_type, ngl::Ve
   setID(m_nextValidID);
   m_nextValidID++;
 
+  m_messageMgr = new MessageManager();
 
   m_entityMgr = new EntityManager();
   m_entityMgr->registerEntity(this);
-
-  m_messageMgr = new MessageManager();
 
   m_pos = pos;
   m_boundingRadius = r;

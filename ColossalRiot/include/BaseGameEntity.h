@@ -9,6 +9,9 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include "Cell.h"
+//#include "GameWorld.h"
+
+class GameWorld;
 
 enum entityType
 {
@@ -36,10 +39,9 @@ protected:
   void setID(int _val) { m_ID = _val; }
   bool m_resetID;
 
-
-  EntityManager* m_entityMgr;
   MessageManager* m_messageMgr;
 
+  EntityManager* m_entityMgr;
   entityType m_entityType;
   ngl::Vec3 m_pos;
   float m_boundingRadius;
