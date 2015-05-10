@@ -7,8 +7,8 @@
 #include <assert.h>
 #include "Cell.h"
 
-SteeringBehaviour::SteeringBehaviour(Vehicle* agent):
-    m_vehicle(agent),
+SteeringBehaviour::SteeringBehaviour(Vehicle* _agent):
+    m_vehicle(_agent),
     m_activeFlags(0),
     m_wanderDistance(3.0),
     m_wanderRadius(1.0),
@@ -256,28 +256,28 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force
 
 //behaviour type functions
 
-ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 TargetPos)
+ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 targetPos)
 {
 
-    ngl::Vec3 desiredVelocity = ngl::Vec3(TargetPos - m_vehicle->getPos());
+    ngl::Vec3 desiredVelocity = ngl::Vec3(targetPos - m_vehicle->getPos());
 
     return (desiredVelocity - m_vehicle->getVelocity());
 
 }
 
-ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 TargetPos)
+ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 targetPos)
 {
 
-    ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - TargetPos);
+    ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - targetPos);
 
     return desiredVelocity - m_vehicle->getVelocity();
 
 }
 
-ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 TargetPos, int deceleration)
+ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
 {
 
-    ngl::Vec3 toTarget = TargetPos - m_vehicle->getPos();
+    ngl::Vec3 toTarget = targetPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
     if(dist>0.1)
@@ -429,10 +429,10 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
   }
 }
 
-ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 SquadPos, int deceleration)
+ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 {
     //arrive
-    ngl::Vec3 toTarget = SquadPos - m_vehicle->getPos();
+    ngl::Vec3 toTarget = squadPos - m_vehicle->getPos();
     double dist = toTarget.length();
 
     if(dist>0.1)
@@ -755,25 +755,25 @@ ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec
   return ngl::Vec3(tempX, 0, tempZ);
 }
 
-void SteeringBehaviour::addAllNeighbours(std::vector<int> neighbours)
+void SteeringBehaviour::addAllNeighbours(std::vector<int> _neighbours)
 {
-  for (int i = 0; i < neighbours.size(); i++)
+  for (int i = 0; i < _neighbours.size(); i++)
   {
 
-    m_allNeighbours.push_back(neighbours[i]);
+    m_allNeighbours.push_back(_neighbours[i]);
   }
 
 }
 
-void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> neighbours)
+void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> _neighbours)
 {
-  for (unsigned int i = 0; i < neighbours.size(); i++)
+  for (unsigned int i = 0; i < _neighbours.size(); i++)
   {
-    m_friendlyNeighbours.push_back(neighbours[i]);
+    m_friendlyNeighbours.push_back(_neighbours[i]);
   }
 }
 
-bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &distToIntersect, ngl::Vec3 &intersectPoint)
+bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &o_distToIntersect, ngl::Vec3 &o_intersectPoint)
 {
   // equation from http://paulbourke.net/geometry/pointlineplane/
 
@@ -795,8 +795,8 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
   if ((r > 0.0) && (r < 1.0) && (s > 0.0) && (s < 1.0))
   {
     ngl::Vec3 lineA = endLineA - startLineA;
-    distToIntersect = lineA.length() * r;
-    intersectPoint = startLineA + (r * (endLineA - startLineA));
+    o_distToIntersect = lineA.length() * r;
+    o_intersectPoint = startLineA + (r * (endLineA - startLineA));
     return true;
   }
   else
