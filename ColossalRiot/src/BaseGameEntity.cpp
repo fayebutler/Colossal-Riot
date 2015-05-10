@@ -26,11 +26,12 @@ BaseGameEntity::BaseGameEntity(GameWorld* _world, entityType _entityType, ngl::V
 
   m_entityMgr = new EntityManager();
   m_entityMgr->registerEntity(this);
+  m_messageMgr = new MessageManager();
 
   m_pos = _pos;
   m_boundingRadius = _r;
   m_entityType = _entityType;
-  m_detectionRadius = _r * 3; // CHANGE TO VARIABLE
+  m_detectionRadius = _r * 3;
 
   m_world->getCellGraph()->initializeCells(this);
 }
@@ -38,7 +39,8 @@ BaseGameEntity::BaseGameEntity(GameWorld* _world, entityType _entityType, ngl::V
 //----------------------------------------------------------------------------------------------------------------------
 BaseGameEntity::~BaseGameEntity()
 {
-    //delete m_entityMgr;
+  delete m_entityMgr;
+  delete m_messageMgr;
 }
 
 //----------------------------------------------------------------------------------------------------------------------

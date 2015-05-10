@@ -24,16 +24,14 @@ class GameWorld
 {
 private:
 
-    //entities that update each frame (not walls n shit)
-
     EntityManager* m_entityMgr;
 
     std::vector<int> m_dynamicEntities;
 
-    //std::vector<BaseGameEntity*> m_obstacles;
-
     std::vector<Rioter*> m_rioters;
     std::vector<Squad*> m_squads;
+    std::vector<Rioter*> m_deadRioters;
+    std::vector<Squad*> m_deadSquads;
 
     std::vector<StaticEntity*> m_obstacles;
 

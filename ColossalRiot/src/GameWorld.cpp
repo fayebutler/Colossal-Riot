@@ -89,12 +89,16 @@ GameWorld::GameWorld(int _level)
     newRioter->setDetectionRadius(3.5f);
     newRioter->setHeading(ngl::Vec3(-1+2*((float)rand())/RAND_MAX, 0.f, -1+2*((float)rand())/RAND_MAX));
     newRioter->setPos(ngl::Vec3(-25+50*((float)rand())/RAND_MAX, 0.f, -25+50*((float)rand())/RAND_MAX));
+       std::cout<<"HERE"<<std::endl;
     m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
+       std::cout<<"HEREE"<<std::endl;
     while (newRioter->getCurrentCellID() < 0)
     {
+         std::cout<<"HERE1"<<std::endl;
       newRioter->setPos(ngl::Vec3(-50+100*((float)rand())/RAND_MAX, 0.f, -50+100*((float)rand())/RAND_MAX));
       m_cellGraph->initializeCells(m_entityMgr->getEntityFromID(newRioter->getID()));
     }
+
     m_rioters.push_back(newRioter);
   }
   m_numberOfRioters = m_rioters.size();
@@ -160,11 +164,35 @@ void GameWorld::setPoliceStation(float _x, float _y, float _z)
 GameWorld::~GameWorld()
 {
    lua_close(L);
+   for (unsigned int i = 0; i<m_rioters.size(); i++)
+   {
+       Rioter* currentRioter = m_rioters[i];
+       //delete currentRioter;
+   }
    m_rioters.clear();
+
+   for (unsigned int i = 0; i<m_squads.size(); i++)
+   {
+       //delete m_squads[i];
+   }
    m_squads.clear();
+   for (unsigned int i = 0; i<m_deadRioters.size(); i++)
+   {
+       //delete m_deadRioters[i];
+   }
+   m_deadRioters.clear();
+
+   for (unsigned int i = 0; i<m_obstacles.size(); i++)
+   {
+       //delete m_obstacles[i];
+   }
    m_obstacles.clear();
+
    delete m_streetMesh;
    delete m_buildingMesh;
+   delete m_cellGraph;
+
+   m_entityMgr->getEntityMap().clear();
    delete m_entityMgr;
 }
 
@@ -185,7 +213,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             currentRioter->death();
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
 
-            delete currentRioter;
+            //delete currentRioter;
+            m_deadRioters.push_back(currentRioter);
 
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
@@ -201,7 +230,8 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
         {
             m_entityMgr->removeEntity(dynamic_cast<BaseGameEntity*>(currentRioter));
-            delete currentRioter;
+            //delete currentRioter;
+            m_deadRioters.push_back(currentRioter);
             m_rioters.erase(m_rioters.begin()+i);
             m_numberOfRioters--;
             m_numberOfRiotersHome++;
@@ -210,7 +240,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 
     //check for squad deaths
-    int m_numberOfSquads = m_squads.size();
+
     for(int i = 0; i < m_numberOfSquads; i++)
     {
       Squad* currentSquad = m_squads[i];
@@ -218,7 +248,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
       if (currentSquad->getSquadSize() <= 0)
       {
           m_entityMgr->removeEntity(currentSquad);
-          delete m_squads[i];
+          //delete m_squads[i];
           m_squads.erase(m_squads.begin()+i);
           m_numberOfSquads--;
           i--;
@@ -353,9 +383,17 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 
 void GameWorld::createSquad(int size)
 {
-    if (m_availablePolice - size < 0)
+    if (m_availablePolice < size)
     {
         std::cout<<"Not enough police available!"<<std::endl;
+        if (m_availablePolice != 0)
+        {
+          Squad* newSquad = new Squad(this, m_availablePolice, m_policeStation, 0.5f, m_policeMesh);
+          m_squads.push_back(newSquad);
+
+          m_activePolice += m_availablePolice;
+          m_availablePolice -= m_availablePolice;
+        }
     }
     else
     {

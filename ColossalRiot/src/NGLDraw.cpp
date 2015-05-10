@@ -183,7 +183,6 @@ void NGLDraw::startGame(int level)
     m_selected = false;
     m_selectedSquad = NULL;
     m_selectedSquadID = -1;  m_spot.setPosition(ngl::Vec3(0,10,10));
-
 }
 
 void NGLDraw::endGame()
@@ -210,8 +209,6 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-  m_spot.setPosition(ngl::Vec3(100000,0,0));
-  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
@@ -221,6 +218,9 @@ void NGLDraw::draw()
       // grab an instance of the shader manager
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
+
+      m_spot.setPosition(ngl::Vec3(100000,0,0));
+      m_spot.loadToShader("spotLight");
 
       // Rotation based on the mouse position for our global transform
       ngl::Mat4 rotX;
@@ -452,6 +452,9 @@ void NGLDraw::draw()
       // grab an instance of the shader manager
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
+
+      m_spot.setPosition(ngl::Vec3(100000,0,0));
+      m_spot.loadToShader("spotLight");
 
       // Rotation based on the mouse position for our global transform
       ngl::Mat4 rotX;

@@ -3,7 +3,6 @@
 
 Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-    m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
     //m_gameworld = world;
 
@@ -41,7 +40,6 @@ Rioter::~Rioter()
 {
   lua_close(L);
   delete m_stateMachine;
-  delete m_messageMgr;
 }
 
 void Rioter::update(double timeElapsed, double currentTime)
@@ -173,12 +171,15 @@ bool Rioter::handleMessage(const Message& _message)
     m_morale -= 5.f;
     m_rage += 30.f;
     return true;
+    break;
   case msgPoliceDeath:
     m_morale -= 15.f;
+    break;
   case msgAttack:
     return Agent::handleMessage(_message);
+    break;
   default:
-    std::cout<<"Agent: Message type not defined"<<std::endl;
+    std::cout<<"Rioter: Message type not defined"<<std::endl;
     return false;
   }
 }
