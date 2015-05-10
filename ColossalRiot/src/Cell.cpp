@@ -1,9 +1,17 @@
+//----------------------------------------------------------------------------------------------------------------------
+///  @file Cell.cpp
+///  @brief This the base cell class, used in CellGraph. It encapsulates all entities within it, neighbouring cells and walls as well.
+//----------------------------------------------------------------------------------------------------------------------
+
 #include "Cell.h"
+
+//----------------------------------------------------------------------------------------------------------------------
 
 Cell::Cell()
 {
 
 }
+//----------------------------------------------------------------------------------------------------------------------
 
 Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs,
            std::vector<int> _perpendicularCellIDs)
@@ -57,55 +65,9 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
 
 
 }
+//----------------------------------------------------------------------------------------------------------------------
 
-std::vector <int> Cell::getNeighbourCellIDs()
-{
-    return m_neighbourCellIDs;
-}
-
-
-ngl::Vec3 Cell::getCentre()
-{
-    return m_centre;
-}
-
-float Cell::getSize()
+Cell::~Cell()
 {
 
-    return fabs(m_boundries[0] - m_boundries[1]);
-}
-
-void Cell::addDynamicEntityID(int _ID)
-{
-    m_dynamicEntityIDs.push_back(_ID);
-}
-
-void Cell::clearDynamicEntityIDs()
-{
-    m_dynamicEntityIDs.clear();
-}
-
-std::vector<int> Cell::getDynamicEntityIDs()
-{
-    return m_dynamicEntityIDs;
-
-}
-
-void Cell::addWall(Wall _wall)
-{
-    m_walls.push_back(_wall);
-}
-void Cell::addWallInCell(Wall _wall)
-{
-    m_wallsInCell.push_back(_wall);
-}
-
-void Cell::addPerpendicularNeighbourID(int _ID)
-{
-    m_perpendicularNeighbourCellIDs.push_back(_ID);
-}
-
-std::vector<int> Cell::getPerpendicularNeighbourCellIDs()
-{
-    return m_perpendicularNeighbourCellIDs;
 }
