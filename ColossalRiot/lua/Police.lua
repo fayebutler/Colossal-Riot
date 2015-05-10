@@ -96,10 +96,10 @@ end
 move = {}
 move["enter"] = function()
 
-   police:wander(0.3)
+   police:wander(0.0)
    police:pursuit(0.0)
    police:evade(0.0)
-   police:seek(10.0)
+   police:seek(1.0)
    police:arrive(0.0)
 
    police:cohesion(0.0)
