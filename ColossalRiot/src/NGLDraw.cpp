@@ -109,7 +109,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   initialiseUI();
   m_selectedLevel = 1;
 
-  m_previousColour =ngl::Colour(0.0f,0.5f,0.5f,1.0f);
+  m_squadCurrentColour =ngl::Colour(0.0f,0.5f,0.5f,1.0f);
 
 }
 
@@ -214,7 +214,7 @@ void NGLDraw::draw()
   (*shader)["Phong"]->use();
 
   m_spot.setPosition(ngl::Vec3(100000,0,0));
-//  m_spot.loadToShader("spotLight");
+  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
@@ -249,37 +249,39 @@ void NGLDraw::draw()
         {
           case squadPatrol :
           {
-            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_previousColour.m_r, m_previousColour.m_g, m_previousColour.m_b));
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_squadCurrentColour.m_r, m_squadCurrentColour.m_g, m_squadCurrentColour.m_b));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_previousColour = ngl::Colour(0.0f, 0.5f, 0.5f, 1.0f);
+            m_squadCurrentColour = ngl::Colour(0.0f, 0.5f, 0.5f, 1.0f);
            // m_previousColour =ngl::Colour(m_buttonSquadPatrol->getButtonColour().m_x,m_buttonSquadPatrol->getButtonColour().m_y,m_buttonSquadPatrol->getButtonColour().m_z,m_buttonSquadPatrol->getButtonColour().m_w );
             if(m_selected == false)
             {
-               m_selectedSquad->setSquadColour(m_previousColour);
+               m_selectedSquad->setSquadColour(m_squadCurrentColour);
             }
             else if(m_selected == true)
             {
-               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+               m_squadSelectedColour = m_squadCurrentColour * 2.0;
+               m_selectedSquad->setSquadColour(m_squadSelectedColour);
             }
             break;
           }
           case squadAggressive :
           {
-            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_previousColour.m_r, m_previousColour.m_g, m_previousColour.m_b));
+            m_buttonSquadPatrol->setButtonColour(ngl::Vec4(m_squadCurrentColour.m_r, m_squadCurrentColour.m_g, m_squadCurrentColour.m_b));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.6f, 0.0f, 0.3f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_previousColour = ngl::Colour(0.2f, 0.2f, 0.9f);
+            m_squadCurrentColour = ngl::Colour(0.2f, 0.2f, 0.9f);
             //m_previousColour = ngl::Colour(m_buttonSquadAggressive->getButtonColour().m_x,m_buttonSquadAggressive->getButtonColour().m_y,m_buttonSquadAggressive->getButtonColour().m_z,m_buttonSquadAggressive->getButtonColour().m_w );
             if(m_selected == false)
             {
-               m_selectedSquad->setSquadColour(m_previousColour);
+               m_selectedSquad->setSquadColour(m_squadCurrentColour);
             }
             else if(m_selected == true)
             {
-               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+              m_squadSelectedColour = m_squadCurrentColour * 2.0;
+              m_selectedSquad->setSquadColour(m_squadSelectedColour);
             }
             break;
           }
@@ -287,16 +289,17 @@ void NGLDraw::draw()
           {
             m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.4f, 0.0f, 0.4f));
+            m_buttonSquadDefensive->setButtonColour(ngl::Vec4(m_squadCurrentColour.m_r, m_squadCurrentColour.m_g, m_squadCurrentColour.m_b));
             m_buttonSquadWall->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_previousColour = ngl::Colour(m_buttonSquadDefensive->getButtonColour().m_x,m_buttonSquadDefensive->getButtonColour().m_y,m_buttonSquadDefensive->getButtonColour().m_z,m_buttonSquadDefensive->getButtonColour().m_w );
+            m_squadCurrentColour = ngl::Colour(0.4f, 0.0f, 0.4f);
             if(m_selected == false)
             {
-               m_selectedSquad->setSquadColour(m_previousColour);
+               m_selectedSquad->setSquadColour(m_squadCurrentColour);
             }
             else if(m_selected == true)
             {
-               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+              m_squadSelectedColour = m_squadCurrentColour * 2.0;
+              m_selectedSquad->setSquadColour(m_squadSelectedColour);
             }
             break;
           }
@@ -305,26 +308,22 @@ void NGLDraw::draw()
             m_buttonSquadPatrol->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadAggressive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
             m_buttonSquadDefensive->setButtonColour(ngl::Vec4(0.2f, 0.2f, 0.9f));
-            m_buttonSquadWall->setButtonColour(ngl::Vec4(0.0f, 0.0f, 0.4f));
-            m_previousColour = ngl::Colour(m_buttonSquadWall->getButtonColour().m_x,m_buttonSquadWall->getButtonColour().m_y,m_buttonSquadWall->getButtonColour().m_z,m_buttonSquadWall->getButtonColour().m_w );
+            m_buttonSquadWall->setButtonColour(ngl::Vec4(m_squadCurrentColour.m_r, m_squadCurrentColour.m_g, m_squadCurrentColour.m_b));
+            m_squadCurrentColour = ngl::Colour(0.0f, 0.0f, 0.8f);
             if(m_selected == false)
             {
-               m_selectedSquad->setSquadColour(m_previousColour);
+               m_selectedSquad->setSquadColour(m_squadCurrentColour);
             }
             else if(m_selected == true)
             {
-               m_selectedSquad->setSquadColour(m_previousColour * 2.0);
+              m_squadSelectedColour = m_squadCurrentColour * 2.0;
+              m_selectedSquad->setSquadColour(m_squadSelectedColour);
             }
             break;
           }
-//          if(m_selected == true)
-//          {
-//              m_selectedSquad->setSquadColour(m_selectedSquad->getSquadColour() *2.0);
-//          }
           case squadMove :
           {
-//            m_previousColour = ngl::Colour(0.3f,0.0f,0.3f,1.0f);
-//            m_selectedSquad->setSquadColour(m_previousColour);
+            m_squadCurrentColour = m_squadCurrentColour;
             break;
           }
           default :
@@ -721,8 +720,20 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 
       if (m_gameState == gamePlay)
       {
-
          doSelection(_event.x, _event.y);
+         if(m_selected == false)
+         {
+           m_selectedSquad->setSquadColour(m_squadCurrentColour);
+         }
+//         if(m_selected == true &&
+//            m_selectedSquad->getSquadColour().m_r == m_squadSelectedColour.m_r &&
+//            m_selectedSquad->getSquadColour().m_g == m_squadSelectedColour.m_g &&
+//            m_selectedSquad->getSquadColour().m_b == m_squadSelectedColour.m_b)
+//         {
+//           m_selected = false;
+//           std::cout<<" de select "<<std::endl;
+//           m_selectedSquad->setSquadColour(m_squadCurrentColour);
+//         }
 
       }
     }
@@ -733,7 +744,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 
            if (m_selected)
            {
-               m_selectedSquad->setSquadColour(m_previousColour);
+               m_selectedSquad->setSquadColour(m_squadCurrentColour);
 
                m_selected = false;
                m_selectedSquad = NULL;
@@ -753,7 +764,6 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
   {
     m_sliderSquadSize->setIsSliding(false);
     m_rotate=false;
-
   }
   // right mouse translate mode
   if (_event.button == SDL_BUTTON_MIDDLE)
@@ -809,7 +819,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
 
         //set de-selected squad colour
-        currentSquad->setSquadColour(m_previousColour);
+//        currentSquad->setSquadColour(m_squadCurrentColour);
 
     }
 
@@ -829,15 +839,32 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
         if(currentSquad->checkSelectionColour(pixel) == true)
         {
-            //set selected squad colour
-            currentSquad->setSquadColour(m_previousColour * 2.0f);
+          //set selected squad colour
+          if(m_selected == true)
+          {
+            m_selectedSquad->setSquadColour(m_squadCurrentColour);
+            m_squadSelectedColour = m_squadCurrentColour *2.0f;
+            currentSquad->setSquadColour(m_squadSelectedColour);
 
             m_selected = true;
             m_selectedSquad = currentSquad;
             m_selectedSquadID = currentSquad->getID();
             newSelection = true;
             break;
+          }
+          else
+          {
+            m_squadSelectedColour = m_squadCurrentColour *2.0f;
+            currentSquad->setSquadColour(m_squadSelectedColour);
+
+            m_selected = true;
+            m_selectedSquad = currentSquad;
+            m_selectedSquadID = currentSquad->getID();
+            newSelection = true;
+            break;
+          }
         }
+
     }
 
     if(newSelection == false && m_selected == true)
@@ -859,6 +886,7 @@ void NGLDraw::doMovement(const int _x, const int _y)
         m_clickPosition = getWorldSpace(_x, _y);
 
         m_gameworld->squadTarget(m_selectedSquad, m_clickPosition);
+        m_selected =false;
     }
 }
 

@@ -226,7 +226,8 @@ class NGLDraw
     float m_height;
     float m_longestSide;
 
-    ngl::Colour m_previousColour;
+    ngl::Colour m_squadCurrentColour;
+    ngl::Colour m_squadSelectedColour;
 
 
 };

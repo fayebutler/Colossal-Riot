@@ -66,7 +66,7 @@ public:
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief defines virtual function to determine how messages should be handled
-  /// @param[in] _messgae:message recieved by the vehicle
+  /// @param[in] _messgae:message recieved by the squad
   //----------------------------------------------------------------------------------------------------------------------------
   bool handleMessage(const Message& _message);
 

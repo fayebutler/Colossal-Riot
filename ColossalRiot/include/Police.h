@@ -34,6 +34,7 @@ public:
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Gets the lua state of the policeman
+  /// @return the current lua state
   //----------------------------------------------------------------------------------------------------------------------------
   lua_State* getLuaState() const { return L ; }
 
@@ -47,14 +48,14 @@ public:
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Method to draw each policeman
   /// @param[in] cam: the camera used for the scene
-  /// @param[in] mouseGlobalTX: the global mouse transformation position
+  /// @param[in] mouseGlobalTX: the global mouse position transformation matrix
   //----------------------------------------------------------------------------------------------------------------------------
   void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Method to load the matrices of the policeman to the shader
   /// @param[in] cam: the camera used for the scene
-  /// @param[in] mouseGlobalTX: the global mouse transformation position
+  /// @param[in] mouseGlobalTX: the global mouse position transformation matrix
   //----------------------------------------------------------------------------------------------------------------------------
   void loadMatricesToShader(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
 
@@ -88,6 +89,7 @@ public:
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Method to define how to handle messages
+  /// @param[in] _messgae:message recieved by the policeman
   //----------------------------------------------------------------------------------------------------------------------------
   bool handleMessage(const Message &_message);
 
@@ -103,6 +105,7 @@ public:
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Method to register class, functions and properties to be used in lua
+  /// @param[in] _L: the lua state
   //----------------------------------------------------------------------------------------------------------------------------
   void registerClass(lua_State* _L);
 
