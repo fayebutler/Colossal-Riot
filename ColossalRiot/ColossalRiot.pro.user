@@ -2,6 +2,7 @@
 <!DOCTYPE QtCreatorProject>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Written by QtCreator 3.2.0, 2015-05-09T22:06:01. -->
 <qtcreator>
  <data>
@@ -21,6 +22,13 @@
   <variable>EnvironmentId</variable>
   <value type="QByteArray">{1c9f8cfe-56ae-4c31-b47f-aaf392462828}</value>
 >>>>>>> 760794eb290caaad487591ca100c962569973d41
+=======
+<!-- Written by QtCreator 3.2.0, 2015-05-10T10:51:25. -->
+<qtcreator>
+ <data>
+  <variable>EnvironmentId</variable>
+  <value type="QByteArray">{96ead819-5c0c-4c18-ae2d-6070eaa2d491}</value>
+>>>>>>> will
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -194,6 +202,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">ColossalRiot</value>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ColossalRiot2</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7715430/Colossal/colossal/ColossalRiot/ColossalRiot.pro</value>
 =======
@@ -204,6 +213,10 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ColossalRiot2</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7715430/Colossal/colossal/ColossalRiot/ColossalRiot.pro</value>
 >>>>>>> 760794eb290caaad487591ca100c962569973d41
+=======
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">ColossalRiot2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/i7776126/compAnim02/colossal/ColossalRiot/ColossalRiot.pro</value>
+>>>>>>> will
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">ColossalRiot.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
