@@ -38,6 +38,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
+  Vehicle::Steering()->setObstacleAvoidWeight(0.6);
 
   m_policeInfluence = 0.0;
 
