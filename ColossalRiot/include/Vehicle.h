@@ -1,68 +1,206 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-#include <ngl/Transformation.h>
+//----------------------------------------------------------------------------------------------------------------------------
+/// @file Vehicle.h
+/// @brief defines a vehicle
+/// Modified from :-
+/// Matt Buckland (2005) Programming AI By Example [Book & Source Code]
+/// [Accessed 2015] Available from: https://github.com/wangchen/Programming-Game-AI-by-Example-src
+//----------------------------------------------------------------------------------------------------------------------------
+
 #include "MovingEntity.h"
 #include "SteeringBehaviour.h"
 
-class SteeringBehaviour;
+//----------------------------------------------------------------------------------------------------------------------
+/// @class Vehicle "include/Vehicle.h"
+/// @brief The base class for all vehicles
+/// @author Faye Butler
+/// @version 1.0
+/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
+//----------------------------------------------------------------------------------------------------------------------
 
+class SteeringBehaviour;
 
 class Vehicle: public MovingEntity
 {
+public:
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Vehicle ctor
+  /// @param[in] world: Pointer to the gameworld to be used
+  /// @param[in] position: vector for the starting position of the vehicle
+  /// @param[in] velocity: vector for the starting velocity of the vehicle
+  /// @param[in] rotation: float for the starting rotation of the vehicle
+  /// @param[in] mass: float to set the mass of the vehicle
+  /// @param[in] max_force: float to set the maximum force
+  /// @param[in] max_speed: float to set the maximum speed
+  /// @param[in] max_turnrate: float to set the maximum turn rate
+  /// @param[in] scale: float to set the scale of the vehicle
+  //----------------------------------------------------------------------------------------------------------------------------
+  Vehicle(GameWorld* world, ngl::Vec3 position, ngl::Vec3 velocity, float rotation, float mass, float max_force, float max_speed, float max_turnrate, float scale);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Vehicle dtor
+  //----------------------------------------------------------------------------------------------------------------------------
+  ~Vehicle();
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Method to update the vehicle every tick
+  /// @param[in] time_elapsed: the time elapsed between each tick
+  //----------------------------------------------------------------------------------------------------------------------------
+  void update(double time_elapsed);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief deifne virtual function to determine how messages should be handled
+  /// @param[in] _message: message recieved by the vehicle
+  //----------------------------------------------------------------------------------------------------------------------------
+  virtual bool handleMessage(const Message& _message);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Returns steering behaviour class
+  //----------------------------------------------------------------------------------------------------------------------------
+  SteeringBehaviour* Steering(){return m_steering;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Returns the time elapsed since last tick
+  /// @return Double: the time elapsed
+  //----------------------------------------------------------------------------------------------------------------------------
+  double getTimeElapsed()const{return m_timeElapsed;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Finds the nearest vec3 from a vector of Vec3s
+  /// @param[in] _exits: vector of Vec3s to search through
+  /// @return Vec3: the vector of the nearest exit
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 findNearestExit(std::vector<ngl::Vec3> _exits);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Method to go through path and set the crosshair as the next point when current crosshair has been reached
+  //----------------------------------------------------------------------------------------------------------------------------
+  void followPath();
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Method to find a path to the target
+  /// @param[in] _target: sets the target point to find a path to
+  //----------------------------------------------------------------------------------------------------------------------------
+  void findPath(ngl::Vec3 _target);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Gets the current crosshair
+  /// @return Vec3: returns current crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 getCrosshair()const{return m_crosshair;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the crosshair
+  /// @param[in] v: vector to set as current crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  void setCrosshair(const ngl::Vec3 v){m_crosshair=v;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Gets the current squad crosshair
+  /// @return Vec3: returns current squad crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 getSquadCrosshair()const{return m_squadCrosshair;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the squad crosshair
+  /// @param[in] v: vector to set as current crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  void setSquadCrosshair(const ngl::Vec3 v){m_squadCrosshair=v;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Method to smooth the heading of the vehicle
+  /// @param[in] _recentHeading: the current heading to pass in
+  /// @return Vec3: returns the average heading from a set number of previous headings
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 smoothingUpdate(ngl::Vec3 _recentHeading);
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Gets the path index
+  /// @return Int: returns the path index number
+  //----------------------------------------------------------------------------------------------------------------------------
+  int getPathIndex(){return m_pathIndex;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the path index
+  /// @param[in] _index: number to set the path index to
+  //----------------------------------------------------------------------------------------------------------------------------
+  void setPathIndex(const int _index){m_pathIndex = _index;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Gets the current path
+  /// @return vector: returns a vector of Vec3s that contains the points for the path
+  //----------------------------------------------------------------------------------------------------------------------------
+  std::vector<ngl::Vec3> getPath(){return m_path;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the current path
+  /// @paran[in] _path: the vector of vec3s to set the path to
+  //----------------------------------------------------------------------------------------------------------------------------
+  void setPath(const std::vector<ngl::Vec3> _path){m_path = _path;}
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Clears the current path
+  //----------------------------------------------------------------------------------------------------------------------------
+  void clearPath(){m_path.clear();}
+
 protected:
 
-    SteeringBehaviour* m_steering;
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Returns a pointer to the steering class
+  //----------------------------------------------------------------------------------------------------------------------------
+  SteeringBehaviour* m_steering;
 
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The time elapsed since the last tick
+  //----------------------------------------------------------------------------------------------------------------------------
+  double m_timeElapsed;
 
-    double m_timeElapsed;
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The current crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 m_crosshair;
 
-    ngl::Vec3 m_crosshair;
-    ngl::Vec3 m_squadCrosshair;
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The current squad crosshair
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 m_squadCrosshair;
 
-    ngl::Vec3 m_smoothHeading;
-    std::vector <ngl::Vec3> m_headingHistory;
-    int m_nextSlot;
-    int m_sampleSize;
-    bool m_smoothingOn;
-    std::vector<ngl::Vec3> m_path;
-    int m_pathIndex;
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The current path
+  //----------------------------------------------------------------------------------------------------------------------------
+  std::vector<ngl::Vec3> m_path;
 
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The current path index
+  //----------------------------------------------------------------------------------------------------------------------------
+  int m_pathIndex;
 
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The smoothed heading
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 m_smoothHeading;
 
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Vector to contain the past headings to use to average for smoothing
+  //----------------------------------------------------------------------------------------------------------------------------
+  std::vector <ngl::Vec3> m_headingHistory;
 
-public:
-    Vehicle(GameWorld* world, ngl::Vec3 position, ngl::Vec3 velocity, float rotation, float mass, float max_force, float max_speed, float max_turnrate, float scale);
-    ~Vehicle();
-    SteeringBehaviour* Steering(){return m_steering;}
-    double TimeElapsed()const{return m_timeElapsed;}
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the number of the next slot in the heading history
+  //----------------------------------------------------------------------------------------------------------------------------
+  int m_nextSlot;
 
-    virtual bool handleMessage(const Message& _message);
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief The number of past headings used to average and smooth
+  //----------------------------------------------------------------------------------------------------------------------------
+  int m_sampleSize;
 
-
-    void update(double time_elapsed);
-    void render();
-
-    ngl::Vec3 getCrosshair()const{return m_crosshair;}
-    void setCrosshair(ngl::Vec3 v){m_crosshair=v;}
-
-    ngl::Vec3 getSquadCrosshair()const{return m_squadCrosshair;}
-    void setSquadCrosshair(ngl::Vec3 v){m_squadCrosshair=v;}
-
-    ngl::Vec3 smoothingUpdate(ngl::Vec3 m_recentHeading);
-
-    ngl::Vec3 findNearestExit(std::vector<ngl::Vec3> _exits);
-    void followPath();
-    void findPath(ngl::Vec3 _target);
-
-    int getPathIndex(){return m_pathIndex;}
-    void setPathIndex(int _index){m_pathIndex = _index;}
-
-
-    std::vector<ngl::Vec3> getPath(){return m_path;}
-    void setPath(std::vector<ngl::Vec3> _path){m_path = _path;}
-    void clearPath(){m_path.clear();}
-
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Boolean: true if smoothing is on, false when smoothing is off
+  //----------------------------------------------------------------------------------------------------------------------------
+  bool m_smoothingOn;
 
 };
 
