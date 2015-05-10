@@ -12,7 +12,6 @@ Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0
 
 Agent::~Agent()
 {
-  lua_close(L);
 }
 
 void Agent::update(double timeElapsed, double currentTime)

@@ -30,17 +30,21 @@ public:
     CellGraph();
     CellGraph(const char *_fileName, int _borderSize);
     ~CellGraph();
-
-    void printCellGraph();
-    //call once at the start to put each agent into a cell
-    bool entityIsInCell(int _cellID, BaseGameEntity *_entity);
-    bool posIsInCell(ngl::Vec3 _pos);
-
     void initializeCells(BaseGameEntity *_entity);
-
     void updateCells(BaseGameEntity *_entity);
     void clearCells();
     void addEntities(BaseGameEntity *_entity);
+    bool entityIsInCell(int _cellID, BaseGameEntity *_entity);
+    bool posIsInCell(ngl::Vec3 _pos);
+
+
+
+    void printCellGraph();
+    //call once at the start to put each agent into a cell
+
+
+
+
     void generateWalls();
 
     std::vector<float> getMapBounds(){return m_mapBounds;}

@@ -25,6 +25,7 @@ struct Lights
   float linearAttenuation;
 };
 
+// @brief spot light structure
 struct SpotLight{
     vec4 position;
     vec3 direction;
@@ -42,8 +43,9 @@ struct SpotLight{
 
 // @param material passed from our program
 uniform Materials material;
-
+// @param light passed from our program
 uniform Lights light;
+// @param spotlight passed from our program
 uniform SpotLight spotLight;
 
 
@@ -55,7 +57,6 @@ in vec3 eyeDirection;
 in vec3 vPosition;
 
 /// @brief a function to compute point light values
-/// @param[in] _light the number of the current light
 vec4 spotLightCalc ()
 {
                 float nDotVP;       // normal * light direction
@@ -104,11 +105,7 @@ vec4 spotLightCalc ()
 
                 nDotVP = max (0.f, dot (fragmentNormal, VP));
                 nDotR = max (0.f, dot (normalize (fragmentNormal), reflection));
-// the clamp code below is the same as this but removes the branch which is quicker
-//    if (nDotVP == 0.f)
-//        pf = 0.f;
-//    else
-//        pf = pow (nDotR, material.shininess);
+
                 pf=clamp(nDotVP,0.0,pow (nDotR, material.shininess));
                 // combine the light / material values
                 vec4 ambient = material.ambient * spotLight.ambient * attenuation;
