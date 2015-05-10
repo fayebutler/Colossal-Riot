@@ -13,6 +13,7 @@ Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0
 
 Agent::~Agent()
 {
+  //lua_close(L);
 }
 
 void Agent::update(double timeElapsed, double currentTime)
@@ -34,107 +35,107 @@ void Agent::setTargetID(int _val)
 }
 
 
-void Agent::wander(double weight)
+void Agent::wander(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->WanderOff();
     }
     else
     {
       Vehicle::Steering()->WanderOn();
-      Vehicle::Steering()->setWanderWeight(weight);
+      Vehicle::Steering()->setWanderWeight(_weight);
     }
 }
 
-void Agent::pursuit(double weight)
+void Agent::pursuit(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->PursuitOff();
     }
     else
     {        
       Vehicle::Steering()->PursuitOn();
-      Vehicle::Steering()->setPursuitWeight(weight);
+      Vehicle::Steering()->setPursuitWeight(_weight);
     }
 }
 
-void Agent::evade(double weight)
+void Agent::evade(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->EvadeOff();
     }
     else
     {
       Vehicle::Steering()->EvadeOn();
-      Vehicle::Steering()->setEvadeWeight(weight);
+      Vehicle::Steering()->setEvadeWeight(_weight);
     }
 }
 
-void Agent::seek(double weight)
+void Agent::seek(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->SeekOff();
     }
     else
     {
       Vehicle::Steering()->SeekOn();
-      Vehicle::Steering()->setSeekWeight(weight);
+      Vehicle::Steering()->setSeekWeight(_weight);
     }
 }
 
-void Agent::arrive(double weight)
+void Agent::arrive(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->ArriveOff();
     }
     else
     {
       Vehicle::Steering()->ArriveOn();
-      Vehicle::Steering()->setArriveWeight(weight);
+      Vehicle::Steering()->setArriveWeight(_weight);
     }
 }
 
-void Agent::cohesion(double weight)
+void Agent::cohesion(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->CohesionOff();
     }
     else
     {
       Vehicle::Steering()->CohesionOn();
-      Vehicle::Steering()->setCohesionWeight(weight);
+      Vehicle::Steering()->setCohesionWeight(_weight);
     }
 }
 
-void Agent::separation(double weight)
+void Agent::separation(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->SeparationOff();
     }
     else
     {
       Vehicle::Steering()->SeparationOn();
-      Vehicle::Steering()->setSeparationWeight(weight);
+      Vehicle::Steering()->setSeparationWeight(_weight);
     }
 }
 
-void Agent::alignment(double weight)
+void Agent::alignment(double _weight)
 {
-    if(weight <= 0.0)
+    if(_weight <= 0.0)
     {
       Vehicle::Steering()->AlignmentOff();
     }
     else
     {
       Vehicle::Steering()->AlignmentOn();
-      Vehicle::Steering()->setAlignmentWeight(weight);
+      Vehicle::Steering()->setAlignmentWeight(_weight);
     }
 }
 

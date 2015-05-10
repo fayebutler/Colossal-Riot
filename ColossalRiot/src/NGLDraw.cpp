@@ -453,6 +453,9 @@ void NGLDraw::draw()
       ngl::ShaderLib *shader=ngl::ShaderLib::instance();
       (*shader)["Phong"]->use();
 
+      m_spot.setPosition(ngl::Vec3(100000,0,0));
+      m_spot.loadToShader("spotLight");
+
       // Rotation based on the mouse position for our global transform
       ngl::Mat4 rotX;
       ngl::Mat4 rotY;
