@@ -1,6 +1,11 @@
 #ifndef AGENT_H
 #define AGENT_H
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file Agent.h
+/// @brief The base class for all agents, that can be rioters or police
+//----------------------------------------------------------------------------------------------------------------------
+
 #include <iostream>
 #include "Vehicle.h"
 #include <ngl/ShaderLib.h>
@@ -17,6 +22,14 @@ extern "C"
   #include <lualib.h>
 }
 #include "LuaBridge.h"
+
+//----------------------------------------------------------------------------------------------------------------------
+/// @class Agent "include/Agent.h"
+/// @brief The base class for all agents, that can be rioters or police
+/// @author Will Herbert
+/// @version 1.0
+/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
+//----------------------------------------------------------------------------------------------------------------------
 
 class Agent: public Vehicle
 {
