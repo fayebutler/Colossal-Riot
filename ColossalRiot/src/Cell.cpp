@@ -5,8 +5,7 @@ Cell::Cell()
 
 }
 
-Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs,
-           std::vector<int> _perpendicularCellIDs)
+Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neighbourCellIDs)
 {
     if ( _fourCorners.size() == 4)
     {
@@ -47,7 +46,6 @@ Cell::Cell(int _ID, std::vector<ngl::Vec3> _fourCorners, std::vector<int> _neigh
 
     m_ID = _ID;
     m_neighbourCellIDs = _neighbourCellIDs;
-    m_perpendicularNeighbourCellIDs = _perpendicularCellIDs;
     }
     else
     {
