@@ -210,8 +210,11 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
+  (*shader)["Phong"]->use();
+
   m_spot.setPosition(ngl::Vec3(100000,0,0));
-  m_spot.loadToShader("spotLight");
+//  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
