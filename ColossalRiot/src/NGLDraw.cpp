@@ -361,7 +361,7 @@ void NGLDraw::draw()
       m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
       m_buttonRioterDeadBar->draw();
       float homePercent = ((float)m_gameworld->getNumberOfRiotersHome() / (float)m_gameworld->getNumberOfRiotersHomeToWin());
-      std::cout<<homePercent<<std::endl;
+//      std::cout<<homePercent<<std::endl;
       if (homePercent > 1.f)
       {
         homePercent = 1.f;
@@ -579,12 +579,12 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
         {
-          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;          
+//          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;
           switch (m_buttons[i]->getName())
           {
             case buttonPlay:
             {
-              std::cout<<m_selectedLevel<<std::endl;
+//              std::cout<<m_selectedLevel<<std::endl;
               startGame(m_selectedLevel);
               m_gameState = gamePlay;
               m_buttonQuit->setIsActive(false);

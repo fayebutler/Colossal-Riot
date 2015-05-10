@@ -146,10 +146,12 @@ bool Agent::handleMessage(const Message& _message)
   case msgAttack:
     m_health -= (_message.m_extraInfo * m_timeElapsed);
     return true;
+    break;
 
   default:
     std::cout<<"Agent: Message type not defined"<<std::endl;
     return false;
+    break;
   }
 }
 

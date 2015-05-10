@@ -51,7 +51,7 @@ public:
   void update(double time_elapsed);
 
   //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief deifne virtual function to determine how messages should be handled
+  /// @brief define virtual function to determine how messages should be handled
   /// @param[in] _message: message recieved by the vehicle
   //----------------------------------------------------------------------------------------------------------------------------
   virtual bool handleMessage(const Message& _message);
