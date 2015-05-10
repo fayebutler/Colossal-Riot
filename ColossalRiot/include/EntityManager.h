@@ -1,12 +1,6 @@
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
 
-#include <map>
-#include "BaseGameEntity.h"
-#include <iostream>
-
-class BaseGameEntity;
-
 //----------------------------------------------------------------------------------------------------------------------
 /// @file EntityManager.h
 /// @class EntityManager "include/EntityManager.h"
@@ -15,6 +9,12 @@ class BaseGameEntity;
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
+
+#include <map>
+#include "BaseGameEntity.h"
+#include <iostream>
+
+class BaseGameEntity;
 
 typedef std::map<int, BaseGameEntity*> EntityMap;
 

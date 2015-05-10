@@ -1,6 +1,15 @@
 #ifndef BASEGAMEENTITY_H
 #define BASEGAMEENTITY_H
 
+//----------------------------------------------------------------------------------------------------------------------
+/// @file BaseGameEntity.h
+/// @class BaseGameEntity "include/BaseGameEntity.h"
+/// @brief The base class for all entities in the game, static or moving
+/// @author Will Herbert
+/// @version 1.0
+/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
+//----------------------------------------------------------------------------------------------------------------------
+
 #include <ngl/Transformation.h>
 #include <vector>
 #include <list>
@@ -15,15 +24,6 @@ class GameWorld;
 class GameWorld;
 class EntityManager;
 class MessageManager;
-
-//----------------------------------------------------------------------------------------------------------------------
-/// @file BaseGameEntity.h
-/// @class BaseGameEntity "include/BaseGameEntity.h"
-/// @brief The base class for all entities in the game, static or moving
-/// @author Will Herbert
-/// @version 1.0
-/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
-//----------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @brief enum to describe the type of entitiy

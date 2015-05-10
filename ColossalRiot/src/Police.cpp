@@ -1,41 +1,43 @@
+//----------------------------------------------------------------------------------------------------------------------------
+/// @file Police.cpp
+/// @brief defines a police entity
+//----------------------------------------------------------------------------------------------------------------------------
+
 #include "Police.h"
 #include "GameWorld.h"
-#include <math.h>
-#include "GameWorld.h"
 
+//----------------------------------------------------------------------------------------------------------------------------
 Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-    m_entityType = typePolice;
+  m_entityType = typePolice;
 
-    registerClass(L);
+  registerClass(L);
 
-    // Set up state machine
-    m_stateMachine = new StateMachine<Police>(this);
+  // Set up state machine
+  m_stateMachine = new StateMachine<Police>(this);
 
-    // Set initial variables
-    m_mesh = _mesh;
+  // Set initial variables
+  m_mesh = _mesh;
 
-    m_isMoving = false;
-    m_validPursuit = true;
+  m_isMoving = false;
+  m_validPursuit = true;
 
-    m_hopHeight = 0.5;
-    m_hopSpeed = 0.0;
-    luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
-    makePolice();
+  m_hopHeight = 0.5;
+  m_hopSpeed = 0.0;
+  luabridge::LuaRef makePolice = luabridge::getGlobal(L, "makePolice");
+  makePolice();
 
-    m_blockadePosition = NULL;
-    Vehicle::Steering()->WallAvoidOn();
-    Vehicle::Steering()->setWallAvoidWeight(0.4);
-    Vehicle::Steering()->ObstacleAvoidOn();
-//    Vehicle::Steering()->setObstacleAvoidWeight(1.0);
+  m_blockadePosition = NULL;
+  Vehicle::Steering()->WallAvoidOn();
+  Vehicle::Steering()->setWallAvoidWeight(0.4);
+  Vehicle::Steering()->ObstacleAvoidOn();
 
-    m_rioterInfluence = 0.0;
+  m_rioterInfluence = 0.0;
 
-   Vehicle::setMaxSpeed(3);
-
-
+  Vehicle::setMaxSpeed(3);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 Police::~Police()
 {
   lua_close(L);
@@ -43,6 +45,7 @@ Police::~Police()
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::update(double timeElapsed, double currentTime)
 {
   //make a friendly and opposing neightbours vector as seperation wants all neighbours bu alignment & cohesion doesn't
@@ -65,43 +68,38 @@ void Police::update(double timeElapsed, double currentTime)
 
   for (int i=0; i<nearbyRioters; i++)
   {
-      Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
-      if (rioter)
-      {
-          m_rioterInfluence += rioter->getRage();
-      }
+    Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_neighbourRioterIDs[i]));
+    if (rioter)
+    {
+      m_rioterInfluence += rioter->getRage();
+    }
   }
 
   m_hopSpeed = 10.f;
   m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
-
-    if(m_blockadePosition != NULL)
+  if(m_blockadePosition != NULL)
+  {
+    this->setCrosshair(m_blockadePosition);
+    if((this->getPos() - m_blockadePosition).lengthSquared() <= 0.01)
     {
-        this->setCrosshair(m_blockadePosition);
-//        this->setMass(10.0);
-        if((this->getPos() - m_blockadePosition).lengthSquared() <= 0.01)
-        {
-            this->Steering()->ArriveOff();
-//            this->setVelocity(ngl::Vec3(0,0,0));
-//            this->setHeading(ngl::Vec3(0,0,1));
-//            this->setMaxTurnRate(0.0);
-        }
-        else
-        {
-            this->Steering()->ArriveOn();
-        }
+      this->Steering()->ArriveOff();
     }
+    else
+    {
+      this->Steering()->ArriveOn();
+    }
+  }
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
 {
   loadMatricesToShader(cam, mouseGlobalTX);
-  //ngl::VAOPrimitives::instance()->draw("cube");
   m_mesh->draw();
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -143,89 +141,90 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::findTargetID(float _health)
 {
-    std::vector<int> rioters = getNeighbourRioterIDs();
-    float currentRage = -1;
-    Agent* currentTarget = NULL;
-    for (int i=0; i<rioters.size(); i++)
+  std::vector<int> rioters = getNeighbourRioterIDs();
+  float currentRage = -1;
+  Agent* currentTarget = NULL;
+  for (int i=0; i<rioters.size(); i++)
+  {
+    Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(rioters[i]));
+    if (rioter)
     {
-        Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(rioters[i]));
-        if (rioter)
-        {
-            if (rioter->getHealth()>_health && rioter->getRage()>currentRage)
-            {
-                currentRage = rioter->getRage();
-                currentTarget = rioter;
-            }
-        }
+      if (rioter->getHealth()>_health && rioter->getRage()>currentRage)
+      {
+        currentRage = rioter->getRage();
+        currentTarget = rioter;
+      }
     }
+  }
 
-    if (currentTarget == NULL)
-    {
-        setTargetID(-1);
-//        std::cout<< "NO NEARBY TARGETS"<<std::endl;
-    }
-    else
-    {
-        int target = currentTarget->getID();
-        setTargetID(target);
-//        std::cout<<"TARGET"<<target<<std::endl;
-//        std::cout<< "FOUND TARGET"<<std::endl;
-    }
+  if (currentTarget == NULL)
+  {
+    setTargetID(-1);
+  }
+  else
+  {
+    int target = currentTarget->getID();
+    setTargetID(target);
+  }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::checkValidPursuitRange(float _dist)
 {
-    ngl::Vec3 toSquad = m_pos - m_squadPos;
-    double distSqFromEachOther = toSquad.lengthSquared();
+  ngl::Vec3 toSquad = m_pos - m_squadPos;
+  double distSqFromEachOther = toSquad.lengthSquared();
 
-    if (m_validPursuit)
+  if (m_validPursuit)
+  {
+    if(distSqFromEachOther > (_dist * _dist))
     {
-        if(distSqFromEachOther > _dist)
-        {
-            m_targetID = -1;
-            m_validPursuit = false;
-        }
+      m_targetID = -1;
+      m_validPursuit = false;
     }
+  }
 
-    else
+  else
+  {
+    m_validPursuit = true;
+    if(distSqFromEachOther > (_dist * _dist )- ((_dist* _dist)/4.0))
     {
-        m_validPursuit = true;
-        if(distSqFromEachOther > _dist- (_dist/4.0))
-        {
-            m_targetID = -1;
-            m_validPursuit = false;
-        }
+      m_targetID = -1;
+      m_validPursuit = false;
     }
-
-
+  }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::findPathHome()
 {
-    m_homePos = m_world->getPoliceStation();
-    findPath(m_homePos);
-    m_hasPathHome = true;
+  m_homePos = m_world->getPoliceStation();
+  findPath(m_homePos);
+  m_hasPathHome = true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
 bool Police::handleMessage(const Message& _message)
 {
-    switch(_message.m_message)
-    {
-    case msgAttack:
-      m_health -= (_message.m_extraInfo * m_timeElapsed);
-      return true;
+  switch(_message.m_message)
+  {
+  case msgAttack:
+    m_health -= (_message.m_extraInfo * m_timeElapsed);
+    return true;
+    break;
 
-    default:
-      std::cout<<"Police: Message type not defined"<<std::endl;
-      return false;
-    }
+  default:
+    std::cout<<"Police: Message type not defined"<<std::endl;
+    return false;
+    break;
+  }
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------
 //POLICE STATE UTILITY FUNCTIONS
-
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::attack()
 {
   m_messageMgr->sendMessage(this->getID(), this->getTargetID(), msgAttack, m_damage);
@@ -247,24 +246,23 @@ void Police::death()
 
 void Police::squadCohesion(double weight)
 {
-    if(weight <= 0.0)
-    {
+  if(weight <= 0.0)
+  {
+    Vehicle::Steering()->SquadCohesionOff();
+  }
+  else
+  {
+    ngl::Vec3 toSquad = m_pos - m_squadPos;
+    double distance = fabs(toSquad.length());
 
-      Vehicle::Steering()->SquadCohesionOff();
-    }
-    else
-    {
-        ngl::Vec3 toSquad = m_pos - m_squadPos;
-        double distance = fabs(toSquad.length());
-
-        weight = (weight*distance*1.5f)/m_squadRadius;
+    weight = (weight*distance*1.5f)/m_squadRadius;
 
 
-        Vehicle::setSquadCrosshair(m_squadPos);
-        Vehicle::Steering()->setSquadCohesionWeight(weight);
+    Vehicle::setSquadCrosshair(m_squadPos);
+    Vehicle::Steering()->setSquadCohesionWeight(weight);
 
-        Vehicle::Steering()->SquadCohesionOn();
-    }
+    Vehicle::Steering()->SquadCohesionOn();
+  }
 
 }
 
@@ -274,21 +272,20 @@ void Police::registerClass(lua_State* _L)
   luaL_dofile(L, "lua/Police.lua");
   luaL_openlibs(L);
 
-    registerLua(_L);
-    luabridge::getGlobalNamespace(_L)
-        .deriveClass<Police, Agent>("Police")
-            .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
-                .addFunction("attack", &Police::attack)
-                .addFunction("getRioterInfluence", &Police::getRioterInfluence)
-                .addFunction("squadCohesion", &Police::squadCohesion)
-                .addFunction("findPathHome", &Police::findPathHome)
-                .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
-                .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
-//                .addProperty("maxSpeed", &Police::Vehicle::getMaxSpeed, &Police::Vehicle::setMaxSpeed)
+  registerLua(_L);
+  luabridge::getGlobalNamespace(_L)
+    .deriveClass<Police, Agent>("Police")
+      .addConstructor <void (*) (GameWorld*, ngl::Obj*)> ()
+        .addFunction("attack", &Police::attack)
+        .addFunction("getRioterInfluence", &Police::getRioterInfluence)
+        .addFunction("squadCohesion", &Police::squadCohesion)
+        .addFunction("findPathHome", &Police::findPathHome)
+        .addProperty("m_isMoving", &Police::getIsMoving, &Police::setIsMoving)
+        .addFunction("checkValidPursuitRange", &Police::checkValidPursuitRange)
 
-        .endClass();
+    .endClass();
 
-    luabridge::push(L, this);
-    lua_setglobal(L, "police");
+  luabridge::push(L, this);
+  lua_setglobal(L, "police");
 }
 

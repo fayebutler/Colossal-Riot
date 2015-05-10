@@ -217,6 +217,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
             i--;
+            std::cout<<"death  "<<m_numberOfRioters<< " "<<i<<std::endl;
         }
 
         //check for when rioters have left the map

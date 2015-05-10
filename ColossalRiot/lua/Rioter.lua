@@ -233,7 +233,7 @@ end
 
 dead["execute"] = function()
 
-  print("I'M DEAD")
+--  print("I'M DEAD")
   rioter.m_health = 0
 end
 
@@ -265,7 +265,7 @@ end
 
 home["execute"] = function()
 
-  print("going home")
+--  print("going home")
   rioter.m_morale = 0
 
 end
