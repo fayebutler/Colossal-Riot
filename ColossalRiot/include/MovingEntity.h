@@ -35,6 +35,8 @@ public:
                                   m_side(m_heading.cross(ngl::Vec3(0,1,0)))
     {}
 
+    ~MovingEntity(){}
+
 
     ngl::Vec3 getVelocity()const{return m_velocity;}
     void setVelocity(ngl::Vec3 newVel){m_velocity = newVel;}

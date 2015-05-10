@@ -183,7 +183,6 @@ void NGLDraw::startGame(int level)
     m_selected = false;
     m_selectedSquad = NULL;
     m_selectedSquadID = -1;  m_spot.setPosition(ngl::Vec3(0,10,10));
-
 }
 
 void NGLDraw::endGame()

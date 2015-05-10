@@ -131,7 +131,7 @@ end
 roam["execute"] = function()
 
   rioter:cohesion(0.02*rioter.m_rage)
-    rioter.m_health = rioter.m_health - 0.1
+
 
   if rioter.m_rage > 60 then
     stateMachine:changeState("protest")

@@ -66,6 +66,7 @@ private:
     static ngl::Vec3 s_nextSelectionColour;
 
     std::vector <Police*> m_squadPolice;
+    std::vector <Police*> m_deadSquadPolice;
 
     ngl::Colour m_squadColour;
 

@@ -9,9 +9,6 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include "Cell.h"
-//#include "GameWorld.h"
-
-class GameWorld;
 
 enum entityType
 {
@@ -26,6 +23,7 @@ enum entityType
 
 class GameWorld;
 class EntityManager;
+class MessageManager;
 
 class BaseGameEntity
 {
@@ -40,6 +38,8 @@ protected:
 
 
   EntityManager* m_entityMgr;
+  MessageManager* m_messageMgr;
+
   entityType m_entityType;
   ngl::Vec3 m_pos;
   float m_boundingRadius;

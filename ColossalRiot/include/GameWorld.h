@@ -34,6 +34,8 @@ private:
 
     std::vector<Rioter*> m_rioters;
     std::vector<Squad*> m_squads;
+    std::vector<Rioter*> m_deadRioters;
+    std::vector<Squad*> m_deadSquads;
 
     std::vector<StaticEntity*> m_obstacles;
 

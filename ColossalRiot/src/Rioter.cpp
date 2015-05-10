@@ -3,7 +3,6 @@
 
 Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
 {
-    m_messageMgr = new MessageManager();
     m_entityType = typeRioter;
     //m_gameworld = world;
 
@@ -41,7 +40,6 @@ Rioter::~Rioter()
 {
   lua_close(L);
   delete m_stateMachine;
-  delete m_messageMgr;
 }
 
 void Rioter::update(double timeElapsed, double currentTime)
