@@ -105,7 +105,7 @@ void Vehicle::update(double time_elapsed)
   }
 
   //smooth the vehicles heading
-  if(m_smoothingOn == true);
+  if(m_smoothingOn == true)
   {
     m_smoothHeading = smoothingUpdate(getHeading());
     m_heading = m_smoothHeading;
@@ -159,7 +159,7 @@ ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
   ngl::Vec3 bestExit;
   float dist = 1000000000.0;
   int exitSize = _exits.size();
-  for(int i = 0; i<exitSize; i++)
+  for(int i = 0; i < exitSize; i++)
   {
     ngl::Vec3 currentExit = _exits[i];
     float testDist = (currentExit- this->getPos()).lengthSquared();

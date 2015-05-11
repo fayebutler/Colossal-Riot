@@ -190,11 +190,9 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
       currentPolice->draw(cam, mouseGlobalTX);
     }
 
-    loadMatricesToShader(cam, mouseGlobalTX);
-
-    ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,12);
-    ngl::VAOPrimitives::instance()->draw("squad");
-
+  loadMatricesToShader(cam, mouseGlobalTX);
+  ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,12);
+  ngl::VAOPrimitives::instance()->draw("squad");
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -205,8 +203,7 @@ void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   if(m_squadState == squadMove)
   {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-      (*shader)["Phong"]->use();
-
+    (*shader)["Phong"]->use();
     ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
     m.setSpecularExponent(5.f);
     m.setDiffuse(ngl::Colour(m_squadDrawColour.m_r+0.3f,m_squadDrawColour.m_g+0.3f,m_squadDrawColour.m_b+0.3f,m_squadDrawColour.m_a));
@@ -220,7 +217,6 @@ void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     trans.setPosition(m_target.m_x, 0.011f, m_target.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
-
     M=trans.getMatrix()*mouseGlobalTX;
     MV=  M*cam->getViewMatrix();
     MVP= M*cam->getVPMatrix();
@@ -229,7 +225,6 @@ void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
     shader->setShaderParamFromMat4("MVP",MVP);
     shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-
 
     ngl::VAOPrimitives::instance()->createDisk("target",1.0,12);
     ngl::VAOPrimitives::instance()->draw("target");
@@ -521,7 +516,7 @@ void Squad::formWall()
                     leftCenter = testCenter;
                   }
                   float dist = distance.length();
-                  float numberOf= dist/m_boundingRadius;
+                  float numberOf = dist/m_boundingRadius;
 
                   if(numberOf >= m_squadSize)
                   {

@@ -223,15 +223,17 @@ bool Police::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgAttack:
-    m_health -= (_message.m_extraInfo * m_timeElapsed);
-    return true;
-    break;
-
-  default:
-    std::cout<<"Police: Message type not defined"<<std::endl;
-    return false;
-    break;
+    case msgAttack:
+    {
+      return Agent::handleMessage(_message);
+      break;
+    }
+    default:
+    {
+      std::cout<<"Police: Message type not defined"<<std::endl;
+      return false;
+      break;
+    }
   }
 }
 

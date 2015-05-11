@@ -42,7 +42,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
-  Vehicle::Steering()->setObstacleAvoidWeight(0.6);
+  Vehicle::Steering()->setObstacleAvoidWeight(0.4);
 
 
 }
@@ -183,21 +183,30 @@ bool Rioter::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgRioterDeath:
-    m_morale -= 5.f;
-    m_rage += 30.f;
-    return true;
-    break;
-  case msgPoliceDeath:
-    m_morale -= 15.f;
-    break;
-  case msgAttack:
-    return Agent::handleMessage(_message);
-    break;
-  default:
-    std::cout<<"Rioter: Message type not defined"<<std::endl;
-    return false;
-    break;
+    case msgRioterDeath:
+    {
+      m_morale -= 5.f;
+      m_rage += 30.f;
+      return true;
+      break;
+    }
+    case msgPoliceDeath:
+    {
+      m_morale -= 15.f;
+      return true;
+      break;
+    }
+    case msgAttack:
+    {
+      return Agent::handleMessage(_message);
+      break;
+    }
+    default:
+    {
+      std::cout<<"Rioter: Message type not defined"<<std::endl;
+      return false;
+      break;
+    }
   }
 }
 
