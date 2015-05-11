@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ad42fae6c8050dfa9aa5c671057bd5064" title="Sets the weight of wander." alt="" coords="177,5,452,35"/>
+<area shape="rect" id="node5" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="247,59,383,88"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#ad38c15d63118621b5a3d82e7c6b74d0a" title="Sets wander to off state." alt="" coords="201,112,428,141"/>
+<area shape="rect" id="node11" href="$class_steering_behaviour.html#a8acf7a63716f12339ea659f81e9e1e6e" title="Sets wander to on state." alt="" coords="203,165,427,195"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="503,112,673,141"/>
+</map>

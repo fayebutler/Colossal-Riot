@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="235,59,349,88"/>
+<area shape="rect" id="node15" href="$class_police.html#a309196a296789d785d325593cc9678ca" title="Method to send message if a policeman has died." alt="" coords="236,112,348,141"/>
+<area shape="rect" id="node5" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="397,5,560,35"/>
+<area shape="rect" id="node9" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="400,59,557,88"/>
+<area shape="rect" id="node7" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="623,5,737,35"/>
+<area shape="rect" id="node11" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="609,59,751,88"/>
+<area shape="rect" id="node13" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="801,59,855,88"/>
+<area shape="rect" id="node17" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="397,112,560,141"/>
+</map>

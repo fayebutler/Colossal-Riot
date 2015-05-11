@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_u_i_slider.html#abfffa026ec00a212e1865c85f5c86088" title="sets the colour of the text" alt="" coords="188,5,364,35"/>
+<area shape="rect" id="node5" href="$class_u_i_button.html#a3c5be36d6353ce1aa3ad9b0bd90ba3ee" title="sets the colour of the text" alt="" coords="183,59,369,88"/>
+<area shape="rect" id="node7" href="$class_text.html#a5454ef14fc670f5ef68bdbe2fe2fad3b" title="ctor must pass in a ready constructed QFont make sure the size and emphasis is set..." alt="" coords="231,112,321,141"/>
+<area shape="rect" id="node9" href="$class_u_i_slider.html#ad4572ba90f629210b4a8f534a6df40ce" title="method used to update the text string, colour and offset from the button centre" alt="" coords="197,165,355,195"/>
+<area shape="rect" id="node15" href="$class_u_i_button.html#ac855ee10dfab054db813393276110685" title="method used to update the text string, colour and offset from the button centre" alt="" coords="191,219,361,248"/>
+<area shape="rect" id="node11" href="$class_n_g_l_draw.html#a1a830ca1a92410286704ffcb4c6d6677" title="initialises all of the buttons, sliders and text to be used in the user interface..." alt="" coords="448,165,608,195"/>
+<area shape="rect" id="node13" href="$class_n_g_l_draw.html#a2317f00e85c646efa0932a79b71904f4" title="NGLDraw::NGLDraw" alt="" coords="685,165,843,195"/>
+<area shape="rect" id="node18" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="420,219,636,248"/>
+<area shape="rect" id="node20" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="737,219,791,248"/>
+</map>

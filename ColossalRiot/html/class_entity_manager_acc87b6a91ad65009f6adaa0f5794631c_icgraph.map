@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_agent.html#ac40730da5725794d428a3b9cb7fbe04c" title="checks if the target is valid, are close enough to the agent, and if they have enough..." alt="" coords="280,57,467,87"/>
+<area shape="rect" id="node15" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="281,111,465,140"/>
+<area shape="rect" id="node23" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="295,164,452,193"/>
+<area shape="rect" id="node5" href="$class_agent.html#a4c5dd024f202fba37ba9be2de062f5db" title="registers the agent&#39;s functions and properties with the valid Lua state" alt="" coords="527,57,676,87"/>
+<area shape="rect" id="node7" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="764,5,927,35"/>
+<area shape="rect" id="node11" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="765,59,925,88"/>
+<area shape="rect" id="node9" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="1004,5,1119,35"/>
+<area shape="rect" id="node13" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="1005,59,1117,88"/>
+<area shape="rect" id="node17" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="515,111,688,140"/>
+<area shape="rect" id="node19" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="737,112,953,141"/>
+<area shape="rect" id="node21" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1035,137,1088,167"/>
+<area shape="rect" id="node25" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="531,164,672,193"/>
+</map>

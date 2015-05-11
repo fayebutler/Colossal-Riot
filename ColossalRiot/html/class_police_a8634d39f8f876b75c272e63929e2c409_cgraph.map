@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ac2e4c257f753365271d4b94c34810c07" title="Adds IDs of the neighbours to the m_allNeighbours vector." alt="" coords="200,5,469,35"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#a8180e10d0e058fb5af26c4142ba482f5" title="Adds IDs of the neighbours to the m_friendlyNeighbours vector." alt="" coords="183,59,487,88"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#ae8f82e92b2b7078e6b27f44efc19c855" title="Sets arrive to off state." alt="" coords="227,112,443,141"/>
+<area shape="rect" id="node11" href="$class_steering_behaviour.html#a48f96ed1a3e13ff2059b1b853ee78776" title="Sets arrive to on state." alt="" coords="228,165,441,195"/>
+<area shape="rect" id="node13" href="$class_steering_behaviour.html#ab3ef0f4cdd59819d691f9dc5c9e4caab" title="Clears the m_allNeighbours vector." alt="" coords="196,219,473,248"/>
+<area shape="rect" id="node15" href="$class_steering_behaviour.html#aa5931111ea584abf0aa8f89c86af62e0" title="Clears the m_friendlyNeighbours vector." alt="" coords="177,272,492,301"/>
+<area shape="rect" id="node17" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="583,216,828,245"/>
+<area shape="rect" id="node19" href="$class_base_game_entity.html#afd8c0380b8a2537d53dddfc0e5a0f78c" title="gets the vector of all neighbour police IDs" alt="" coords="185,533,484,563"/>
+<area shape="rect" id="node21" href="$class_base_game_entity.html#a728af739a106602335d6de16578c06e0" title="gets the vector of all neighbour rioter IDs" alt="" coords="184,587,485,616"/>
+<area shape="rect" id="node23" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="608,589,803,619"/>
+<area shape="rect" id="node25" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="269,640,400,669"/>
+<area shape="rect" id="node27" href="$class_steering_behaviour.html#a9878c2a1cb534b11458c6e03d895cb08" title="Calculates the overlap for obstacle avoidance." alt="" coords="173,376,496,405"/>
+<area shape="rect" id="node39" href="$class_vehicle.html#ae78c2817056f9bd161414a07929157c0" title="Sets the crosshair." alt="" coords="253,693,416,723"/>
+<area shape="rect" id="node41" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="267,747,403,776"/>
+<area shape="rect" id="node43" href="$class_state_machine.html#a1cb50dc462cfec1f5d07c797df0f5040" title="update function that checks the global state for changes and then the execute funciton..." alt="" coords="248,800,421,829"/>
+<area shape="rect" id="node45" href="$class_steering_behaviour.html#ab700251978d118ffe5166166e9bce465" title="Calculates the overlap for wall avoidance." alt="" coords="184,429,485,459"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="620,112,791,141"/>
+<area shape="rect" id="node29" href="$class_base_game_entity.html#afeac7d43a7f85e84916f2dc5a7b7d9fb" title="gets the bounding radius of the base game entity" alt="" coords="568,429,843,459"/>
+<area shape="rect" id="node32" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="612,269,799,299"/>
+<area shape="rect" id="node34" href="$class_base_game_entity.html#af21df174ac6222b3ef0cf5f9c37c1e37" title="gets the vector of all neighbour obstacle IDs" alt="" coords="545,323,865,352"/>
+<area shape="rect" id="node37" href="$class_base_game_entity.html#a40fbe8bf0567b624ef89be67c12aab48" title="sets the position of the base game enitity in world space" alt="" coords="608,376,803,405"/>
+<area shape="rect" id="node48" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="581,536,829,565"/>
+<area shape="rect" id="node51" href="$class_cell.html#a47eb59ee59aca6b7a32690132838c8fb" title="returns the vector of walls in the cell." alt="" coords="631,483,780,512"/>
+</map>

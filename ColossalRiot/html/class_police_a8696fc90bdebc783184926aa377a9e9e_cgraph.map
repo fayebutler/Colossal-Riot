@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ae3c6ece2390d271b46a6065a97f6b065" title="Sets the weight of squad cohesion." alt="" coords="228,5,553,35"/>
+<area shape="rect" id="node5" href="$class_vehicle.html#a7d681791dd1de7642681117886a987a5" title="Sets the squad crosshair." alt="" coords="289,59,492,88"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#a0203b8e221c784933e227b87ec51c043" title="Sets squad cohesion to off state." alt="" coords="252,112,529,141"/>
+<area shape="rect" id="node11" href="$class_steering_behaviour.html#a9b91ab457716aead17f1a5875d97a89f" title="Sets squad cohesion to on state." alt="" coords="253,165,528,195"/>
+<area shape="rect" id="node13" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="323,219,459,248"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="604,112,775,141"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_state_machine.html" title="{StateMachine\&lt; Police \&gt;\n|&#45; m_owner\l&#45; m_currentState\l&#45; m_previousState\l&#45; m_globalState\l&#45; L\l|+ StateMachine()\l+ ~StateMachine()\l+ setCurrentState()\l+ getCurrentState()\l+ setPreviousState()\l+ getPreviousState()\l+ setGlobalState()\l+ getGlobalState()\l+ update()\l+ luaCallState()\l+ changeState()\l+ registerLua()\l}" alt="" coords="5,419,192,765"/>
+<area shape="rect" id="node5" href="$class_state_machine.html" title="{StateMachine\&lt; Rioter \&gt;\n|&#45; m_owner\l&#45; m_currentState\l&#45; m_previousState\l&#45; m_globalState\l&#45; L\l|+ StateMachine()\l+ ~StateMachine()\l+ setCurrentState()\l+ getCurrentState()\l+ setPreviousState()\l+ getPreviousState()\l+ setGlobalState()\l+ getGlobalState()\l+ update()\l+ luaCallState()\l+ changeState()\l+ registerLua()\l}" alt="" coords="216,419,405,765"/>
+</map>

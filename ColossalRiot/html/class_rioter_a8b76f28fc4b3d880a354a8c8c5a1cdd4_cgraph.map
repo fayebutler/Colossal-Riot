@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_rioter.html#ab1e39d9ce4d61e39bd01ca9c41917b79" title="Method to load the matrices of the rioter to the shader." alt="" coords="161,85,380,115"/>
+<area shape="rect" id="node5" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="431,5,628,35"/>
+<area shape="rect" id="node7" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="459,59,600,88"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="432,112,627,141"/>
+<area shape="rect" id="node11" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="464,165,595,195"/>
+</map>

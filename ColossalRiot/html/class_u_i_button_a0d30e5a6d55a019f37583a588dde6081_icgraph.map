@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_n_g_l_draw.html#a1a830ca1a92410286704ffcb4c6d6677" title="initialises all of the buttons, sliders and text to be used in the user interface..." alt="" coords="272,5,432,35"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="244,59,460,88"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#a2317f00e85c646efa0932a79b71904f4" title="NGLDraw::NGLDraw" alt="" coords="509,5,667,35"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="561,59,615,88"/>
+</map>

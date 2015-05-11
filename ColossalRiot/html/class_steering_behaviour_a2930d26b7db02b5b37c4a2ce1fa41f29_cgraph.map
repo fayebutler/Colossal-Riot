@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="243,5,437,35"/>
+<area shape="rect" id="node5" href="$class_moving_entity.html#afa1f94de8e8a08ed21e7892280ed4b3c" title="Gets the velocity of the entity." alt="" coords="241,59,439,88"/>
+</map>

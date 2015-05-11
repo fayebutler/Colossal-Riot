@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="279,5,524,35"/>
+<area shape="rect" id="node5" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="303,59,500,88"/>
+</map>

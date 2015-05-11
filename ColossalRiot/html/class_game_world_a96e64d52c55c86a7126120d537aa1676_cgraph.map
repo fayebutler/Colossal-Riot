@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#acfe0178846faca285dd7a2376a6ebfae" title="CellGraph::addEntities" alt="" coords="800,219,973,248"/>
+<area shape="rect" id="node27" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="1181,1480,1376,1509"/>
+<area shape="rect" id="node29" href="$class_cell_graph.html#ad5d47564e156eeb36b5e6159eb756e3a" title="CellGraph::clearCells" alt="" coords="244,1555,404,1584"/>
+<area shape="rect" id="node31" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="524,376,639,405"/>
+<area shape="rect" id="node41" href="$class_entity_manager.html#acc87b6a91ad65009f6adaa0f5794631c" title="gets the entity map" alt="" coords="211,1608,437,1637"/>
+<area shape="rect" id="node43" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="253,1661,395,1691"/>
+<area shape="rect" id="node45" href="$class_cell_graph.html#ab503e143f9f22b3d70810f68121c85e0" title="CellGraph::getMapBounds" alt="" coords="225,1715,423,1744"/>
+<area shape="rect" id="node48" href="$class_squad.html#ac0454a014a8ae593875d73a73e6058d8" title="Gets the squad size." alt="" coords="243,1768,405,1797"/>
+<area shape="rect" id="node50" href="$class_entity_manager.html#a3be56b8475fd86e38d5016f25d0acfa1" title="removes a specific entity from the entity map" alt="" coords="211,1057,437,1087"/>
+<area shape="rect" id="node53" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="264,1451,384,1480"/>
+<area shape="rect" id="node104" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="520,1163,643,1192"/>
+<area shape="rect" id="node118" href="$class_cell_graph.html#ac7c0220b66b4771eb7795f4393273e43" title="CellGraph::updateCells" alt="" coords="493,688,669,717"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#a0266af3c2d3f1f7344e693448c5027d3" title="adds the detected entity&#39;s ID to the vector of detected entity IDs" alt="" coords="1101,112,1456,141"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#a95c4b2a596fc2191e5ace053f9c3208c" title="adds the input police ID to the vector of neighbour obstacle IDs" alt="" coords="1156,165,1401,195"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#a46b46c284ff1c9ce6afc6eeb56a8bc22" title="adds the input police ID to the vector of neighbour police IDs" alt="" coords="1165,219,1392,248"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#a78f9282334698f3afd21a1945ee0f2ba" title="adds the input police ID to the vector of neighbour rioter IDs" alt="" coords="1165,272,1392,301"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#a0a5a40c6adc08045ea1b8a8a21c49efb" title="clears all of the vectors of neighbour police/rioter/obstacle IDs" alt="" coords="1157,325,1400,355"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#accc4766e7002489ca8d1725931ed04b2" title="clears all the IDs stored within the detected dynamic entity IDs vector" alt="" coords="1097,379,1460,408"/>
+<area shape="rect" id="node17" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="1148,432,1409,461"/>
+<area shape="rect" id="node19" href="$class_base_game_entity.html#a5a57de8a08073fb830b375422f450d7b" title="gets the vector of all detected dynamic entitys IDs" alt="" coords="1128,5,1429,35"/>
+<area shape="rect" id="node21" href="$class_base_game_entity.html#ac358edc221b657dbb9c610ee05afb791" title="gets the detection radius of the base game entity" alt="" coords="1136,59,1421,88"/>
+<area shape="rect" id="node23" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="1156,740,1401,769"/>
+<area shape="rect" id="node25" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="1185,485,1372,515"/>
+<area shape="rect" id="node34" href="$class_game_world.html#a8f5cd1877b1b828d56b727f4f0c10f62" title="gest the number of rioters in the game world" alt="" coords="761,272,1012,301"/>
+<area shape="rect" id="node36" href="$class_game_world.html#af68848b5c94bf97dc9fcd135038e48e2" title="gets the vector of all rioters in the current game world" alt="" coords="796,325,977,355"/>
+<area shape="rect" id="node38" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="765,531,1008,560"/>
+<area shape="rect" id="node55" href="$class_squad.html#a7d8b07a54ea96e222fa9fcdc7f033f73" title="Method to calculate the average police position." alt="" coords="487,1531,676,1560"/>
+<area shape="rect" id="node58" href="$class_squad.html#a2f0b623b15f81593059b33aa5b65fcb1" title="Creates positions for each of the policeman to form a blockade using the closest..." alt="" coords="517,1635,645,1664"/>
+<area shape="rect" id="node61" href="$class_police.html#a654be4d2d2b7db4ca8a1cdb4d2948459" title="Sets the blockade position of the policeman." alt="" coords="492,1688,671,1717"/>
+<area shape="rect" id="node63" href="$class_vehicle.html#ae78c2817056f9bd161414a07929157c0" title="Sets the crosshair." alt="" coords="805,1584,968,1613"/>
+<area shape="rect" id="node65" href="$class_police.html#a06d4603dfa374ccd74fd26d4fc87a8bb" title="Sets if the policeman is moving (move state in lua)." alt="" coords="505,1320,657,1349"/>
+<area shape="rect" id="node67" href="$class_police.html#ad38d3aeae44937c6b8031e89a1b63f6f" title="Sets the position of the squad." alt="" coords="503,1373,660,1403"/>
+<area shape="rect" id="node69" href="$class_police.html#ae74ab914d99a5a5b43ff2bb54cb9ee49" title="Sets the the radius of the policeman&#39;s squad." alt="" coords="492,1477,671,1507"/>
+<area shape="rect" id="node71" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="521,1267,641,1296"/>
+<area shape="rect" id="node73" href="$class_steering_behaviour.html#ac2e4c257f753365271d4b94c34810c07" title="Adds IDs of the neighbours to the m_allNeighbours vector." alt="" coords="752,1323,1021,1352"/>
+<area shape="rect" id="node75" href="$class_steering_behaviour.html#a8180e10d0e058fb5af26c4142ba482f5" title="Adds IDs of the neighbours to the m_friendlyNeighbours vector." alt="" coords="735,1480,1039,1509"/>
+<area shape="rect" id="node77" href="$class_steering_behaviour.html#ab3ef0f4cdd59819d691f9dc5c9e4caab" title="Clears the m_allNeighbours vector." alt="" coords="748,949,1025,979"/>
+<area shape="rect" id="node79" href="$class_steering_behaviour.html#aa5931111ea584abf0aa8f89c86af62e0" title="Clears the m_friendlyNeighbours vector." alt="" coords="729,1003,1044,1032"/>
+<area shape="rect" id="node82" href="$class_base_game_entity.html#afd8c0380b8a2537d53dddfc0e5a0f78c" title="gets the vector of all neighbour police IDs" alt="" coords="737,1056,1036,1085"/>
+<area shape="rect" id="node84" href="$class_base_game_entity.html#a728af739a106602335d6de16578c06e0" title="gets the vector of all neighbour rioter IDs" alt="" coords="736,1109,1037,1139"/>
+<area shape="rect" id="node87" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="821,1163,952,1192"/>
+<area shape="rect" id="node89" href="$class_steering_behaviour.html#a9878c2a1cb534b11458c6e03d895cb08" title="Calculates the overlap for obstacle avoidance." alt="" coords="725,843,1048,872"/>
+<area shape="rect" id="node95" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="819,1216,955,1245"/>
+<area shape="rect" id="node97" href="$class_state_machine.html#a1cb50dc462cfec1f5d07c797df0f5040" title="update function that checks the global state for changes and then the execute funciton..." alt="" coords="800,1269,973,1299"/>
+<area shape="rect" id="node99" href="$class_steering_behaviour.html#ab700251978d118ffe5166166e9bce465" title="Calculates the overlap for wall avoidance." alt="" coords="736,1427,1037,1456"/>
+<area shape="rect" id="node101" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="1155,1111,1403,1140"/>
+<area shape="rect" id="node120" href="$class_cell_graph.html#a232e707892754279c175bc2c18e7ef8b" title="CellGraph::entityIsInCell" alt="" coords="793,896,980,925"/>
+<area shape="rect" id="node126" href="$class_cell.html#ae97335697d6f5da8c6527d96dcc94009" title="returns neighbouring cell IDs." alt="" coords="789,688,984,717"/>
+<area shape="rect" id="node128" href="$class_base_game_entity.html#adebb4e4740ecc00e23d03b34432d3c96" title="sets the current cell that the base game enitity is located in" alt="" coords="764,635,1009,664"/>
+</map>

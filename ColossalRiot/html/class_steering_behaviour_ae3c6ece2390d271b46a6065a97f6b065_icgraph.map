@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_rioter.html#a58e4a9cc6eaf38919de9c1a751a65bb7" title="Method to set the protest cohesion of the rioter." alt="" coords="381,5,568,35"/>
+<area shape="rect" id="node9" href="$class_police.html#a8696fc90bdebc783184926aa377a9e9e" title="Method to set the squad cohesion of the policeman&#39;s squad." alt="" coords="389,59,560,88"/>
+<area shape="rect" id="node5" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="616,5,779,35"/>
+<area shape="rect" id="node7" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="828,5,943,35"/>
+<area shape="rect" id="node11" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="617,59,777,88"/>
+<area shape="rect" id="node13" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="829,59,941,88"/>
+</map>

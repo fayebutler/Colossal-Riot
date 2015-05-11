@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_state_machine.html#ab077f35ef0f9cab4b768d5a4ae35243d" title="function to register the state machine class using LuaBridge" alt="" coords="271,5,545,35"/>
+<area shape="rect" id="node5" href="$class_squad.html#a12585c674b5835844174c4be470ec894" title="Gets the state of the squad." alt="" coords="321,59,495,88"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="596,32,812,61"/>
+<area shape="rect" id="node11" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="648,85,760,115"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="863,32,916,61"/>
+</map>

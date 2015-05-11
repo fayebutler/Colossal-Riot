@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_state_machine.html#ae1d09b16ad3de9a387075fb661a15f62" title="function to change state by calling the exit function of the current state and then..." alt="" coords="265,5,551,35"/>
+<area shape="rect" id="node5" href="$class_state_machine.html#a1cb50dc462cfec1f5d07c797df0f5040" title="update function that checks the global state for changes and then the execute funciton..." alt="" coords="285,59,531,88"/>
+</map>

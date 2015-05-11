@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_state_machine.html#ae1d09b16ad3de9a387075fb661a15f62" title="function to change state by calling the exit function of the current state and then..." alt="" coords="231,5,444,35"/>
+<area shape="rect" id="node5" href="$class_police.html#a8f1e8716d25c5227edb3762fc2e2d4a6" title="Gets the state machine for the policeman." alt="" coords="243,59,432,88"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#a416c1c19d40b523e74858d7b0f7adaa7" title="CellGraph::findPath" alt="" coords="343,59,492,88"/>
+<area shape="rect" id="node5" href="$class_vehicle.html#a0f77f5af2dc4b5fa2b3d80be7c3acd7d" title="Method to find a path to the target." alt="" coords="543,59,676,88"/>
+<area shape="rect" id="node7" href="$class_rioter.html#a2c1412677ddf6b49581d8f17c9d29afb" title="Method to set the rioter on a path to an exit." alt="" coords="727,5,895,35"/>
+<area shape="rect" id="node13" href="$class_police.html#a584c14abdca491996417a616e4c382ba" title="Method to set the policeman on a path back to the police station." alt="" coords="728,59,893,88"/>
+<area shape="rect" id="node19" href="$class_squad.html#a02fb56d0c1b33b9f8c77c397e9a8ecba" title="Sets the target for the squad and police." alt="" coords="741,112,880,141"/>
+<area shape="rect" id="node9" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="959,5,1121,35"/>
+<area shape="rect" id="node11" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="1219,5,1333,35"/>
+<area shape="rect" id="node15" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="960,59,1120,88"/>
+<area shape="rect" id="node17" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="1220,59,1332,88"/>
+<area shape="rect" id="node21" href="$class_game_world.html#abb3045797c612525c12c320f11f752fb" title="sets the target position for the currently selected squad" alt="" coords="945,112,1135,141"/>
+<area shape="rect" id="node23" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="1184,112,1368,141"/>
+<area shape="rect" id="node25" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="1416,112,1589,141"/>
+<area shape="rect" id="node27" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="1639,112,1855,141"/>
+<area shape="rect" id="node29" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1905,112,1959,141"/>
+</map>

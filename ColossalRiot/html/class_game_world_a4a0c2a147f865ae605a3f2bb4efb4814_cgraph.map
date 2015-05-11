@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_squad.html#a1f4e5f3971536a5750be884191abef42" title="Method to draw the squad." alt="" coords="271,85,375,115"/>
+<area shape="rect" id="node17" href="$class_rioter.html#a8b76f28fc4b3d880a354a8c8c5a1cdd4" title="Method to draw the rioters." alt="" coords="576,139,683,168"/>
+<area shape="rect" id="node26" href="$class_static_entity.html#a71542884f891e55b646ce54165761371" title="Method to draw the obstacle entities." alt="" coords="249,191,396,220"/>
+<area shape="rect" id="node30" href="$class_squad.html#a1648cabfa012c822b1f3401a0bc5dc22" title="Method to draw the squad&#39;s target." alt="" coords="249,244,396,273"/>
+<area shape="rect" id="node32" href="$class_squad.html#aaf26debbea83ed63cdbf729e3d0885d1" title="Gets the state of the squad." alt="" coords="236,297,409,327"/>
+<area shape="rect" id="node34" href="$class_game_world.html#ac15b53c2104efcb0b2237b0aad17c71a" title="method to load the matrices of the game world to the shader" alt="" coords="196,351,449,380"/>
+<area shape="rect" id="node5" href="$class_police.html#af02215cd207f14f5a9bfd9fac537d49a" title="Method to draw each policeman." alt="" coords="577,32,681,61"/>
+<area shape="rect" id="node15" href="$class_squad.html#afb02deaa862484458718c2feff9d88ef" title="Method to load the matrices to the shader." alt="" coords="520,85,739,115"/>
+<area shape="rect" id="node7" href="$class_police.html#ad6160af3097d616c6b89fa01f16ff5a6" title="Method to load the matrices of the policeman to the shader." alt="" coords="809,45,1028,75"/>
+<area shape="rect" id="node9" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="1079,5,1276,35"/>
+<area shape="rect" id="node11" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="1107,59,1248,88"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="1080,112,1275,141"/>
+<area shape="rect" id="node19" href="$class_rioter.html#ab1e39d9ce4d61e39bd01ca9c41917b79" title="Method to load the matrices of the rioter to the shader." alt="" coords="809,112,1028,141"/>
+<area shape="rect" id="node24" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="1112,165,1243,195"/>
+<area shape="rect" id="node28" href="$class_static_entity.html#aad40d281f45266581445735697bcad05" title="Method to load the matrices of the entity to the shader." alt="" coords="500,192,759,221"/>
+</map>

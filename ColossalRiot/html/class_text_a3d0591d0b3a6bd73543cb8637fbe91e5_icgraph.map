@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_u_i_slider.html#a1c49ae57eee928f5c330b65042388c2e" title="draws the button, and any text if necessary" alt="" coords="196,5,308,35"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#aec8a377329da67db1e2ef007bd27f026" title="draw the scene" alt="" coords="364,57,489,87"/>
+<area shape="rect" id="node9" href="$class_u_i_button.html#aa640170f598cb86d78fedf77e78ba889" title="draws the button, and any text if necessary" alt="" coords="189,109,315,139"/>
+<area shape="rect" id="node7" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="540,57,593,87"/>
+</map>

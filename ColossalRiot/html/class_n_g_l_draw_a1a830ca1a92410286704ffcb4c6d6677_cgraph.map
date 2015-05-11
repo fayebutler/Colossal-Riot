@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_u_i_slider.html#a55b1ddbb0faa911da7e96d04214704c9" title="method used to calculate the output of the slider, based on the ouput min, max and..." alt="" coords="453,73,645,102"/>
+<area shape="rect" id="node5" href="$class_u_i_button.html#a0d30e5a6d55a019f37583a588dde6081" title="method used to updated the button position, dimensions and colour" alt="" coords="216,33,405,62"/>
+<area shape="rect" id="node7" href="$class_u_i_slider.html#a1419358173530cc0bd08cf5b14cd87b7" title="method used to updated the button position, dimensions and colour" alt="" coords="228,86,393,116"/>
+<area shape="rect" id="node10" href="$class_u_i_slider.html#ad4572ba90f629210b4a8f534a6df40ce" title="method used to update the text string, colour and offset from the button centre" alt="" coords="232,140,389,169"/>
+<area shape="rect" id="node14" href="$class_u_i_button.html#ac855ee10dfab054db813393276110685" title="method used to update the text string, colour and offset from the button centre" alt="" coords="225,193,396,222"/>
+<area shape="rect" id="node12" href="$class_text.html#ad898e1ff3c2221029c115ed5de7f1b72" title="set the colour of the font from an Colour" alt="" coords="487,153,612,182"/>
+</map>

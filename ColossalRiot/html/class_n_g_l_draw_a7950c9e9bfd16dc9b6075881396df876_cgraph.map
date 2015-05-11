@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="273,5,468,35"/>
+<area shape="rect" id="node5" href="$class_u_i_slider.html#a06aafba0b8850a482b01e146101c03b2" title="gets if the slider is sliding or not" alt="" coords="292,59,449,88"/>
+<area shape="rect" id="node7" href="$class_cell_graph.html#ab503e143f9f22b3d70810f68121c85e0" title="CellGraph::getMapBounds" alt="" coords="272,112,469,141"/>
+<area shape="rect" id="node9" href="$class_u_i_slider.html#a1fc64c425f431c354837e13e40a0038f" title="sets the text string of the button" alt="" coords="284,165,457,195"/>
+<area shape="rect" id="node11" href="$class_u_i_slider.html#abdd2d04e0b681296bedae3d23d01e9ab" title="method called while the slider is being clicked to update the position of the slider..." alt="" coords="304,219,437,248"/>
+<area shape="rect" id="node13" href="$class_u_i_slider.html#a55b1ddbb0faa911da7e96d04214704c9" title="method used to calculate the output of the slider, based on the ouput min, max and..." alt="" coords="517,219,709,248"/>
+</map>

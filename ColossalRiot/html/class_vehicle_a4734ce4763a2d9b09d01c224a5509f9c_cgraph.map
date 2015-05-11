@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="203,5,397,35"/>
+<area shape="rect" id="node5" href="$class_vehicle.html#a5fcabdc13b6a3928803eb08cccac2e1c" title="Sets the path index." alt="" coords="215,59,385,88"/>
+</map>

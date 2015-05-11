@@ -1,0 +1,3 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#a522631cd4ab9534c5b09af09d8a82c9b" title="dtor cleans up all entities in the world and closes the Lua state associated with..." alt="" coords="248,5,443,35"/>
+</map>

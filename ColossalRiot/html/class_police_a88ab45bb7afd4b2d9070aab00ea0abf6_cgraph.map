@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="569,86,815,115"/>
+<area shape="rect" id="node5" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="289,45,431,74"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="267,98,453,127"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#a728af739a106602335d6de16578c06e0" title="gets the vector of all neighbour rioter IDs" alt="" coords="209,151,511,181"/>
+<area shape="rect" id="node11" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="295,205,425,234"/>
+<area shape="rect" id="node13" href="$class_agent.html#aff221a3fde468b55c2ad11133844bdf1" title="sets the health of the agent" alt="" coords="283,258,437,287"/>
+<area shape="rect" id="node16" href="$class_steering_behaviour.html#a8b46c17e3c314214a82318123980774c" title="Sets the target agent for pursuit and evade." alt="" coords="561,231,823,261"/>
+<area shape="rect" id="node18" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="624,285,760,314"/>
+</map>

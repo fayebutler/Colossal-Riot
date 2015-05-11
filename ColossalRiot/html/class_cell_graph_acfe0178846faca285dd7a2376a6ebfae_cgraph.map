@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#a0266af3c2d3f1f7344e693448c5027d3" title="adds the detected entity&#39;s ID to the vector of detected entity IDs" alt="" coords="232,5,587,35"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#a95c4b2a596fc2191e5ace053f9c3208c" title="adds the input police ID to the vector of neighbour obstacle IDs" alt="" coords="287,59,532,88"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#a46b46c284ff1c9ce6afc6eeb56a8bc22" title="adds the input police ID to the vector of neighbour police IDs" alt="" coords="296,112,523,141"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#a78f9282334698f3afd21a1945ee0f2ba" title="adds the input police ID to the vector of neighbour rioter IDs" alt="" coords="296,165,523,195"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#a0a5a40c6adc08045ea1b8a8a21c49efb" title="clears all of the vectors of neighbour police/rioter/obstacle IDs" alt="" coords="288,219,531,248"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#accc4766e7002489ca8d1725931ed04b2" title="clears all the IDs stored within the detected dynamic entity IDs vector" alt="" coords="228,272,591,301"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="279,325,540,355"/>
+<area shape="rect" id="node17" href="$class_base_game_entity.html#a5a57de8a08073fb830b375422f450d7b" title="gets the vector of all detected dynamic entitys IDs" alt="" coords="259,379,560,408"/>
+<area shape="rect" id="node19" href="$class_base_game_entity.html#ac358edc221b657dbb9c610ee05afb791" title="gets the detection radius of the base game entity" alt="" coords="267,432,552,461"/>
+<area shape="rect" id="node21" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="287,485,532,515"/>
+<area shape="rect" id="node23" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="316,539,503,568"/>
+<area shape="rect" id="node25" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="312,592,507,621"/>
+</map>

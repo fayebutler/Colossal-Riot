@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="323,5,571,35"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#ac358edc221b657dbb9c610ee05afb791" title="gets the detection radius of the base game entity" alt="" coords="304,59,589,88"/>
+<area shape="rect" id="node7" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="348,112,545,141"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="349,165,544,195"/>
+<area shape="rect" id="node11" href="$class_cell.html#a4a75f7c77fc4a8fc94be555ad064db42" title="returns the vector of Walls." alt="" coords="389,219,504,248"/>
+<area shape="rect" id="node13" href="$class_steering_behaviour.html#a1aa93a94909f67fff4b9aaa89bf69745" title="Returns if two lines intersect." alt="" coords="307,272,587,301"/>
+</map>

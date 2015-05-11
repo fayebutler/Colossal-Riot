@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#afeac7d43a7f85e84916f2dc5a7b7d9fb" title="gets the bounding radius of the base game entity" alt="" coords="400,5,675,35"/>
+<area shape="rect" id="node5" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="415,59,660,88"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="444,112,631,141"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#af21df174ac6222b3ef0cf5f9c37c1e37" title="gets the vector of all neighbour obstacle IDs" alt="" coords="377,165,697,195"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="440,219,635,248"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#a40fbe8bf0567b624ef89be67c12aab48" title="sets the position of the base game enitity in world space" alt="" coords="440,272,635,301"/>
+</map>

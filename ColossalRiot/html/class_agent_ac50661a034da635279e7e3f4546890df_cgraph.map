@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ae09ecc51f974a588e239751a45528138" title="Sets pursuit to off state." alt="" coords="199,5,423,35"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#a602edf7fb2b960f99afc40df67487bd2" title="Sets pursuit to on state." alt="" coords="200,59,421,88"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#a0fdee5e896c445a00d3893e42545e195" title="Sets the weight of pursuit." alt="" coords="175,112,447,141"/>
+<area shape="rect" id="node11" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="243,165,379,195"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="497,5,668,35"/>
+</map>

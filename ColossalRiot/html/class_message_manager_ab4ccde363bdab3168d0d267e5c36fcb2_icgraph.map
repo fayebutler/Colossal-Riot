@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="237,85,480,115"/>
+<area shape="rect" id="node5" href="$class_rioter.html#a0c28ca5d0a4ed7af4399e95a2d27822c" title="Method to send message to attack (deliver damage to target)." alt="" coords="529,5,647,35"/>
+<area shape="rect" id="node11" href="$class_police.html#a2c24c6e62f69e44febfcee56dce38a87" title="Method to send a message to attack (deliver damage to target)." alt="" coords="529,112,647,141"/>
+<area shape="rect" id="node17" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="531,59,645,88"/>
+<area shape="rect" id="node26" href="$class_police.html#a309196a296789d785d325593cc9678ca" title="Method to send message if a policeman has died." alt="" coords="532,165,644,195"/>
+<area shape="rect" id="node7" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="696,5,859,35"/>
+<area shape="rect" id="node9" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="921,5,1036,35"/>
+<area shape="rect" id="node13" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="697,112,857,141"/>
+<area shape="rect" id="node15" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="923,112,1035,141"/>
+<area shape="rect" id="node20" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="699,59,856,88"/>
+<area shape="rect" id="node22" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="908,59,1049,88"/>
+<area shape="rect" id="node24" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1100,59,1153,88"/>
+<area shape="rect" id="node28" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="696,165,859,195"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#a2930d26b7db02b5b37c4a2ce1fa41f29" title="Flee behaviour type." alt="" coords="269,44,453,73"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="520,5,715,35"/>
+<area shape="rect" id="node7" href="$class_moving_entity.html#afa1f94de8e8a08ed21e7892280ed4b3c" title="Gets the velocity of the entity." alt="" coords="519,71,716,100"/>
+<area shape="rect" id="node9" href="$class_moving_entity.html#ac3b31cd27093a16424039b89a010a537" title="Gets the maximum speed of the entity." alt="" coords="255,148,468,177"/>
+<area shape="rect" id="node12" href="$class_moving_entity.html#a4f6bb01baa7db4dc183baf9edc0a49ba" title="Gets the speed of the entity." alt="" coords="268,201,455,231"/>
+</map>

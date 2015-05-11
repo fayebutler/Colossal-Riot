@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="211,5,405,35"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="177,59,439,88"/>
+<area shape="rect" id="node7" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="185,112,431,141"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="537,163,724,192"/>
+<area shape="rect" id="node11" href="$class_cell_graph.html#a86c653f370172aad7f0478d29c4d6a4f" title="CellGraph::initializeCells" alt="" coords="217,216,399,245"/>
+<area shape="rect" id="node22" href="$class_base_game_entity.html#a312f5b98c5fd6aae544e437212f23f40" title="sets the bounding radius of the base game entitity" alt="" coords="175,269,441,299"/>
+<area shape="rect" id="node24" href="$class_base_game_entity.html#ab201ce0f66c80f1a292d692a7ae3dcd1" title="sets the detection radius of the base game entity" alt="" coords="167,323,449,352"/>
+<area shape="rect" id="node26" href="$class_base_game_entity.html#a40fbe8bf0567b624ef89be67c12aab48" title="sets the position of the base game enitity in world space" alt="" coords="211,376,405,405"/>
+<area shape="rect" id="node28" href="$class_police.html#acc2c6d66b14e19536219a8a7b8e08d4d" title="Sets the policeman&#39;s squad ID." alt="" coords="233,429,383,459"/>
+<area shape="rect" id="node30" href="$class_police.html#ad38d3aeae44937c6b8031e89a1b63f6f" title="Sets the position of the squad." alt="" coords="229,483,387,512"/>
+<area shape="rect" id="node32" href="$class_police.html#ae74ab914d99a5a5b43ff2bb54cb9ee49" title="Sets the the radius of the policeman&#39;s squad." alt="" coords="219,536,397,565"/>
+<area shape="rect" id="node34" href="$class_squad.html#a12585c674b5835844174c4be470ec894" title="Gets the state of the squad." alt="" coords="221,589,395,619"/>
+<area shape="rect" id="node13" href="$class_cell_graph.html#a232e707892754279c175bc2c18e7ef8b" title="CellGraph::entityIsInCell" alt="" coords="537,216,724,245"/>
+<area shape="rect" id="node18" href="$class_base_game_entity.html#adebb4e4740ecc00e23d03b34432d3c96" title="sets the current cell that the base game enitity is located in" alt="" coords="508,269,753,299"/>
+<area shape="rect" id="node20" href="$class_base_game_entity.html#a30860e538984f1be7b320f7eb7b05c35" title="sets the current cell ID for the base game entity" alt="" coords="500,323,761,352"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="811,216,1005,245"/>
+<area shape="rect" id="node36" href="$class_state_machine.html#ae1d09b16ad3de9a387075fb661a15f62" title="function to change state by calling the exit function of the current state and then..." alt="" coords="524,563,737,592"/>
+<area shape="rect" id="node38" href="$class_police.html#a8f1e8716d25c5227edb3762fc2e2d4a6" title="Gets the state machine for the policeman." alt="" coords="536,616,725,645"/>
+</map>

@@ -1,0 +1,39 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#afa2543f019c0fb14cc1feb6cb42b781d" title="CellGraph::generateWalls" alt="" coords="284,8,476,37"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="249,61,511,91"/>
+<area shape="rect" id="node7" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="257,115,503,144"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="644,5,831,35"/>
+<area shape="rect" id="node11" href="$class_cell_graph.html#aea1345d6c2588d7e81020cbc885e8a0c" title="CellGraph::getWallCentres" alt="" coords="280,219,480,248"/>
+<area shape="rect" id="node13" href="$class_cell_graph.html#abe5f3f8f24697006998f29f61579e5e6" title="CellGraph::getWallNormals" alt="" coords="280,272,480,301"/>
+<area shape="rect" id="node15" href="$class_cell_graph.html#ac7745c6b0790bcecdfc09be4ab6b2711" title="CellGraph::getWallRotations" alt="" coords="275,325,485,355"/>
+<area shape="rect" id="node17" href="$class_cell_graph.html#a86c653f370172aad7f0478d29c4d6a4f" title="CellGraph::initializeCells" alt="" coords="289,379,471,408"/>
+<area shape="rect" id="node28" href="$class_game_world.html#a564f6b38c114c79c152f5c6ca64171fd" title="registers all the necessary functions and members with Lua so that they can be edited..." alt="" coords="288,592,472,621"/>
+<area shape="rect" id="node70" href="$class_base_game_entity.html#a312f5b98c5fd6aae544e437212f23f40" title="sets the bounding radius of the base game entitity" alt="" coords="247,645,513,675"/>
+<area shape="rect" id="node72" href="$class_base_game_entity.html#ab201ce0f66c80f1a292d692a7ae3dcd1" title="sets the detection radius of the base game entity" alt="" coords="239,699,521,728"/>
+<area shape="rect" id="node74" href="$class_moving_entity.html#a6425a302c6ec04efb898ff400e9718f2" title="Sets the heading of the entity." alt="" coords="281,752,479,781"/>
+<area shape="rect" id="node76" href="$class_base_game_entity.html#a40fbe8bf0567b624ef89be67c12aab48" title="sets the position of the base game enitity in world space" alt="" coords="283,805,477,835"/>
+<area shape="rect" id="node19" href="$class_cell_graph.html#a232e707892754279c175bc2c18e7ef8b" title="CellGraph::entityIsInCell" alt="" coords="644,59,831,88"/>
+<area shape="rect" id="node24" href="$class_base_game_entity.html#adebb4e4740ecc00e23d03b34432d3c96" title="sets the current cell that the base game enitity is located in" alt="" coords="615,112,860,141"/>
+<area shape="rect" id="node26" href="$class_base_game_entity.html#a30860e538984f1be7b320f7eb7b05c35" title="sets the current cell ID for the base game entity" alt="" coords="607,165,868,195"/>
+<area shape="rect" id="node21" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="952,59,1147,88"/>
+<area shape="rect" id="node30" href="$class_game_world.html#ac1d0e79df6ab3b0235335847cc5b0475" title="method exposed to Lua to add a protest position for rioters to gather around" alt="" coords="619,219,856,248"/>
+<area shape="rect" id="node32" href="$class_game_world.html#a62ee59d2d5498bce917b50c707951cf0" title="gets the number of available police during the current level" alt="" coords="623,272,852,301"/>
+<area shape="rect" id="node34" href="$class_game_world.html#afbc7b1f9f5082c6aaac76c429773da2e" title="gets the file used for the building mesh" alt="" coords="617,325,857,355"/>
+<area shape="rect" id="node36" href="$class_game_world.html#afcbb30775e521a99374bb076d1bb747b" title="gets the file used for generating the cell graph" alt="" coords="628,379,847,408"/>
+<area shape="rect" id="node38" href="$class_game_world.html#a996e382ef8b414814443e85dbc2e5b9a" title="gets the initial number of rioters that were spawned in the level" alt="" coords="595,432,880,461"/>
+<area shape="rect" id="node40" href="$class_game_world.html#aa9646a9492d75f5897c4532e8e8987e2" title="gets the number of rioters needed for the lose state to be achieved" alt="" coords="572,485,903,515"/>
+<area shape="rect" id="node42" href="$class_game_world.html#ac119b85caca4920e6d02e367c16ea7d1" title="gets the number of rioters needed for the win state to be achieved" alt="" coords="573,539,901,568"/>
+<area shape="rect" id="node44" href="$class_game_world.html#a1126bf7965840c74831831041d35a288" title="gets the number of street lights spawned in the level" alt="" coords="595,592,880,621"/>
+<area shape="rect" id="node46" href="$class_game_world.html#aa162435d730566e9e0d6c27e99787468" title="gets the number of trees spawned in the level" alt="" coords="619,645,856,675"/>
+<area shape="rect" id="node48" href="$class_game_world.html#a908951c91681019fae463fec46c55859" title="gets the file used for the street mesh" alt="" coords="620,699,855,728"/>
+<area shape="rect" id="node50" href="$class_game_world.html#a5309f41be19d15b6763e6aefa5de6f80" title="sets the number of available police during the current level" alt="" coords="623,752,852,781"/>
+<area shape="rect" id="node52" href="$class_game_world.html#af70d153ca8cd31c64b4013d18305cfbd" title="sets the file to be used for the building mesh" alt="" coords="617,805,857,835"/>
+<area shape="rect" id="node54" href="$class_game_world.html#a07e2c24c57aab5c3e38e1df9d2b442cf" title="sets the file to be used for generating the cell graph" alt="" coords="629,859,845,888"/>
+<area shape="rect" id="node56" href="$class_game_world.html#aad3e4443eaef84793fc5f70f4bb1558b" title="sets the initial number of rioters that were spawned in the level" alt="" coords="595,912,880,941"/>
+<area shape="rect" id="node58" href="$class_game_world.html#af494994488ca5614f142b503568fbb3c" title="sets the number of rioters needed for the lose state to be achieved" alt="" coords="572,965,903,995"/>
+<area shape="rect" id="node60" href="$class_game_world.html#a30d6e3fc79553ee2b00668fb4831221c" title="sets the number of rioters needed for the win state to be achieved" alt="" coords="575,1019,900,1048"/>
+<area shape="rect" id="node62" href="$class_game_world.html#ab3f58fd6c924dc0fd578da1286492fd3" title="sets the number of street lights spawned in the level" alt="" coords="595,1072,880,1101"/>
+<area shape="rect" id="node64" href="$class_game_world.html#a482203121817b35c7c8f1ae02be66eb9" title="sets the number of trees spawned in the level" alt="" coords="620,1125,855,1155"/>
+<area shape="rect" id="node66" href="$class_game_world.html#a96072bf2f890168ca7d54d93e4023fd8" title="method exposed to Lua that sets the world position of the police state" alt="" coords="628,1179,847,1208"/>
+<area shape="rect" id="node68" href="$class_game_world.html#ad3435dff802a96f9b7a370f45f3161b0" title="sets the file to be used for the street mesh" alt="" coords="620,1232,855,1261"/>
+</map>

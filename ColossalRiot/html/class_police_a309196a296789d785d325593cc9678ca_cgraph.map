@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="197,5,384,35"/>
+<area shape="rect" id="node5" href="$class_game_world.html#a8f5cd1877b1b828d56b727f4f0c10f62" title="gest the number of rioters in the game world" alt="" coords="165,59,416,88"/>
+<area shape="rect" id="node7" href="$class_game_world.html#af68848b5c94bf97dc9fcd135038e48e2" title="gets the vector of all rioters in the current game world" alt="" coords="200,112,381,141"/>
+<area shape="rect" id="node9" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="169,165,412,195"/>
+<area shape="rect" id="node11" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="465,139,711,168"/>
+<area shape="rect" id="node13" href="$class_message_manager.html#ab4ccde363bdab3168d0d267e5c36fcb2" title="a method that ensures that messages are handled successfully" alt="" coords="497,192,679,221"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#a8446b2cf2fde23d6b9d3d9a4149762d7" title="virtual pure function to determin how any messages received by the base game entity..." alt="" coords="760,192,1011,221"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#af8591e23fc16acf1953014079d46df68" title="Sets alignment to off state." alt="" coords="220,5,465,35"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#aba8167767f588ec20f3d7ae1135bbea5" title="Sets alignment to on state." alt="" coords="221,59,464,88"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#a8fbd665d7952871be9a3ecf146c72c41" title="Sets the weight of alignment." alt="" coords="196,112,489,141"/>
+<area shape="rect" id="node11" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="275,165,411,195"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="540,5,711,35"/>
+</map>

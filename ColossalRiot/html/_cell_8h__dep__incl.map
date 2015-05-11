@@ -1,0 +1,33 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_cell_8cpp.html" title="This the base cell class, used in CellGraph. It encapsulates all entities within..." alt="" coords="97,83,172,112"/>
+<area shape="rect" id="node5" href="$_base_game_entity_8h.html" title="BaseGameEntity.h" alt="" coords="573,83,720,112"/>
+<area shape="rect" id="node14" href="$_cell_graph_8h.html" title="CellGraph.h" alt="" coords="21,237,120,267"/>
+<area shape="rect" id="node7" href="$_base_game_entity_8cpp.html" title="The base class for all entites in the game, static or moving." alt="" coords="1093,701,1256,731"/>
+<area shape="rect" id="node9" href="$_entity_manager_8h.html" title="EntityManager.h" alt="" coords="384,160,517,189"/>
+<area shape="rect" id="node73" href="$_moving_entity_8h.html" title="defines a moving entity Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="587,160,707,189"/>
+<area shape="rect" id="node78" href="$_static_entity_8h.html" title="defines a static entity" alt="" coords="889,160,1004,189"/>
+<area shape="rect" id="node11" href="$_entity_manager_8cpp.html" title="A manager monostate class that stores all base game entities with a corresponding..." alt="" coords="376,237,525,267"/>
+<area shape="rect" id="node35" href="$_n_g_l_draw_8h.html" title="NGLDraw.h" alt="" coords="109,701,205,731"/>
+<area shape="rect" id="node40" href="$_message_manager_8h.html" title="MessageManager.h" alt="" coords="760,237,909,267"/>
+<area shape="rect" id="node46" href="$_steering_behaviour_8h.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="195,237,352,267"/>
+<area shape="rect" id="node16" href="$_cell_graph_8cpp.html" title="CellGraph.cpp" alt="" coords="5,315,120,344"/>
+<area shape="rect" id="node18" href="$_game_world_8h.html" title="GameWorld.h" alt="" coords="667,624,776,653"/>
+<area shape="rect" id="node21" href="$_game_world_8cpp.html" title="The game world that contains all entities." alt="" coords="656,701,781,731"/>
+<area shape="rect" id="node23" href="$_n_g_l_draw_8cpp.html" title="Controls drawing and updating all entities in the game and any UI elements." alt="" coords="492,779,604,808"/>
+<area shape="rect" id="node25" href="$_police_8cpp.html" title="defines a police entity" alt="" coords="427,701,517,731"/>
+<area shape="rect" id="node27" href="$_rioter_8cpp.html" title="defines a rioter entity" alt="" coords="856,701,947,731"/>
+<area shape="rect" id="node29" href="$src_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="541,701,632,731"/>
+<area shape="rect" id="node31" href="$_steering_behaviour_8cpp.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="229,701,403,731"/>
+<area shape="rect" id="node33" href="$_vehicle_8cpp.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="971,701,1069,731"/>
+<area shape="rect" id="node37" href="$main_8cpp.html" title="main.cpp" alt="" coords="116,779,199,808"/>
+<area shape="rect" id="node42" href="$_message_manager_8cpp.html" title="A manager monostate class that helps handle the sending and receiving of messages..." alt="" coords="744,315,909,344"/>
+<area shape="rect" id="node49" href="$_vehicle_8h.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="597,315,680,344"/>
+<area shape="rect" id="node52" href="$_agent_8h.html" title="Agent.h" alt="" coords="601,392,676,421"/>
+<area shape="rect" id="node54" href="$_agent_8cpp.html" title="The base class for all agents, that can be rioters or police." alt="" coords="593,469,684,499"/>
+<area shape="rect" id="node56" href="$_police_8h.html" title="defines a policeman entity" alt="" coords="444,469,519,499"/>
+<area shape="rect" id="node67" href="$_rioter_8h.html" title="defines a rioter entity" alt="" coords="684,547,759,576"/>
+<area shape="rect" id="node61" href="$_squad_8h.html" title="defines a squad of police" alt="" coords="451,547,525,576"/>
+<area shape="rect" id="node65" href="$include_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="451,624,541,653"/>
+<area shape="rect" id="node75" href="$_moving_entity_8cpp.html" title="defines a moving entity Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="549,237,685,267"/>
+<area shape="rect" id="node80" href="$_static_entity_8cpp.html" title="StaticEntity.cpp" alt="" coords="984,237,1115,267"/>
+</map>

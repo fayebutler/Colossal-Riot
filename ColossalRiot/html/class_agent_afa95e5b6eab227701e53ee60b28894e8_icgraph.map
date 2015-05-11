@@ -1,0 +1,21 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="227,5,389,35"/>
+<area shape="rect" id="node5" href="$class_agent.html#ac40730da5725794d428a3b9cb7fbe04c" title="checks if the target is valid, are close enough to the agent, and if they have enough..." alt="" coords="215,59,401,88"/>
+<area shape="rect" id="node7" href="$class_agent.html#a4c5dd024f202fba37ba9be2de062f5db" title="registers the agent&#39;s functions and properties with the valid Lua state" alt="" coords="471,85,620,115"/>
+<area shape="rect" id="node17" href="$class_rioter.html#a578c1a5cbbe63a71946757b6c48a046a" title="Method to find a target to pursue." alt="" coords="231,163,385,192"/>
+<area shape="rect" id="node19" href="$class_police.html#a88ab45bb7afd4b2d9070aab00ea0abf6" title="Method to find a target to pursue." alt="" coords="231,216,385,245"/>
+<area shape="rect" id="node21" href="$class_rioter.html#ab1e39d9ce4d61e39bd01ca9c41917b79" title="Method to load the matrices of the rioter to the shader." alt="" coords="199,269,417,299"/>
+<area shape="rect" id="node31" href="$class_police.html#ad6160af3097d616c6b89fa01f16ff5a6" title="Method to load the matrices of the policeman to the shader." alt="" coords="199,323,417,352"/>
+<area shape="rect" id="node39" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="467,376,624,405"/>
+<area shape="rect" id="node9" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="672,59,835,88"/>
+<area shape="rect" id="node13" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="673,112,833,141"/>
+<area shape="rect" id="node11" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="896,59,1011,88"/>
+<area shape="rect" id="node15" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="897,112,1009,141"/>
+<area shape="rect" id="node23" href="$class_rioter.html#a8b76f28fc4b3d880a354a8c8c5a1cdd4" title="Method to draw the rioters." alt="" coords="700,269,807,299"/>
+<area shape="rect" id="node25" href="$class_game_world.html#a4a0c2a147f865ae605a3f2bb4efb4814" title="method to draw the game world and contained entities" alt="" coords="884,323,1023,352"/>
+<area shape="rect" id="node27" href="$class_n_g_l_draw.html#aec8a377329da67db1e2ef007bd27f026" title="draw the scene" alt="" coords="1081,323,1207,352"/>
+<area shape="rect" id="node29" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1265,349,1319,379"/>
+<area shape="rect" id="node33" href="$class_police.html#af02215cd207f14f5a9bfd9fac537d49a" title="Method to draw each policeman." alt="" coords="493,323,597,352"/>
+<area shape="rect" id="node35" href="$class_squad.html#a1f4e5f3971536a5750be884191abef42" title="Method to draw the squad." alt="" coords="701,323,805,352"/>
+<area shape="rect" id="node41" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1073,376,1215,405"/>
+</map>

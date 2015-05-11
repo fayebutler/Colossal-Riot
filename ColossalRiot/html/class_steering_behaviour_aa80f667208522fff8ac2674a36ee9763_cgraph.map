@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="265,5,463,35"/>
+<area shape="rect" id="node5" href="$class_moving_entity.html#ac3b31cd27093a16424039b89a010a537" title="Gets the maximum speed of the entity." alt="" coords="257,59,471,88"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="523,151,717,180"/>
+<area shape="rect" id="node9" href="$class_moving_entity.html#a4f6bb01baa7db4dc183baf9edc0a49ba" title="Gets the speed of the entity." alt="" coords="271,163,457,192"/>
+<area shape="rect" id="node11" href="$class_moving_entity.html#afa1f94de8e8a08ed21e7892280ed4b3c" title="Gets the velocity of the entity." alt="" coords="521,243,719,272"/>
+<area shape="rect" id="node13" href="$class_steering_behaviour.html#a3847c58bb15027da3fbfe20ca559322a" title="Seek behaviour type." alt="" coords="269,216,459,245"/>
+</map>

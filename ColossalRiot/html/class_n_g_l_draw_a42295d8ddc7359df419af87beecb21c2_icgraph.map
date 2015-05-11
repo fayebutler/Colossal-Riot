@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="248,5,432,35"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="480,5,653,35"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="703,5,919,35"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="969,5,1023,35"/>
+</map>

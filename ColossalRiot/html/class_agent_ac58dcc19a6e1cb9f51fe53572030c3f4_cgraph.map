@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#a34cb0cde13e60ae2410df607936987ac" title="Sets separation to off state." alt="" coords="223,5,471,35"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#a94cd24bdcaeca96cbbc37ffaf7a5b47e" title="Sets separation to on state." alt="" coords="224,59,469,88"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#a4e0866e9a199a6751404678e30e34779" title="Sets the weight of separation." alt="" coords="197,112,496,141"/>
+<area shape="rect" id="node11" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="279,165,415,195"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="545,5,716,35"/>
+</map>

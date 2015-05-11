@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="235,5,483,35"/>
+<area shape="rect" id="node5" href="$class_cell.html#a4a75f7c77fc4a8fc94be555ad064db42" title="returns the vector of Walls." alt="" coords="301,59,416,88"/>
+</map>

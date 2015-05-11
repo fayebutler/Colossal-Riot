@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$class_cell_graph.html" title="{CellGraph\n|&#45; m_entityMgr\l&#45; m_cells\l&#45; m_exitPoints\l&#45; m_mapBounds\l&#45; m_numberOfCells\l&#45; m_cellSize\l&#45; m_maxDist\l&#45; m_wallCentres\l&#45; m_wallNormals\l&#45; m_wallRotations\l|+ CellGraph()\l+ CellGraph()\l+ ~CellGraph()\l+ initializeCells()\l+ updateCells()\l+ clearCells()\l+ addEntities()\l+ entityIsInCell()\l+ posIsInCell()\l+ printCellGraph()\l+ generateWalls()\l+ getMapBounds()\l+ getExitPoints()\l+ findPath()\l+ getWallCentres()\l+ getWallNormals()\l+ getWallRotations()\l}" alt="" coords="193,281,353,799"/>
+<area shape="rect" id="node4" href="$class_entity_manager.html" title="A manager monostate class that stores all base game entities with a corresponding..." alt="" coords="60,6,220,213"/>
+</map>

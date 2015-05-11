@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_agent.html#a6a51485c4535f4de1ea8cc76ed4e47fc" title="used to expose the function to Lua, so alignment steering behaviour can be turned..." alt="" coords="237,112,376,141"/>
+<area shape="rect" id="node13" href="$class_agent.html#a74339e27b7f728205a3e4a149edcd221" title="used to expose the function to Lua, so arrive steering behaviour can be turned on..." alt="" coords="252,272,361,301"/>
+<area shape="rect" id="node22" href="$class_agent.html#ac40730da5725794d428a3b9cb7fbe04c" title="checks if the target is valid, are close enough to the agent, and if they have enough..." alt="" coords="213,1232,400,1261"/>
+<area shape="rect" id="node30" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="535,1445,676,1475"/>
+<area shape="rect" id="node34" href="$class_agent.html#a7e44a58983893a89c52bf0ff9932aa33" title="used to expose the function to Lua, so cohesion steering behaviour can be turned..." alt="" coords="241,432,372,461"/>
+<area shape="rect" id="node43" href="$class_agent.html#ad842f149c91e277989db6ae96338361d" title="used to expose the function to Lua, so evade steering behaviour can be turned on..." alt="" coords="249,592,364,621"/>
+<area shape="rect" id="node52" href="$class_agent.html#a9ab800ad3b112227c20332c7be7bd1c2" title="gets the damage of the agent" alt="" coords="229,1336,384,1365"/>
+<area shape="rect" id="node55" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="213,1389,400,1419"/>
+<area shape="rect" id="node57" href="$class_agent.html#a7f26e6e8877596a11cb15c1bd74e1df5" title="gets the maximum speed of the agent" alt="" coords="224,1443,389,1472"/>
+<area shape="rect" id="node59" href="$class_agent.html#a4e97ef1c8de4bd0c2128ec4b53ecc1f5" title="gets the morale of the agent" alt="" coords="236,1496,377,1525"/>
+<area shape="rect" id="node61" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="241,1549,372,1579"/>
+<area shape="rect" id="node63" href="$class_agent.html#a348c01179089893d58e0d0bab21ef3fc" title="gets the ID of the agent&#39;s current target" alt="" coords="229,1603,384,1632"/>
+<area shape="rect" id="node65" href="$class_agent.html#ac50661a034da635279e7e3f4546890df" title="used to expose the function to Lua, so pursuit steering behaviour can be turned on..." alt="" coords="248,752,365,781"/>
+<area shape="rect" id="node74" href="$class_agent.html#ac0ae2593548310efdd37c7dbbd55238c" title="used to expose the function to Lua, so seek steering behaviour can be turned on and..." alt="" coords="255,912,359,941"/>
+<area shape="rect" id="node83" href="$class_agent.html#ac58dcc19a6e1cb9f51fe53572030c3f4" title="used to expose the function to Lua, so separation steering behaviour can be turned..." alt="" coords="235,1072,379,1101"/>
+<area shape="rect" id="node92" href="$class_agent.html#a1edc76180a46c46b70459998f12f114b" title="sets the damage of the agent" alt="" coords="231,1656,383,1685"/>
+<area shape="rect" id="node94" href="$class_agent.html#a6234f38da84487cc528d279c9efd17cd" title="sets the health of the agent" alt="" coords="236,1709,377,1739"/>
+<area shape="rect" id="node96" href="$class_agent.html#a9f13f31be0c17c140126b4ac487c3b13" title="sets the maximum speed of the agent" alt="" coords="224,1763,389,1792"/>
+<area shape="rect" id="node98" href="$class_agent.html#a4ddf3491038599447c47af31e9a6a38d" title="sets the morale of the agent" alt="" coords="236,1816,377,1845"/>
+<area shape="rect" id="node100" href="$class_agent.html#a7b589f1194c89cc62355f79e037b791f" title="sets the rage of the agent" alt="" coords="241,1869,372,1899"/>
+<area shape="rect" id="node102" href="$class_agent.html#af2dc5499c583783aa742c8fd8c4f8f55" title="determins if the target agent is within reach" alt="" coords="207,1179,407,1208"/>
+<area shape="rect" id="node106" href="$class_agent.html#a61e08aa56a3e1c0a8bf17d8afab21dc8" title="used to expose the function to Lua, so wander steering behaviour can be turned on..." alt="" coords="245,1125,368,1155"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#af8591e23fc16acf1953014079d46df68" title="Sets alignment to off state." alt="" coords="483,5,728,35"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#aba8167767f588ec20f3d7ae1135bbea5" title="Sets alignment to on state." alt="" coords="484,59,727,88"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#a8fbd665d7952871be9a3ecf146c72c41" title="Sets the weight of alignment." alt="" coords="459,112,752,141"/>
+<area shape="rect" id="node11" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="537,645,673,675"/>
+<area shape="rect" id="node15" href="$class_steering_behaviour.html#ae8f82e92b2b7078e6b27f44efc19c855" title="Sets arrive to off state." alt="" coords="497,165,713,195"/>
+<area shape="rect" id="node17" href="$class_steering_behaviour.html#a48f96ed1a3e13ff2059b1b853ee78776" title="Sets arrive to on state." alt="" coords="499,219,712,248"/>
+<area shape="rect" id="node19" href="$class_steering_behaviour.html#a5c3cc86a2e88cf2915af6a554e64aadb" title="Sets the weight of arrive." alt="" coords="473,272,737,301"/>
+<area shape="rect" id="node24" href="$class_agent.html#a26fb786523975057d4bb0119754203e8" title="pure virtual method to find a target ID with highest rage with minimum health threshold..." alt="" coords="528,1339,683,1368"/>
+<area shape="rect" id="node26" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="483,1285,728,1315"/>
+<area shape="rect" id="node28" href="$class_entity_manager.html#acc87b6a91ad65009f6adaa0f5794631c" title="gets the entity map" alt="" coords="492,1392,719,1421"/>
+<area shape="rect" id="node32" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="508,1232,703,1261"/>
+<area shape="rect" id="node36" href="$class_steering_behaviour.html#addfdb6d1f2ec1bd06729e44b1d22abc4" title="Sets cohesion to off state." alt="" coords="487,325,724,355"/>
+<area shape="rect" id="node38" href="$class_steering_behaviour.html#a4c52f31d7d4e356e7ee5c125eb9c464c" title="Sets cohesion to on state." alt="" coords="488,379,723,408"/>
+<area shape="rect" id="node40" href="$class_steering_behaviour.html#af242f920c3b1335fa849c73622d18c49" title="Sets the weight of cohesion." alt="" coords="463,432,748,461"/>
+<area shape="rect" id="node45" href="$class_steering_behaviour.html#ae5fef038a64fd0c00905529d53f87211" title="Sets evade to off state." alt="" coords="496,485,715,515"/>
+<area shape="rect" id="node47" href="$class_steering_behaviour.html#a79ebac74084a597a441cd4cfcdea188f" title="Sets evade to on state." alt="" coords="497,539,713,568"/>
+<area shape="rect" id="node49" href="$class_steering_behaviour.html#a8347e99b758de0836cfd44362b07e24c" title="Sets the weight of evade." alt="" coords="472,592,739,621"/>
+<area shape="rect" id="node67" href="$class_steering_behaviour.html#ae09ecc51f974a588e239751a45528138" title="Sets pursuit to off state." alt="" coords="493,699,717,728"/>
+<area shape="rect" id="node69" href="$class_steering_behaviour.html#a602edf7fb2b960f99afc40df67487bd2" title="Sets pursuit to on state." alt="" coords="495,752,716,781"/>
+<area shape="rect" id="node71" href="$class_steering_behaviour.html#a0fdee5e896c445a00d3893e42545e195" title="Sets the weight of pursuit." alt="" coords="469,805,741,835"/>
+<area shape="rect" id="node76" href="$class_steering_behaviour.html#a27663e88395cb000f2c2a2b395ac1fca" title="Sets seek to off state." alt="" coords="500,859,711,888"/>
+<area shape="rect" id="node78" href="$class_steering_behaviour.html#ae6e0aab31cd19d3b8a53ebc64bb07ec9" title="Sets seek to on state." alt="" coords="501,912,709,941"/>
+<area shape="rect" id="node80" href="$class_steering_behaviour.html#a3de23b40b65261b3f4db3d9d46a306f3" title="Sets the weight of seek." alt="" coords="476,965,735,995"/>
+<area shape="rect" id="node85" href="$class_steering_behaviour.html#a34cb0cde13e60ae2410df607936987ac" title="Sets separation to off state." alt="" coords="481,1019,729,1048"/>
+<area shape="rect" id="node87" href="$class_steering_behaviour.html#a94cd24bdcaeca96cbbc37ffaf7a5b47e" title="Sets separation to on state." alt="" coords="483,1072,728,1101"/>
+<area shape="rect" id="node89" href="$class_steering_behaviour.html#a4e0866e9a199a6751404678e30e34779" title="Sets the weight of separation." alt="" coords="456,1125,755,1155"/>
+<area shape="rect" id="node108" href="$class_steering_behaviour.html#ad42fae6c8050dfa9aa5c671057bd5064" title="Sets the weight of wander." alt="" coords="468,1179,743,1208"/>
+</map>

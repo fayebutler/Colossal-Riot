@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node7" href="$class_agent.html" title="The base class for all agents, that can be rioters or police." alt="" coords="132,1969,305,2938"/>
+<area shape="rect" id="node13" href="$class_squad.html" title="The class to define a squad of policemen." alt="" coords="329,2012,543,2895"/>
+<area shape="rect" id="node2" href="$class_moving_entity.html" title="{MovingEntity\n|# m_velocity\l# m_maxSpeed\l# m_heading\l# m_mass\l# m_maxTurnRate\l# m_maxForce\l# m_side\l|+ MovingEntity()\l+ getVelocity()\l+ setVelocity()\l+ getHeading()\l+ setHeading()\l+ getSide()\l+ getMass()\l+ setMass()\l+ getMaxSpeed()\l+ setMaxSpeed()\l+ getMaxForce()\l+ setMaxForce()\l+ getMaxTurnRate()\l+ setMaxTurnRate()\l+ getSpeed()\l+ handleMessage()\l}" alt="" coords="248,851,405,1301"/>
+<area shape="rect" id="node4" href="$class_base_game_entity.html" title="The base class for all entities in the game, static or moving." alt="" coords="196,6,457,802"/>
+<area shape="rect" id="node9" href="$class_police.html" title="The base class for all policemen." alt="" coords="5,2987,211,3627"/>
+<area shape="rect" id="node11" href="$class_rioter.html" title="The base class for all rioters." alt="" coords="235,3099,427,3514"/>
+</map>

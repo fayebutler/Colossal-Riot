@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="263,5,460,35"/>
+<area shape="rect" id="node5" href="$class_vehicle.html#a4844701931bab6f55cf26ecbc4e1146b" title="Returns the time elapsed since last tick." alt="" coords="267,59,456,88"/>
+</map>

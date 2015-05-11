@@ -1,0 +1,31 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#acfe0178846faca285dd7a2376a6ebfae" title="CellGraph::addEntities" alt="" coords="924,200,1097,229"/>
+<area shape="rect" id="node11" href="$class_rioter.html#a0c28ca5d0a4ed7af4399e95a2d27822c" title="Method to send message to attack (deliver damage to target)." alt="" coords="343,409,460,439"/>
+<area shape="rect" id="node17" href="$class_police.html#a2c24c6e62f69e44febfcee56dce38a87" title="Method to send a message to attack (deliver damage to target)." alt="" coords="343,516,460,545"/>
+<area shape="rect" id="node23" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="344,305,459,335"/>
+<area shape="rect" id="node27" href="$class_police.html#a309196a296789d785d325593cc9678ca" title="Method to send message if a policeman has died." alt="" coords="345,97,457,127"/>
+<area shape="rect" id="node31" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="924,357,1097,387"/>
+<area shape="rect" id="node36" href="$class_rioter.html#a578c1a5cbbe63a71946757b6c48a046a" title="Method to find a target to pursue." alt="" coords="324,569,479,599"/>
+<area shape="rect" id="node38" href="$class_police.html#a88ab45bb7afd4b2d9070aab00ea0abf6" title="Method to find a target to pursue." alt="" coords="324,623,479,652"/>
+<area shape="rect" id="node40" href="$class_game_world.html#a2a083401521f82615c6bb87832fe872d" title="ctor this will create a new world to spawn entities inside" alt="" coords="651,700,835,729"/>
+<area shape="rect" id="node42" href="$class_cell_graph.html#a86c653f370172aad7f0478d29c4d6a4f" title="CellGraph::initializeCells" alt="" coords="311,780,492,809"/>
+<area shape="rect" id="node47" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="687,825,799,855"/>
+<area shape="rect" id="node49" href="$class_steering_behaviour.html#a9878c2a1cb534b11458c6e03d895cb08" title="Calculates the overlap for obstacle avoidance." alt="" coords="240,44,563,73"/>
+<area shape="rect" id="node59" href="$class_entity_manager.html#adf21a250dc32f04211f0ff7301f402cf" title="inserts an entity into the entity map along with it&#39;s unique ID" alt="" coords="288,727,515,756"/>
+<area shape="rect" id="node62" href="$class_agent.html#a4c5dd024f202fba37ba9be2de062f5db" title="registers the agent&#39;s functions and properties with the valid Lua state" alt="" coords="327,463,476,492"/>
+<area shape="rect" id="node66" href="$class_entity_manager.html#a3be56b8475fd86e38d5016f25d0acfa1" title="removes a specific entity from the entity map" alt="" coords="288,151,515,180"/>
+<area shape="rect" id="node71" href="$class_cell_graph.html#ac7c0220b66b4771eb7795f4393273e43" title="CellGraph::updateCells" alt="" coords="923,253,1099,283"/>
+<area shape="rect" id="node5" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="1177,200,1335,229"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1415,213,1556,243"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1607,253,1660,283"/>
+<area shape="rect" id="node13" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="661,409,824,439"/>
+<area shape="rect" id="node15" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="953,411,1068,440"/>
+<area shape="rect" id="node19" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="663,491,823,520"/>
+<area shape="rect" id="node21" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="955,491,1067,520"/>
+<area shape="rect" id="node29" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="661,97,824,127"/>
+<area shape="rect" id="node33" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="1148,344,1364,373"/>
+<area shape="rect" id="node44" href="$class_base_game_entity.html#a1f729a91a5565006fe0170a37c7da36d" title="ctor this will create a base game entitiy in a valid world, with a type, position..." alt="" coords="612,760,873,789"/>
+<area shape="rect" id="node51" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="949,5,1072,35"/>
+<area shape="rect" id="node54" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="683,44,803,73"/>
+<area shape="rect" id="node56" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="951,71,1071,100"/>
+</map>

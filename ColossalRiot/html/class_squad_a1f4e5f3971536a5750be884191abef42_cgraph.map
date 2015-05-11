@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_police.html#af02215cd207f14f5a9bfd9fac537d49a" title="Method to draw each policeman." alt="" coords="215,59,319,88"/>
+<area shape="rect" id="node13" href="$class_squad.html#afb02deaa862484458718c2feff9d88ef" title="Method to load the matrices to the shader." alt="" coords="157,112,376,141"/>
+<area shape="rect" id="node5" href="$class_police.html#ad6160af3097d616c6b89fa01f16ff5a6" title="Method to load the matrices of the policeman to the shader." alt="" coords="424,59,643,88"/>
+<area shape="rect" id="node7" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="692,5,889,35"/>
+<area shape="rect" id="node9" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="720,59,861,88"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="693,112,888,141"/>
+</map>

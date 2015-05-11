@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#afeac7d43a7f85e84916f2dc5a7b7d9fb" title="gets the bounding radius of the base game entity" alt="" coords="363,5,637,35"/>
+<area shape="rect" id="node5" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="377,59,623,88"/>
+<area shape="rect" id="node7" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="401,112,599,141"/>
+<area shape="rect" id="node9" href="$class_moving_entity.html#ac3b31cd27093a16424039b89a010a537" title="Gets the maximum speed of the entity." alt="" coords="393,165,607,195"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#af21df174ac6222b3ef0cf5f9c37c1e37" title="gets the vector of all neighbour obstacle IDs" alt="" coords="340,219,660,248"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="403,272,597,301"/>
+<area shape="rect" id="node15" href="$class_moving_entity.html#ab393c80c8aaf1d348b61e55f1aff8e0f" title="Gets the side vector of the entity." alt="" coords="415,325,585,355"/>
+<area shape="rect" id="node17" href="$class_moving_entity.html#a4f6bb01baa7db4dc183baf9edc0a49ba" title="Gets the speed of the entity." alt="" coords="407,379,593,408"/>
+<area shape="rect" id="node19" href="$class_steering_behaviour.html#a5b36d2c6ce5ecf9c8dbad8979950ce21" title="Convert from world to local space." alt="" coords="360,432,640,461"/>
+</map>

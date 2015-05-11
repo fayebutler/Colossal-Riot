@@ -38,33 +38,38 @@ level1 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 -- level 2
 ------------------------------------------------------------------------------------------------------------------------
 level2 = function()
-  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh2.obj"
   gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh2.obj"
 
-  gameWorld:setPoliceStation(2.0,0,-38)
-  gameWorld.m_initialNumberOfRioters = 200
+  gameWorld:setPoliceStation(34.0,0, 46)
+  gameWorld.m_initialNumberOfRioters = 400
   gameWorld.m_availablePolice = 100
-  gameWorld.m_numberOfRiotersHomeToWin = 75
-  gameWorld.m_numberOfRiotersDeadToLose = 60
+  gameWorld.m_numberOfRiotersHomeToWin = 100
+  gameWorld.m_numberOfRiotersDeadToLose = 70
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(14.0,0.0,-10.0)
+  gameWorld:addProtestPosition(-10.0,0.0,-50.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 -- level 3
 ------------------------------------------------------------------------------------------------------------------------
 level3 = function()
-  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh2.obj"
   gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh2.obj"
 
   gameWorld:setPoliceStation(0,0,0)
   gameWorld.m_initialNumberOfRioters = 300
@@ -74,15 +79,17 @@ level3 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
 -- level 4
 ------------------------------------------------------------------------------------------------------------------------
 level4 = function()
-  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh2.obj"
   gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh2.obj"
 
   gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 400
@@ -92,6 +99,8 @@ level4 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -110,4 +119,6 @@ level5 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end

@@ -1,0 +1,45 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#a67683f0bb5a15de7247403f98c7dea06" title="creates a squad of a specific size" alt="" coords="295,129,489,159"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="305,233,479,263"/>
+<area shape="rect" id="node41" href="$class_squad.html#a901b9c4a406f22432cbd6f6370280fdd" title="Gets the colour of the squad." alt="" coords="591,5,769,35"/>
+<area shape="rect" id="node49" href="$class_squad.html#a5cacd9ff738d82a58e5320ff096cbd47" title="Sets the draw colour of the squad." alt="" coords="575,379,785,408"/>
+<area shape="rect" id="node51" href="$class_n_g_l_draw.html#af8762b7736e5c2886c7f3f9778e9f526" title="ends the current level by calling destructors and resetting the timer" alt="" coords="313,365,471,395"/>
+<area shape="rect" id="node53" href="$class_timer.html#a820de3710c231c2f926937fe479d4d8e" title="resets the start time of the game to SDL_GetTicks()" alt="" coords="608,432,752,461"/>
+<area shape="rect" id="node55" href="$class_u_i_slider.html#ababb9db54e1cb3755f553a5c1f828829" title="gets if the button is active or not" alt="" coords="312,469,472,499"/>
+<area shape="rect" id="node58" href="$class_u_i_slider.html#a8510b183cea1137deca970bae26ab605" title="a method to detect if a button has been clicked, based on it&#39;s NDC screen position..." alt="" coords="323,523,461,552"/>
+<area shape="rect" id="node61" href="$class_u_i_slider.html#af91c7567f9c64fa27ca325c2c300ae79" title="sets if the button is active or inactive" alt="" coords="313,576,471,605"/>
+<area shape="rect" id="node63" href="$class_u_i_button.html#a0feca5450984b834df28a01ef11744da" title="sets if the button is active or inactive" alt="" coords="307,629,477,659"/>
+<area shape="rect" id="node65" href="$class_u_i_slider.html#a717909d6f7768b33f68780ca0d7f9376" title="sets if the slider is sliding or not" alt="" coords="315,683,469,712"/>
+<area shape="rect" id="node67" href="$class_squad.html#a7caa39b94f31ecdc3d1669edbfafc8cf" title="Sets the colour of the squad." alt="" coords="304,736,480,765"/>
+<area shape="rect" id="node70" href="$class_squad.html#af27234eee3b7b441ebe3f5cb86b35288" title="Sets the selected colour of the squad." alt="" coords="273,789,511,819"/>
+<area shape="rect" id="node72" href="$class_squad.html#a12585c674b5835844174c4be470ec894" title="Gets the state of the squad." alt="" coords="305,843,479,872"/>
+<area shape="rect" id="node78" href="$class_u_i_slider.html#a1fc64c425f431c354837e13e40a0038f" title="sets the text string of the button" alt="" coords="305,896,479,925"/>
+<area shape="rect" id="node80" href="$class_u_i_slider.html#abdd2d04e0b681296bedae3d23d01e9ab" title="method called while the slider is being clicked to update the position of the slider..." alt="" coords="325,949,459,979"/>
+<area shape="rect" id="node84" href="$class_n_g_l_draw.html#a4060f82b026286cdc80fdd3b75be4e61" title="starts a new level by contructing new GameWorld with level specified by buttons" alt="" coords="308,1003,476,1032"/>
+<area shape="rect" id="node86" href="$class_u_i_button.html#a0d30e5a6d55a019f37583a588dde6081" title="method used to updated the button position, dimensions and colour" alt="" coords="297,1056,487,1085"/>
+<area shape="rect" id="node88" href="$class_u_i_button.html#ac855ee10dfab054db813393276110685" title="method used to update the text string, colour and offset from the button centre" alt="" coords="307,1109,477,1139"/>
+<area shape="rect" id="node7" href="$class_squad.html#a5b761d485be9c6f1f14a8a545bb45f8c" title="Method to check if the colour selected matches the colour of a squad." alt="" coords="572,59,788,88"/>
+<area shape="rect" id="node9" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="588,112,772,141"/>
+<area shape="rect" id="node39" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="587,165,773,195"/>
+<area shape="rect" id="node43" href="$class_game_world.html#a5dea00d59bb549604813430c00014c57" title="gets the vector of all squads in the current level" alt="" coords="591,219,769,248"/>
+<area shape="rect" id="node45" href="$class_squad.html#a4941da6116d24880dc44e2889408c609" title="Gets the selected colour of the squad." alt="" coords="561,272,799,301"/>
+<area shape="rect" id="node47" href="$class_squad.html#ab02dc25c6944169b9eead819be23314d" title="Method to draw the squads with the selection colours Not loaded to the shader, just..." alt="" coords="596,325,764,355"/>
+<area shape="rect" id="node11" href="$class_entity_manager.html#acc87b6a91ad65009f6adaa0f5794631c" title="gets the entity map" alt="" coords="848,59,1075,88"/>
+<area shape="rect" id="node13" href="$class_n_g_l_draw.html#a42295d8ddc7359df419af87beecb21c2" title="a method to convert the screen coordinates of the mouse click to world coordinates..." alt="" coords="864,112,1059,141"/>
+<area shape="rect" id="node15" href="$class_game_world.html#abb3045797c612525c12c320f11f752fb" title="sets the target position for the currently selected squad" alt="" coords="867,165,1056,195"/>
+<area shape="rect" id="node17" href="$class_cell_graph.html#a65b52692d7aa72f261a85edff2b4edeb" title="CellGraph::posIsInCell" alt="" coords="1124,139,1289,168"/>
+<area shape="rect" id="node19" href="$class_squad.html#a02fb56d0c1b33b9f8c77c397e9a8ecba" title="Sets the target for the squad and police." alt="" coords="1137,192,1276,221"/>
+<area shape="rect" id="node21" href="$class_vehicle.html#a0f77f5af2dc4b5fa2b3d80be7c3acd7d" title="Method to find a path to the target." alt="" coords="1361,112,1495,141"/>
+<area shape="rect" id="node33" href="$class_police.html#a06d4603dfa374ccd74fd26d4fc87a8bb" title="Sets if the policeman is moving (move state in lua)." alt="" coords="1352,165,1504,195"/>
+<area shape="rect" id="node35" href="$class_police.html#ad38d3aeae44937c6b8031e89a1b63f6f" title="Sets the position of the squad." alt="" coords="1349,219,1507,248"/>
+<area shape="rect" id="node37" href="$class_police.html#ae74ab914d99a5a5b43ff2bb54cb9ee49" title="Sets the the radius of the policeman&#39;s squad." alt="" coords="1339,272,1517,301"/>
+<area shape="rect" id="node23" href="$class_cell_graph.html#a416c1c19d40b523e74858d7b0f7adaa7" title="CellGraph::findPath" alt="" coords="1589,85,1739,115"/>
+<area shape="rect" id="node31" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="1567,139,1761,168"/>
+<area shape="rect" id="node25" href="$class_cell.html#a95b44a8e04cbcab77ab3fc3f5de9b284" title="gets the Centre point of the cell." alt="" coords="1891,32,2019,61"/>
+<area shape="rect" id="node27" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="1824,85,2085,115"/>
+<area shape="rect" id="node29" href="$class_cell.html#a23d4e6a14085f48263e881d5f38bef1e" title="returns perpendicular neighbouring cells." alt="" coords="1812,139,2097,168"/>
+<area shape="rect" id="node74" href="$class_state_machine.html#ae1d09b16ad3de9a387075fb661a15f62" title="function to change state by calling the exit function of the current state and then..." alt="" coords="573,816,787,845"/>
+<area shape="rect" id="node76" href="$class_police.html#a8f1e8716d25c5227edb3762fc2e2d4a6" title="Gets the state machine for the policeman." alt="" coords="585,869,775,899"/>
+<area shape="rect" id="node82" href="$class_u_i_slider.html#a55b1ddbb0faa911da7e96d04214704c9" title="method used to calculate the output of the slider, based on the ouput min, max and..." alt="" coords="584,949,776,979"/>
+<area shape="rect" id="node90" href="$class_text.html#ad898e1ff3c2221029c115ed5de7f1b72" title="set the colour of the font from an Colour" alt="" coords="617,1109,743,1139"/>
+</map>

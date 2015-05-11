@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ab0afe27e6d9ed04043d1f69c1fe21ed3" title="Evade behaviour type." alt="" coords="284,5,481,35"/>
+<area shape="rect" id="node9" href="$class_steering_behaviour.html#a1af071b6a9ea5374bdeaafdae31701b3" title="Obstacle Avoidance behaviour." alt="" coords="240,59,525,88"/>
+<area shape="rect" id="node12" href="$class_steering_behaviour.html#aa80f667208522fff8ac2674a36ee9763" title="Pursuit behaviour type." alt="" coords="281,112,484,141"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#af2a6cfd577c4705514255858cf191e73" title="Sums together all the steering forces in a prioritized list." alt="" coords="573,59,888,88"/>
+<area shape="rect" id="node7" href="$class_vehicle.html#a8dea23fa2c115969938e663830f4f381" title="Method to update the vehicle every tick." alt="" coords="936,59,1064,88"/>
+</map>

@@ -1,0 +1,34 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#acfe0178846faca285dd7a2376a6ebfae" title="CellGraph::addEntities" alt="" coords="1035,51,1208,81"/>
+<area shape="rect" id="node11" href="$class_steering_behaviour.html#a2fc02d6d41858d43fd590e82467157eb" title="Alignment behaviour type." alt="" coords="351,421,575,450"/>
+<area shape="rect" id="node17" href="$class_agent.html#ac40730da5725794d428a3b9cb7fbe04c" title="checks if the target is valid, are close enough to the agent, and if they have enough..." alt="" coords="369,367,556,397"/>
+<area shape="rect" id="node29" href="$class_steering_behaviour.html#ac0a8a93b941f8a0443477e9aa6c90cd9" title="Cohesion behaviour type." alt="" coords="355,474,571,503"/>
+<area shape="rect" id="node32" href="$class_rioter.html#a578c1a5cbbe63a71946757b6c48a046a" title="Method to find a target to pursue." alt="" coords="752,645,907,674"/>
+<area shape="rect" id="node34" href="$class_police.html#a88ab45bb7afd4b2d9070aab00ea0abf6" title="Method to find a target to pursue." alt="" coords="752,723,907,753"/>
+<area shape="rect" id="node36" href="$class_game_world.html#a2a083401521f82615c6bb87832fe872d" title="ctor this will create a new world to spawn entities inside" alt="" coords="371,789,555,818"/>
+<area shape="rect" id="node38" href="$class_steering_behaviour.html#a9878c2a1cb534b11458c6e03d895cb08" title="Calculates the overlap for obstacle avoidance." alt="" coords="301,155,624,185"/>
+<area shape="rect" id="node40" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="768,102,891,131"/>
+<area shape="rect" id="node43" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="769,155,889,185"/>
+<area shape="rect" id="node48" href="$class_steering_behaviour.html#a1af071b6a9ea5374bdeaafdae31701b3" title="Obstacle Avoidance behaviour." alt="" coords="320,527,605,557"/>
+<area shape="rect" id="node51" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="341,261,584,290"/>
+<area shape="rect" id="node67" href="$class_steering_behaviour.html#a92574068f3b98aecabcad5745ead23e9" title="Separation behaviour type." alt="" coords="349,581,576,610"/>
+<area shape="rect" id="node70" href="$class_agent.html#aff221a3fde468b55c2ad11133844bdf1" title="sets the health of the agent" alt="" coords="385,685,540,714"/>
+<area shape="rect" id="node74" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="407,842,519,871"/>
+<area shape="rect" id="node76" href="$class_agent.html#af2dc5499c583783aa742c8fd8c4f8f55" title="determins if the target agent is within reach" alt="" coords="363,314,563,343"/>
+<area shape="rect" id="node5" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="1256,130,1413,159"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1463,130,1604,159"/>
+<area shape="rect" id="node9" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1655,130,1708,159"/>
+<area shape="rect" id="node13" href="$class_steering_behaviour.html#af2a6cfd577c4705514255858cf191e73" title="Sums together all the steering forces in a prioritized list." alt="" coords="672,502,987,531"/>
+<area shape="rect" id="node15" href="$class_vehicle.html#a8dea23fa2c115969938e663830f4f381" title="Method to update the vehicle every tick." alt="" coords="1057,502,1185,531"/>
+<area shape="rect" id="node19" href="$class_agent.html#a4c5dd024f202fba37ba9be2de062f5db" title="registers the agent&#39;s functions and properties with the valid Lua state" alt="" coords="755,422,904,451"/>
+<area shape="rect" id="node21" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="1040,315,1203,345"/>
+<area shape="rect" id="node25" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="1041,395,1201,425"/>
+<area shape="rect" id="node23" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="1277,315,1392,345"/>
+<area shape="rect" id="node27" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="1279,395,1391,425"/>
+<area shape="rect" id="node45" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="1061,155,1181,185"/>
+<area shape="rect" id="node53" href="$class_rioter.html#a0c28ca5d0a4ed7af4399e95a2d27822c" title="Method to send message to attack (deliver damage to target)." alt="" coords="771,315,888,345"/>
+<area shape="rect" id="node56" href="$class_police.html#a2c24c6e62f69e44febfcee56dce38a87" title="Method to send a message to attack (deliver damage to target)." alt="" coords="771,369,888,398"/>
+<area shape="rect" id="node59" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="772,262,887,291"/>
+<area shape="rect" id="node63" href="$class_police.html#a309196a296789d785d325593cc9678ca" title="Method to send message if a policeman has died." alt="" coords="773,209,885,238"/>
+<area shape="rect" id="node65" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="1040,209,1203,238"/>
+</map>

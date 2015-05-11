@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_u_i_button_8cpp.html" title="A simple button class that uses SDL TTF text and NGL triangle planes." alt="" coords="5,83,115,112"/>
+<area shape="rect" id="node5" href="$_n_g_l_draw_8h.html" title="NGLDraw.h" alt="" coords="139,83,235,112"/>
+<area shape="rect" id="node7" href="$main_8cpp.html" title="main.cpp" alt="" coords="84,160,167,189"/>
+<area shape="rect" id="node9" href="$_n_g_l_draw_8cpp.html" title="Controls drawing and updating all entities in the game and any UI elements." alt="" coords="191,160,303,189"/>
+</map>

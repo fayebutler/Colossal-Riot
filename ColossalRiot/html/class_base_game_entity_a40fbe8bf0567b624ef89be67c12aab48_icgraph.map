@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#a2a083401521f82615c6bb87832fe872d" title="ctor this will create a new world to spawn entities inside" alt="" coords="317,5,501,35"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#a9878c2a1cb534b11458c6e03d895cb08" title="Calculates the overlap for obstacle avoidance." alt="" coords="248,59,571,88"/>
+<area shape="rect" id="node20" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="353,165,465,195"/>
+<area shape="rect" id="node22" href="$class_steering_behaviour.html#ab700251978d118ffe5166166e9bce465" title="Calculates the overlap for wall avoidance." alt="" coords="259,112,560,141"/>
+<area shape="rect" id="node7" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="619,59,741,88"/>
+<area shape="rect" id="node15" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="620,112,740,141"/>
+<area shape="rect" id="node9" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="957,87,1115,116"/>
+<area shape="rect" id="node11" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1164,87,1305,116"/>
+<area shape="rect" id="node13" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1356,87,1409,116"/>
+<area shape="rect" id="node17" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="789,112,909,141"/>
+</map>

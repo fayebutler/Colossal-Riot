@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="333,5,528,35"/>
+<area shape="rect" id="node5" href="$class_game_world.html#a32545549ba33a8706c2b168d453bee09" title="gets if the reset ID is true or false" alt="" coords="337,59,524,88"/>
+<area shape="rect" id="node7" href="$class_cell_graph.html#a86c653f370172aad7f0478d29c4d6a4f" title="CellGraph::initializeCells" alt="" coords="340,165,521,195"/>
+<area shape="rect" id="node19" href="$class_entity_manager.html#adf21a250dc32f04211f0ff7301f402cf" title="inserts an entity into the entity map along with it&#39;s unique ID" alt="" coords="317,112,544,141"/>
+<area shape="rect" id="node22" href="$class_base_game_entity.html#a3a55a5dafd5f776e16759c28bed784e0" title="a method to set the ID of the base game entity for the entity manager" alt="" coords="339,219,523,248"/>
+<area shape="rect" id="node24" href="$class_game_world.html#a4122c255d941c63246e9e8e6629289e0" title="sets if the reset ID is true or false" alt="" coords="337,272,524,301"/>
+<area shape="rect" id="node9" href="$class_cell_graph.html#a232e707892754279c175bc2c18e7ef8b" title="CellGraph::entityIsInCell" alt="" coords="631,165,817,195"/>
+<area shape="rect" id="node13" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="631,112,817,141"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#adebb4e4740ecc00e23d03b34432d3c96" title="sets the current cell that the base game enitity is located in" alt="" coords="601,219,847,248"/>
+<area shape="rect" id="node17" href="$class_base_game_entity.html#a30860e538984f1be7b320f7eb7b05c35" title="sets the current cell ID for the base game entity" alt="" coords="593,272,855,301"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="904,165,1099,195"/>
+</map>

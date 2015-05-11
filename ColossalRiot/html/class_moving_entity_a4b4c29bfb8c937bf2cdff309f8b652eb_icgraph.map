@@ -1,0 +1,17 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#a2fc02d6d41858d43fd590e82467157eb" title="Alignment behaviour type." alt="" coords="284,71,508,101"/>
+<area shape="rect" id="node7" href="$class_vehicle.html#a8dea23fa2c115969938e663830f4f381" title="Method to update the vehicle every tick." alt="" coords="949,73,1077,102"/>
+<area shape="rect" id="node9" href="$class_rioter.html#ab1e39d9ce4d61e39bd01ca9c41917b79" title="Method to load the matrices of the rioter to the shader." alt="" coords="287,338,505,367"/>
+<area shape="rect" id="node19" href="$class_police.html#ad6160af3097d616c6b89fa01f16ff5a6" title="Method to load the matrices of the policeman to the shader." alt="" coords="287,391,505,421"/>
+<area shape="rect" id="node26" href="$class_steering_behaviour.html#a1af071b6a9ea5374bdeaafdae31701b3" title="Obstacle Avoidance behaviour." alt="" coords="253,125,539,154"/>
+<area shape="rect" id="node29" href="$class_steering_behaviour.html#aa80f667208522fff8ac2674a36ee9763" title="Pursuit behaviour type." alt="" coords="295,178,497,207"/>
+<area shape="rect" id="node33" href="$class_steering_behaviour.html#a3531f5a49dc8e3ae4882afa9a52e478d" title="Wall Avoidance behaviour." alt="" coords="271,231,521,261"/>
+<area shape="rect" id="node36" href="$class_steering_behaviour.html#a7af2250ce734efb264f672d8bc7ccf17" title="Wander behaviour type." alt="" coords="293,285,499,314"/>
+<area shape="rect" id="node5" href="$class_steering_behaviour.html#af2a6cfd577c4705514255858cf191e73" title="Sums together all the steering forces in a prioritized list." alt="" coords="587,151,901,181"/>
+<area shape="rect" id="node11" href="$class_rioter.html#a8b76f28fc4b3d880a354a8c8c5a1cdd4" title="Method to draw the rioters." alt="" coords="960,338,1067,367"/>
+<area shape="rect" id="node13" href="$class_game_world.html#a4a0c2a147f865ae605a3f2bb4efb4814" title="method to draw the game world and contained entities" alt="" coords="1127,365,1265,394"/>
+<area shape="rect" id="node15" href="$class_n_g_l_draw.html#aec8a377329da67db1e2ef007bd27f026" title="draw the scene" alt="" coords="1316,365,1441,394"/>
+<area shape="rect" id="node17" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1492,365,1545,394"/>
+<area shape="rect" id="node21" href="$class_police.html#af02215cd207f14f5a9bfd9fac537d49a" title="Method to draw each policeman." alt="" coords="692,391,796,421"/>
+<area shape="rect" id="node23" href="$class_squad.html#a1f4e5f3971536a5750be884191abef42" title="Method to draw the squad." alt="" coords="961,391,1065,421"/>
+</map>

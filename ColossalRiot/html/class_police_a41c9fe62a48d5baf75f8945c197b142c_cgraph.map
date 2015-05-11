@@ -1,0 +1,51 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#ad04f2ac8fc1dc7f8bc02a6727aa0087d" title="Sets obstacle avoidance to on state." alt="" coords="175,403,444,432"/>
+<area shape="rect" id="node5" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="229,456,389,485"/>
+<area shape="rect" id="node45" href="$class_vehicle.html#ac988fd4dcfb887773135bb3e1b63ffe2" title="Returns steering behaviour class." alt="" coords="1237,1093,1373,1123"/>
+<area shape="rect" id="node85" href="$class_agent.html#a9f13f31be0c17c140126b4ac487c3b13" title="sets the maximum speed of the agent" alt="" coords="863,1547,1028,1576"/>
+<area shape="rect" id="node111" href="$class_steering_behaviour.html#aeaa0a52f3d46b7c8275ab8483538ef43" title="Sets the weight of wall avoidance." alt="" coords="167,1651,452,1680"/>
+<area shape="rect" id="node114" href="$class_steering_behaviour.html#aa1062febd5103f22b02e7d2c1e4e4abc" title="Sets wall avoidance to on state." alt="" coords="192,1704,427,1733"/>
+<area shape="rect" id="node7" href="$class_police.html#a2c24c6e62f69e44febfcee56dce38a87" title="Method to send a message to attack (deliver damage to target)." alt="" coords="559,429,676,459"/>
+<area shape="rect" id="node19" href="$class_police.html#a75cb51eb097bb0171d34e25edc3929b5" title="Method to check that the policeman is within the pursuit range around the squad." alt="" coords="501,376,733,405"/>
+<area shape="rect" id="node21" href="$class_police.html#a584c14abdca491996417a616e4c382ba" title="Method to set the policeman on a path back to the police station." alt="" coords="535,323,700,352"/>
+<area shape="rect" id="node31" href="$class_police.html#a5a084592b73c732bd2ce6324611574e2" title="Gets whether the policeman is moving (move state in lua)." alt="" coords="540,483,695,512"/>
+<area shape="rect" id="node33" href="$class_police.html#a1df9aedc85a79794fa2de67104826975" title="Gets the influence of the rioters." alt="" coords="517,536,717,565"/>
+<area shape="rect" id="node35" href="$class_agent.html#a4c5dd024f202fba37ba9be2de062f5db" title="registers the agent&#39;s functions and properties with the valid Lua state" alt="" coords="543,960,692,989"/>
+<area shape="rect" id="node97" href="$class_police.html#a06d4603dfa374ccd74fd26d4fc87a8bb" title="Sets if the policeman is moving (move state in lua)." alt="" coords="541,112,693,141"/>
+<area shape="rect" id="node99" href="$class_police.html#a8696fc90bdebc783184926aa377a9e9e" title="Method to set the squad cohesion of the policeman&#39;s squad." alt="" coords="532,165,703,195"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="852,429,1039,459"/>
+<area shape="rect" id="node11" href="$class_agent.html#a348c01179089893d58e0d0bab21ef3fc" title="gets the ID of the agent&#39;s current target" alt="" coords="868,483,1023,512"/>
+<area shape="rect" id="node13" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="824,376,1067,405"/>
+<area shape="rect" id="node15" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="1183,536,1428,565"/>
+<area shape="rect" id="node17" href="$class_message_manager.html#ab4ccde363bdab3168d0d267e5c36fcb2" title="a method that ensures that messages are handled successfully" alt="" coords="1215,376,1396,405"/>
+<area shape="rect" id="node23" href="$class_vehicle.html#a0f77f5af2dc4b5fa2b3d80be7c3acd7d" title="Method to find a path to the target." alt="" coords="879,219,1012,248"/>
+<area shape="rect" id="node29" href="$class_game_world.html#ac6cae6047a1591d72868854b4a871dbe" title="gets the world position of the police station" alt="" coords="835,323,1056,352"/>
+<area shape="rect" id="node25" href="$class_cell_graph.html#a416c1c19d40b523e74858d7b0f7adaa7" title="CellGraph::findPath" alt="" coords="1231,245,1380,275"/>
+<area shape="rect" id="node27" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="1208,192,1403,221"/>
+<area shape="rect" id="node37" href="$class_agent.html#a6a51485c4535f4de1ea8cc76ed4e47fc" title="used to expose the function to Lua, so alignment steering behaviour can be turned..." alt="" coords="876,907,1015,936"/>
+<area shape="rect" id="node47" href="$class_agent.html#a74339e27b7f728205a3e4a149edcd221" title="used to expose the function to Lua, so arrive steering behaviour can be turned on..." alt="" coords="891,1493,1000,1523"/>
+<area shape="rect" id="node50" href="$class_agent.html#ac40730da5725794d428a3b9cb7fbe04c" title="checks if the target is valid, are close enough to the agent, and if they have enough..." alt="" coords="852,589,1039,619"/>
+<area shape="rect" id="node53" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="1235,695,1376,724"/>
+<area shape="rect" id="node55" href="$class_agent.html#a7e44a58983893a89c52bf0ff9932aa33" title="used to expose the function to Lua, so cohesion steering behaviour can be turned..." alt="" coords="880,960,1011,989"/>
+<area shape="rect" id="node58" href="$class_agent.html#ad842f149c91e277989db6ae96338361d" title="used to expose the function to Lua, so evade steering behaviour can be turned on..." alt="" coords="888,1067,1003,1096"/>
+<area shape="rect" id="node61" href="$class_agent.html#a9ab800ad3b112227c20332c7be7bd1c2" title="gets the damage of the agent" alt="" coords="868,1227,1023,1256"/>
+<area shape="rect" id="node65" href="$class_agent.html#a7f26e6e8877596a11cb15c1bd74e1df5" title="gets the maximum speed of the agent" alt="" coords="863,1280,1028,1309"/>
+<area shape="rect" id="node67" href="$class_agent.html#a4e97ef1c8de4bd0c2128ec4b53ecc1f5" title="gets the morale of the agent" alt="" coords="875,1333,1016,1363"/>
+<area shape="rect" id="node69" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="880,1387,1011,1416"/>
+<area shape="rect" id="node72" href="$class_agent.html#ac50661a034da635279e7e3f4546890df" title="used to expose the function to Lua, so pursuit steering behaviour can be turned on..." alt="" coords="887,1120,1004,1149"/>
+<area shape="rect" id="node75" href="$class_agent.html#ac0ae2593548310efdd37c7dbbd55238c" title="used to expose the function to Lua, so seek steering behaviour can be turned on and..." alt="" coords="893,1173,997,1203"/>
+<area shape="rect" id="node78" href="$class_agent.html#ac58dcc19a6e1cb9f51fe53572030c3f4" title="used to expose the function to Lua, so separation steering behaviour can be turned..." alt="" coords="873,1013,1017,1043"/>
+<area shape="rect" id="node81" href="$class_agent.html#a1edc76180a46c46b70459998f12f114b" title="sets the damage of the agent" alt="" coords="869,643,1021,672"/>
+<area shape="rect" id="node83" href="$class_agent.html#a6234f38da84487cc528d279c9efd17cd" title="sets the health of the agent" alt="" coords="875,696,1016,725"/>
+<area shape="rect" id="node87" href="$class_agent.html#a4ddf3491038599447c47af31e9a6a38d" title="sets the morale of the agent" alt="" coords="875,749,1016,779"/>
+<area shape="rect" id="node89" href="$class_agent.html#a7b589f1194c89cc62355f79e037b791f" title="sets the rage of the agent" alt="" coords="880,803,1011,832"/>
+<area shape="rect" id="node91" href="$class_agent.html#af2dc5499c583783aa742c8fd8c4f8f55" title="determins if the target agent is within reach" alt="" coords="845,536,1045,565"/>
+<area shape="rect" id="node94" href="$class_agent.html#a61e08aa56a3e1c0a8bf17d8afab21dc8" title="used to expose the function to Lua, so wander steering behaviour can be turned on..." alt="" coords="884,1440,1007,1469"/>
+<area shape="rect" id="node39" href="$class_steering_behaviour.html#af8591e23fc16acf1953014079d46df68" title="Sets alignment to off state." alt="" coords="1183,853,1428,883"/>
+<area shape="rect" id="node41" href="$class_steering_behaviour.html#aba8167767f588ec20f3d7ae1135bbea5" title="Sets alignment to on state." alt="" coords="1184,907,1427,936"/>
+<area shape="rect" id="node43" href="$class_steering_behaviour.html#a8fbd665d7952871be9a3ecf146c72c41" title="Sets the weight of alignment." alt="" coords="1159,960,1452,989"/>
+<area shape="rect" id="node101" href="$class_steering_behaviour.html#ae3c6ece2390d271b46a6065a97f6b065" title="Sets the weight of squad cohesion." alt="" coords="783,59,1108,88"/>
+<area shape="rect" id="node103" href="$class_vehicle.html#a7d681791dd1de7642681117886a987a5" title="Sets the squad crosshair." alt="" coords="844,112,1047,141"/>
+<area shape="rect" id="node105" href="$class_steering_behaviour.html#a0203b8e221c784933e227b87ec51c043" title="Sets squad cohesion to off state." alt="" coords="807,165,1084,195"/>
+<area shape="rect" id="node107" href="$class_steering_behaviour.html#a9b91ab457716aead17f1a5875d97a89f" title="Sets squad cohesion to on state." alt="" coords="808,5,1083,35"/>
+</map>

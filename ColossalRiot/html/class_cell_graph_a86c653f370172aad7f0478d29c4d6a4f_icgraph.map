@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_base_game_entity.html#a1f729a91a5565006fe0170a37c7da36d" title="ctor this will create a base game entitiy in a valid world, with a type, position..." alt="" coords="239,5,500,35"/>
+<area shape="rect" id="node5" href="$class_game_world.html#a2a083401521f82615c6bb87832fe872d" title="ctor this will create a new world to spawn entities inside" alt="" coords="277,59,461,88"/>
+<area shape="rect" id="node7" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="313,112,425,141"/>
+</map>

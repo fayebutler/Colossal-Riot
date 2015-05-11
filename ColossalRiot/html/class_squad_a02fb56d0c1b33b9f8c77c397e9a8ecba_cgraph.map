@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_vehicle.html#a0f77f5af2dc4b5fa2b3d80be7c3acd7d" title="Method to find a path to the target." alt="" coords="215,85,348,115"/>
+<area shape="rect" id="node15" href="$class_police.html#a06d4603dfa374ccd74fd26d4fc87a8bb" title="Sets if the policeman is moving (move state in lua)." alt="" coords="205,139,357,168"/>
+<area shape="rect" id="node17" href="$class_police.html#ad38d3aeae44937c6b8031e89a1b63f6f" title="Sets the position of the squad." alt="" coords="203,192,360,221"/>
+<area shape="rect" id="node19" href="$class_police.html#ae74ab914d99a5a5b43ff2bb54cb9ee49" title="Sets the the radius of the policeman&#39;s squad." alt="" coords="192,245,371,275"/>
+<area shape="rect" id="node5" href="$class_cell_graph.html#a416c1c19d40b523e74858d7b0f7adaa7" title="CellGraph::findPath" alt="" coords="443,59,592,88"/>
+<area shape="rect" id="node13" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="420,112,615,141"/>
+<area shape="rect" id="node7" href="$class_cell.html#a95b44a8e04cbcab77ab3fc3f5de9b284" title="gets the Centre point of the cell." alt="" coords="744,5,872,35"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="677,59,939,88"/>
+<area shape="rect" id="node11" href="$class_cell.html#a23d4e6a14085f48263e881d5f38bef1e" title="returns perpendicular neighbouring cells." alt="" coords="665,112,951,141"/>
+</map>

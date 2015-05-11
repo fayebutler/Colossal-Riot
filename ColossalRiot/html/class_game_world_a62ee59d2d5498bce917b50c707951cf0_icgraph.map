@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_n_g_l_draw.html#aec8a377329da67db1e2ef007bd27f026" title="draw the scene" alt="" coords="316,5,441,35"/>
+<area shape="rect" id="node7" href="$class_game_world.html#a564f6b38c114c79c152f5c6ca64171fd" title="registers all the necessary functions and members with Lua so that they can be edited..." alt="" coords="287,59,471,88"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="585,5,639,35"/>
+<area shape="rect" id="node9" href="$class_game_world.html#a2a083401521f82615c6bb87832fe872d" title="ctor this will create a new world to spawn entities inside" alt="" coords="520,59,704,88"/>
+</map>

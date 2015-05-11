@@ -1,0 +1,38 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_u_i_slider.html#a1c49ae57eee928f5c330b65042388c2e" title="draws the button, and any text if necessary" alt="" coords="292,33,404,63"/>
+<area shape="rect" id="node7" href="$class_text.html#a3d0591d0b3a6bd73543cb8637fbe91e5" title="render the text to the screen at _x,_y where 0,0 is top left of the screen all positioning..." alt="" coords="623,59,759,88"/>
+<area shape="rect" id="node9" href="$class_u_i_button.html#aa640170f598cb86d78fedf77e78ba889" title="draws the button, and any text if necessary" alt="" coords="285,137,411,167"/>
+<area shape="rect" id="node14" href="$class_game_world.html#a4a0c2a147f865ae605a3f2bb4efb4814" title="method to draw the game world and contained entities" alt="" coords="279,245,417,275"/>
+<area shape="rect" id="node45" href="$class_squad.html#aaf26debbea83ed63cdbf729e3d0885d1" title="Gets the state of the squad." alt="" coords="604,429,777,459"/>
+<area shape="rect" id="node49" href="$class_game_world.html#a62ee59d2d5498bce917b50c707951cf0" title="gets the number of available police during the current level" alt="" coords="233,349,463,379"/>
+<area shape="rect" id="node51" href="$class_game_world.html#aee1f224434bdad7f671dd766f68a2502" title="gets if the player has achieved the lose conditions" alt="" coords="255,403,441,432"/>
+<area shape="rect" id="node53" href="$class_game_world.html#a1a31e00b741e15632f146bd8eed06ae5" title="gets if the player has achieved the win conditions" alt="" coords="256,456,440,485"/>
+<area shape="rect" id="node55" href="$class_game_world.html#af4b00967fc4609fc8954c5cb8a815640" title="gets the number of rioters who have died during this level" alt="" coords="205,509,491,539"/>
+<area shape="rect" id="node57" href="$class_game_world.html#aa9646a9492d75f5897c4532e8e8987e2" title="gets the number of rioters needed for the lose state to be achieved" alt="" coords="183,563,513,592"/>
+<area shape="rect" id="node59" href="$class_game_world.html#ae6f7eb2328d548bf90e878cc07c15714" title="gets the number of rioters who have gone home during this level" alt="" coords="203,616,493,645"/>
+<area shape="rect" id="node61" href="$class_game_world.html#ac119b85caca4920e6d02e367c16ea7d1" title="gets the number of rioters needed for the win state to be achieved" alt="" coords="184,669,512,699"/>
+<area shape="rect" id="node63" href="$class_squad.html#ae979128d3c9c04d35ad518d38cda7fab" title="Gets the previous state of the squad." alt="" coords="252,723,444,752"/>
+<area shape="rect" id="node65" href="$class_squad.html#a901b9c4a406f22432cbd6f6370280fdd" title="Gets the colour of the squad." alt="" coords="259,776,437,805"/>
+<area shape="rect" id="node67" href="$class_squad.html#a4941da6116d24880dc44e2889408c609" title="Gets the selected colour of the squad." alt="" coords="229,829,467,859"/>
+<area shape="rect" id="node71" href="$class_u_i_button.html#a86486ab63b2e87863115a74c131537e8" title="sets the colour of the button" alt="" coords="245,883,451,912"/>
+<area shape="rect" id="node73" href="$class_u_i_button.html#a2b0b36fd4b19f3f86095dd0d21e97659" title="sets the button dimensions in NDC" alt="" coords="231,936,465,965"/>
+<area shape="rect" id="node75" href="$class_u_i_button.html#a6f14e155124a5e8cab4985686d022eea" title="sets the button position in NDC" alt="" coords="240,989,456,1019"/>
+<area shape="rect" id="node77" href="$class_u_i_button.html#a0feca5450984b834df28a01ef11744da" title="sets if the button is active or inactive" alt="" coords="263,1043,433,1072"/>
+<area shape="rect" id="node79" href="$class_squad.html#a5cacd9ff738d82a58e5320ff096cbd47" title="Sets the draw colour of the squad." alt="" coords="243,1096,453,1125"/>
+<area shape="rect" id="node5" href="$class_u_i_slider.html#a81b23d5d2b6a0731ef698e7d10e746f3" title="method to load transform data to the shaders" alt="" coords="577,5,804,35"/>
+<area shape="rect" id="node11" href="$class_u_i_button.html#a5422606b33750f2cd4ca2cd3fada9fc6" title="method to load transform data to the shaders" alt="" coords="572,112,809,141"/>
+<area shape="rect" id="node16" href="$class_squad.html#a1f4e5f3971536a5750be884191abef42" title="Method to draw the squad." alt="" coords="639,272,743,301"/>
+<area shape="rect" id="node30" href="$class_rioter.html#a8b76f28fc4b3d880a354a8c8c5a1cdd4" title="Method to draw the rioters." alt="" coords="944,325,1051,355"/>
+<area shape="rect" id="node39" href="$class_static_entity.html#a71542884f891e55b646ce54165761371" title="Method to draw the obstacle entities." alt="" coords="617,376,764,405"/>
+<area shape="rect" id="node43" href="$class_squad.html#a1648cabfa012c822b1f3401a0bc5dc22" title="Method to draw the squad&#39;s target." alt="" coords="617,165,764,195"/>
+<area shape="rect" id="node47" href="$class_game_world.html#ac15b53c2104efcb0b2237b0aad17c71a" title="method to load the matrices of the game world to the shader" alt="" coords="564,219,817,248"/>
+<area shape="rect" id="node18" href="$class_police.html#af02215cd207f14f5a9bfd9fac537d49a" title="Method to draw each policeman." alt="" coords="945,219,1049,248"/>
+<area shape="rect" id="node28" href="$class_squad.html#afb02deaa862484458718c2feff9d88ef" title="Method to load the matrices to the shader." alt="" coords="888,272,1107,301"/>
+<area shape="rect" id="node20" href="$class_police.html#ad6160af3097d616c6b89fa01f16ff5a6" title="Method to load the matrices of the policeman to the shader." alt="" coords="1177,232,1396,261"/>
+<area shape="rect" id="node22" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="1447,299,1644,328"/>
+<area shape="rect" id="node24" href="$class_agent.html#afa95e5b6eab227701e53ee60b28894e8" title="gets the health of the agent" alt="" coords="1475,192,1616,221"/>
+<area shape="rect" id="node26" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="1448,245,1643,275"/>
+<area shape="rect" id="node32" href="$class_rioter.html#ab1e39d9ce4d61e39bd01ca9c41917b79" title="Method to load the matrices of the rioter to the shader." alt="" coords="1177,299,1396,328"/>
+<area shape="rect" id="node37" href="$class_agent.html#a8abeffae7d084224ad0f53451f097359" title="gets the rage of the agent" alt="" coords="1480,352,1611,381"/>
+<area shape="rect" id="node41" href="$class_static_entity.html#aad40d281f45266581445735697bcad05" title="Method to load the matrices of the entity to the shader." alt="" coords="868,379,1127,408"/>
+</map>

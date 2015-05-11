@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_n_g_l_draw.html#a1a830ca1a92410286704ffcb4c6d6677" title="initialises all of the buttons, sliders and text to be used in the user interface..." alt="" coords="488,5,648,35"/>
+<area shape="rect" id="node7" href="$class_u_i_slider.html#abdd2d04e0b681296bedae3d23d01e9ab" title="method called while the slider is being clicked to update the position of the slider..." alt="" coords="261,85,395,115"/>
+<area shape="rect" id="node16" href="$class_u_i_slider.html#a1419358173530cc0bd08cf5b14cd87b7" title="method used to updated the button position, dimensions and colour" alt="" coords="245,32,411,61"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#a2317f00e85c646efa0932a79b71904f4" title="NGLDraw::NGLDraw" alt="" coords="725,5,883,35"/>
+<area shape="rect" id="node9" href="$class_n_g_l_draw.html#a7950c9e9bfd16dc9b6075881396df876" title="this method is called every time a mouse is moved" alt="" coords="460,59,676,88"/>
+<area shape="rect" id="node13" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="460,112,676,141"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="777,85,831,115"/>
+</map>

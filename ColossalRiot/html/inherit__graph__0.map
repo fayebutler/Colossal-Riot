@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$class_base_game_entity.html" title="The base class for all entities in the game, static or moving." alt="" coords="5,85,144,115"/>
+<area shape="rect" id="node3" href="$class_moving_entity.html" title="MovingEntity" alt="" coords="193,59,303,88"/>
+<area shape="rect" id="node15" href="$class_static_entity.html" title="The base class for all static entities." alt="" coords="196,112,300,141"/>
+<area shape="rect" id="node5" href="$class_vehicle.html" title="The base class for all vehicles." alt="" coords="353,59,423,88"/>
+<area shape="rect" id="node7" href="$class_agent.html" title="The base class for all agents, that can be rioters or police." alt="" coords="473,32,535,61"/>
+<area shape="rect" id="node13" href="$class_squad.html" title="The class to define a squad of policemen." alt="" coords="473,85,535,115"/>
+<area shape="rect" id="node9" href="$class_police.html" title="The base class for all policemen." alt="" coords="585,5,647,35"/>
+<area shape="rect" id="node11" href="$class_rioter.html" title="The base class for all rioters." alt="" coords="584,59,648,88"/>
+</map>

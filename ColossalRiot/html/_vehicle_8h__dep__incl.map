@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_vehicle_8cpp.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="5,392,104,421"/>
+<area shape="rect" id="node5" href="$_agent_8h.html" title="Agent.h" alt="" coords="867,83,941,112"/>
+<area shape="rect" id="node29" href="$_n_g_l_draw_8h.html" title="NGLDraw.h" alt="" coords="1056,392,1152,421"/>
+<area shape="rect" id="node7" href="$_agent_8cpp.html" title="The base class for all agents, that can be rioters or police." alt="" coords="859,160,949,189"/>
+<area shape="rect" id="node9" href="$_police_8h.html" title="defines a policeman entity" alt="" coords="760,160,835,189"/>
+<area shape="rect" id="node41" href="$_rioter_8h.html" title="defines a rioter entity" alt="" coords="949,237,1024,267"/>
+<area shape="rect" id="node11" href="$_police_8cpp.html" title="defines a police entity" alt="" coords="827,392,917,421"/>
+<area shape="rect" id="node13" href="$_game_world_8h.html" title="GameWorld.h" alt="" coords="661,315,771,344"/>
+<area shape="rect" id="node35" href="$_squad_8h.html" title="defines a squad of police" alt="" coords="616,237,691,267"/>
+<area shape="rect" id="node15" href="$_base_game_entity_8cpp.html" title="The base class for all entites in the game, static or moving." alt="" coords="243,392,405,421"/>
+<area shape="rect" id="node17" href="$_game_world_8cpp.html" title="The game world that contains all entities." alt="" coords="429,392,555,421"/>
+<area shape="rect" id="node19" href="$_n_g_l_draw_8cpp.html" title="Controls drawing and updating all entities in the game and any UI elements." alt="" coords="732,469,844,499"/>
+<area shape="rect" id="node22" href="$_rioter_8cpp.html" title="defines a rioter entity" alt="" coords="941,392,1032,421"/>
+<area shape="rect" id="node24" href="$src_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="128,392,219,421"/>
+<area shape="rect" id="node26" href="$_steering_behaviour_8cpp.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="629,392,803,421"/>
+<area shape="rect" id="node31" href="$main_8cpp.html" title="main.cpp" alt="" coords="1063,469,1145,499"/>
+<area shape="rect" id="node39" href="$include_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="547,315,637,344"/>
+</map>

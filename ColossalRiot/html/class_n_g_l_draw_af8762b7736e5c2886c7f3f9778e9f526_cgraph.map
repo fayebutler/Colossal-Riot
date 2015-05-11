@@ -1,0 +1,3 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_timer.html#a820de3710c231c2f926937fe479d4d8e" title="resets the start time of the game to SDL_GetTicks()" alt="" coords="215,5,359,35"/>
+</map>

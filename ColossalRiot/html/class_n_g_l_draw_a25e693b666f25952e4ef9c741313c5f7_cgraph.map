@@ -1,0 +1,24 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_squad.html#a5b761d485be9c6f1f14a8a545bb45f8c" title="Method to check if the colour selected matches the colour of a squad." alt="" coords="239,32,455,61"/>
+<area shape="rect" id="node5" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="255,85,439,115"/>
+<area shape="rect" id="node35" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="253,139,440,168"/>
+<area shape="rect" id="node37" href="$class_squad.html#a901b9c4a406f22432cbd6f6370280fdd" title="Gets the colour of the squad." alt="" coords="257,192,436,221"/>
+<area shape="rect" id="node39" href="$class_game_world.html#a5dea00d59bb549604813430c00014c57" title="gets the vector of all squads in the current level" alt="" coords="257,245,436,275"/>
+<area shape="rect" id="node41" href="$class_squad.html#a4941da6116d24880dc44e2889408c609" title="Gets the selected colour of the squad." alt="" coords="228,299,465,328"/>
+<area shape="rect" id="node43" href="$class_squad.html#ab02dc25c6944169b9eead819be23314d" title="Method to draw the squads with the selection colours Not loaded to the shader, just..." alt="" coords="263,352,431,381"/>
+<area shape="rect" id="node45" href="$class_squad.html#a5cacd9ff738d82a58e5320ff096cbd47" title="Sets the draw colour of the squad." alt="" coords="241,405,452,435"/>
+<area shape="rect" id="node7" href="$class_entity_manager.html#acc87b6a91ad65009f6adaa0f5794631c" title="gets the entity map" alt="" coords="515,32,741,61"/>
+<area shape="rect" id="node9" href="$class_n_g_l_draw.html#a42295d8ddc7359df419af87beecb21c2" title="a method to convert the screen coordinates of the mouse click to world coordinates..." alt="" coords="531,85,725,115"/>
+<area shape="rect" id="node11" href="$class_game_world.html#abb3045797c612525c12c320f11f752fb" title="sets the target position for the currently selected squad" alt="" coords="533,139,723,168"/>
+<area shape="rect" id="node13" href="$class_cell_graph.html#a65b52692d7aa72f261a85edff2b4edeb" title="CellGraph::posIsInCell" alt="" coords="791,112,956,141"/>
+<area shape="rect" id="node15" href="$class_squad.html#a02fb56d0c1b33b9f8c77c397e9a8ecba" title="Sets the target for the squad and police." alt="" coords="804,165,943,195"/>
+<area shape="rect" id="node17" href="$class_vehicle.html#a0f77f5af2dc4b5fa2b3d80be7c3acd7d" title="Method to find a path to the target." alt="" coords="1028,85,1161,115"/>
+<area shape="rect" id="node29" href="$class_police.html#a06d4603dfa374ccd74fd26d4fc87a8bb" title="Sets if the policeman is moving (move state in lua)." alt="" coords="1019,139,1171,168"/>
+<area shape="rect" id="node31" href="$class_police.html#ad38d3aeae44937c6b8031e89a1b63f6f" title="Sets the position of the squad." alt="" coords="1016,192,1173,221"/>
+<area shape="rect" id="node33" href="$class_police.html#ae74ab914d99a5a5b43ff2bb54cb9ee49" title="Sets the the radius of the policeman&#39;s squad." alt="" coords="1005,245,1184,275"/>
+<area shape="rect" id="node19" href="$class_cell_graph.html#a416c1c19d40b523e74858d7b0f7adaa7" title="CellGraph::findPath" alt="" coords="1256,59,1405,88"/>
+<area shape="rect" id="node27" href="$class_game_world.html#ade3d70c817fddc64da3a2b9665e08b79" title="the cell graph generated for the current level" alt="" coords="1233,112,1428,141"/>
+<area shape="rect" id="node21" href="$class_cell.html#a95b44a8e04cbcab77ab3fc3f5de9b284" title="gets the Centre point of the cell." alt="" coords="1557,5,1685,35"/>
+<area shape="rect" id="node23" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="1491,59,1752,88"/>
+<area shape="rect" id="node25" href="$class_cell.html#a23d4e6a14085f48263e881d5f38bef1e" title="returns perpendicular neighbouring cells." alt="" coords="1479,112,1764,141"/>
+</map>

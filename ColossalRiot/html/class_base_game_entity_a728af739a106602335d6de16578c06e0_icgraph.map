@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_police.html#a88ab45bb7afd4b2d9070aab00ea0abf6" title="Method to find a target to pursue." alt="" coords="357,5,512,35"/>
+<area shape="rect" id="node5" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="560,56,683,85"/>
+<area shape="rect" id="node13" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="375,109,495,139"/>
+<area shape="rect" id="node7" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="731,83,888,112"/>
+<area shape="rect" id="node9" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="937,83,1079,112"/>
+<area shape="rect" id="node11" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1129,83,1183,112"/>
+<area shape="rect" id="node15" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="561,109,681,139"/>
+</map>

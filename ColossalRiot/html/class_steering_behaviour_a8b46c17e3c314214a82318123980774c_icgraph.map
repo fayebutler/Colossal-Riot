@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_agent.html#aff221a3fde468b55c2ad11133844bdf1" title="sets the health of the agent" alt="" coords="317,32,472,61"/>
+<area shape="rect" id="node5" href="$class_rioter.html#a578c1a5cbbe63a71946757b6c48a046a" title="Method to find a target to pursue." alt="" coords="521,5,676,35"/>
+<area shape="rect" id="node7" href="$class_police.html#a88ab45bb7afd4b2d9070aab00ea0abf6" title="Method to find a target to pursue." alt="" coords="521,59,676,88"/>
+</map>

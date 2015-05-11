@@ -1,0 +1,10 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_cell_graph.html#a232e707892754279c175bc2c18e7ef8b" title="CellGraph::entityIsInCell" alt="" coords="268,5,455,35"/>
+<area shape="rect" id="node7" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="237,59,485,88"/>
+<area shape="rect" id="node9" href="$class_base_game_entity.html#ac0a10b7313fd8dfe236699397bace536" title="gets the ID of the current cell for the base game entity" alt="" coords="231,112,492,141"/>
+<area shape="rect" id="node11" href="$class_base_game_entity.html#ab53c0bea5e4f3d93d50d4af6d5c7ab15" title="gets the ID of the base game entity" alt="" coords="268,165,455,195"/>
+<area shape="rect" id="node13" href="$class_cell.html#ae97335697d6f5da8c6527d96dcc94009" title="returns neighbouring cell IDs." alt="" coords="264,219,459,248"/>
+<area shape="rect" id="node15" href="$class_base_game_entity.html#adebb4e4740ecc00e23d03b34432d3c96" title="sets the current cell that the base game enitity is located in" alt="" coords="239,272,484,301"/>
+<area shape="rect" id="node17" href="$class_base_game_entity.html#a30860e538984f1be7b320f7eb7b05c35" title="sets the current cell ID for the base game entity" alt="" coords="231,325,492,355"/>
+<area shape="rect" id="node5" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="541,5,736,35"/>
+</map>

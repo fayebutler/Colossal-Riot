@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_message_manager.html#ab4ccde363bdab3168d0d267e5c36fcb2" title="a method that ensures that messages are handled successfully" alt="" coords="305,85,487,115"/>
+<area shape="rect" id="node5" href="$class_message_manager.html#a01e42f542f0cfa3e4c2b6720ff2dcdd3" title="method to send a message from a sender to a reciever with any additional information..." alt="" coords="536,85,779,115"/>
+<area shape="rect" id="node7" href="$class_rioter.html#a0c28ca5d0a4ed7af4399e95a2d27822c" title="Method to send message to attack (deliver damage to target)." alt="" coords="828,5,945,35"/>
+<area shape="rect" id="node13" href="$class_police.html#a2c24c6e62f69e44febfcee56dce38a87" title="Method to send a message to attack (deliver damage to target)." alt="" coords="828,112,945,141"/>
+<area shape="rect" id="node19" href="$class_rioter.html#a59bc04388e0c0afeb72640808f2e9de5" title="Method to send message if a rioter has died." alt="" coords="829,59,944,88"/>
+<area shape="rect" id="node28" href="$class_police.html#a309196a296789d785d325593cc9678ca" title="Method to send message if a policeman has died." alt="" coords="831,165,943,195"/>
+<area shape="rect" id="node9" href="$class_rioter.html#a3c73c29e7166e7432d88c155538d00b0" title="Method to register class, functions and properties to be used in lua." alt="" coords="995,5,1157,35"/>
+<area shape="rect" id="node11" href="$class_rioter.html#adb0ee58a96d58fa28fe9dc465f0b770e" title="Rioter ctor." alt="" coords="1220,5,1335,35"/>
+<area shape="rect" id="node15" href="$class_police.html#a78d2a9826cd5c3214d7d3a3d7b73fabd" title="Method to register class, functions and properties to be used in lua." alt="" coords="996,112,1156,141"/>
+<area shape="rect" id="node17" href="$class_police.html#a41c9fe62a48d5baf75f8945c197b142c" title="Police ctor." alt="" coords="1221,112,1333,141"/>
+<area shape="rect" id="node22" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="997,59,1155,88"/>
+<area shape="rect" id="node24" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1207,59,1348,88"/>
+<area shape="rect" id="node26" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1399,59,1452,88"/>
+<area shape="rect" id="node30" href="$class_squad.html#af052907688f2ec28d3083bb6bd21f32a" title="Method to check if the policeman in the squad has died." alt="" coords="995,165,1157,195"/>
+</map>

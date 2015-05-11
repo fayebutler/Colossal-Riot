@@ -1,0 +1,20 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_steering_behaviour_8cpp.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="5,469,179,499"/>
+<area shape="rect" id="node5" href="$_vehicle_8h.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="327,83,409,112"/>
+<area shape="rect" id="node7" href="$_vehicle_8cpp.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="1053,469,1152,499"/>
+<area shape="rect" id="node9" href="$_agent_8h.html" title="Agent.h" alt="" coords="431,160,505,189"/>
+<area shape="rect" id="node32" href="$_n_g_l_draw_8h.html" title="NGLDraw.h" alt="" coords="203,469,299,499"/>
+<area shape="rect" id="node11" href="$_agent_8cpp.html" title="The base class for all agents, that can be rioters or police." alt="" coords="567,237,657,267"/>
+<area shape="rect" id="node13" href="$_police_8h.html" title="defines a policeman entity" alt="" coords="468,237,543,267"/>
+<area shape="rect" id="node44" href="$_rioter_8h.html" title="defines a rioter entity" alt="" coords="391,315,465,344"/>
+<area shape="rect" id="node15" href="$_police_8cpp.html" title="defines a police entity" alt="" coords="824,469,915,499"/>
+<area shape="rect" id="node17" href="$_game_world_8h.html" title="GameWorld.h" alt="" coords="464,392,573,421"/>
+<area shape="rect" id="node38" href="$_squad_8h.html" title="defines a squad of police" alt="" coords="648,315,723,344"/>
+<area shape="rect" id="node19" href="$_base_game_entity_8cpp.html" title="The base class for all entites in the game, static or moving." alt="" coords="437,469,600,499"/>
+<area shape="rect" id="node21" href="$_game_world_8cpp.html" title="The game world that contains all entities." alt="" coords="624,469,749,499"/>
+<area shape="rect" id="node23" href="$_n_g_l_draw_8cpp.html" title="Controls drawing and updating all entities in the game and any UI elements." alt="" coords="523,547,635,576"/>
+<area shape="rect" id="node26" href="$_rioter_8cpp.html" title="defines a rioter entity" alt="" coords="323,469,413,499"/>
+<area shape="rect" id="node28" href="$src_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="939,469,1029,499"/>
+<area shape="rect" id="node34" href="$main_8cpp.html" title="main.cpp" alt="" coords="209,547,292,576"/>
+<area shape="rect" id="node42" href="$include_2_squad_8cpp.html" title="Squad.cpp" alt="" coords="723,392,813,421"/>
+</map>

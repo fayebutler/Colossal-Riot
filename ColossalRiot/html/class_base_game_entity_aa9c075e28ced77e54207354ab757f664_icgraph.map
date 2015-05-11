@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_squad.html#a36f86a82f9160571a4d3709509ef2762" title="Reorders the vector of the walls in order of how close to the squad." alt="" coords="364,189,543,219"/>
+<area shape="rect" id="node15" href="$class_cell_graph.html#ac7c0220b66b4771eb7795f4393273e43" title="CellGraph::updateCells" alt="" coords="1016,59,1192,88"/>
+<area shape="rect" id="node18" href="$class_steering_behaviour.html#a3531f5a49dc8e3ae4882afa9a52e478d" title="Wall Avoidance behaviour." alt="" coords="328,7,579,36"/>
+<area shape="rect" id="node24" href="$class_steering_behaviour.html#ab700251978d118ffe5166166e9bce465" title="Calculates the overlap for wall avoidance." alt="" coords="303,111,604,140"/>
+<area shape="rect" id="node5" href="$class_squad.html#a2f0b623b15f81593059b33aa5b65fcb1" title="Creates positions for each of the policeman to form a blockade using the closest..." alt="" coords="747,215,875,244"/>
+<area shape="rect" id="node7" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="1044,165,1164,195"/>
+<area shape="rect" id="node9" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="1240,112,1397,141"/>
+<area shape="rect" id="node11" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="1447,112,1588,141"/>
+<area shape="rect" id="node13" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1639,112,1692,141"/>
+<area shape="rect" id="node20" href="$class_steering_behaviour.html#af2a6cfd577c4705514255858cf191e73" title="Sums together all the steering forces in a prioritized list." alt="" coords="653,7,968,36"/>
+<area shape="rect" id="node22" href="$class_vehicle.html#a8dea23fa2c115969938e663830f4f381" title="Method to update the vehicle every tick." alt="" coords="1040,5,1168,35"/>
+<area shape="rect" id="node26" href="$class_rioter.html#ac71359ecf513d1469f9acaada7ea82b7" title="Method to update the rioter at every tick." alt="" coords="1043,112,1165,141"/>
+<area shape="rect" id="node29" href="$class_police.html#a8634d39f8f876b75c272e63929e2c409" title="Method to update each policeman at every tick." alt="" coords="751,161,871,191"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_police_8h.html" title="defines a policeman entity" alt="" coords="460,237,535,267"/>
+<area shape="rect" id="node82" href="$_game_world_8h.html" title="GameWorld.h" alt="" coords="543,83,652,112"/>
+<area shape="rect" id="node5" href="$_agent_8h.html" title="Agent.h" alt="" coords="711,315,785,344"/>
+<area shape="rect" id="node72" href="$_state_machine_8h.html" title="StateMachine.h" alt="" coords="257,315,385,344"/>
+<area shape="rect" id="node9" href="$_vehicle_8h.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="651,392,733,421"/>
+<area shape="rect" id="node60" href="$_timer_8h.html" title="Timer.h" alt="" coords="757,392,827,421"/>
+<area shape="rect" id="node11" href="$_moving_entity_8h.html" title="defines a moving entity Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="729,469,849,499"/>
+<area shape="rect" id="node46" href="$_steering_behaviour_8h.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="688,547,845,576"/>
+<area shape="rect" id="node13" href="$_base_game_entity_8h.html" title="BaseGameEntity.h" alt="" coords="1165,547,1312,576"/>
+<area shape="rect" id="node21" href="$_entity_manager_8h.html" title="EntityManager.h" alt="" coords="867,701,1000,731"/>
+<area shape="rect" id="node27" href="$_message_8h.html" title="Message.h" alt="" coords="1093,701,1187,731"/>
+<area shape="rect" id="node32" href="$_message_manager_8h.html" title="MessageManager.h" alt="" coords="1027,624,1176,653"/>
+<area shape="rect" id="node38" href="$_cell_8h.html" title="this the base cell class, used in CellGraph. It encapsulates all entities within..." alt="" coords="1352,624,1411,653"/>
+<area shape="rect" id="node86" href="$_rioter_8h.html" title="defines a rioter entity" alt="" coords="561,237,636,267"/>
+<area shape="rect" id="node91" href="$_cell_graph_8h.html" title="CellGraph.h" alt="" coords="1693,315,1792,344"/>
+<area shape="rect" id="node103" href="$_squad_8h.html" title="defines a squad of police" alt="" coords="460,160,535,189"/>
+<area shape="rect" id="node106" href="$_static_entity_8h.html" title="defines a static entity" alt="" coords="1235,315,1349,344"/>
+</map>

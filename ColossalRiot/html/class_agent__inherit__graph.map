@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node9" href="$class_police.html" title="The base class for all policemen." alt="" coords="5,2987,211,3627"/>
+<area shape="rect" id="node11" href="$class_rioter.html" title="The base class for all rioters." alt="" coords="235,3099,427,3514"/>
+<area shape="rect" id="node2" href="$class_vehicle.html" title="The base class for all vehicles." alt="" coords="133,1349,304,1920"/>
+<area shape="rect" id="node4" href="$class_moving_entity.html" title="{MovingEntity\n|# m_velocity\l# m_maxSpeed\l# m_heading\l# m_mass\l# m_maxTurnRate\l# m_maxForce\l# m_side\l|+ MovingEntity()\l+ getVelocity()\l+ setVelocity()\l+ getHeading()\l+ setHeading()\l+ getSide()\l+ getMass()\l+ setMass()\l+ getMaxSpeed()\l+ setMaxSpeed()\l+ getMaxForce()\l+ setMaxForce()\l+ getMaxTurnRate()\l+ setMaxTurnRate()\l+ getSpeed()\l+ handleMessage()\l}" alt="" coords="140,851,297,1301"/>
+<area shape="rect" id="node6" href="$class_base_game_entity.html" title="The base class for all entities in the game, static or moving." alt="" coords="88,6,349,802"/>
+</map>

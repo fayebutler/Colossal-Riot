@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_squad.html#a02fb56d0c1b33b9f8c77c397e9a8ecba" title="Sets the target for the squad and police." alt="" coords="232,5,371,35"/>
+<area shape="rect" id="node15" href="$class_squad.html#ae1ca5345900e5f3194d6bf43affc350b" title="Squad ctor." alt="" coords="245,59,357,88"/>
+<area shape="rect" id="node17" href="$class_squad.html#afcce35cf4acef99103130aa306660274" title="Method to update the squad every tick." alt="" coords="455,85,575,115"/>
+<area shape="rect" id="node5" href="$class_game_world.html#abb3045797c612525c12c320f11f752fb" title="sets the target position for the currently selected squad" alt="" coords="420,9,609,39"/>
+<area shape="rect" id="node7" href="$class_n_g_l_draw.html#a0834cd3a927adc86d1004ef30625fd6a" title="sets a taget location for the currently selected squad, if there is one" alt="" coords="659,23,843,52"/>
+<area shape="rect" id="node9" href="$class_n_g_l_draw.html#a25e693b666f25952e4ef9c741313c5f7" title="selectes a squad using colour differences, if there is a valid squad icon below the..." alt="" coords="891,25,1064,55"/>
+<area shape="rect" id="node11" href="$class_n_g_l_draw.html#a1b20896f4aac3cddd5ea2f977410a19f" title="this method is called every time a mouse button is presses" alt="" coords="1113,27,1329,56"/>
+<area shape="rect" id="node13" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="1380,53,1433,83"/>
+<area shape="rect" id="node19" href="$class_game_world.html#a96e64d52c55c86a7126120d537aa1676" title="updates all of the entities in the world, the cells in the cell graph and checks..." alt="" coords="672,83,829,112"/>
+<area shape="rect" id="node21" href="$class_n_g_l_draw.html#a67d742ec0e034dd6fe8f092d0da66d16" title="update the scene" alt="" coords="907,80,1048,109"/>
+</map>

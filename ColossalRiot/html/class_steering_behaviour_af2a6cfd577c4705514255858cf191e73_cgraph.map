@@ -1,0 +1,34 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$class_steering_behaviour.html#a791973d8cbc497398ad66f408ed8d996" title="Used in calculating the steering force to make sure it does not exceed the maximum..." alt="" coords="373,71,648,100"/>
+<area shape="rect" id="node7" href="$class_steering_behaviour.html#a2fc02d6d41858d43fd590e82467157eb" title="Alignment behaviour type." alt="" coords="399,891,623,920"/>
+<area shape="rect" id="node13" href="$class_steering_behaviour.html#ac90a092920330784189e19f95937b19f" title="Arrive behaviour type." alt="" coords="413,268,608,297"/>
+<area shape="rect" id="node21" href="$class_steering_behaviour.html#ac0a8a93b941f8a0443477e9aa6c90cd9" title="Cohesion behaviour type." alt="" coords="403,677,619,707"/>
+<area shape="rect" id="node25" href="$class_steering_behaviour.html#a3847c58bb15027da3fbfe20ca559322a" title="Seek behaviour type." alt="" coords="768,624,957,653"/>
+<area shape="rect" id="node29" href="$class_steering_behaviour.html#ab0afe27e6d9ed04043d1f69c1fe21ed3" title="Evade behaviour type." alt="" coords="412,391,609,420"/>
+<area shape="rect" id="node31" href="$class_steering_behaviour.html#a2930d26b7db02b5b37c4a2ce1fa41f29" title="Flee behaviour type." alt="" coords="771,160,955,189"/>
+<area shape="rect" id="node41" href="$class_vehicle.html#acf8bfea24ca8b9f12f6bc263242a7213" title="Gets the current crosshair." alt="" coords="428,571,593,600"/>
+<area shape="rect" id="node43" href="$class_vehicle.html#af5f774d59d1ccffc80ef61f028cbdc2a" title="Gets the current squad crosshair." alt="" coords="408,624,613,653"/>
+<area shape="rect" id="node45" href="$class_steering_behaviour.html#a1af071b6a9ea5374bdeaafdae31701b3" title="Obstacle Avoidance behaviour." alt="" coords="368,837,653,867"/>
+<area shape="rect" id="node60" href="$class_steering_behaviour.html#acb03d44c3e5fb3b66b971ab4f22a1513" title="Returns if a steering behaviour is set to on." alt="" coords="425,731,596,760"/>
+<area shape="rect" id="node62" href="$class_steering_behaviour.html#aa80f667208522fff8ac2674a36ee9763" title="Pursuit behaviour type." alt="" coords="409,467,612,496"/>
+<area shape="rect" id="node71" href="$class_steering_behaviour.html#a92574068f3b98aecabcad5745ead23e9" title="Separation behaviour type." alt="" coords="397,784,624,813"/>
+<area shape="rect" id="node75" href="$class_steering_behaviour.html#ac6c983e42f586f7e296b55ca6eca857b" title="Squad Cohesion behaviour type." alt="" coords="383,327,639,356"/>
+<area shape="rect" id="node80" href="$class_steering_behaviour.html#a3531f5a49dc8e3ae4882afa9a52e478d" title="Wall Avoidance behaviour." alt="" coords="385,1173,636,1203"/>
+<area shape="rect" id="node92" href="$class_steering_behaviour.html#a7af2250ce734efb264f672d8bc7ccf17" title="Wander behaviour type." alt="" coords="408,1227,613,1256"/>
+<area shape="rect" id="node5" href="$class_moving_entity.html#a6064bb120e91c9ee72b867a333fd8a0c" title="Gets the maximum force of the entity." alt="" coords="757,5,968,35"/>
+<area shape="rect" id="node9" href="$class_entity_manager.html#a6a2bde31294e1f866a6f6c7141cedd33" title="gets a specific base game entity from the entity map based on input ID param[in]..." alt="" coords="740,779,985,808"/>
+<area shape="rect" id="node11" href="$class_moving_entity.html#a4b4c29bfb8c937bf2cdff309f8b652eb" title="Gets the heading of the entity." alt="" coords="764,1096,961,1125"/>
+<area shape="rect" id="node15" href="$class_moving_entity.html#ac3b31cd27093a16424039b89a010a537" title="Gets the maximum speed of the entity." alt="" coords="756,416,969,445"/>
+<area shape="rect" id="node17" href="$class_base_game_entity.html#a1aa0b0492efe7a451b385805cb000e5d" title="gets the position of the base game enitity in world space" alt="" coords="1075,599,1269,628"/>
+<area shape="rect" id="node19" href="$class_moving_entity.html#afa1f94de8e8a08ed21e7892280ed4b3c" title="Gets the velocity of the entity." alt="" coords="1073,187,1271,216"/>
+<area shape="rect" id="node37" href="$class_moving_entity.html#a4f6bb01baa7db4dc183baf9edc0a49ba" title="Gets the speed of the entity." alt="" coords="769,520,956,549"/>
+<area shape="rect" id="node47" href="$class_base_game_entity.html#afeac7d43a7f85e84916f2dc5a7b7d9fb" title="gets the bounding radius of the base game entity" alt="" coords="725,885,1000,915"/>
+<area shape="rect" id="node52" href="$class_base_game_entity.html#af21df174ac6222b3ef0cf5f9c37c1e37" title="gets the vector of all neighbour obstacle IDs" alt="" coords="703,939,1023,968"/>
+<area shape="rect" id="node55" href="$class_moving_entity.html#ab393c80c8aaf1d348b61e55f1aff8e0f" title="Gets the side vector of the entity." alt="" coords="777,1043,948,1072"/>
+<area shape="rect" id="node58" href="$class_steering_behaviour.html#a5b36d2c6ce5ecf9c8dbad8979950ce21" title="Convert from world to local space." alt="" coords="723,832,1003,861"/>
+<area shape="rect" id="node82" href="$class_base_game_entity.html#aa9c075e28ced77e54207354ab757f664" title="gets the current cell that the base game entity in located in" alt="" coords="739,1253,987,1283"/>
+<area shape="rect" id="node84" href="$class_base_game_entity.html#ac358edc221b657dbb9c610ee05afb791" title="gets the detection radius of the base game entity" alt="" coords="720,1307,1005,1336"/>
+<area shape="rect" id="node88" href="$class_cell.html#a4a75f7c77fc4a8fc94be555ad064db42" title="returns the vector of Walls." alt="" coords="805,1360,920,1389"/>
+<area shape="rect" id="node90" href="$class_steering_behaviour.html#a1aa93a94909f67fff4b9aaa89bf69745" title="Returns if two lines intersect." alt="" coords="723,1200,1003,1229"/>
+<area shape="rect" id="node95" href="$class_vehicle.html#a4844701931bab6f55cf26ecbc4e1146b" title="Returns the time elapsed since last tick." alt="" coords="768,1413,957,1443"/>
+</map>

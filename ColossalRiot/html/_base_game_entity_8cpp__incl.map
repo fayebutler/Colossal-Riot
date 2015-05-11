@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_base_game_entity_8h.html" title="BaseGameEntity.h" alt="" coords="1441,547,1588,576"/>
+<area shape="rect" id="node37" href="$_game_world_8h.html" title="GameWorld.h" alt="" coords="681,83,791,112"/>
+<area shape="rect" id="node11" href="$_entity_manager_8h.html" title="EntityManager.h" alt="" coords="1143,701,1276,731"/>
+<area shape="rect" id="node18" href="$_message_8h.html" title="Message.h" alt="" coords="1369,701,1463,731"/>
+<area shape="rect" id="node23" href="$_message_manager_8h.html" title="MessageManager.h" alt="" coords="1303,624,1452,653"/>
+<area shape="rect" id="node29" href="$_cell_8h.html" title="this the base cell class, used in CellGraph. It encapsulates all entities within..." alt="" coords="1628,624,1687,653"/>
+<area shape="rect" id="node42" href="$_rioter_8h.html" title="defines a rioter entity" alt="" coords="649,237,724,267"/>
+<area shape="rect" id="node87" href="$_police_8h.html" title="defines a policeman entity" alt="" coords="549,237,624,267"/>
+<area shape="rect" id="node91" href="$_cell_graph_8h.html" title="CellGraph.h" alt="" coords="1756,315,1855,344"/>
+<area shape="rect" id="node103" href="$_squad_8h.html" title="defines a squad of police" alt="" coords="548,160,623,189"/>
+<area shape="rect" id="node106" href="$_static_entity_8h.html" title="defines a static entity" alt="" coords="1243,315,1357,344"/>
+<area shape="rect" id="node44" href="$_agent_8h.html" title="Agent.h" alt="" coords="776,315,851,344"/>
+<area shape="rect" id="node77" href="$_state_machine_8h.html" title="StateMachine.h" alt="" coords="345,315,473,344"/>
+<area shape="rect" id="node47" href="$_vehicle_8h.html" title="defines a vehicle Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="651,392,733,421"/>
+<area shape="rect" id="node65" href="$_timer_8h.html" title="Timer.h" alt="" coords="757,392,827,421"/>
+<area shape="rect" id="node49" href="$_moving_entity_8h.html" title="defines a moving entity Modified from :&#45; Matt Buckland (2005) Programming AI By Example..." alt="" coords="729,469,849,499"/>
+<area shape="rect" id="node52" href="$_steering_behaviour_8h.html" title="defines behaviours and steering forces Modified from :&#45; Matt Buckland (2005) Programming..." alt="" coords="753,547,911,576"/>
+</map>
