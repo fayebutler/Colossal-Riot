@@ -9,10 +9,11 @@ const static float INCREMENT=-0.02;
 const static float ZOOM=5;
 float cameraHeight =125;
 
+//Called once to set up the GL context, link shaders, initialize UI, set up Camera.
 NGLDraw::NGLDraw(int _width, int _height)
 {
+  //Mouse rotation values
   m_rotate=false;
-  // mouse rotation values set to 0
   m_spinXFace=0;
   m_spinYFace=0;
 
@@ -81,12 +82,9 @@ NGLDraw::NGLDraw(int _width, int _height)
 
 
   //SPOT LIGHT:
-
   m_spot = ngl::SpotLight(ngl::Vec3(0,0,0),
-                                         ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
+           ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
   m_spot.aim(ngl::Vec4(0,10,0));
-
-
   m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
   m_spot.setCutoff(15);
   m_spot.setInnerCutoff(10);
@@ -94,7 +92,6 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_spot.setAttenuation(1.0,0.0,0.0);
   m_spot.enable();
   m_spot.setTransform(iv);
-
   m_spot.loadToShader("spotLight");
 
 
@@ -104,15 +101,18 @@ NGLDraw::NGLDraw(int _width, int _height)
 
   m_gameState = gameMenu;
 
+  //Create new instance of entity manager.
   m_entityMgr = new EntityManager();
 
   initialiseUI();
   m_selectedLevel = 1;
 
+  //Set Squad Circular indicator colour.
   m_squadCurrentColour =ngl::Colour(0.0f,0.5f,0.5f,1.0f);
 
 }
 
+//Destructor of the NGL, deletes all associated memebers and frees memory.
 NGLDraw::~NGLDraw()
 {
   delete m_entityMgr;
@@ -136,6 +136,7 @@ NGLDraw::~NGLDraw()
   Init->NGLQuit();
 }
 
+//Resize viewport to desired width and height, distorting the camera image accordingly.
 void NGLDraw::resize(int _w, int _h)
 {
   glViewport(0,0,_w,_h);
@@ -152,7 +153,7 @@ void NGLDraw::resize(int _w, int _h)
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
 
-
+  //Distort UI buttons
   unsigned int numberOfButtons = m_buttons.size();
   for (unsigned int i = 0; i < numberOfButtons; i++)
   {
@@ -162,14 +163,11 @@ void NGLDraw::resize(int _w, int _h)
 
   m_textSmall->setScreenSize(_w, _h);
   m_textMedium->setScreenSize(_w, _h);
-  // Ok so this is still a bit of a hack we need to scale our text based
-  // on max screen size so first get the size of the screen
+  //Distort scrren text
   SDL_Rect s;
   SDL_GetDisplayBounds(0,&s);
   float x,y;
   // now get a scale transform for the text shader
-
-
   x=1.0-float(s.w-_w)/s.w;
   y=1.0-float(s.h-_h)/s.h;
   // now set the new transform element for this shader
@@ -179,6 +177,7 @@ void NGLDraw::resize(int _w, int _h)
 
 void NGLDraw::startGame(int level)
 {
+  //Initialize a gameWorld when the game state is initiated:
     m_gameworld = new GameWorld(level);
     m_selected = false;
     m_selectedSquad = NULL;
@@ -188,6 +187,7 @@ void NGLDraw::startGame(int level)
 
 void NGLDraw::endGame()
 {
+  //Reset the timer, mouse and delete gameworld when the game session has ended
     m_gameTimer.resetTimer();
     delete m_gameworld;
 
@@ -210,12 +210,6 @@ void NGLDraw::draw()
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-
-//  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
-//  (*shader)["Phong"]->use();
-
-//  m_spot.setPosition(ngl::Vec3(100000,0,0));
-//  m_spot.loadToShader("spotLight");
 
   switch (m_gameState)
   {
@@ -552,6 +546,7 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     }
   }
 
+  //Sets the squad size to the amount selected on the slider
   if (m_sliderSquadSize->getIsSliding() == true)
   {
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
@@ -560,10 +555,6 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_squadSizeString = m_ss.str();
     m_sliderSquadSize->setTextString(m_squadSizeString);  
   }
-
-//  m_spot.setPosition(ngl::Vec3(0,10,0));
-//  m_spot.loadToShader("spotLight");
-//  m_spot.setPosition(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z));
 
 }
 
@@ -587,12 +578,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
         {
-//          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;
           switch (m_buttons[i]->getName())
           {
             case buttonPlay:
             {
-//              std::cout<<m_selectedLevel<<std::endl;
               startGame(m_selectedLevel);
               m_gameState = gamePlay;
               m_buttonQuit->setIsActive(false);
@@ -810,6 +799,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for(int i=0; i < m_gameworld->getSquads().size(); i++)
@@ -817,9 +807,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
         Squad* currentSquad = m_gameworld->getSquads()[i];
 
         currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
-
-        //set de-selected squad colour
-//        currentSquad->setSquadColour(m_squadCurrentColour);
 
     }
 
