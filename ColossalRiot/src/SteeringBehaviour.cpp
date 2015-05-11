@@ -592,7 +592,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
   if (closestIntersectingObstacle)
   {
-    double mult = 2.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
+    double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
     ngl::Vec3 avoidanceForce;
 
     if (localPosOfCIO.m_z >= 0)
@@ -640,7 +640,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     }
     else
     {
-      //worldAvoidanceForce.normalize();
+      worldAvoidanceForce.normalize();
     }
     std::cout<<"world = "<<worldAvoidanceForce.m_x<<" "<<worldAvoidanceForce.m_y<<" "<<worldAvoidanceForce.m_z<<" "<<std::endl;
 
