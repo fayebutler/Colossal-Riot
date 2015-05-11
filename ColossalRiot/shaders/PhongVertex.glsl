@@ -12,7 +12,7 @@ uniform vec3 viewerPos;
 /// @brief the current fragment normal for the vert being processed
 out vec3 fragmentNormal;
 
-
+/// @brief material structure
 struct Materials
 {
   vec4 ambient;
@@ -21,7 +21,7 @@ struct Materials
   float shininess;
 };
 
-
+// @brief light structure
 struct Lights
 {
   vec4 position;
@@ -33,7 +33,7 @@ struct Lights
   float quadraticAttenuation;
   float linearAttenuation;
 };
-
+// @brief spot light structure
 struct SpotLight{
     vec4 position;
     vec3 direction;

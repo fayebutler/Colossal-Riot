@@ -22,9 +22,7 @@ Squad::Squad(GameWorld* world, int squadSize, ngl::Vec3 pos, float r, ngl::Obj *
 
   m_previousState = squadPatrol;
 
-  m_squadDrawColour = ngl::Colour(0.0f, 0.25f, 0.6f);
-  m_squadColour = ngl::Colour(0.0f, 0.25f, 0.6f);
-  m_squadSelectedColour = m_squadColour*2.0;
+  m_squadColour = ngl::Colour(0.0f,0.5f,0.5f,1.0f);
 
   m_squadRadius = squadSize*m_boundingRadius;
   m_mesh = _mesh;
@@ -184,6 +182,7 @@ void Squad::update(double timeElapsed, double currentTime)
 //----------------------------------------------------------------------------------------------------------------------------
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
+
     for(unsigned int i=0; i<m_squadSize; ++i)
     {
       Police* currentPolice = m_squadPolice[i];
@@ -209,13 +208,13 @@ void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     m.setDiffuse(ngl::Colour(m_squadDrawColour.m_r+0.3f,m_squadDrawColour.m_g+0.3f,m_squadDrawColour.m_b+0.3f,m_squadDrawColour.m_a));
     m.loadToShader("material");
 
-    ngl::Mat4 MV;
-    ngl::Mat4 MVP;
-    ngl::Mat3 normalMatrix;
-    ngl::Mat4 M;
-    ngl::Transformation trans;
-    trans.setPosition(m_target.m_x, 0.011f, m_target.m_z);
-    trans.setRotation(90.0,0.0,0.0);
+      ngl::Mat4 MV;
+      ngl::Mat4 MVP;
+      ngl::Mat3 normalMatrix;
+      ngl::Mat4 M;
+      ngl::Transformation trans;
+      trans.setPosition(m_target.m_x, 0.005f, m_target.m_z);
+      trans.setRotation(90.0,0.0,0.0);
 
     M=trans.getMatrix()*mouseGlobalTX;
     MV=  M*cam->getViewMatrix();
@@ -223,8 +222,11 @@ void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     normalMatrix=MV;
     normalMatrix.inverse();
 
-    shader->setShaderParamFromMat4("MVP",MVP);
-    shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+      shader->setShaderParamFromMat4("MVP",MVP);
+      shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
+
+
+
 
     ngl::VAOPrimitives::instance()->createDisk("target",1.0,12);
     ngl::VAOPrimitives::instance()->draw("target");
@@ -239,7 +241,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
   ngl::Material m(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.2775f,0.2775f,0.2775f, 1.0), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   m.setSpecularExponent(5.f);
-  m.setDiffuse(ngl::Colour(m_squadDrawColour));
+  m.setDiffuse(ngl::Colour(m_squadColour));
   m.loadToShader("material");
 
   ngl::Mat4 MV;
@@ -247,7 +249,7 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
   ngl::Transformation trans;
-  trans.setPosition(m_pos.m_x, 0.01, m_pos.m_z);
+  trans.setPosition(m_pos.m_x, 0.004, m_pos.m_z);
   trans.setRotation(90.0,15.0,0.0);
 
 
@@ -516,7 +518,7 @@ void Squad::formWall()
                     leftCenter = testCenter;
                   }
                   float dist = distance.length();
-                  float numberOf = dist/m_boundingRadius;
+                  float numberOf= dist/m_boundingRadius;
 
                   if(numberOf >= m_squadSize)
                   {

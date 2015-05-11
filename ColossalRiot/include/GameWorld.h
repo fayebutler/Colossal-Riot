@@ -28,6 +28,7 @@ typedef std::vector<BaseGameEntity*>::iterator ObIt;
 
 class GameWorld
 {
+
 public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief ctor this will create a new world to spawn entities inside
@@ -256,6 +257,7 @@ public:
   /// @param[in] _number input number to assign to the number of spawned street lights
   //----------------------------------------------------------------------------------------------------------------------
   void setNumberOfStreetLights(const int _number) {m_numberOfStreetLights = _number; }
+
 
 private:
   //----------------------------------------------------------------------------------------------------------------------

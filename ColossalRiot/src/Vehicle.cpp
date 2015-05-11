@@ -70,6 +70,7 @@ void Vehicle::update(double time_elapsed)
 
   //velocity truncated by maxspeed
 
+
   if(m_velocity.lengthSquared() > m_maxSpeed * m_maxSpeed)
   {
     if(m_velocity.lengthSquared() == 0.0f)
@@ -105,7 +106,7 @@ void Vehicle::update(double time_elapsed)
   }
 
   //smooth the vehicles heading
-  if(m_smoothingOn == true)
+  if(m_smoothingOn == true);
   {
     m_smoothHeading = smoothingUpdate(getHeading());
     m_heading = m_smoothHeading;
@@ -138,8 +139,9 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 _recentHeading)
   }
 
   ngl::Vec3 sum = ngl::Vec3(0,0,0);
+  std::vector<ngl::Vec3>::iterator it = m_headingHistory.begin();
 
-  for(std::vector<ngl::Vec3>::iterator it = m_headingHistory.begin(); it!=m_headingHistory.end(); it++)
+  for(it; it!=m_headingHistory.end(); it++)
   {
     sum += *it;
   }
@@ -159,7 +161,7 @@ ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
   ngl::Vec3 bestExit;
   float dist = 1000000000.0;
   int exitSize = _exits.size();
-  for(int i = 0; i < exitSize; i++)
+  for(int i = 0; i<exitSize; i++)
   {
     ngl::Vec3 currentExit = _exits[i];
     float testDist = (currentExit- this->getPos()).lengthSquared();

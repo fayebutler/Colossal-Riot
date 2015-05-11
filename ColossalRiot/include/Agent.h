@@ -113,10 +113,9 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief checks if the target is valid, are close enough to the agent, and if they have enough health
   /// @param[in] _dist input to determin maximum distance to valid target
-  /// @param[in] _health input to determin minimum health to consider
-  /// @param[in] _rage input to determin minimum rage to consider
+  /// @param[in] _health intput to determin minimum health to consider
   //----------------------------------------------------------------------------------------------------------------------
-  void checkValidTarget(float _dist, float _health, float _rage);
+  void checkValidTarget(float _dist, float _health);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief determins if the target agent is within reach
   /// @param[in] _reach the input of how far the agent can reach
@@ -129,7 +128,7 @@ public:
   ngl::Vec3 getHomePos() const { return m_homePos; }
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief sets the position of the agent's home
-  /// @param[in] _val input to set the agent's home position
+  /// @param [in] _val input to set the agent's home position
   //----------------------------------------------------------------------------------------------------------------------
   void setHomePos(const ngl::Vec3 _val) { m_homePos = _val; }
   //----------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,4 @@
+#ifndef OPENGLWINDOW_H
+#define OPENGLWINDOW_H
+
+#endif // OPENGLWINDOW_H

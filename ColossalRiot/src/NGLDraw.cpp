@@ -14,16 +14,17 @@ const static float INCREMENT=-0.02;
 const static float ZOOM=5;
 float cameraHeight =125;
 
+//Called once to set up the GL context, link shaders, initialize UI, set up Camera.
 //----------------------------------------------------------------------------------------------------------------------
 NGLDraw::NGLDraw(int _width, int _height)
 {
+
   m_patrolColour = ngl::Colour(0.0f, 0.25f, 0.6f);
   m_defensiveColour = ngl::Colour(0.5f, 0.4f, 0.5f);
   m_aggressiveColour = ngl::Colour(0.3f, 0.0f, 0.2f);
   m_wallColour = ngl::Colour(0.3f, 0.5f, 0.5f);
-
+  //Mouse rotation values
   m_rotate=false;
-  // mouse rotation values set to 0
   m_spinXFace=0;
   m_spinYFace=0;
 
@@ -92,20 +93,16 @@ NGLDraw::NGLDraw(int _width, int _height)
 
 
   //SPOT LIGHT:
-
   m_spot = ngl::SpotLight(ngl::Vec3(0,0,0),
-                                         ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
+           ngl::Vec3(0,1,0),ngl::Colour(0.5,0.4,0.4));
   m_spot.aim(ngl::Vec4(0,10,0));
-
-
   m_spot.setSpecColour(ngl::Colour(0.4,0.4,0.1,1));
-  m_spot.setCutoff(5);
-  m_spot.setInnerCutoff(4.5);
+  m_spot.setCutoff(15);
+  m_spot.setInnerCutoff(10);
   m_spot.setExponent(2+1);
   m_spot.setAttenuation(1.0,0.0,0.0);
   m_spot.enable();
   m_spot.setTransform(iv);
-
   m_spot.loadToShader("spotLight");
 
 
@@ -115,14 +112,18 @@ NGLDraw::NGLDraw(int _width, int _height)
 
   m_gameState = gameMenu;
 
+  //Create new instance of entity manager.
   m_entityMgr = new EntityManager();
 
   initialiseUI();
   m_selectedLevel = 1;
 
-  m_squadCurrentColour = m_patrolColour;
+  //Set Squad Circular indicator colour.
+  m_squadCurrentColour =ngl::Colour(0.0f,0.5f,0.5f,1.0f);
+
 }
 
+//Destructor of the NGL, deletes all associated memebers and frees memory.
 //----------------------------------------------------------------------------------------------------------------------
 NGLDraw::~NGLDraw()
 {
@@ -147,6 +148,7 @@ NGLDraw::~NGLDraw()
   Init->NGLQuit();
 }
 
+//Resize viewport to desired width and height, distorting the camera image accordingly.
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::resize(int _w, int _h)
 {
@@ -164,7 +166,7 @@ void NGLDraw::resize(int _w, int _h)
   // now set the camera size values as the screen size has changed
   m_cam->setShape(45,(float)_w/_h,0.05,350);
 
-
+  //Distort UI buttons
   unsigned int numberOfButtons = m_buttons.size();
   for (unsigned int i = 0; i < numberOfButtons; i++)
   {
@@ -174,14 +176,11 @@ void NGLDraw::resize(int _w, int _h)
 
   m_textSmall->setScreenSize(_w, _h);
   m_textMedium->setScreenSize(_w, _h);
-  // Ok so this is still a bit of a hack we need to scale our text based
-  // on max screen size so first get the size of the screen
+  //Distort scrren text
   SDL_Rect s;
   SDL_GetDisplayBounds(0,&s);
   float x,y;
   // now get a scale transform for the text shader
-
-
   x=1.0-float(s.w-_w)/s.w;
   y=1.0-float(s.h-_h)/s.h;
   // now set the new transform element for this shader
@@ -192,15 +191,15 @@ void NGLDraw::resize(int _w, int _h)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::startGame(int _level)
 {
+
+  //Initialize a gameWorld when the game state is initiated:
     m_gameworld = new GameWorld(_level);
     m_selected = false;
     m_selectedSquad = NULL;
-    m_selectedSquadID = -1;
-    m_spot.setPosition(ngl::Vec3(0,10,10));
-
+    m_selectedSquadID = -1;  m_spot.setPosition(ngl::Vec3(0,10,10));
     // reset camera
-    ngl::Vec3 from(ngl::Vec3(m_gameworld->getPoliceStation().m_x,cameraHeight,m_gameworld->getPoliceStation().m_z));
-    ngl::Vec3 to(m_gameworld->getPoliceStation());
+    ngl::Vec3 from(0,cameraHeight,0);
+    ngl::Vec3 to(0,0,0);
     ngl::Vec3 up(0,0,-1);
 
     m_cam = new ngl::Camera(from,to,up);
@@ -214,10 +213,13 @@ void NGLDraw::startGame(int _level)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::endGame()
 {
+  //Reset the timer, mouse and delete gameworld when the game session has ended
     m_gameTimer.resetTimer();
     delete m_gameworld;
 
+
 }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::draw()
@@ -545,6 +547,7 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     }
   }
 
+  //Sets the squad size to the amount selected on the slider
   if (m_sliderSquadSize->getIsSliding() == true)
   {
     m_squadSize = m_sliderSquadSize->slideBar(_event.x);
@@ -553,10 +556,6 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
     m_squadSizeString = m_ss.str();
     m_sliderSquadSize->setTextString(m_squadSizeString);  
   }
-
-//  m_spot.setPosition(ngl::Vec3(0,10,0));
-//  m_spot.loadToShader("spotLight");
-//  m_spot.setPosition(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z));
 
 }
 
@@ -746,7 +745,6 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
         }
     }
 }
-
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
 {
@@ -1018,7 +1016,7 @@ void NGLDraw::initialiseUI()
   m_buttons.push_back(m_buttonRioterHomeBar);
 
   m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
-  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 1, 9);
+  m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
   m_ss.str(std::string());
   m_ss << m_squadSize;
