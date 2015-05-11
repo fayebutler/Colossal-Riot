@@ -11,7 +11,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class Squad "include/Squad.h"
 /// @brief The class to define a squad of policemen
-/// @author Faye Butler
+/// @author Faye Butler & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

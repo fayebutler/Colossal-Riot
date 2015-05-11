@@ -5,7 +5,7 @@
 /// @file Message.h
 /// @class Message "include/Message.h"
 /// @brief A struct used to store message information so it can be sent from one entity to another
-/// @author Will Herbert
+/// @author Will Herbert & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
