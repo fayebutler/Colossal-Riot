@@ -367,8 +367,10 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       Rioter* currentRioter = m_rioters[a];
       currentRioter->draw(cam, mouseGlobalTX);
   }
-
-  for(unsigned int a=0; a<m_squads.size(); ++a)
+  
+  m_numberOfSquads = m_squads.size();
+  
+  for(unsigned int a=0; a<m_numberOfSquads; ++a)
   {
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
