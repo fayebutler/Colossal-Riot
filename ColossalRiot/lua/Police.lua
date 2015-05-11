@@ -190,7 +190,7 @@ defensive["execute"] = function()
 --  print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 30.0, 40.0)
-  police:checkValidPursuitRange(32.0)
+  police:checkValidPursuitRange(4.0)
 
   if police:getTargetID() >= 0 then
     police:wander(0.0)

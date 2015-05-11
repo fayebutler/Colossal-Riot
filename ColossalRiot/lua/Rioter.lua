@@ -101,7 +101,7 @@ protest["enter"] = function()
    rioter:separation(0.8)
    rioter:alignment(0.5)
 
-   rioter:protestCohesion(0.3)
+   rioter:protestCohesion(1.0)
 
 end
 
