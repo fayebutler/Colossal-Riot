@@ -445,8 +445,8 @@ void Squad::formWall()
                   {
                     upperCenter = testCenter;
                   }
-                  float dist = distance.lengthSquared();
-                  float numberOf= dist/(m_boundingRadius * m_boundingRadius);
+                  float dist = distance.length();
+                  float numberOf= dist/m_boundingRadius;
 
                   if(numberOf >= m_squadSize)
                   {
@@ -479,8 +479,8 @@ void Squad::formWall()
                   {
                     leftCenter = testCenter;
                   }
-                  float dist = distance.lengthSquared();
-                  float numberOf = dist/(m_boundingRadius * m_boundingRadius);
+                  float dist = distance.length();
+                  float numberOf = dist/m_boundingRadius;
 
                   if(numberOf >= m_squadSize)
                   {

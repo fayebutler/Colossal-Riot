@@ -277,9 +277,9 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 targetPos)
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
 {
   ngl::Vec3 toTarget = targetPos - m_vehicle->getPos();
-  double dist = toTarget.lengthSquared();
+  double dist = toTarget.length();
 
-  if(dist > (0.1 * 0.1))
+  if(dist > 0.1)
   {
     double decelerationTweak = 0.01;
 
@@ -473,7 +473,7 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
   ngl::Vec3 toTarget = squadPos - m_vehicle->getPos();
   double dist = toTarget.lengthSquared();
 
-  if(dist > (0.1 * 0.1))
+  if(dist > 0.1)
   {
     double decelerationTweak = 0.01;
 
@@ -506,46 +506,46 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
   double distanceToCIO = 99999.9;
   ngl::Vec3 localPosOfCIO;
 
-  int numberOfAgents = m_allNeighbours.size();
-  for (unsigned int i = 0; i < numberOfAgents; i++)
-  {
-    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
-    if (currentAgent)
-    {
-      if (currentAgent->getID() != m_vehicle->getID())
-      {
-        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
+//  int numberOfAgents = m_allNeighbours.size();
+//  for (unsigned int i = 0; i < numberOfAgents; i++)
+//  {
+//    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
+//    if (currentAgent)
+//    {
+//      if (currentAgent->getID() != m_vehicle->getID())
+//      {
+//        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
 
-        if (vectorToObstacle.lengthSquared() < (detectionLength * detectionLength))
-        {
-          ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+//        if (vectorToObstacle.lengthSquared() < (detectionLength * detectionLength))
+//        {
+//          ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
-          // if obstacle is behind vehicle in local space, discard
-          if (localPos.m_x >= 0.f)
-          {
-            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
-            if (fabs(localPos.m_z) < addedRadius)
-            {
-              // intersection of radius and line z = 0
-              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
-              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
-              double intersectX = localPos.m_x - sqrtPart;
-              if (intersectX <= 0)
-              {
-                intersectX = localPos.m_x + sqrtPart;
-              }
-              if (intersectX < distanceToCIO)
-              {
-                distanceToCIO = intersectX;
-                closestIntersectingObstacle = currentAgent;
-                localPosOfCIO = localPos;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+//          // if obstacle is behind vehicle in local space, discard
+//          if (localPos.m_x >= 0.f)
+//          {
+//            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
+//            if (fabs(localPos.m_z) < addedRadius)
+//            {
+//              // intersection of radius and line z = 0
+//              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+//              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+//              double intersectX = localPos.m_x - sqrtPart;
+//              if (intersectX <= 0)
+//              {
+//                intersectX = localPos.m_x + sqrtPart;
+//              }
+//              if (intersectX < distanceToCIO)
+//              {
+//                distanceToCIO = intersectX;
+//                closestIntersectingObstacle = currentAgent;
+//                localPosOfCIO = localPos;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
 
   int numberOfObstacles = m_vehicle->getNeighbourObstacleIDs().size();
   for (unsigned int i = 0; i < numberOfObstacles; ++i)
@@ -587,7 +587,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
   if (closestIntersectingObstacle)
   {
-    double mult = 2.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
+    double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
     ngl::Vec3 avoidanceForce;
 
     if (localPosOfCIO.m_z >= 0)
