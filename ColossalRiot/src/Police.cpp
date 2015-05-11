@@ -31,7 +31,7 @@ Police::Police(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
-  Vehicle::Steering()->setObstacleAvoidWeight(0.1);
+  Vehicle::Steering()->setObstacleAvoidWeight(0.4);
 
   m_rioterInfluence = 0.0;
 
@@ -43,7 +43,6 @@ Police::~Police()
 {
   lua_close(L);
   delete m_stateMachine;
-
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
@@ -148,7 +147,8 @@ void Police::findTargetID(float _health)
   std::vector<int> rioters = getNeighbourRioterIDs();
   float currentRage = -1;
   Agent* currentTarget = NULL;
-  for (int i=0; i<rioters.size(); i++)
+  int numberOfRioters = rioters.size();
+  for (int i=0; i<numberOfRioters; i++)
   {
     Agent* rioter = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(rioters[i]));
     if (rioter)
@@ -211,15 +211,17 @@ bool Police::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgAttack:
-    m_health -= (_message.m_extraInfo * m_timeElapsed);
-    return true;
-    break;
-
-  default:
-    std::cout<<"Police: Message type not defined"<<std::endl;
-    return false;
-    break;
+    case msgAttack:
+    {
+      return Agent::handleMessage(_message);
+      break;
+    }
+    default:
+    {
+      std::cout<<"Police: Message type not defined"<<std::endl;
+      return false;
+      break;
+    }
   }
 }
 

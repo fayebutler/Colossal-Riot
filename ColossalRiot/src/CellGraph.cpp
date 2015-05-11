@@ -538,7 +538,7 @@ bool CellGraph::posIsInCell(ngl::Vec3 _pos)
 
 std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
 {
-  //we use a method based on DIGSTAHGGHHGJS algoritmey for path planning
+  //we use a method based on dijkstra's algorithm for path planning
 
   //as we are using cell centres as nodes in paths, we only check perpendicular cells to avoid clipping through corners
 

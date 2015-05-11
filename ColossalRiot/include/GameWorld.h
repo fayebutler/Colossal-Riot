@@ -58,8 +58,9 @@ private:
     ngl::Obj *m_treeMesh;
     ngl::Obj *m_streetLightMesh;
 
-
     ngl::Vec3 m_policeStation;
+
+    std::vector<ngl::Vec3> m_protestPositions;
 
     bool m_resetID;
 
@@ -111,7 +112,6 @@ public:
     void setNumberOfRiotersHomeToWin(int _number) { m_numberOfRiotersHomeToWin = _number; }
 
     ngl::Vec3 getPoliceStation() const { return m_policeStation; }
-   // void setPoliceStation(ngl::Vec3 _policeStation) { m_policeStation = _policeStation; }
 
     void setResetID(bool _resetID){m_resetID = _resetID;}
     bool getResetID()const{return m_resetID;}
@@ -147,6 +147,9 @@ public:
 
     void setStreetMeshFile(std::string _file) { m_streetMeshFile = _file; }
     void setBuildingMeshFile(std::string file) { m_buildingMeshFile = file; }
+
+    void addProtestPosition(float _x, float _y, float _z);
+    std::vector<ngl::Vec3> getProtestPositions() const { return m_protestPositions; }
 
 };
 

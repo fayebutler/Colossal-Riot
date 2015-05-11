@@ -38,6 +38,8 @@ level1 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -56,6 +58,8 @@ level2 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -74,6 +78,8 @@ level3 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -92,6 +98,8 @@ level4 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -110,4 +118,6 @@ level5 = function()
 
   gameWorld.m_numberOfTrees = 20
   gameWorld.m_numberOfStreetLights = 100
+
+  gameWorld:addProtestPosition(0.0,0.0,0.0)
 end

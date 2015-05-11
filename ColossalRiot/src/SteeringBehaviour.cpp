@@ -279,7 +279,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
   ngl::Vec3 toTarget = targetPos - m_vehicle->getPos();
   double dist = toTarget.length();
 
-  if(dist>0.1)
+  if(dist > 0.1)
   {
     double decelerationTweak = 0.01;
 
@@ -293,7 +293,7 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
     ngl::Vec3 desiredVelocity = toTarget * speed/dist;
     return(desiredVelocity - m_vehicle->getVelocity());
   }
-  else if(dist <= 0.1 )
+  else if(dist <= (0.1 * 0.1) )
   {
     return ngl::Vec3(0,0,0);
   }
@@ -338,7 +338,7 @@ ngl::Vec3 SteeringBehaviour::Wander()
 
   double dotProduct = worldNormalise.dot(headingNormalise);
 
-  double magnitude = headingNormalise.length()*worldNormalise.length();
+  double magnitude = 1.0;
   double temp = dotProduct/magnitude;
   double angle = acos(temp);
   if(headingNormalise.m_z > 0)
@@ -397,7 +397,8 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
   ngl::Vec3 separationForce;
-  for (unsigned int i = 0; i < neighbours.size(); i++)
+  int numberOfNeighbours = neighbours.size();
+  for (unsigned int i = 0; i < numberOfNeighbours; i++)
   {
     ngl::Vec3 vectorToNeighbour = m_entityMgr->getEntityFromID(neighbours[i])->getPos() - m_vehicle->getPos();
 
@@ -419,10 +420,11 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
-  if (neighbours.size() > 0)
+  int numberOfNeighbours = neighbours.size();
+  if (numberOfNeighbours > 0)
   {
     ngl::Vec3 averageHeading;
-    for (unsigned int i = 0; i < neighbours.size(); i++)
+    for (unsigned int i = 0; i < numberOfNeighbours; i++)
     {
       Vehicle* vehicleNeighbour = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(neighbours[i]));
       if (vehicleNeighbour)
@@ -430,7 +432,7 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
         averageHeading += vehicleNeighbour->getHeading();
       }
     }
-    averageHeading /= neighbours.size();
+    averageHeading /= numberOfNeighbours;
     averageHeading -= m_vehicle->getHeading();
     return averageHeading;
   }
@@ -443,15 +445,16 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
-  if (neighbours.size() > 0)
+  int numberOfNeighbours = neighbours.size();
+  if (numberOfNeighbours > 0)
   {
     ngl::Vec3 averagePosition;
     ngl::Vec3 cohesionForce;
-    for (unsigned int i =0; i < neighbours.size(); i++)
+    for (unsigned int i =0; i < numberOfNeighbours; i++)
     {
       averagePosition += m_entityMgr->getEntityFromID(neighbours[i])->getPos();
     }
-    averagePosition /= neighbours.size();
+    averagePosition /= numberOfNeighbours;
     cohesionForce = Seek(averagePosition);
 
     return cohesionForce;
@@ -468,9 +471,9 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 {
   //arrive
   ngl::Vec3 toTarget = squadPos - m_vehicle->getPos();
-  double dist = toTarget.length();
+  double dist = toTarget.lengthSquared();
 
-  if(dist>0.1)
+  if(dist > 0.1)
   {
     double decelerationTweak = 0.01;
 
@@ -484,7 +487,7 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
     ngl::Vec3 desiredVelocity = toTarget * speed/dist;
     return(desiredVelocity - m_vehicle->getVelocity());
   }
-  else if(dist <= 0.1 )
+  else if(dist <= (0.1 * 0.1))
   {
     return ngl::Vec3(0,0,0);
   }
@@ -498,61 +501,53 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
   float minDetectionLength = m_vehicle->getDetectionRadius();
   float detectionLength = minDetectionLength + ((m_vehicle->getSpeed() / m_vehicle->getMaxSpeed()) * minDetectionLength);
-  std::cout<<"min length     "<<minDetectionLength<<std::endl;
-  std::cout<<"speed     "<<m_vehicle->getSpeed()<<std::endl;
-  std::cout<<"max speed "<<m_vehicle->getMaxSpeed()<<std::endl;
-  std::cout<<"detectionLength = "<<detectionLength<<std::endl;
-
-
-  //detectionLength = 5.f;
 
   BaseGameEntity* closestIntersectingObstacle = NULL;
   double distanceToCIO = 99999.9;
   ngl::Vec3 localPosOfCIO;
 
-  int numberOfAgents = m_allNeighbours.size();
-  for (unsigned int i = 0; i < numberOfAgents; i++)
-  {
-    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
-    if (currentAgent)
-    {
-      if (currentAgent->getID() != m_vehicle->getID())
-      {
-        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
+//  int numberOfAgents = m_allNeighbours.size();
+//  for (unsigned int i = 0; i < numberOfAgents; i++)
+//  {
+//    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
+//    if (currentAgent)
+//    {
+//      if (currentAgent->getID() != m_vehicle->getID())
+//      {
+//        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
 
-        if (vectorToObstacle.length() < detectionLength)
-        {
-          ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
+//        if (vectorToObstacle.lengthSquared() < (detectionLength * detectionLength))
+//        {
+//          ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
-          // if obstacle is behind vehicle in local space, discard
-          if (localPos.m_x >= 0.f)
-          {
-            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
-            if (fabs(localPos.m_z) < addedRadius)
-            {
-              // intersection of radius and line z = 0
-              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
-              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
-              double intersectX = localPos.m_x - sqrtPart;
-              if (intersectX <= 0)
-              {
-                intersectX = localPos.m_x + sqrtPart;
-              }
-              if (intersectX < distanceToCIO)
-              {
-                distanceToCIO = intersectX;
-                closestIntersectingObstacle = currentAgent;
-                localPosOfCIO = localPos;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+//          // if obstacle is behind vehicle in local space, discard
+//          if (localPos.m_x >= 0.f)
+//          {
+//            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
+//            if (fabs(localPos.m_z) < addedRadius)
+//            {
+//              // intersection of radius and line z = 0
+//              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
+//              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
+//              double intersectX = localPos.m_x - sqrtPart;
+//              if (intersectX <= 0)
+//              {
+//                intersectX = localPos.m_x + sqrtPart;
+//              }
+//              if (intersectX < distanceToCIO)
+//              {
+//                distanceToCIO = intersectX;
+//                closestIntersectingObstacle = currentAgent;
+//                localPosOfCIO = localPos;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
 
   int numberOfObstacles = m_vehicle->getNeighbourObstacleIDs().size();
-
   for (unsigned int i = 0; i < numberOfObstacles; ++i)
   {
     StaticEntity* currentObstacle = dynamic_cast<StaticEntity*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourObstacleIDs()[i]));
@@ -560,7 +555,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     {
       ngl::Vec3 vectorToObstacle = currentObstacle->getPos() - m_vehicle->getPos();
 
-      if (vectorToObstacle.length() < detectionLength)
+      if (vectorToObstacle.lengthSquared() < (detectionLength * detectionLength))
         {
           ngl::Vec3 localPos = worldToLocalSpace(currentObstacle->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
 
@@ -592,7 +587,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 
   if (closestIntersectingObstacle)
   {
-    double mult = 2.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
+    double mult = 1.0 + (detectionLength - localPosOfCIO.m_x) / detectionLength;
     ngl::Vec3 avoidanceForce;
 
     if (localPosOfCIO.m_z >= 0)
@@ -622,7 +617,7 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
       headingNormalise.normalize();
     }
     double dotProduct = worldNormalise.dot(headingNormalise);
-    double magnitude = headingNormalise.length()*worldNormalise.length();
+    double magnitude = 1.0;
     double temp = dotProduct/magnitude;
     double angle = acos(temp);
     if(headingNormalise.m_z > 0)
@@ -642,9 +637,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     {
       //worldAvoidanceForce.normalize();
     }
-    std::cout<<"world = "<<worldAvoidanceForce.m_x<<" "<<worldAvoidanceForce.m_y<<" "<<worldAvoidanceForce.m_z<<" "<<std::endl;
-
-   // return avoidanceForce;
     return worldAvoidanceForce;
 
   }
@@ -675,10 +667,11 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
 
   ngl::Vec3 wallAvoidanceForce = ngl::Vec3(0.f, 0.f, 0.f);
 
-  for (int i = 0; i < feelers.size(); ++i)
+  int numberOfFeelers = feelers.size();
+  for (int i = 0; i < numberOfFeelers; ++i)
   {
-    // need neighbour walls
-    for (int j= 0; j < m_vehicle->getCurrentCell().getWalls().size(); ++j)
+    int numberOfWallsInCell = m_vehicle->getCurrentCell().getWalls().size();
+    for (int j= 0; j < numberOfWallsInCell; ++j)
     {
       ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWalls()[j].start;
       ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWalls()[j].end;
@@ -752,7 +745,8 @@ ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::addAllNeighbours(std::vector<int> _neighbours)
 {
-  for (int i = 0; i < _neighbours.size(); i++)
+  int numberOfNeighbours = _neighbours.size();
+  for (int i = 0; i < numberOfNeighbours; i++)
   {
     m_allNeighbours.push_back(_neighbours[i]);
   }
@@ -763,7 +757,8 @@ void SteeringBehaviour::addAllNeighbours(std::vector<int> _neighbours)
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> _neighbours)
 {
-  for (unsigned int i = 0; i < _neighbours.size(); i++)
+  int numberOfNeighbours = _neighbours.size();
+  for (unsigned int i = 0; i < numberOfNeighbours; i++)
   {
     m_friendlyNeighbours.push_back(_neighbours[i]);
   }
@@ -807,7 +802,8 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::ObjectOverlapAvoidance()
 {
-  for (unsigned int i = 0; i < m_allNeighbours.size(); i++)
+  int numberOfNeighbours = m_allNeighbours.size();
+  for (unsigned int i = 0; i < numberOfNeighbours; i++)
   {
     Vehicle* curEntity = dynamic_cast<Vehicle*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
     if (curEntity)
@@ -828,7 +824,8 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
      }
   }
 
-  for (unsigned int i = 0; i < m_vehicle->getNeighbourObstacleIDs().size(); i++)
+  int numberOfNeighbourObstacles = m_vehicle->getNeighbourObstacleIDs().size();
+  for (unsigned int i = 0; i < numberOfNeighbourObstacles; i++)
   {
     StaticEntity* curEntity = dynamic_cast<StaticEntity*>(m_entityMgr->getEntityFromID(m_vehicle->getNeighbourObstacleIDs()[i]));
     if (curEntity)
@@ -850,7 +847,8 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::WallOverlapAvoidance()
 {
-  for (int j= 0; j < m_vehicle->getCurrentCell().getWallsInCell().size(); ++j)
+  int numberOfWallsInCell = m_vehicle->getCurrentCell().getWallsInCell().size();
+  for (int j= 0; j < numberOfWallsInCell; ++j)
   {
     ngl::Vec3 wallStart = m_vehicle->getCurrentCell().getWallsInCell()[j].start;
     ngl::Vec3 wallEnd = m_vehicle->getCurrentCell().getWallsInCell()[j].end;
