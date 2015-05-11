@@ -564,7 +564,7 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
 {
   // this method is called when the mouse button is pressed in this case we
   // store the value where the maouse was clicked (x,y) and set the Rotate flag to true
-    if(_event.button == SDL_BUTTON_MIDDLE)
+    if(m_gameState != gameMenu && _event.button == SDL_BUTTON_MIDDLE)
     {
       m_origXPos = _event.x;
       m_origYPos = _event.y;
@@ -756,7 +756,7 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
     m_rotate=false;
   }
   // right mouse translate mode
-  if (_event.button == SDL_BUTTON_MIDDLE)
+  if (m_gameState != gameMenu && _event.button == SDL_BUTTON_MIDDLE)
   {
     m_translate=false;
   }
@@ -931,91 +931,91 @@ ngl::Vec3 NGLDraw::getWorldSpace(const int _x, const int _y)
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::initialiseUI()
 {
-  m_textSmall = new Text("../font/arial.ttf", 20);
-  m_textMedium = new Text("../font/arial.ttf", 40);
-  m_textLarge = new Text("../font/arial.ttf", 60);
+  m_textSmall = new Text("font/arial.ttf", 20);
+  m_textMedium = new Text("font/arial.ttf", 40);
+  m_textLarge = new Text("font/arial.ttf", 60);
 
-  m_buttonPlay = new UIButton(buttonPlay, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPlay = new UIButton(buttonPlay, "font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonPlay->updateButton(ngl::Vec2(0.f, 0.1f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonPlay->updateText("New Game", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-98.f, -25.f));
   m_buttons.push_back(m_buttonPlay);
 
-  m_buttonLevel1 = new UIButton(buttonLevel1, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel1 = new UIButton(buttonLevel1, "font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
   m_buttonLevel1->updateButton(ngl::Vec2(-0.2f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.4f, 1.f));
   m_buttonLevel1->updateText("1", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
   m_buttons.push_back(m_buttonLevel1);
 
-  m_buttonLevel2 = new UIButton(buttonLevel2, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel2 = new UIButton(buttonLevel2, "font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
   m_buttonLevel2->updateButton(ngl::Vec2(-0.1f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonLevel2->updateText("2", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
   m_buttons.push_back(m_buttonLevel2);
 
-  m_buttonLevel3 = new UIButton(buttonLevel3, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel3 = new UIButton(buttonLevel3, "font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
   m_buttonLevel3->updateButton(ngl::Vec2(0.f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonLevel3->updateText("3", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
   m_buttons.push_back(m_buttonLevel3);
 
-  m_buttonLevel4 = new UIButton(buttonLevel4, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel4 = new UIButton(buttonLevel4, "font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
   m_buttonLevel4->updateButton(ngl::Vec2(0.1f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonLevel4->updateText("4", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
   m_buttons.push_back(m_buttonLevel4);
 
-  m_buttonLevel5 = new UIButton(buttonLevel5, "../font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
+  m_buttonLevel5 = new UIButton(buttonLevel5, "font/arial.ttf", 30, ngl::Vec2(m_width, m_height));
   m_buttonLevel5->updateButton(ngl::Vec2(0.2f, -0.1f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonLevel5->updateText("5", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-9.f, -17.f));
   m_buttons.push_back(m_buttonLevel5);
 
-  m_buttonQuit = new UIButton(buttonQuit,  "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonQuit = new UIButton(buttonQuit,  "font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonQuit->updateButton(ngl::Vec2(0.f, -0.3f), ngl::Vec2(0.5f, 0.2f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonQuit->updateText("Quit", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-40.f, -25.f));
   m_buttons.push_back(m_buttonQuit);
 
-  m_buttonPause = new UIButton(buttonPause, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonPause = new UIButton(buttonPause, "font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonPause->updateButton(ngl::Vec2(0.9f, 0.95f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonPause->updateText("Pause", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
   m_buttons.push_back(m_buttonPause);
 
-  m_buttonMenu = new UIButton(buttonMenu, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_buttonMenu = new UIButton(buttonMenu, "font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_buttonMenu->updateButton(ngl::Vec2(0.9f, 0.83f), ngl::Vec2(0.2f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonMenu->updateText("Menu", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-52.f, -25.f));
   m_buttons.push_back(m_buttonMenu);
 
-  m_buttonCreateSquad = new UIButton(buttonCreateSquad, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonCreateSquad = new UIButton(buttonCreateSquad, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonCreateSquad->updateButton(ngl::Vec2(0.f, -0.9f), ngl::Vec2(0.3f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonCreateSquad->updateText("Create Squad", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-60.f, -13.f));
   m_buttons.push_back(m_buttonCreateSquad);
 
-  m_buttonSquadPatrol = new UIButton(buttonSquadPatrol, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadPatrol = new UIButton(buttonSquadPatrol, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonSquadPatrol->updateButton(ngl::Vec2(0.7f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonSquadPatrol->updateText("Patr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadPatrol);
 
-  m_buttonSquadAggressive = new UIButton(buttonSquadAggressive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadAggressive = new UIButton(buttonSquadAggressive, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonSquadAggressive->updateButton(ngl::Vec2(0.5f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonSquadAggressive->updateText("Aggr", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadAggressive);
 
-  m_buttonSquadDefensive = new UIButton(buttonSquadDefensive, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadDefensive = new UIButton(buttonSquadDefensive, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonSquadDefensive->updateButton(ngl::Vec2(0.6f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonSquadDefensive->updateText("Def", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadDefensive);
 
-  m_buttonSquadWall = new UIButton(buttonSquadWall, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonSquadWall = new UIButton(buttonSquadWall, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonSquadWall->updateButton(ngl::Vec2(0.4f, -0.9f), ngl::Vec2(0.1f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f));
   m_buttonSquadWall->updateText("Wall", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(-20.f, -13.f));
   m_buttons.push_back(m_buttonSquadWall);
 
-  m_buttonRioterDeadBar = new UIButton(buttonRioterDeadBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterDeadBar = new UIButton(buttonRioterDeadBar, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonRioterDeadBar->updateButton(ngl::Vec2(-0.95f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.7f, 0.2f, 0.2f, 1.f));
   m_buttonRioterDeadBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
   m_buttons.push_back(m_buttonRioterDeadBar);
 
-  m_buttonRioterHomeBar = new UIButton(buttonRioterHomeBar, "../font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
+  m_buttonRioterHomeBar = new UIButton(buttonRioterHomeBar, "font/arial.ttf", 20, ngl::Vec2(m_width, m_height));
   m_buttonRioterHomeBar->updateButton(ngl::Vec2(-0.88f, 0.f), ngl::Vec2(0.05f, 1.9f), ngl::Vec4(0.2f, 0.7f, 0.2f, 1.f));
   m_buttonRioterHomeBar->updateText("", ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(0.f, 0.f));
   m_buttons.push_back(m_buttonRioterHomeBar);
 
-  m_sliderSquadSize = new UISlider(sliderSquadSize, "../font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
+  m_sliderSquadSize = new UISlider(sliderSquadSize, "font/arial.ttf", 40, ngl::Vec2(m_width, m_height));
   m_sliderSquadSize->updateSlider(ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.5f, 0.1f), ngl::Vec4(0.2f, 0.2f, 0.9f, 1.f), ngl::Vec2(-0.5f, -0.9f), ngl::Vec2(0.02f, 0.1f), ngl::Vec4(1.f, 1.f, 1.f, 1.f), 3, 9);
   m_squadSize = m_sliderSquadSize->calculateOutput();
   m_ss.str(std::string());

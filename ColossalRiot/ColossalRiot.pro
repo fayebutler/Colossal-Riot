@@ -30,9 +30,9 @@ HEADERS+= $$PWD/include/*.h \
 
 # and add the include dir into the search path for Qt and make
 INCLUDEPATH +=./include \
-              ../lua/include \
-              ../LuaBridge \
-              ../SDL2_ttf/include/SDL2
+              ./lua/lua/include \
+              ./lua/LuaBridge \
+              ./SDL2_ttf/include/SDL2
 # where our exe is going to live (root of project)
 DESTDIR=./
 # add the glsl shader files
@@ -42,7 +42,7 @@ OTHER_FILES+= shaders/*.glsl \
               lua/Rioter.lua \
               shaders/TextureFrag.glsl \
               shaders/TextureVert.glsl \
-    lua/GameWorld.lua
+              lua/GameWorld.lua
 
 # were are going to default to a console app
 CONFIG += console
@@ -75,8 +75,8 @@ DEFINES +=NGL_DEBUG
 
 unix:LIBS += -L/usr/local/lib \
              -L/$(HOME)/NGL/lib -l NGL \
-             -L../lua/lib -llua -ldl \
-             -L../SDL2_ttf/lib -lSDL2_ttf \
+             -L./lua/lua/lib -llua -ldl \
+             -L./SDL2_ttf/lib -lSDL2_ttf \
 
 # now if we are under unix and not on a Mac (i.e. linux)
 linux-*{

@@ -70,10 +70,10 @@ GameWorld::GameWorld(int _level)
    m_cellGraph = new CellGraph(m_cellGraphFile, 1); //Obj for cell graph, must be quads
    m_cellGraph->generateWalls();
 
-   m_policeMesh = new ngl::Obj("policeMan.obj");
-   m_rioterMesh = new ngl::Obj("rioterMan.obj");
-   m_treeMesh = new ngl::Obj("tree.obj");
-   m_streetLightMesh = new ngl::Obj("streetLight.obj");
+   m_policeMesh = new ngl::Obj("models/policeMan.obj");
+   m_rioterMesh = new ngl::Obj("models/rioterMan.obj");
+   m_treeMesh = new ngl::Obj("models/tree.obj");
+   m_streetLightMesh = new ngl::Obj("models/streetLight.obj");
 
    std::vector<ngl::Vec3> wallCentres = m_cellGraph->getWallCentres();
    std::vector<ngl::Vec3> wallNormals = m_cellGraph->getWallNormals();

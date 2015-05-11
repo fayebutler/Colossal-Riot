@@ -26,9 +26,9 @@
 -- level 1
 ------------------------------------------------------------------------------------------------------------------------
 level1 = function()
-  gameWorld.m_cellGraphFile = "navMesh.obj"
-  gameWorld.m_streetMeshFile = "streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(0,0,0)
   gameWorld.m_initialNumberOfRioters = 100
@@ -44,9 +44,9 @@ end
 -- level 2
 ------------------------------------------------------------------------------------------------------------------------
 level2 = function()
-  gameWorld.m_cellGraphFile = "navMesh.obj"
-  gameWorld.m_streetMeshFile = "streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 200
@@ -62,9 +62,9 @@ end
 -- level 3
 ------------------------------------------------------------------------------------------------------------------------
 level3 = function()
-  gameWorld.m_cellGraphFile = "navMesh.obj"
-  gameWorld.m_streetMeshFile = "streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(0,0,0)
   gameWorld.m_initialNumberOfRioters = 300
@@ -80,9 +80,9 @@ end
 -- level 4
 ------------------------------------------------------------------------------------------------------------------------
 level4 = function()
-  gameWorld.m_cellGraphFile = "navMesh.obj"
-  gameWorld.m_streetMeshFile = "streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(2.0,0,-38)
   gameWorld.m_initialNumberOfRioters = 400
@@ -98,9 +98,9 @@ end
 -- level 5
 ------------------------------------------------------------------------------------------------------------------------
 level5 = function()
-  gameWorld.m_cellGraphFile = "navMesh.obj"
-  gameWorld.m_streetMeshFile = "streetMesh1.obj"
-  gameWorld.m_buildingMeshFile = "buildingsMesh1.obj"
+  gameWorld.m_cellGraphFile = "models/navMesh.obj"
+  gameWorld.m_streetMeshFile = "models/streetMesh1.obj"
+  gameWorld.m_buildingMeshFile = "models/buildingsMesh1.obj"
 
   gameWorld:setPoliceStation(0,0,0)
   gameWorld.m_initialNumberOfRioters = 500
