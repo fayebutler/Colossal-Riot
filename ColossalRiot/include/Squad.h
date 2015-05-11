@@ -131,15 +131,12 @@ public:
   /// @return Colour: vector of the colour of the squad
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour getSquadColour() const { return m_squadColour; }
-  ngl::Colour getSquadSelectedColour() const { return m_squadSelectedColour; }
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Sets the colour of the squad
   /// @param[in] _val: the vector to set the colour of the squad to
   //----------------------------------------------------------------------------------------------------------------------------
   void setSquadColour(const ngl::Colour _val) { m_squadColour = _val; }
-  void setSquadSelectedColour(const ngl::Colour _val) { m_squadSelectedColour = _val; }
-  void setSquadDrawColour(const ngl::Colour _val) { m_squadDrawColour = _val; }
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Gets the police in the squad
@@ -225,8 +222,6 @@ private:
   /// @brief Vector for the squad colour
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour m_squadColour;
-  ngl::Colour m_squadSelectedColour;
-  ngl::Colour m_squadDrawColour;
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Vector for the target of the squad

@@ -113,10 +113,9 @@ public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief checks if the target is valid, are close enough to the agent, and if they have enough health
   /// @param[in] _dist input to determin maximum distance to valid target
-  /// @param[in] _health input to determin minimum health to consider
-  /// @param[in] _rage input to determin minimum rage to consider
+  /// @param[in] _health intput to determin minimum health to consider
   //----------------------------------------------------------------------------------------------------------------------
-  void checkValidTarget(float _dist, float _health, float _rage);
+  void checkValidTarget(float _dist, float _health);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief determins if the target agent is within reach
   /// @param[in] _reach the input of how far the agent can reach

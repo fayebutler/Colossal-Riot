@@ -7,7 +7,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 Agent::Agent(GameWorld* _world): Vehicle(_world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
-  // creates a new Lua state to enable interfacing with lua files
   L = luaL_newstate();
 
   m_targetID = -1;
@@ -27,9 +26,6 @@ void Agent::update(double timeElapsed, double currentTime)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-/// this method lets agents handle incoming mesages of different types in the speicific way that the message
-/// dictates. This can be extended to any number of messages by simply adding in additional enum values
-//----------------------------------------------------------------------------------------------------------------------
 bool Agent::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
@@ -46,9 +42,6 @@ bool Agent::handleMessage(const Message& _message)
     }
   }
 }
-//----------------------------------------------------------------------------------------------------------------------
-/// this method registers all the appropriate members and functions with Lua useing the functionality included with
-///  LuaBridge, allowing for scriptable changes to the program
 //----------------------------------------------------------------------------------------------------------------------
 void Agent::registerLua(lua_State* _L)
 {
@@ -201,7 +194,7 @@ void Agent::setTargetID(int _val)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-void Agent::checkValidTarget(float _dist, float _health, float _rage)
+void Agent::checkValidTarget(float _dist, float _health)
 {
   if(m_targetID >= 0)
   {
@@ -213,7 +206,7 @@ void Agent::checkValidTarget(float _dist, float _health, float _rage)
       ngl::Vec3 toEntity = m_pos - target->getPos();
       double distSqFromEachOther = toEntity.lengthSquared();
       // change target
-      if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health || target->getRage() < _rage)
+      if(distSqFromEachOther > ((m_boundingRadius * _dist) * (m_boundingRadius * _dist)) || target->getHealth() < _health)
       {
         findTargetID(_health);
       }
