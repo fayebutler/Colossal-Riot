@@ -10,6 +10,8 @@
 #include "GameWorld.h"
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Ctor that intialises variables
+//----------------------------------------------------------------------------------------------------------------------------
 Vehicle::Vehicle(GameWorld* world,
                  ngl::Vec3 position,
                  ngl::Vec3 velocity,
@@ -51,6 +53,11 @@ Vehicle::~Vehicle()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Update Function - used to calculate the acceleration, using the steering force and mass,
+///                   this is multiplied by the time elapsed from the last tick to create the new vehicle position
+///                 - Smoothing is also added to the heading, so that the jumpy erratic movement is removed
+///                 - finally if a path has been set the vehicle is set to follow it
+//----------------------------------------------------------------------------------------------------------------------------
 void Vehicle::update(double time_elapsed)
 {
   m_timeElapsed = time_elapsed;
@@ -63,7 +70,7 @@ void Vehicle::update(double time_elapsed)
 
   //velocity truncated by maxspeed
 
-  if(m_velocity.length() > m_maxSpeed)
+  if(m_velocity.lengthSquared() > m_maxSpeed * m_maxSpeed)
   {
     if(m_velocity.lengthSquared() == 0.0f)
     {
@@ -98,7 +105,7 @@ void Vehicle::update(double time_elapsed)
   }
 
   //smooth the vehicles heading
-  if(m_smoothingOn == true);
+  if(m_smoothingOn == true)
   {
     m_smoothHeading = smoothingUpdate(getHeading());
     m_heading = m_smoothHeading;
@@ -119,6 +126,8 @@ bool Vehicle::handleMessage(const Message& _message)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Smoothing - calculates the average heading from a set number of past headings (_sampleSize)
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 _recentHeading)
 {
   m_headingHistory[m_nextSlot++] = _recentHeading;
@@ -129,9 +138,8 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 _recentHeading)
   }
 
   ngl::Vec3 sum = ngl::Vec3(0,0,0);
-  std::vector<ngl::Vec3>::iterator it = m_headingHistory.begin();
 
-  for(it; it!=m_headingHistory.end(); it++)
+  for(std::vector<ngl::Vec3>::iterator it = m_headingHistory.begin(); it!=m_headingHistory.end(); it++)
   {
     sum += *it;
   }
@@ -140,6 +148,10 @@ ngl::Vec3 Vehicle::smoothingUpdate(ngl::Vec3 _recentHeading)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Exit - given a vector of vectors, this function iterates through and finds the closest point to the vehicle
+///           - mainly used for rioters finding their way home
+///           - using the returned vector, a path can be found to that point
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
 {
   //find nearest point to current positiong and set that as path thing
@@ -147,11 +159,11 @@ ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
   ngl::Vec3 bestExit;
   float dist = 1000000000.0;
   int exitSize = _exits.size();
-  for(int i = 0; i<exitSize; i++)
+  for(int i = 0; i < exitSize; i++)
   {
     ngl::Vec3 currentExit = _exits[i];
-    float testDist = (currentExit- this->getPos()).length();
-    if(testDist < dist)
+    float testDist = (currentExit- this->getPos()).lengthSquared();
+    if(testDist < dist*dist)
     {
       bestExit = currentExit;
       dist = testDist;
@@ -160,6 +172,8 @@ ngl::Vec3 Vehicle::findNearestExit(std::vector<ngl::Vec3> _exits)
   return bestExit;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Find Path - sets m_path to be a path to the inputted target, if this path is not zero then the vehicle is set to follow
 //----------------------------------------------------------------------------------------------------------------------------
 void Vehicle::findPath(ngl::Vec3 _target)
 {
@@ -171,6 +185,9 @@ void Vehicle::findPath(ngl::Vec3 _target)
   m_crosshair = m_path[m_pathIndex];
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Follow Path - function iterates through the vectors in the path, and once the vehicle has reached the current crosshair,
+///               the next one is set as the destination
 //----------------------------------------------------------------------------------------------------------------------------
 void Vehicle::followPath()
 {

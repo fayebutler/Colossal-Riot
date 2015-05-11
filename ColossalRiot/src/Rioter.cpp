@@ -42,7 +42,7 @@ Rioter::Rioter(GameWorld* world, ngl::Obj *_mesh) : Agent(world)
   Vehicle::Steering()->WallAvoidOn();
   Vehicle::Steering()->setWallAvoidWeight(0.4);
   Vehicle::Steering()->ObstacleAvoidOn();
-  Vehicle::Steering()->setObstacleAvoidWeight(0.6);
+  Vehicle::Steering()->setObstacleAvoidWeight(0.4);
 
 
 }
@@ -54,6 +54,8 @@ Rioter::~Rioter()
   delete m_stateMachine;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Update - updates the rioter with the time elapsed from the last tick
 //----------------------------------------------------------------------------------------------------------------------------
 void Rioter::update(double timeElapsed, double currentTime)
 {
@@ -144,12 +146,15 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Target ID - find available target that has acceptable amount of health
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::findTargetID(float _health)
 {
   std::vector<int> police = getNeighbourPoliceIDs();
   float currentHealth = -1;
   Agent* currentTarget = NULL;
-  for (int i=0; i<police.size(); i++)
+  int numberOfPolice = police.size();
+  for (int i=0; i<numberOfPolice; i++)
   {
     Agent* policeman = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(police[i]));
     if (policeman)
@@ -178,21 +183,30 @@ bool Rioter::handleMessage(const Message& _message)
 {
   switch(_message.m_message)
   {
-  case msgRioterDeath:
-    m_morale -= 5.f;
-    m_rage += 30.f;
-    return true;
-    break;
-  case msgPoliceDeath:
-    m_morale -= 15.f;
-    break;
-  case msgAttack:
-    return Agent::handleMessage(_message);
-    break;
-  default:
-    std::cout<<"Rioter: Message type not defined"<<std::endl;
-    return false;
-    break;
+    case msgRioterDeath:
+    {
+      m_morale -= 5.f;
+      m_rage += 30.f;
+      return true;
+      break;
+    }
+    case msgPoliceDeath:
+    {
+      m_morale -= 15.f;
+      return true;
+      break;
+    }
+    case msgAttack:
+    {
+      return Agent::handleMessage(_message);
+      break;
+    }
+    default:
+    {
+      std::cout<<"Rioter: Message type not defined"<<std::endl;
+      return false;
+      break;
+    }
   }
 }
 
@@ -218,6 +232,8 @@ void Rioter::death()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Protest Cohesion - correlates weight of the cohesion to how far away from the protest the rioter is
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::protestCohesion(double weight)
 {
     if(weight <= 0.0)
@@ -242,6 +258,8 @@ void Rioter::protestCohesion(double weight)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Path Home - finds the nearest exit for the rioter and sets a path to this
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::findPathHome()
 {
   m_homePos = findNearestExit(m_world->getCellGraph()->getExitPoints());
@@ -249,6 +267,8 @@ void Rioter::findPathHome()
   m_hasPathHome = true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Register Class - exposes the functions and properties in Rioter.h to lua
 //----------------------------------------------------------------------------------------------------------------------------
 void Rioter::registerClass(lua_State* _L)
 {
