@@ -307,9 +307,10 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
-/// Wander - creates a circle in front of the vehicle, adds a random amount, normalises the vector and
-///           places it back on the circle to create a random vector that follows a smooth path
-///        - the point created on the circle must be converted from local to world space
+/// Wander - creates a circle around the entity of radius r. a new point on the circle is found by getting the current point
+///          adding a vector to the point, normalising the resulting local position vector and multiplying this vector by
+///          the radius. The circle is then moved forward in local space by a distance d and the entity creates a steering
+///          force from the vector from the entity origin to the point on the circle
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Wander()
 {
@@ -508,8 +509,12 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
-/// Obstacle Avoidance - Searches through the closest obstacles to find the closest intersecting point
-///                       returns an opposing force
+/// Obstacle Avoidance - A detection length is generated based on a minimum length plus the ratio between current speed
+///                      and max entity speed. A detection box is created with length of detection length and width of
+///                      entity radius multiplied by 2. All other entities that are within the detection box plus their own
+///                      radius are compared to find the closest entity. The steering force is calculated from the distance
+///                      to the closest other entity in the local x and z direction. This local force is then converted
+///                      into world space.
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
@@ -609,7 +614,10 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
-/// Wall avoidance - uses feelers to calculate when the vehicle may come into contact with walls and return an opposing force
+/// Wall avoidance - Three feelers are created from the local origin of the entity with forward direction and one 45 degrees
+///                  either side. Each of the feelers compare against the walls of the current cell and and check for
+///                  intersections. Whichever feeler has the closest intersection creates a force in the direction of the
+///                  intersected wall normal, with strength based upon the amount of overlap with the wall.
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::WallAvoidance()
 {
@@ -676,6 +684,8 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// This method converts points from world space to local space
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::worldToLocalSpace(ngl::Vec3 pointWorldPos, ngl::Vec3 vehiclePos, ngl::Vec3 vehicleHeading, ngl::Vec3 vehicleSide)
 {
   if(vehicleHeading.lengthSquared() == 0.0f)
@@ -732,11 +742,12 @@ void SteeringBehaviour::addFriendlyNeighbours(std::vector<int> _neighbours)
 
 
 //----------------------------------------------------------------------------------------------------------------------------
-bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB, double &o_distToIntersect, ngl::Vec3 &o_intersectPoint)
+/// this method uses the equations from http://paulbourke.net/geometry/pointlineplane/ to determin wether two 2D lines
+/// intersect. It also calculates the interesection point and the distance to the interesections point.
+//----------------------------------------------------------------------------------------------------------------------------
+bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLineA, ngl::Vec3 startLineB, ngl::Vec3 endLineB,
+                                           double &o_distToIntersect, ngl::Vec3 &o_intersectPoint)
 {
-  // equation from http://paulbourke.net/geometry/pointlineplane/
-
-
   double rTop = (startLineA.m_z-startLineB.m_z)*(endLineB.m_x-startLineB.m_x)-(startLineA.m_x-startLineB.m_x)*(endLineB.m_z-startLineB.m_z);
   double rBot = (endLineA.m_x-startLineA.m_x)*(endLineB.m_z-startLineB.m_z)-(endLineA.m_z-startLineA.m_z)*(endLineB.m_x-startLineB.m_x);
 
@@ -765,6 +776,10 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// this object overlap avoidance method stops objects from overalpping by comparing the distance between them against
+/// the sum of their radii. If the distance is less than their radii sum then they two entities are moved apart in the
+/// direction of the vector between them by a distance equal to the amount of overlap#
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::ObjectOverlapAvoidance()
 {
@@ -811,6 +826,10 @@ void SteeringBehaviour::ObjectOverlapAvoidance()
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// wall overlap avoidance checks the entity against the walls in the current cell. If the distance between the wall location
+/// and the entity centre is less than the radius of the entity then the entity is moved in the direction of the wall normal
+/// by the amount of overlap with the wall
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::WallOverlapAvoidance()
 {
