@@ -3,14 +3,18 @@
 
 //----------------------------------------------------------------------------------------------------------------------
 /// @file Agent.h
+/// @class Agent "include/Agent.h"
 /// @brief The base class for all agents, that can be rioters or police
+/// @author Will Herbert
+/// @version 1.0
+/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
 
 #include <iostream>
 #include "Vehicle.h"
 #include <ngl/ShaderLib.h>
-#include <ngl/NGLInit.h>
 #include <ngl/Material.h>
+#include <ngl/NGLInit.h>
 #include <ngl/Transformation.h>
 #include <ngl/Camera.h>
 #include <ngl/Obj.h>
@@ -23,21 +27,14 @@ extern "C"
 }
 #include "LuaBridge.h"
 
-//----------------------------------------------------------------------------------------------------------------------
-/// @class Agent "include/Agent.h"
-/// @brief The base class for all agents, that can be rioters or police
-/// @author Will Herbert
-/// @version 1.0
-/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
-//----------------------------------------------------------------------------------------------------------------------
-
 class Agent: public Vehicle
 {
 public:
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief ctor this will create a valid Lua state and initialise into a valid world
+  /// @param[in] _world input world to create the agent in
   //----------------------------------------------------------------------------------------------------------------------
-  Agent(GameWorld *world);
+  Agent(GameWorld *_world);
   //----------------------------------------------------------------------------------------------------------------------
   /// @brief dtor used to remove agent and close Lua state
   //----------------------------------------------------------------------------------------------------------------------

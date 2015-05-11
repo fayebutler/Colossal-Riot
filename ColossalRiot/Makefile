@@ -413,6 +413,8 @@ compiler_clean:
 
 obj/Agent.o: src/Agent.cpp include/Agent.h \
 		include/Vehicle.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -535,8 +537,6 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -550,10 +550,10 @@ obj/Agent.o: src/Agent.cpp include/Agent.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Camera.h \
 		/home/i7758474/NGL/include/ngl/RibExport.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
@@ -726,10 +726,10 @@ obj/BaseGameEntity.o: src/BaseGameEntity.cpp include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Obj.h \
 		/home/i7758474/NGL/include/ngl/Texture.h \
 		/home/i7758474/NGL/include/ngl/AbstractMesh.h \
@@ -1295,10 +1295,10 @@ obj/GameWorld.o: src/GameWorld.cpp include/GameWorld.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Obj.h \
 		/home/i7758474/NGL/include/ngl/Texture.h \
 		/home/i7758474/NGL/include/ngl/AbstractMesh.h \
@@ -1463,7 +1463,6 @@ obj/main.o: src/main.cpp /home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
 		/home/i7758474/NGL/include/ngl/Light.h \
 		/home/i7758474/NGL/include/ngl/Colour.h \
-		/home/i7758474/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		include/Rioter.h \
 		include/Agent.h \
@@ -1510,7 +1509,8 @@ obj/main.o: src/main.cpp /home/i7758474/NGL/include/ngl/NGLInit.h \
 		include/StaticEntity.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h
+		include/UISlider.h \
+		/home/i7758474/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
@@ -1643,6 +1643,7 @@ obj/MessageManager.o: src/MessageManager.cpp include/MessageManager.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/MessageManager.o src/MessageManager.cpp
 
 obj/MovingEntity.o: src/MovingEntity.cpp include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -1765,7 +1766,6 @@ obj/MovingEntity.o: src/MovingEntity.cpp include/MovingEntity.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -1898,7 +1898,6 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
 		/home/i7758474/NGL/include/ngl/Light.h \
 		/home/i7758474/NGL/include/ngl/Colour.h \
-		/home/i7758474/NGL/include/ngl/SpotLight.h \
 		include/GameWorld.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/NGLassert.h \
@@ -1919,10 +1918,10 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Obj.h \
 		/home/i7758474/NGL/include/ngl/Texture.h \
 		/home/i7758474/NGL/include/ngl/AbstractMesh.h \
@@ -1953,12 +1952,15 @@ obj/NGLDraw.o: src/NGLDraw.cpp include/NGLDraw.h \
 		include/StaticEntity.h \
 		include/UIButton.h \
 		include/Text.h \
-		include/UISlider.h
+		include/UISlider.h \
+		/home/i7758474/NGL/include/ngl/SpotLight.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLDraw.o src/NGLDraw.cpp
 
 obj/Police.o: src/Police.cpp include/Police.h \
 		include/Agent.h \
 		include/Vehicle.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -2081,8 +2083,6 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -2096,10 +2096,10 @@ obj/Police.o: src/Police.cpp include/Police.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Camera.h \
 		/home/i7758474/NGL/include/ngl/RibExport.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
@@ -2137,6 +2137,8 @@ obj/Police.o: src/Police.cpp include/Police.h \
 obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		include/Agent.h \
 		include/Vehicle.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -2259,8 +2261,6 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -2274,10 +2274,10 @@ obj/Rioter.o: src/Rioter.cpp include/Rioter.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Camera.h \
 		/home/i7758474/NGL/include/ngl/RibExport.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
@@ -2316,6 +2316,8 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		include/Police.h \
 		include/Agent.h \
 		include/Vehicle.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -2438,8 +2440,6 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -2453,10 +2453,10 @@ obj/Squad.o: src/Squad.cpp include/Squad.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Camera.h \
 		/home/i7758474/NGL/include/ngl/RibExport.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
@@ -2767,14 +2767,14 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/Message.h \
 		include/MessageManager.h \
 		include/Cell.h \
-		include/Vehicle.h \
-		include/MovingEntity.h \
 		include/GameWorld.h \
 		/home/i7758474/NGL/include/ngl/Camera.h \
 		/home/i7758474/NGL/include/ngl/RibExport.h \
 		/home/i7758474/NGL/include/ngl/Plane.h \
 		include/Rioter.h \
 		include/Agent.h \
+		include/Vehicle.h \
+		include/MovingEntity.h \
 		/home/i7758474/NGL/include/ngl/ShaderLib.h \
 		/home/i7758474/NGL/include/ngl/Colour.h \
 		/home/i7758474/NGL/include/ngl/Shader.h \
@@ -2783,10 +2783,10 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Obj.h \
 		/home/i7758474/NGL/include/ngl/Texture.h \
 		/home/i7758474/NGL/include/ngl/AbstractMesh.h \
@@ -2814,8 +2814,7 @@ obj/SteeringBehaviour.o: src/SteeringBehaviour.cpp include/SteeringBehaviour.h \
 		include/Police.h \
 		include/CellGraph.h \
 		include/Squad.h \
-		include/StaticEntity.h \
-		/home/i7758474/NGL/include/ngl/Random.h
+		include/StaticEntity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/SteeringBehaviour.o src/SteeringBehaviour.cpp
 
 obj/Text.o: src/Text.cpp include/Text.h \
@@ -3233,6 +3232,8 @@ obj/UISlider.o: src/UISlider.cpp include/UISlider.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/UISlider.o src/UISlider.cpp
 
 obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
+		include/MovingEntity.h \
+		include/BaseGameEntity.h \
 		/home/i7758474/NGL/include/ngl/Transformation.h \
 		/home/i7758474/NGL/include/ngl/Mat4.h \
 		/home/i7758474/NGL/include/ngl/Types.h \
@@ -3355,8 +3356,6 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7758474/NGL/include/ngl/Vec4.h \
 		/home/i7758474/NGL/include/ngl/Vec2.h \
 		/home/i7758474/NGL/include/ngl/Vec3.h \
-		include/MovingEntity.h \
-		include/BaseGameEntity.h \
 		include/EntityManager.h \
 		include/Message.h \
 		include/MessageManager.h \
@@ -3376,10 +3375,10 @@ obj/Vehicle.o: src/Vehicle.cpp include/Vehicle.h \
 		/home/i7758474/NGL/include/ngl/Singleton.h \
 		/opt/Qt/5.3/gcc_64/include/QtCore/QMutexLocker \
 		/home/i7758474/NGL/include/ngl/Mat3.h \
+		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/NGLInit.h \
 		/home/i7758474/NGL/include/ngl/VAOPrimitives.h \
 		/home/i7758474/NGL/include/ngl/VertexArrayObject.h \
-		/home/i7758474/NGL/include/ngl/Material.h \
 		/home/i7758474/NGL/include/ngl/Obj.h \
 		/home/i7758474/NGL/include/ngl/Texture.h \
 		/home/i7758474/NGL/include/ngl/AbstractMesh.h \

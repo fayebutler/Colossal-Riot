@@ -1,16 +1,23 @@
 #ifndef STEERINGBEHAVIOUR_H
 #define STEERINGBEHAVIOUR_H
 
-#include "EntityManager.h"
-#include <ngl/Transformation.h>
-#include <vector>
-#include <list>
-
+  //----------------------------------------------------------------------------------------------------------------------------
 /// @file SteeringBehaviour.h
 /// @brief defines behaviours and steering forces
 /// Modified from :-
 /// Matt Buckland (2005) Programming AI By Example [Book & Source Code]
 /// [Accessed 2015] Available from: https://github.com/wangchen/Programming-Game-AI-by-Example-src
+  //----------------------------------------------------------------------------------------------------------------------------
+
+#include "EntityManager.h"
+
+//----------------------------------------------------------------------------------------------------------------------
+/// @class Steering Behaviours "include/SteeringBehaviour.h"
+/// @brief The class to contain all steering behaviours and avoidance
+/// @author Faye Butler
+/// @version 1.0
+/// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
+//----------------------------------------------------------------------------------------------------------------------
 
 
 class Vehicle;
@@ -392,10 +399,10 @@ public:
   /// @brief Calculates the overlap for wall avoidance
   //----------------------------------------------------------------------------------------------------------------------------
   void WallOverlapAvoidance();
-
 private:
-
-  //enumerate list of behaviours
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief enumerate the list of behaviours
+  //----------------------------------------------------------------------------------------------------------------------------
   enum behaviour_type
   {
       seek               = 0x00002, //0
@@ -569,16 +576,6 @@ private:
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Vec3 Evade(const Vehicle* agent);
   //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief Obstacle Avoidance behaviour
-  /// @return Vec3: the steering force
-  //----------------------------------------------------------------------------------------------------------------------------
-  ngl::Vec3 ObstacleAvoidance();
-  //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief Wall Avoidance behaviour
-  /// @return Vec3: the steering force
-  //----------------------------------------------------------------------------------------------------------------------------
-  ngl::Vec3 WallAvoidance();
-  //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Separation behaviour type
   /// @param[in] neighbours: vector of ints to contain the IDs of the neighbours
   /// @return Vec3: the steering force
@@ -603,6 +600,16 @@ private:
   /// @return Vec3: the steering force
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Vec3 SquadCohesion(ngl::Vec3 squadPos, int deceleration);
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Obstacle Avoidance behaviour
+  /// @return Vec3: the steering force
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 ObstacleAvoidance();
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Wall Avoidance behaviour
+  /// @return Vec3: the steering force
+  //----------------------------------------------------------------------------------------------------------------------------
+  ngl::Vec3 WallAvoidance();
 
   //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Convert from world to local space

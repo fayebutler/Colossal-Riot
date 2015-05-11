@@ -701,18 +701,9 @@ std::vector<ngl::Vec3> CellGraph::findPath(BaseGameEntity *_from, ngl::Vec3 _to)
               {
                 newSPT.push_back(currentCellID);
                 //if currentCell is perpendicular element in the last SPT
-                if(j+1==SPTs[i].size())
+                if(j+1==SPTs[i].size() && i == SPTs.size())
                 {
-                  //if it is the last SPT, overwrite the last SPT
-                  if(i == SPTs.size())
-                  {
-                    SPTs.back() = newSPT;
-                  }
-                  //else append newSPT
-                  else
-                  {
-                    SPTs.push_back(newSPT);
-                  }
+                  SPTs.back() = newSPT;
                   foundShortestTree = true;
                 }
                 // if currentCell is perpendicular to element in any other SPT, append newSPT

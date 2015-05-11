@@ -1,47 +1,71 @@
--- set up initial police variables
+------------------------------------------------------------------------------------------------------------------------
+-- file: Police.lua "lua/Police.lua"
+-- brief: a Lua file used to edit police states and behaviour
+-- author: Will Herbert
+-- version: 1.0
+-- last revision: 10/05/2015 updated to add documentation and instructions
+------------------------------------------------------------------------------------------------------------------------
 
+------------------------------------------------------------------------------------------------------------------------
+-- police properties exposed from C++
+-- m_isMoving                   = gets and sets if the police are moving
+--
+-- police functions exposed from C++
+-- attack()                     = attacks the current target
+-- death()                      = calls the death message of the entity
+-- getRioterInfluence()         = gets the influence from nearby rioters
+-- squadCohesion(float)         = sets the weight of how much squad members group together
+-- findPathHome                 = gives the police a path home
+-- checkValidPursuitRage(float) = checks if the policeman is within a range to the squad
+--
+-- state machine properties exposed from C++
+-- m_currentState               = the current state of the policeman's state machine
+-- m_previousState              = the previous state of the policeman's state machine
+-- m_globalState                = the global state of the policeman's state machine
+--
+-- state machine functions exposed from C++
+-- changeState("")              = changes the state machine of the policeman to a new state
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------
+-- template state
+------------------------------------------------------------------------------------------------------------------------
+--STATE = {}
+--STATE["enter"] = function()
+--
+--end
+--
+--STATE["execute"] = function()
+--
+--end
+--
+--STATE["exit"] = function()
+--
+--end
+
+------------------------------------------------------------------------------------------------------------------------
+-- set up initial policeman variables
+------------------------------------------------------------------------------------------------------------------------
 makePolice = function()
-
-   police.m_health = 150
+   police.m_health = 80 + math.random(20)
    police.m_morale = 100
    police.m_rage = 20
    police.m_damage = 10.0
 
    stateMachine.m_currentState = "patrol"
    stateMachine.m_globalState = "global"
-
 end
 
 
-
--- TEMPLATE STATE
-
-STATE = {}
-STATE["enter"] = function()
-end
-
-STATE["execute"] = function()
-  if CONDITION then
-    stateMachine:changeState(NEWSTATE)
-  end
-end
-
-STATE["exit"] = function()
-end
-
-
-
+------------------------------------------------------------------------------------------------------------------------
 -- global state
-
+------------------------------------------------------------------------------------------------------------------------
 global = {}
 global["enter"] = function()
 end
 
 global["execute"] = function()
 
---    police.m_rage = 80
---    police.m_health = 100
---    police.m_morale = 100
 --  if stateMachine.m_currentState ~= "dead" then
 --    if police.m_health <= 0 then
 --        stateMachine:changeState("dead")
@@ -66,16 +90,16 @@ global["exit"] = function()
 end
 
 
-
+------------------------------------------------------------------------------------------------------------------------
 -- move state
-
+------------------------------------------------------------------------------------------------------------------------
 move = {}
 move["enter"] = function()
 
-   police:wander(0.3)
+   police:wander(0.0)
    police:pursuit(0.0)
    police:evade(0.0)
-   police:seek(10.0)
+   police:seek(5.0)
    police:arrive(0.0)
 
    police:cohesion(0.0)
@@ -87,7 +111,7 @@ move["enter"] = function()
 end
 
 move["execute"] = function()
-  print("LUA POLICE move execute")
+--  print("LUA POLICE move execute")
   if police.m_isMoving == false then
     stateMachine:changeState(stateMachine.m_previousState)
   end
@@ -98,11 +122,11 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- patrol state
-
+------------------------------------------------------------------------------------------------------------------------
 patrol = {}
 patrol["enter"] = function()
-
 
    police:wander(0.5)
    police:pursuit(0.0)
@@ -122,7 +146,7 @@ end
 
 patrol["execute"] = function()
 
-  print("LUA POLICE patrol execute")
+--  print("LUA POLICE patrol execute")
   police:squadCohesion(0.6)
 
   if police.m_morale < 20 then
@@ -139,8 +163,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- defensive state
-
+------------------------------------------------------------------------------------------------------------------------
 defensive = {}
 defensive["enter"] = function()
 
@@ -162,7 +187,7 @@ end
 
 defensive["execute"] = function()
 
-  print("LUA POLICE defensive execute")
+--  print("LUA POLICE defensive execute")
 
   police:checkValidTarget(1.0, 20.0)
   police:checkValidPursuitRange(32.0)
@@ -188,8 +213,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- aggressive state
-
+------------------------------------------------------------------------------------------------------------------------
 aggressive = {}
 aggressive["enter"] = function()
 
@@ -211,7 +237,7 @@ end
 
 aggressive["execute"] = function()
 
-  print("LUA POLICE aggressive execute")
+--  print("LUA POLICE aggressive execute")
 
   police:checkValidTarget(3.0, 0.0)
   police:checkValidPursuitRange(64.0)
@@ -221,11 +247,11 @@ aggressive["execute"] = function()
     police:squadCohesion(0.0)
     police:separation(0.0)
     if(police:targetWithinReach(2.0) == true) then
-        print("attacking")
+ --       print("attacking")
         police:attack()
     end
   else
-    print("no target")
+--    print("no target")
     police:wander(0.5)
     police:squadCohesion(0.5)
   end
@@ -241,8 +267,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- wall state
-
+------------------------------------------------------------------------------------------------------------------------
 wall = {}
 wall["enter"] = function()
 
@@ -264,7 +291,7 @@ end
 
 wall["execute"] = function()
 
-  print("LUA POLICE wall execute")
+--  print("LUA POLICE wall execute")
   if police.m_morale < 20 then
     stateMachine:changeState("flee")
   end
@@ -275,8 +302,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- flee state
-
+------------------------------------------------------------------------------------------------------------------------
 flee = {}
 flee["enter"] = function()
 
@@ -307,8 +335,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- dead state
-
+------------------------------------------------------------------------------------------------------------------------
 dead = {}
 dead["enter"] = function()
 
@@ -337,8 +366,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- home state
-
+------------------------------------------------------------------------------------------------------------------------
 home = {}
 home["enter"] = function()
 
@@ -359,7 +389,7 @@ home["enter"] = function()
 end
 
 home["execute"] = function()
-  print("LUA RIOTER home execute")
+ -- print("LUA RIOTER home execute")
   --rioter.m_morale = 0
 end
 
@@ -369,8 +399,9 @@ end
 
 
 
+------------------------------------------------------------------------------------------------------------------------
 -- limits
-
+------------------------------------------------------------------------------------------------------------------------
 limits = {}
 limits["check"] = function()
 
@@ -395,11 +426,10 @@ limits["check"] = function()
         police.m_rage = 0
     end
 
---    if police.m_damage > 1 then
---        police.m_damage = 1
---    end
---    if police.m_damage < 0 then
---        police.m_damage = 0
---    end
-
+    if police.m_damage > 1 then
+        police.m_damage = 10.0
+    end
+    if police.m_damage < 0 then
+        police.m_damage = 0
+    end
 end

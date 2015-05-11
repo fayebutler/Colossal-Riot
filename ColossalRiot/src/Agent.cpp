@@ -2,10 +2,10 @@
 /// @file Agent.cpp
 /// @brief The base class for all agents, that can be rioters or police
 //----------------------------------------------------------------------------------------------------------------------
-#include "Agent.h"
 
+#include "Agent.h"
 //----------------------------------------------------------------------------------------------------------------------
-Agent::Agent(GameWorld* world): Vehicle(world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
+Agent::Agent(GameWorld* _world): Vehicle(_world, ngl::Vec3(0,0,0), ngl::Vec3(0,0,0), 0.0f, 1.0f, 10.0f,1.0f, 1.0f, 0.5f)
 {
   L = luaL_newstate();
 
@@ -40,7 +40,6 @@ bool Agent::handleMessage(const Message& _message)
     }
   }
 }
-
 //----------------------------------------------------------------------------------------------------------------------
 void Agent::registerLua(lua_State* _L)
 {
@@ -235,4 +234,5 @@ bool Agent::targetWithinReach(float _reach)
     return false;
   }
 }
+
 
