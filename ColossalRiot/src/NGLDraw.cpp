@@ -810,7 +810,6 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
   glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
 
-
   bool newSelection = false;
 
   for(int i=0; i < numberOfSquads; i++)
