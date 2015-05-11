@@ -5,7 +5,7 @@
 /// @file BaseGameEntity.h
 /// @class BaseGameEntity "include/BaseGameEntity.h"
 /// @brief The base class for all entities in the game, static or moving
-/// @author Will Herbert
+/// @author Will Herbert & Faye Butler & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
@@ -17,9 +17,6 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include "Cell.h"
-//#include "GameWorld.h"
-
-class GameWorld;
 
 class GameWorld;
 class EntityManager;

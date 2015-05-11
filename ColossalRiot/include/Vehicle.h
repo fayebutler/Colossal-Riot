@@ -15,7 +15,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class Vehicle "include/Vehicle.h"
 /// @brief The base class for all vehicles
-/// @author Faye Butler
+/// @author Faye Butler, Will Herbert
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

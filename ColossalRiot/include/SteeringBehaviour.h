@@ -14,7 +14,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class Steering Behaviours "include/SteeringBehaviour.h"
 /// @brief The class to contain all steering behaviours and avoidance
-/// @author Faye Butler
+/// @author Faye Butler, Will Herbert
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

@@ -46,6 +46,8 @@ Police::~Police()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Update - updates the police agent by time elapsed from the last tick
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::update(double timeElapsed, double currentTime)
 {
   //make a friendly and opposing neightbours vector as seperation wants all neighbours bu alignment & cohesion doesn't
@@ -58,6 +60,7 @@ void Police::update(double timeElapsed, double currentTime)
   Vehicle::Steering()->WallOverlapAvoidance();
   Vehicle::Steering()->ObjectOverlapAvoidance();
 
+  //call agent and state machine update
   Agent::update(timeElapsed, currentTime);
   m_stateMachine->update();
 
@@ -78,6 +81,7 @@ void Police::update(double timeElapsed, double currentTime)
   m_hopSpeed = 10.f;
   m_hop = (sin((currentTime*m_hopSpeed)+m_ID)*sin((currentTime*m_hopSpeed)+m_ID)*m_hopHeight);
 
+  //if they have a blockade position (Wall State is on) then set this to the crosshair
   if(m_blockadePosition != NULL)
   {
     this->setCrosshair(m_blockadePosition);
@@ -142,6 +146,8 @@ void Police::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Target ID - finds a valid target to pursue regarding the target's health
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::findTargetID(float _health)
 {
   std::vector<int> rioters = getNeighbourRioterIDs();
@@ -172,11 +178,14 @@ void Police::findTargetID(float _health)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Check Pursuit Range - make sure the policeman hasn't got to far from th squad
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::checkValidPursuitRange(float _dist)
 {
   ngl::Vec3 toSquad = m_pos - m_squadPos;
   double distSqFromEachOther = toSquad.lengthSquared();
 
+  // make 2 checks so that the police don't get stuck on the edge of the check
   if (m_validPursuit)
   {
     if(distSqFromEachOther > (_dist * _dist))
@@ -197,6 +206,8 @@ void Police::checkValidPursuitRange(float _dist)
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Find Path Home - sets the home position and sets a path to it
 //----------------------------------------------------------------------------------------------------------------------------
 void Police::findPathHome()
 {
@@ -244,6 +255,9 @@ void Police::death()
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Squad Cohesion - correlates weight of the cohesion to how far away from the squad the policeman is
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::squadCohesion(double weight)
 {
   if(weight <= 0.0)
@@ -266,6 +280,9 @@ void Police::squadCohesion(double weight)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Register class - exposes to lua the added functions and properties from Police.h
+//----------------------------------------------------------------------------------------------------------------------------
 void Police::registerClass(lua_State* _L)
 {
   // Set up LUA state

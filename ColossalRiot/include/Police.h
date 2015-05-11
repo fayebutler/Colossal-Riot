@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class Police "include/Police.h"
 /// @brief The base class for all policemen
-/// @author Faye Butler
+/// @author Faye Butler, Will Herbert & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

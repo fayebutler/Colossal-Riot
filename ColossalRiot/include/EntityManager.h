@@ -5,7 +5,7 @@
 /// @file EntityManager.h
 /// @class EntityManager "include/EntityManager.h"
 /// @brief A manager monostate class that stores all base game entities with a corresponding ID number
-/// @author Will Herbert
+/// @author Will Herbert & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

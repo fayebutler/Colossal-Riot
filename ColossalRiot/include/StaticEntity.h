@@ -18,7 +18,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class StaticEntity "include/StaticEntity.h"
 /// @brief The base class for all static entities
-/// @author Faye Butler
+/// @author Emily Holt & Faye Butler
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
