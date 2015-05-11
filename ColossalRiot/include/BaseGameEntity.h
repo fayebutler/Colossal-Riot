@@ -17,9 +17,6 @@
 #include "Message.h"
 #include "MessageManager.h"
 #include "Cell.h"
-//#include "GameWorld.h"
-
-class GameWorld;
 
 class GameWorld;
 class EntityManager;

@@ -153,7 +153,7 @@ GameWorld::GameWorld(int _level)
   m_numberOfObstacles = m_obstacles.size();
 }
 
-void GameWorld::setPoliceStation(float _x, float _y, float _z)
+void GameWorld::setPoliceStation(const float _x, const float _y, const float _z)
 {
     ngl::Vec3 pos = ngl::Vec3(_x,_y,_z);
     m_policeStation = pos;
@@ -195,7 +195,7 @@ GameWorld::~GameWorld()
    delete m_entityMgr;
 }
 
-void GameWorld::Update(double timeElapsed, double currentTime)
+void GameWorld::Update(double _timeElapsed, double _currentTime)
 {
     //check for deaths/homes
     m_numberOfSquads = m_squads.size();
@@ -284,14 +284,14 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     for(unsigned int a=0; a<m_numberOfRioters; ++a)
     {
         Rioter* currentRioter = m_rioters[a];
-        currentRioter->update(timeElapsed, currentTime);
+        currentRioter->update(_timeElapsed, _currentTime);
     }
 
     m_numberOfSquads = m_squads.size();
     for(unsigned int a=0; a<m_squads.size(); ++a)
     {
         Squad* currentSquad = m_squads[a];
-        currentSquad->update(timeElapsed, currentTime);
+        currentSquad->update(_timeElapsed, _currentTime);
     }
 
 
@@ -312,7 +312,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
     }
 }
 
-void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
+void GameWorld::loadMatricesToShader(ngl::Camera *_cam, ngl::Mat4 _mouseGlobalTX)
 {
 
 //  ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -328,9 +328,9 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
   ngl::Mat3 normalMatrix;
   ngl::Mat4 M;
 
-  M=mouseGlobalTX;
-  MV=  M*cam->getViewMatrix();
-  MVP= M*cam->getVPMatrix();
+  M=_mouseGlobalTX;
+  MV=  M*_cam->getViewMatrix();
+  MVP= M*_cam->getVPMatrix();
   normalMatrix=MV;
   normalMatrix.inverse();
   shader->setShaderParamFromMat4("MV",MV);
@@ -341,66 +341,66 @@ void GameWorld::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 }
 
 
-void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
+void GameWorld::draw(ngl::Camera* _cam, ngl::Mat4 _mouseGlobalTX)
 {
 
   ngl::Material a(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.32f,0.31f,0.3f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   a.setSpecularExponent(20.f);
   a.loadToShader("material");
-  loadMatricesToShader(cam, mouseGlobalTX);
+  loadMatricesToShader(_cam, _mouseGlobalTX);
   m_streetMesh->draw();
 
   ngl::Material b(ngl::Colour(0.2f,0.2f,0.2f, 1.0), ngl::Colour(0.45f,0.45f,0.45f, 1.), ngl::Colour(0.77391f,0.77391f,0.77391f, 1.0));
   b.setSpecularExponent(20.f);
   b.loadToShader("material");
-  loadMatricesToShader(cam, mouseGlobalTX);
+  loadMatricesToShader(_cam, _mouseGlobalTX);
   m_buildingMesh->draw();
 
   for(unsigned int a=0; a<m_numberOfObstacles; ++a)
   {
       StaticEntity* currentObstacle = m_obstacles[a];
-      currentObstacle->draw(cam, mouseGlobalTX);
+      currentObstacle->draw(_cam, _mouseGlobalTX);
   }
 
   for(unsigned int a=0; a<m_numberOfRioters; ++a)
   {
       Rioter* currentRioter = m_rioters[a];
-      currentRioter->draw(cam, mouseGlobalTX);
+      currentRioter->draw(_cam, _mouseGlobalTX);
   }
 
   for(unsigned int a=0; a<m_squads.size(); ++a)
   {
       Squad* currentSquad = m_squads[a];
-      currentSquad->draw(cam, mouseGlobalTX);
+      currentSquad->draw(_cam, _mouseGlobalTX);
   }
 
 
 }
 
-void GameWorld::createSquad(int size)
+void GameWorld::createSquad(int _size)
 {
-    if (m_availablePolice - size < 0)
+    if (m_availablePolice - _size < 0)
     {
         std::cout<<"Not enough police available!"<<std::endl;
     }
     else
     {
-        Squad* newSquad = new Squad(this, size, m_policeStation, 0.5f, m_policeMesh);
+        Squad* newSquad = new Squad(this, _size, m_policeStation, 0.5f, m_policeMesh);
         m_squads.push_back(newSquad);
 
-        m_activePolice += size;
-        m_availablePolice -= size;
+        m_activePolice += _size;
+        m_availablePolice -= _size;
     }
 }
 
-void GameWorld::squadTarget(Squad* selectedSquad, ngl::Vec3 target)
+void GameWorld::squadTarget(Squad* _selectedSquad, ngl::Vec3 _target)
 {
 
 //    std::vector<ngl::Vec3> path = m_cellGraph->findPath(m_entityMgr->getEntityFromID(selectedSquad->getID()), target);
 
-    if(m_cellGraph->posIsInCell(target))
+    if(m_cellGraph->posIsInCell(_target))
     {
-        selectedSquad->setTarget(target);
+        _selectedSquad->setTarget(_target);
     }
 //      selectedSquad->findPath(target);
 }

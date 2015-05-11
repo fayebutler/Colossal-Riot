@@ -1,3 +1,8 @@
+//----------------------------------------------------------------------------------------------------------------------
+/// @file NGLDraw.cpp
+/// @brief Controls drawing and updating all entities in the game and any UI elements
+//----------------------------------------------------------------------------------------------------------------------
+
 #include "NGLDraw.h"
 #include <ngl/ShaderLib.h>
 #include <ngl/NGLInit.h>
@@ -9,7 +14,7 @@ const static float INCREMENT=-0.02;
 const static float ZOOM=5;
 float cameraHeight =125;
 
-
+//----------------------------------------------------------------------------------------------------------------------
 NGLDraw::NGLDraw(int _width, int _height)
 {
   m_patrolColour = ngl::Colour(0.0f, 0.25f, 0.6f);
@@ -118,6 +123,7 @@ NGLDraw::NGLDraw(int _width, int _height)
   m_squadCurrentColour = m_patrolColour;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 NGLDraw::~NGLDraw()
 {
   delete m_entityMgr;
@@ -141,6 +147,7 @@ NGLDraw::~NGLDraw()
   Init->NGLQuit();
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::resize(int _w, int _h)
 {
   glViewport(0,0,_w,_h);
@@ -182,9 +189,10 @@ void NGLDraw::resize(int _w, int _h)
   m_textMedium->setTransform(x, y);
 }
 
-void NGLDraw::startGame(int level)
+//----------------------------------------------------------------------------------------------------------------------
+void NGLDraw::startGame(int _level)
 {
-    m_gameworld = new GameWorld(level);
+    m_gameworld = new GameWorld(_level);
     m_selected = false;
     m_selectedSquad = NULL;
     m_selectedSquadID = -1;
@@ -203,6 +211,7 @@ void NGLDraw::startGame(int level)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::endGame()
 {
     m_gameTimer.resetTimer();
@@ -210,6 +219,7 @@ void NGLDraw::endGame()
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::draw()
 {
   // clear the screen and depth buffer
@@ -477,11 +487,13 @@ void NGLDraw::draw()
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::update(double _timeElapsed, double _currentTime)
 {
   m_gameworld->Update(_timeElapsed, _currentTime);
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::loadMatricesToShader()
 {
   ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -548,7 +560,6 @@ void NGLDraw::mouseMoveEvent (const SDL_MouseMotionEvent &_event)
 //  m_spot.setPosition(ngl::Vec3(m_cam->getEye().m_x,m_cam->getEye().m_y,m_cam->getEye().m_z));
 
 }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
@@ -757,10 +768,6 @@ void NGLDraw::mouseReleaseEvent (const SDL_MouseButtonEvent &_event)
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------------------------------
-
-//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 {
 
@@ -792,6 +799,7 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::doSelection(const int _x, const int _y)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -868,6 +876,7 @@ void NGLDraw::doSelection(const int _x, const int _y)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::doMovement(const int _x, const int _y)
 {
     std::map<int, BaseGameEntity*>::const_iterator entity = m_entityMgr->getEntityMap().find(m_selectedSquadID);
@@ -881,7 +890,8 @@ void NGLDraw::doMovement(const int _x, const int _y)
     }
 }
 
-ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
+//----------------------------------------------------------------------------------------------------------------------
+ngl::Vec3 NGLDraw::getWorldSpace(const int _x, const int _y)
 {
 
     ngl::Mat4 m;
@@ -936,6 +946,7 @@ ngl::Vec3 NGLDraw::getWorldSpace(int _x, int _y)
     return obj;
 }
 
+//----------------------------------------------------------------------------------------------------------------------
 void NGLDraw::initialiseUI()
 {
   m_textSmall = new Text("../font/arial.ttf", 20);
@@ -1029,8 +1040,6 @@ void NGLDraw::initialiseUI()
   m_ss << m_squadSize;
   m_squadSizeString = m_ss.str();
   m_sliderSquadSize->updateText(m_squadSizeString, ngl::Vec3(1.f, 1.f, 1.f), ngl::Vec2(177.f, -27.f));
-
-
 }
 
 
