@@ -351,7 +351,6 @@ void NGLDraw::draw()
       m_buttonRioterDeadBar->setButtonDimension(ngl::Vec2(0.05f, 1.5f));
       m_buttonRioterDeadBar->draw();
       float homePercent = ((float)m_gameworld->getNumberOfRiotersHome() / (float)m_gameworld->getNumberOfRiotersHomeToWin());
-//      std::cout<<homePercent<<std::endl;
       if (homePercent > 1.f)
       {
         homePercent = 1.f;
@@ -569,12 +568,10 @@ void NGLDraw::mousePressEvent (const SDL_MouseButtonEvent &_event)
       {
         if (m_buttons[i]->isClicked(_event.x, _event.y) && m_buttons[i]->getIsActive() == true)
         {
-//          std::cout<<"button "<<m_buttons[i]->getName()<<std::endl;
           switch (m_buttons[i]->getName())
           {
             case buttonPlay:
             {
-//              std::cout<<m_selectedLevel<<std::endl;
               startGame(m_selectedLevel);
               m_gameState = gamePlay;
               m_buttonQuit->setIsActive(false);
@@ -787,82 +784,72 @@ void NGLDraw::wheelEvent(const SDL_MouseWheelEvent &_event)
         m_modelPos.m_y= cameraHeight - furthest;
       }
   }
-//  m_spot.setPosition(ngl::Vec3(100,0,0));
 
 
 }
 
 void NGLDraw::doSelection(const int _x, const int _y)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for(int i=0; i < m_gameworld->getSquads().size(); i++)
+  int numberOfSquads = m_gameworld->getSquads().size();
+  for(int i=0; i < numberOfSquads; i++)
+  {
+    Squad* currentSquad = m_gameworld->getSquads()[i];
+
+    currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
+
+    currentSquad->setSquadDrawColour(currentSquad->getSquadColour());
+
+  }
+
+  ngl::Vec3 pixel;
+
+  GLint viewport[4];
+  glGetIntegerv(GL_VIEWPORT, viewport);
+
+  glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
+
+
+  bool newSelection = false;
+
+  for(int i=0; i < numberOfSquads; i++)
+  {
+    Squad* currentSquad = m_gameworld->getSquads()[i];
+
+    if(currentSquad->checkSelectionColour(pixel) == true)
     {
-        Squad* currentSquad = m_gameworld->getSquads()[i];
-
-        currentSquad->selectionDraw(m_cam, m_mouseGlobalTX);
-
-        //set de-selected squad colour
-        currentSquad->setSquadDrawColour(currentSquad->getSquadColour());
-
+      currentSquad->setSquadDrawColour(currentSquad->getSquadSelectedColour());
+      //set selected squad colour
+      if(m_selected == true)
+      {
+        m_selected = true;
+        m_selectedSquad = currentSquad;
+        m_selectedSquadID = currentSquad->getID();
+        newSelection = true;
+        break;
+      }
+      else
+      {
+        m_selected = true;
+        m_selectedSquad = currentSquad;
+        m_selectedSquadID = currentSquad->getID();
+        newSelection = true;
+        break;
+      }
     }
 
-    ngl::Vec3 pixel;
+  }
 
-    GLint viewport[4];
-    glGetIntegerv(GL_VIEWPORT, viewport);
-
-    glReadPixels(_x, viewport[3] - _y , 1, 1, GL_RGB, GL_FLOAT, &pixel);
-
-
-    bool newSelection = false;
-
-    for(int i=0; i < m_gameworld->getSquads().size(); i++)
-    {
-        Squad* currentSquad = m_gameworld->getSquads()[i];
-
-        if(currentSquad->checkSelectionColour(pixel) == true)
-        {
-          currentSquad->setSquadDrawColour(currentSquad->getSquadSelectedColour());
-          //set selected squad colour
-          if(m_selected == true)
-          {
-
-            //m_squadCurrentColour = currentSquad->getSquadColour();
-            //m_squadSelectedColour = m_squadCurrentColour *2.0f;
-            //currentSquad->setSquadColour(m_squadSelectedColour);
-
-            m_selected = true;
-            m_selectedSquad = currentSquad;
-            m_selectedSquadID = currentSquad->getID();
-            newSelection = true;
-            break;
-          }
-          else
-          {
-            //m_squadSelectedColour = m_squadCurrentColour *2.0f;
-            //currentSquad->setSquadColour(m_squadSelectedColour);
-
-            m_selected = true;
-            m_selectedSquad = currentSquad;
-            m_selectedSquadID = currentSquad->getID();
-            newSelection = true;
-            break;
-          }
-        }
-
-    }
-
-    if(newSelection == false && m_selected == true)
-    {
-//        m_selectedSquad->setPreviousState(m_selectedSquad->getSquadState());
-        doMovement(_x, _y);
-        m_selected = false;
-        m_selectedSquad= NULL;
-    }
+  if(newSelection == false && m_selected == true)
+  {
+    doMovement(_x, _y);
+    m_selected = false;
+    m_selectedSquad= NULL;
+  }
 
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 }
 

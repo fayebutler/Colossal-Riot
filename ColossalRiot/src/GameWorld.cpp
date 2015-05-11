@@ -217,7 +217,6 @@ void GameWorld::Update(double timeElapsed, double currentTime)
             m_numberOfRioters--;
             m_numberOfRiotersDead ++;
             i--;
-            std::cout<<"death  "<<m_numberOfRioters<< " "<<i<<std::endl;
         }
 
         //check for when rioters have left the map
@@ -289,7 +288,7 @@ void GameWorld::Update(double timeElapsed, double currentTime)
 
     m_numberOfSquads = m_squads.size();
 
-    for(unsigned int a=0; a<m_squads.size(); ++a)
+    for(unsigned int a=0; a<m_numberOfSquads; ++a)
     {
         Squad* currentSquad = m_squads[a];
         currentSquad->update(timeElapsed, currentTime);
@@ -369,10 +368,16 @@ void GameWorld::draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX)
       currentRioter->draw(cam, mouseGlobalTX);
   }
 
-  for(unsigned int a=0; a<m_squads.size(); ++a)
+  m_numberOfSquads = m_squads.size();
+
+  for(unsigned int a=0; a<m_numberOfSquads; ++a)
   {
       Squad* currentSquad = m_squads[a];
       currentSquad->draw(cam, mouseGlobalTX);
+      if(currentSquad->getSquadState() == squadMove)
+      {
+        currentSquad->drawTarget(cam, mouseGlobalTX);
+      }
   }
 
 
