@@ -81,6 +81,8 @@ Squad::~Squad()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Average Police Pos - function to calculate the average position of the police in the squad
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 Squad::averagePolicePos()
 {
   ngl::Vec3 currentTotal =0;
@@ -93,6 +95,10 @@ ngl::Vec3 Squad::averagePolicePos()
   return currentTotal;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Update - updates the police within the squad, according to what state they are in
+///           if in state move, then police are set to moving (lua state)
+///           if in state wall, form wall is called and crosshairs are set to individual blockade positions
 //----------------------------------------------------------------------------------------------------------------------------
 void Squad::update(double timeElapsed, double currentTime)
 {
@@ -113,12 +119,13 @@ void Squad::update(double timeElapsed, double currentTime)
        currentPolice->setIsMoving(false);
        if(m_policeArrived[i]==false)
        {
+         //set to moving, sets the police to lua state move
          m_allArrived = false;
          currentPolice->setIsMoving(true);
          break;
        }
      }
-
+    //switch out of move if police have ALL arrived
     if(m_allArrived == true)
     {
       m_squadState = m_previousState;
@@ -150,6 +157,7 @@ void Squad::update(double timeElapsed, double currentTime)
     }
     else
     {
+      //WALL
       if (m_generatedBlockade == false)
       {
         currentPolice->setCrosshair(m_pos);
@@ -166,26 +174,32 @@ void Squad::update(double timeElapsed, double currentTime)
     {
       currentPolice->setBlockadePos(NULL);
     }
-
+    //finally update the police
     currentPolice->update(timeElapsed, currentTime);
   }
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Draw - calls the police draw and loads squad draws matrices to shader
+//----------------------------------------------------------------------------------------------------------------------------
 void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
-  int numberOfPolice = m_squadPolice.size();
-  for(unsigned int i = 0; i < numberOfPolice; ++i)
-  {
-    Police* currentPolice = m_squadPolice[i];
-    currentPolice->draw(cam, mouseGlobalTX);
-  }
+    for(unsigned int i=0; i<m_squadSize; ++i)
+    {
+      Police* currentPolice = m_squadPolice[i];
+      currentPolice->draw(cam, mouseGlobalTX);
+    }
 
   loadMatricesToShader(cam, mouseGlobalTX);
-
   ngl::VAOPrimitives::instance()->createDisk("squad",m_squadRadius,12);
   ngl::VAOPrimitives::instance()->draw("squad");
+}
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Draw Target - draws the target in the move state
+//----------------------------------------------------------------------------------------------------------------------------
+void Squad::drawTarget(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
+{
   if(m_squadState == squadMove)
   {
     ngl::ShaderLib *shader=ngl::ShaderLib::instance();
@@ -203,7 +217,6 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
     trans.setPosition(m_target.m_x, 0.011f, m_target.m_z);
     trans.setRotation(90.0,0.0,0.0);
 
-
     M=trans.getMatrix()*mouseGlobalTX;
     MV=  M*cam->getViewMatrix();
     MVP= M*cam->getVPMatrix();
@@ -212,7 +225,6 @@ void Squad::draw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
     shader->setShaderParamFromMat4("MVP",MVP);
     shader->setShaderParamFromMat3("normalMatrix",normalMatrix);
-
 
     ngl::VAOPrimitives::instance()->createDisk("target",1.0,12);
     ngl::VAOPrimitives::instance()->draw("target");
@@ -249,6 +261,10 @@ void Squad::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Check Selection colour - checks if the selected colour matches the colour of a squad
+///                         - returns true if it does, false if it doesn't
+//----------------------------------------------------------------------------------------------------------------------------
 bool Squad::checkSelectionColour(const ngl::Vec3 colour)
 {
   if(m_selectionColour.m_x >= colour.m_x-0.01f && m_selectionColour.m_x <= colour.m_x+0.01f &&
@@ -263,6 +279,8 @@ bool Squad::checkSelectionColour(const ngl::Vec3 colour)
   }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Selection Draw - this draws the squad colours as used for the colour selection (this is not actually loaded to the shader)
 //----------------------------------------------------------------------------------------------------------------------------
 void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 {
@@ -290,6 +308,8 @@ void Squad::selectionDraw(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Set Target - sets the previous state of the squad when it enters move, and finds a path to the target
+//----------------------------------------------------------------------------------------------------------------------------
 void Squad::setTarget(const ngl::Vec3 _target)
 {
   if(m_squadState != squadMove)
@@ -312,6 +332,8 @@ void Squad::setTarget(const ngl::Vec3 _target)
   m_squadState = squadMove;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Check Deaths - function to check the number of police in the squad that are dead
 //----------------------------------------------------------------------------------------------------------------------------
 int Squad::checkDeaths()
 {
@@ -351,6 +373,9 @@ bool Squad::handleMessage(const Message& _message)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Closest Walls - this iterates through a vector of the closest walls to the squad and
+///                 reorders it with the closest first, to be used in the blockade
+//----------------------------------------------------------------------------------------------------------------------------
 void Squad::findClosestWalls(Squad* squad)
 {
   m_closestWalls.clear();
@@ -364,7 +389,7 @@ void Squad::findClosestWalls(Squad* squad)
     Wall closestWall;
     int closestWallID = 0;
     bool isInMemory = false;
-    for (int i = 0; i < inWalls.size(); i++ )
+    for (int i = 0; i < numberOfWallsToCheck; i++ )
     {
       shortestDist = 10000000000.0f;
       isInMemory = false;
@@ -401,14 +426,19 @@ void Squad::findClosestWalls(Squad* squad)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Form wall - used to form a blockade of policemen, taking the closest walls and cells it computes the positions
+///              based on how many police in the squad and their bounding radius
+//----------------------------------------------------------------------------------------------------------------------------
 void Squad::formWall()
 {
 
     m_inBlockade = false;
     int numberOfWallsToCheck =0;
     m_generatedBlockade = false;
+    //check to make sure not already made
     if(m_generatedBlockade == false)
     {
+      //update the closest walls vector
       findClosestWalls(this);
       numberOfWallsToCheck = m_closestWalls.size();
     }
@@ -423,12 +453,14 @@ void Squad::formWall()
           ngl::Vec3 currentCenter = (currentWall.start+currentWall.end)/2;
           for(int j=0; j<numberOfWallsToCheck; j++)
           {
+            //check not testing same wall against itself
             if(i!=j)
             {
               Wall testWall = m_closestWalls[j];
               ngl::Vec3 testNormal = testWall.normal;
               ngl::Vec3 testCenter = (testWall.start+testWall.end)/2;
 
+              // if true this means two walls are facing each other
               if(currentNormal + testNormal == ngl::Vec3(0.0,0.0,0.0))
               {
                 //if vertical line
@@ -437,6 +469,7 @@ void Squad::formWall()
                   ngl::Vec3 distance = currentCenter - testCenter;
                   ngl::Vec3 upperCenter = ngl::Vec3(0.0,0.0,0.0);
 
+                  //test which wall is the higher wall
                   if(currentCenter.m_z < testCenter.m_z)
                   {
                     upperCenter = currentCenter;
@@ -450,11 +483,12 @@ void Squad::formWall()
 
                   if(numberOf >= m_squadSize)
                   {
-                    //send as many police to this
+                    //calculate spacing for however many police in squad
                     float spacing = dist/(m_squadSize*2);
                     m_blockadePositions.clear();
                     for(int i =0; i< m_squadSize*2; i+=2)
                     {
+                      //set position, the x value should be the middle of the squad as it is value that doesn't change
                       ngl::Vec3 position = ngl::Vec3(m_pos.m_x, 0.0, upperCenter.m_z +((i+1)*spacing));
                       m_blockadePositions.push_back(position);
                     }
@@ -471,6 +505,8 @@ void Squad::formWall()
                   //if horizontal line
                   ngl::Vec3 distance = currentCenter - testCenter;
                   ngl::Vec3 leftCenter = ngl::Vec3(0.0,0.0,0.0);
+
+                  //test which wall is to the left
                   if(currentCenter.m_x < testCenter.m_x)
                   {
                     leftCenter = currentCenter;
@@ -484,12 +520,13 @@ void Squad::formWall()
 
                   if(numberOf >= m_squadSize)
                   {
-                    //send as many police to this
+                    //calculate spacing for however many police in squad
                     float spacing = dist/(m_squadSize*2);
 
                     m_blockadePositions.clear();
                     for(int i =0; i< m_squadSize*2; i+=2)
                     {
+                      //set position, the x value should be the middle of the squad as it is value that doesn't change
                       ngl::Vec3 position = ngl::Vec3(leftCenter.m_x +((i+1)*spacing), 0.0, m_pos.m_z);
                       m_blockadePositions.push_back(position);
                     }
@@ -523,6 +560,8 @@ void Squad::formWall()
       }
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Set Squad State - used to change the squad state to the eSquadState in lua
 //----------------------------------------------------------------------------------------------------------------------------
 void Squad::setSquadState(const char *_luaState, eSquadState _enumState)
 {

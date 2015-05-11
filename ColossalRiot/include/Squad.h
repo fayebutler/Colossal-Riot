@@ -11,7 +11,7 @@
 //----------------------------------------------------------------------------------------------------------------------
 /// @class Squad "include/Squad.h"
 /// @brief The class to define a squad of policemen
-/// @author Faye Butler, Will Herbert
+/// @author Faye Butler, Will Herbert & Emily Holt
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------
@@ -58,6 +58,13 @@ public:
   void draw(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
 
   //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Method to draw the squad's target
+  /// @param[in] cam: the camera used in the scene
+  /// @param[in] mouseGlobalTX: the global transform of the mouse position
+  //----------------------------------------------------------------------------------------------------------------------------
+  void drawTarget(ngl::Camera* cam, ngl::Mat4 mouseGlobalTX);
+
+  //----------------------------------------------------------------------------------------------------------------------------
   /// @brief Method to load the matrices to the shader
   /// @param[in] cam: the camera used in the scene
   /// @param[in] mouseGlobalTX: the global transform of the mouse position
@@ -77,7 +84,7 @@ public:
   void findClosestWalls(Squad* squad);
 
   //----------------------------------------------------------------------------------------------------------------------------
-  /// @brief Creates positions for each of the policeman to form a wall using the closes walls vector
+  /// @brief Creates positions for each of the policeman to form a blockade using the closest walls vector
   //----------------------------------------------------------------------------------------------------------------------------
   void formWall();
 
@@ -131,6 +138,11 @@ public:
   /// @return Colour: vector of the colour of the squad
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour getSquadColour() const { return m_squadColour; }
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Gets the selected colour of the squad
+  /// @return Colour: vector of the selected colour of the squad
+  //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour getSquadSelectedColour() const { return m_squadSelectedColour; }
 
   //----------------------------------------------------------------------------------------------------------------------------
@@ -138,7 +150,17 @@ public:
   /// @param[in] _val: the vector to set the colour of the squad to
   //----------------------------------------------------------------------------------------------------------------------------
   void setSquadColour(const ngl::Colour _val) { m_squadColour = _val; }
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the selected colour of the squad
+  /// @param[in] _val: the vector to set the selected colour of the squad to
+  //----------------------------------------------------------------------------------------------------------------------------
   void setSquadSelectedColour(const ngl::Colour _val) { m_squadSelectedColour = _val; }
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Sets the draw colour of the squad
+  /// @param[in] _val: the vector to set the draw colour of the squad to
+  //----------------------------------------------------------------------------------------------------------------------------
   void setSquadDrawColour(const ngl::Colour _val) { m_squadDrawColour = _val; }
 
   //----------------------------------------------------------------------------------------------------------------------------
@@ -225,7 +247,15 @@ private:
   /// @brief Vector for the squad colour
   //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour m_squadColour;
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Vector for the selected squad colour
+  //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour m_squadSelectedColour;
+
+  //----------------------------------------------------------------------------------------------------------------------------
+  /// @brief Vector for the squad draw colour
+  //----------------------------------------------------------------------------------------------------------------------------
   ngl::Colour m_squadDrawColour;
 
   //----------------------------------------------------------------------------------------------------------------------------

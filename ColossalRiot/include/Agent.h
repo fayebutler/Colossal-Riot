@@ -5,7 +5,7 @@
 /// @file Agent.h
 /// @class Agent "include/Agent.h"
 /// @brief The base class for all agents, that can be rioters or police
-/// @author Will Herbert
+/// @author Will Herbert & Emily Holt & Faye Butler
 /// @version 1.0
 /// @date Last revision 10/05/2015 Updated to comply with doxygen and NCCA coding standard
 //----------------------------------------------------------------------------------------------------------------------

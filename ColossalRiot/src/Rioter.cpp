@@ -55,6 +55,8 @@ Rioter::~Rioter()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Update - updates the rioter with the time elapsed from the last tick
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::update(double timeElapsed, double currentTime)
 {
   Vehicle::Steering()->clearFriendlyNeighbours();
@@ -144,6 +146,8 @@ void Rioter::loadMatricesToShader(ngl::Camera *cam, ngl::Mat4 mouseGlobalTX)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Target ID - find available target that has acceptable amount of health
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::findTargetID(float _health)
 {
   std::vector<int> police = getNeighbourPoliceIDs();
@@ -228,6 +232,8 @@ void Rioter::death()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Protest Cohesion - correlates weight of the cohesion to how far away from the protest the rioter is
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::protestCohesion(double weight)
 {
     if(weight <= 0.0)
@@ -252,6 +258,8 @@ void Rioter::protestCohesion(double weight)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Find Path Home - finds the nearest exit for the rioter and sets a path to this
+//----------------------------------------------------------------------------------------------------------------------------
 void Rioter::findPathHome()
 {
   m_homePos = findNearestExit(m_world->getCellGraph()->getExitPoints());
@@ -259,6 +267,8 @@ void Rioter::findPathHome()
   m_hasPathHome = true;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Register Class - exposes the functions and properties in Rioter.h to lua
 //----------------------------------------------------------------------------------------------------------------------------
 void Rioter::registerClass(lua_State* _L)
 {

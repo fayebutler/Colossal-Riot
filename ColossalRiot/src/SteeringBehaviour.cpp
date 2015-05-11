@@ -43,6 +43,9 @@ SteeringBehaviour::~SteeringBehaviour()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Calculates total steering force by ordering behaviours by priority
+/// Each force is added to the steering if there is enough max force left over (AccumulateForce function)
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 {
   m_steeringForce = ngl::Vec3(0.f, 0.f, 0.f);
@@ -117,11 +120,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 
   if(on(pursuit))
   {
-    if (m_targetAgent == NULL)
-    {
-       //std::cout<<"no target agent assigned for pursuit"<<std::endl;
-    }
-    else
+    if (m_targetAgent != NULL)
     {
       force = Pursuit(m_targetAgent) * m_weightPursuit;
       if(!accumulateForce(m_steeringForce, force))
@@ -137,11 +136,7 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 
   if(on(evade))
   {
-    if (m_targetAgent == NULL)
-    {
-        //std::cout<<"no target agent assigned for evade"<<std::endl;
-    }
-    else
+    if (m_targetAgent != NULL)
     {
       force = Evade(m_targetAgent) * m_weightEvade;
       if(!accumulateForce(m_steeringForce, force))
@@ -225,6 +220,8 @@ ngl::Vec3 SteeringBehaviour::calculatePrioritizedSum()
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Adds together steering forces, making sure does not exceed the maximum force
+//----------------------------------------------------------------------------------------------------------------------------
 bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force)
 {
   double magnitude = currentTotal.length();
@@ -257,6 +254,9 @@ bool SteeringBehaviour::accumulateForce(ngl::Vec3 currentTotal, ngl::Vec3 &force
 //----------------------------------------------------------------------------------------------------------------------------
 //behaviour type functions
 //----------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------
+/// Seek - returns the vector toward to the target position
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 targetPos)
 {
   ngl::Vec3 desiredVelocity = ngl::Vec3(targetPos - m_vehicle->getPos());
@@ -266,6 +266,8 @@ ngl::Vec3 SteeringBehaviour::Seek(ngl::Vec3 targetPos)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Flee - returns vector directing away from the target position
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 targetPos)
 {
   ngl::Vec3 desiredVelocity = ngl::Vec3(m_vehicle->getPos() - targetPos);
@@ -273,6 +275,9 @@ ngl::Vec3 SteeringBehaviour::Flee(ngl::Vec3 targetPos)
   return desiredVelocity - m_vehicle->getVelocity();
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Arrive - returns vector towards the target position, but as it gets closer the forces lowers
+///           so the vehicle decelerates
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
 {
@@ -301,6 +306,10 @@ ngl::Vec3 SteeringBehaviour::Arrive(ngl::Vec3 targetPos, int deceleration)
   return ngl::Vec3(0,0,0);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Wander - creates a circle in front of the vehicle, adds a random amount, normalises the vector and
+///           places it back on the circle to create a random vector that follows a smooth path
+///        - the point created on the circle must be converted from local to world space
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Wander()
 {
@@ -346,26 +355,17 @@ ngl::Vec3 SteeringBehaviour::Wander()
     angle = 2*M_PI - angle;
   }
 
-
   ngl::Transformation trans;
   trans.setRotation(0, (-angle * 180)/M_PI, 0);
   ngl::Vec3 worldTarget;
   worldTarget = trans.getMatrix() * localTarget;
 
-//  if(worldTarget.lengthSquared() == 0.0f)
-//  {
-//      std::cout<<"World Target in wander equals zero, can't normalise"<<std::endl;
-//  }
-//  else
-//  {
-//    //worldTarget.normalize();
-//  }
-
-//  worldTarget = worldTarget * m_vehicle->getMaxSpeed();
-
   return worldTarget;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Pursuit - uses seek to pursue a moving vehicle,
+///           but uses heading so it can calculate where the vehicle will be in the future and aim for that point
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 {
@@ -382,6 +382,9 @@ ngl::Vec3 SteeringBehaviour::Pursuit(const Vehicle *agent)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Evade - uses flee to evade a moving vehicle,
+///        but uses heading so it can calculate where the vehicle will be in the future and avoid that point
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
 {
   ngl::Vec3 toAgent = agent->getPos() - m_vehicle->getPos();
@@ -393,6 +396,8 @@ ngl::Vec3 SteeringBehaviour::Evade(const Vehicle *agent)
   return Flee(agentPos);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Separation - finds the average separation force for the vehicles closest neighbours
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
 {
@@ -417,6 +422,8 @@ ngl::Vec3 SteeringBehaviour::Separation(std::vector<int> neighbours)
   return separationForce;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Alignment - finds the average heading of the surrounding neighbours
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 {
@@ -443,6 +450,8 @@ ngl::Vec3 SteeringBehaviour::Alignment(std::vector<int> neighbours)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Cohesion - finds the average position of the vehicles neighbours and seeks to that point
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
 {
   int numberOfNeighbours = neighbours.size();
@@ -465,7 +474,9 @@ ngl::Vec3 SteeringBehaviour::Cohesion(std::vector<int> neighbours)
   }
 }
 
-
+//----------------------------------------------------------------------------------------------------------------------------
+/// Squad Cohesion - this is the same as arrive, but is used for squads, or protest cohesion only
+///                   this is so the weight can be altered using alternate variables
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 {
@@ -497,6 +508,9 @@ ngl::Vec3 SteeringBehaviour::SquadCohesion(ngl::Vec3 squadPos, int deceleration)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
+/// Obstacle Avoidance - Searches through the closest obstacles to find the closest intersecting point
+///                       returns an opposing force
+//----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
 {
   float minDetectionLength = m_vehicle->getDetectionRadius();
@@ -505,47 +519,6 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
   BaseGameEntity* closestIntersectingObstacle = NULL;
   double distanceToCIO = 99999.9;
   ngl::Vec3 localPosOfCIO;
-
-//  int numberOfAgents = m_allNeighbours.size();
-//  for (unsigned int i = 0; i < numberOfAgents; i++)
-//  {
-//    Agent* currentAgent = dynamic_cast<Agent*>(m_entityMgr->getEntityFromID(m_allNeighbours[i]));
-//    if (currentAgent)
-//    {
-//      if (currentAgent->getID() != m_vehicle->getID())
-//      {
-//        ngl::Vec3 vectorToObstacle = currentAgent->getPos() - m_vehicle->getPos();
-
-//        if (vectorToObstacle.lengthSquared() < (detectionLength * detectionLength))
-//        {
-//          ngl::Vec3 localPos = worldToLocalSpace(currentAgent->getPos(), m_vehicle->getPos(), m_vehicle->getHeading(), m_vehicle->getSide());
-
-//          // if obstacle is behind vehicle in local space, discard
-//          if (localPos.m_x >= 0.f)
-//          {
-//            double addedRadius = currentAgent->getBoundingRadius() + m_vehicle->getBoundingRadius();
-//            if (fabs(localPos.m_z) < addedRadius)
-//            {
-//              // intersection of radius and line z = 0
-//              // x = cx +- sqrt(addedRadius^2 - cz^2) where cx and cz are centre coordinates
-//              double sqrtPart = sqrt(addedRadius*addedRadius - localPos.m_z*localPos.m_z);
-//              double intersectX = localPos.m_x - sqrtPart;
-//              if (intersectX <= 0)
-//              {
-//                intersectX = localPos.m_x + sqrtPart;
-//              }
-//              if (intersectX < distanceToCIO)
-//              {
-//                distanceToCIO = intersectX;
-//                closestIntersectingObstacle = currentAgent;
-//                localPosOfCIO = localPos;
-//              }
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
 
   int numberOfObstacles = m_vehicle->getNeighbourObstacleIDs().size();
   for (unsigned int i = 0; i < numberOfObstacles; ++i)
@@ -629,20 +602,14 @@ ngl::Vec3 SteeringBehaviour::ObstacleAvoidance()
     ngl::Vec3 worldAvoidanceForce;
     worldAvoidanceForce = trans.getMatrix() * avoidanceForce;
 
-    if(worldAvoidanceForce.lengthSquared() == 0.0f)
-    {
-      std::cout<<"worldAvoidanceForce in obstacleAvoidance equals zero, can't normalise"<<std::endl;
-    }
-    else
-    {
-      //worldAvoidanceForce.normalize();
-    }
     return worldAvoidanceForce;
 
   }
   return ngl::Vec3(0.f, 0.f, 0.f);
 }
 
+//----------------------------------------------------------------------------------------------------------------------------
+/// Wall avoidance - uses feelers to calculate when the vehicle may come into contact with walls and return an opposing force
 //----------------------------------------------------------------------------------------------------------------------------
 ngl::Vec3 SteeringBehaviour::WallAvoidance()
 {
@@ -666,7 +633,6 @@ ngl::Vec3 SteeringBehaviour::WallAvoidance()
   bool feelerTouch = false;
 
   ngl::Vec3 wallAvoidanceForce = ngl::Vec3(0.f, 0.f, 0.f);
-
   int numberOfFeelers = feelers.size();
   for (int i = 0; i < numberOfFeelers; ++i)
   {
@@ -802,6 +768,7 @@ bool SteeringBehaviour::lineIntersection2D(ngl::Vec3 startLineA, ngl::Vec3 endLi
 //----------------------------------------------------------------------------------------------------------------------------
 void SteeringBehaviour::ObjectOverlapAvoidance()
 {
+
   int numberOfNeighbours = m_allNeighbours.size();
   for (unsigned int i = 0; i < numberOfNeighbours; i++)
   {
